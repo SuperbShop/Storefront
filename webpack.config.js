@@ -9,12 +9,12 @@ module.exports = {
     filename: 'bundle.js',
     path: DIST_DIR,
   },
-  resolve: {
-    extensions: ['.js', '.jsx'],
-  },
   module: {
     rules: [
       {
+        resolve: {
+          extensions: ['.js', '.jsx'],
+        },
         test: /\.(js|jsx)?/,
         exclude: /node_modules/,
         use: {

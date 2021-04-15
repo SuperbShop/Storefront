@@ -1,15 +1,11 @@
 {
-  "name": "project-catwalk",
+  "name": "catwalk",
   "version": "1.0.0",
-  "description": "My webpack project",
+  "description": "FEC ecommerce app",
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode=production",
-    "build:dev": "webpack --mode=development --watch",
-    "build:prod": "webpack --mode=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "react-dev": "webpack --mode=development --watch"
   },
   "repository": {
     "type": "git",

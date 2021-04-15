@@ -5,7 +5,8 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "react-dev": "webpack --mode=development --watch"
+    "react-dev": "webpack --mode=development --watch",
+    "live-server": "live-server client/dist/"
   },
   "repository": {
     "type": "git",

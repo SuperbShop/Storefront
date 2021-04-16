@@ -5,13 +5,25 @@ import Questions from './components/Questions/Questions';
 import Ratings from './components/Ratings/Ratings';
 import RelatedItems from './components/RelatedItems/RelatedItems';
 
-const App = () => (
-  <div>
-    <section className="overview module"><Overview /></section>
-    <section className="questions module"><Questions /></section>
-    <section className="ratings module"><Ratings /></section>
-    <section className="related-items module"><RelatedItems /></section>
-  </div>
-);
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      product: '',
+    };
+  }
+
+  render() {
+    const { product } = this.state;
+    return (
+      <div>
+        <section className="overview module"><Overview product={product} /></section>
+        <section className="questions module"><Questions product={product} /></section>
+        <section className="ratings module"><Ratings product={product} /></section>
+        <section className="related-items module"><RelatedItems product={product} /></section>
+      </div>
+    );
+  }
+}
 
 ReactDOM.render(<App />, document.getElementById('app'));

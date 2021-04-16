@@ -3,6 +3,9 @@ import React from 'react';
 class Breakdown extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      // idk yet
+    };
   }
 
   componentDidMount() {

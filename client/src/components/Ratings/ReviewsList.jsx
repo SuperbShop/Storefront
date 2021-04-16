@@ -1,18 +1,18 @@
 import React from 'react';
 
-class Questions extends React.Component {
+class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // property: true,
+      // tiles: 2,
     };
   }
 
   render() {
     return (
-      <p>Questions</p>
+      <p>This is the ReviewsList component</p>
     );
   }
 }
 
-export default Questions;
+export default ReviewsList;

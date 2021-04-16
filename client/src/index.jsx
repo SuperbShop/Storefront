@@ -9,7 +9,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '',
+      product: '23145',
     };
   }
 

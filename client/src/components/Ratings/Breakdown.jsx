@@ -1,4 +1,6 @@
 import React from 'react';
+import Distribution from './children/Distribution';
+import ProductFactors from './children/ProductFactors';
 
 class Breakdown extends React.Component {
   constructor(props) {
@@ -14,7 +16,13 @@ class Breakdown extends React.Component {
 
   render() {
     return (
-      <div id="breakdown">This is the ratings breakdown component</div>
+      <div id="breakdown">
+        This is the ratings breakdown Component
+        <section>
+          <Distribution />
+          <ProductFactors />
+        </section>
+      </div>
     );
   }
 }

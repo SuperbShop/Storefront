@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Overview from './components/Overview/Overview';
-import Questions from './components/Questions/Questions';
+import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
 import RelatedItems from './components/RelatedItems/RelatedItems';
 

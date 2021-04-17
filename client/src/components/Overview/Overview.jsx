@@ -3,7 +3,7 @@ import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
 import config from '../../../../config';
-import ProductInformation from './ProductInformation/ProductInformation';
+import ProductInfo from './ProductInfo/ProductInfo';
 // import ImageGallery from './ImageGallery';
 // import StyleSelector from './StyleSelector';
 // import AddToCart from './AddToCart';
@@ -16,6 +16,7 @@ class Overview extends React.Component {
     this.state = {
       productDetails: {},
       productStyles: [],
+      selectedStyle: {},
     };
   }
 
@@ -45,19 +46,21 @@ class Overview extends React.Component {
       .then((res) => {
         this.setState({
           productStyles: res.data.results,
+          selectedStyle: res.data.results[0],
         });
       })
       .catch((err) => console.error(err));
   }
 
   render() {
-    const { productDetails, productStyles } = this.state;
+    const { productDetails, productStyles, selectedStyle } = this.state;
     return (
-
       <div className="ProductOverview">
-        <div className="ProductInformation">
-          ProductInformation
-          <ProductInformation productDetails={productDetails} />
+        <div className="ProductInfo">
+          <ProductInfo
+            productDetails={productDetails}
+            selectedStyle={selectedStyle}
+          />
         </div>
         {/* <div className="AddToCart">
           AddToCart

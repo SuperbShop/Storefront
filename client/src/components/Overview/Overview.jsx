@@ -14,7 +14,7 @@ class Overview extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      productDetails: {},
+      currentProduct: {},
       productStyles: [],
       selectedStyle: {},
     };
@@ -30,7 +30,7 @@ class Overview extends React.Component {
     axios.get(URL)
       .then((res) => {
         this.setState({
-          productDetails: res.data,
+          currentProduct: res.data,
         });
       })
       .then(() => {
@@ -53,12 +53,12 @@ class Overview extends React.Component {
   }
 
   render() {
-    const { productDetails, productStyles, selectedStyle } = this.state;
+    const { currentProduct, productStyles, selectedStyle } = this.state;
     return (
       <div className="ProductOverview">
         <div className="ProductInfo">
           <ProductInfo
-            productDetails={productDetails}
+            currentProduct={currentProduct}
             selectedStyle={selectedStyle}
           />
         </div>

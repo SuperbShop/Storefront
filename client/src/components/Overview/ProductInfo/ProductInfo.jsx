@@ -10,9 +10,9 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    // eslint-disable-next-line react/prop-types
-    const { productDetails, selectedStyle } = this.props;
-    const { name, category, description } = productDetails;
+    const { currentProduct, selectedStyle } = this.props;
+    const { name, category, description } = currentProduct;
+    const { original_price, sale_price } = selectedStyle;
     return (
       <div className="ProductInfo">
         <h1 className="productTitle">
@@ -29,7 +29,7 @@ class ProductInfo extends React.Component {
         </div>
         <div className="price">
           Price:
-          <Price selectedStyle={selectedStyle} />
+          <Price price={original_price} sale={sale_price} />
         </div>
       </div>
     );
@@ -37,14 +37,14 @@ class ProductInfo extends React.Component {
 }
 
 // ProductInfo.propTypes = {
-//   productDetails: PropTypes.object.isRequired,
+//   currentProduct: PropTypes.object.isRequired,
 //   name: PropTypes.string.isRequired,
 //   category: PropTypes.string.isRequired,
 //   description: PropTypes.string,
 // };
 
-ProductInfo.defaultProps = {
-  description: null,
-};
+// ProductInfo.defaultProps = {
+//   description: null,
+// };
 
 export default ProductInfo;

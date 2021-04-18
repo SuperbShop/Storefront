@@ -23,10 +23,6 @@ class ProductInfo extends React.Component {
           Category:
           {category}
         </div>
-        <div className="description">
-          Description:
-          {description}
-        </div>
         <div className="price">
           Price:
           <Price price={original_price} sale={sale_price} />

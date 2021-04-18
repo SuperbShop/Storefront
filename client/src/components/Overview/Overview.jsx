@@ -3,7 +3,8 @@ import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
 import config from '../../../../config';
-import ProductInfo from './ProductInfo/ProductInfo';
+import ProductInfo from './Subcomponents/ProductInfo';
+import Description from './Subcomponents/Description';
 // import ImageGallery from './ImageGallery';
 // import StyleSelector from './StyleSelector';
 // import AddToCart from './AddToCart';
@@ -61,6 +62,9 @@ class Overview extends React.Component {
             currentProduct={currentProduct}
             selectedStyle={selectedStyle}
           />
+        </div>
+        <div className="Description">
+          <Description currentProduct={currentProduct}/>
         </div>
         {/* <div className="AddToCart">
           AddToCart

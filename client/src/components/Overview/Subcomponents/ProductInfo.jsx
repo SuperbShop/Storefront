@@ -31,13 +31,13 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    const { currentProduct, selectedStyle } = this.props;
+    const { currentProduct, selectedStyle, productRatings } = this.props;
     const { name, category } = currentProduct;
     const { original_price, sale_price } = selectedStyle;
 
     return (
       <ProductWrapper>
-        <StarRatings />
+        <StarRatings ratings={productRatings} />
         <Category>{category}</Category>
 
         <Title>{name}</Title>

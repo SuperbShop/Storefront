@@ -41,7 +41,8 @@ class Overview extends React.Component {
       currentProduct: {},
       productStyles: [],
       selectedStyle: {},
-      stylePhotos: []
+      productRatings: [],
+      stylePhotos: [],
     };
   }
 
@@ -61,6 +62,9 @@ class Overview extends React.Component {
       .then(() => {
         this.fetchProductStyles();
       })
+      .then(() => {
+        this.fetchProductRatings();
+      })
       .catch((err) => console.error(err));
   }
 
@@ -72,24 +76,39 @@ class Overview extends React.Component {
         this.setState({
           productStyles: res.data.results,
           selectedStyle: res.data.results[0],
-          stylePhotos: res.data.results[0].photos
+          stylePhotos: res.data.results[0].photos,
+        });
+      })
+      .catch((err) => console.error(err));
+  }
+
+  fetchProductRatings() {
+    const { productId } = this.props;
+    const URL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/?product_id=${productId}`;
+    axios.get(URL)
+      .then((res) => {
+        this.setState({
+          productRatings: res.data.results,
         });
       })
       .catch((err) => console.error(err));
   }
 
   render() {
-    const { currentProduct, productStyles, selectedStyle, stylePhotos } = this.state;
+    const {
+      currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
+    } = this.state;
     return (
       <Wrapper>
         <TopWrapper>
           <LeftDiv>
-            <ImageGallery photos={this.state.stylePhotos}/>
+            <ImageGallery photos={stylePhotos} />
           </LeftDiv>
           <RightDiv>
             <ProductInfo
               currentProduct={currentProduct}
               selectedStyle={selectedStyle}
+              productRatings={productRatings}
             />
           </RightDiv>
         </TopWrapper>

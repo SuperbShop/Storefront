@@ -11,6 +11,7 @@ const StarWrapper = styled.div`
 const ReviewWrapper = styled.div`
   font-size: 12px;
   padding-top: 5px;
+  padding-left: 5px;
 `;
 
 class StarRatings extends React.Component {
@@ -21,17 +22,29 @@ class StarRatings extends React.Component {
   }
 
   render() {
+    const { ratings } = this.props;
+    let totalRating = 0;
+    let avgRating = 0;
+    const totalCount = ratings.length;
+    if (totalCount > 0) {
+      ratings.forEach((item) => totalRating += item.rating);
+      avgRating = totalRating / totalCount;
+    }
     return (
       <StarWrapper>
         <ReactStars
           size={20}
-          edit
+          // edit
           isHalf
+          value={avgRating}
           // emptyIcon={<FontAwesomeIcon icon={farStar} />}
           // halfIcon={<FontAwesomeIcon icon={faStarHalfAlt} />}
           // filledIcon={<FontAwesomeIcon icon={faStar} />}
         />
-        <ReviewWrapper><a href="#Reviews">Read all reviews</a></ReviewWrapper>
+        {avgRating}
+        <ReviewWrapper>
+          <a href="#Reviews">Read {totalCount} reviews</a>
+        </ReviewWrapper>
       </StarWrapper>
     );
   }

@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 
+const GalleryWrapper = styled.div`
+  padding-right: 3rem;
+`;
 const ImageWrapper = styled.img`
   object-fit: cover;
   width: 100%;
@@ -18,11 +21,13 @@ const ImageGallery = ({ photos }) => {
   };
 
   return (
-    <Carousel className="carousel">
-      {photos.map((photo, index) => (
-        <Carousel.Item><ImageWrapper key={index += 1} src={photo.url} alt="product" /></Carousel.Item>
-      ))}
-    </Carousel>
+    <GalleryWrapper>
+      <Carousel>
+        {photos.map((photo, index) => (
+          <Carousel.Item key={index += 1}><ImageWrapper src={photo.url} alt="product" /></Carousel.Item>
+        ))}
+      </Carousel>
+    </GalleryWrapper>
   );
 };
 

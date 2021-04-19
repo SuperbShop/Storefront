@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 // class Price extends React.Component {
 //   constructor(props) {
@@ -40,17 +41,34 @@ import PropTypes from 'prop-types';
 //   }
 // }
 
+const NoSale = styled.div`
+  padding: 15px 0;
+`;
+const OnSale = styled.div`
+  padding: 15px 0;
+`;
+
+const RegularPrice = styled.span`
+  text-decoration: line-through;
+  font-size: 13px;
+`;
+
+const SalePrice = styled.span`
+  color: red;
+  font-size: 13px;
+`;
+
 const Price = ({price, sale}) => {
   if (!sale) {
     return (
-      <div className="nosale">{`$${price}`}</div>
+      <NoSale>{`$${price}`}</NoSale>
     );
   }
   return (
-    <div>
-      <span>{`$${price}`}</span>
-      <span>{`$${sale}`}</span>
-    </div>
+    <OnSale>
+      <RegularPrice>{`$${price}`}</RegularPrice>
+      <SalePrice>{`$${sale}`}</SalePrice>
+    </OnSale>
   );
 };
 

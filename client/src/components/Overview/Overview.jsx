@@ -7,7 +7,7 @@ import config from '../../../../config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';
-// import StyleSelector from './StyleSelector';
+import StyleSelector from './Subcomponents/StyleSelector';
 // import AddToCart from './AddToCart';
 
 axios.defaults.headers.common.Authorization = config.TOKEN; // authorization for all requests
@@ -110,22 +110,22 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               productRatings={productRatings}
             />
+            <StyleSelector selectedStyle={selectedStyle} />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">
-
           <div className="Description">
             <Description currentProduct={currentProduct} />
           </div>
-          {/* <div className="AddToCart">
-          AddToCart
-          <AddToCart />
-        </div>
+          {/* <div className="StyleSelector">
+            StyleSelector
+            <StyleSelector />
+          </div>
+          <div className="AddToCart">
+            AddToCart
+            <AddToCart />
+          </div> */}
 
-        <div className="StyleSelector">
-          StyleSelector
-          <StyleSelector />
-        </div> */}
         </div>
       </Wrapper>
     );

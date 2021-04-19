@@ -110,7 +110,7 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               productRatings={productRatings}
             />
-            <StyleSelector selectedStyle={selectedStyle} />
+            <StyleSelector selectedStyle={selectedStyle} styles={productStyles} />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">

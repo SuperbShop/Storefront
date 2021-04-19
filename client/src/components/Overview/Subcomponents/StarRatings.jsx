@@ -40,7 +40,7 @@ class StarRatings extends React.Component {
           emptyIcon={<FontAwesomeIcon icon={farStar} />}
           filledIcon={<FontAwesomeIcon icon={faStar} />}
           halfIcon={<FontAwesomeIcon icon={faStarHalfAlt} />}
-          activeColor="#535353"
+          activeColor="#fce38a"
         />
         <ReviewWrapper>
           <a href="#Reviews">Read {totalCount} reviews</a>

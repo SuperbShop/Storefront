@@ -38,8 +38,8 @@ class ProductInfo extends React.Component {
 
     return (
       <ProductWrapper>
-        {productRatings.length > 0 &&
-        <StarRatings ratings={productRatings} />}
+        {productRatings.length > 0
+        && <StarRatings ratings={productRatings} />}
         <Category>{category}</Category>
 
         <Title>{name}</Title>

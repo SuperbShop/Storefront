@@ -19,7 +19,6 @@ const BreakdownWrapper = styled.div`
 const ListWrapper = styled.div`
   background-color: lightgreen;
   width: 800px;
-  padding-right: 200px;
   `;
 
 class Ratings extends React.Component {

@@ -1,8 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
-import { farStar } from '@fortawesome/free-regular-svg-icons';
 import ReactStars from 'react-rating-stars-component';
 
 const StarWrapper = styled.div`
@@ -37,11 +34,7 @@ class StarRatings extends React.Component {
           // edit
           isHalf
           value={avgRating}
-          // emptyIcon={<FontAwesomeIcon icon={farStar} />}
-          // halfIcon={<FontAwesomeIcon icon={faStarHalfAlt} />}
-          // filledIcon={<FontAwesomeIcon icon={faStar} />}
         />
-        {avgRating}
         <ReviewWrapper>
           <a href="#Reviews">Read {totalCount} reviews</a>
         </ReviewWrapper>

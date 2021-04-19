@@ -18,9 +18,10 @@ const Title = styled.h1`
 
 const Category = styled.h2`
   font-weight: 200;
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin: 0;
   padding: 0;
+  text-transform: uppercase;
 `;
 
 class ProductInfo extends React.Component {
@@ -37,7 +38,8 @@ class ProductInfo extends React.Component {
 
     return (
       <ProductWrapper>
-        <StarRatings ratings={productRatings} />
+        {productRatings.length > 0 &&
+        <StarRatings ratings={productRatings} />}
         <Category>{category}</Category>
 
         <Title>{name}</Title>

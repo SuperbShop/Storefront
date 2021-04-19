@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 const DescWrapper = styled.div`
   margin: 3rem;
   padding: 3rem;
   display: flex;
-  flex-basis: 60%;
   color: #535353;
-  background-color: #d4d4d4;
 `;
 
 const LeftDiv = styled.div`
@@ -43,7 +42,7 @@ const Description = ({ currentProduct }) => (
         {currentProduct.features
         && currentProduct.features.map((item) => (
           <li key={currentProduct.id += 1}>
-            <FontAwesomeIcon icon={faCheck}/> {item.feature}: {item.value}
+            <FontAwesomeIcon icon={faCheck} /> {item.feature}: {item.value}
           </li>
         ))}
       </Features>

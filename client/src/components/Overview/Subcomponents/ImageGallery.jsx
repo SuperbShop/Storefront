@@ -10,8 +10,16 @@ class ImageGallery extends React.Component {
   }
 
   render() {
+    const { photos } = this.props;
     return (
-      <h1>ImageGallery</h1>
+      <div>
+        <h1>ImageGallery</h1>
+        <div>
+          {photos.map((photo) => (
+            <img src={photo.thumbnail_url} />
+          ))}
+        </div>
+      </div>
     );
   }
 }

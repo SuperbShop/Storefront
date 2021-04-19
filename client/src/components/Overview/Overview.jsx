@@ -1,15 +1,38 @@
 import React from 'react';
+import styled from 'styled-components';
 import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
 import config from '../../../../config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
-// import ImageGallery from './ImageGallery';
+import ImageGallery from './Subcomponents/ImageGallery';
 // import StyleSelector from './StyleSelector';
 // import AddToCart from './AddToCart';
 
 axios.defaults.headers.common.Authorization = config.TOKEN; // authorization for all requests
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const TopWrapper = styled.div`
+  margin: 2rem;
+  padding: 2rem;
+  display: flex;
+  color: #535353;
+`;
+
+const LeftDiv = styled.div`
+  width: 70%;
+  float: left;
+`;
+
+const RightDiv = styled.div`
+  width: 30%;
+  float: right;
+`;
 
 class Overview extends React.Component {
   constructor(props) {
@@ -18,6 +41,7 @@ class Overview extends React.Component {
       currentProduct: {},
       productStyles: [],
       selectedStyle: {},
+      stylePhotos: []
     };
   }
 
@@ -48,37 +72,43 @@ class Overview extends React.Component {
         this.setState({
           productStyles: res.data.results,
           selectedStyle: res.data.results[0],
+          stylePhotos: res.data.results[0].photos
         });
       })
       .catch((err) => console.error(err));
   }
 
   render() {
-    const { currentProduct, productStyles, selectedStyle } = this.state;
+    const { currentProduct, productStyles, selectedStyle, stylePhotos } = this.state;
     return (
-      <div className="ProductOverview">
-        <div className="ProductInfo">
-          <ProductInfo
-            currentProduct={currentProduct}
-            selectedStyle={selectedStyle}
-          />
-        </div>
-        <div className="Description">
-          <Description currentProduct={currentProduct}/>
-        </div>
-        {/* <div className="AddToCart">
+      <Wrapper>
+        <TopWrapper>
+          <LeftDiv>
+            <ImageGallery photos={this.state.stylePhotos}/>
+          </LeftDiv>
+          <RightDiv>
+            <ProductInfo
+              currentProduct={currentProduct}
+              selectedStyle={selectedStyle}
+            />
+          </RightDiv>
+        </TopWrapper>
+        <div className="ProductOverview">
+
+          <div className="Description">
+            <Description currentProduct={currentProduct} />
+          </div>
+          {/* <div className="AddToCart">
           AddToCart
           <AddToCart />
         </div>
-        <div className="ImageGallery">
-          ImageGallery
-          <ImageGallery />
-        </div>
+
         <div className="StyleSelector">
           StyleSelector
           <StyleSelector />
         </div> */}
-      </div>
+        </div>
+      </Wrapper>
     );
   }
 }

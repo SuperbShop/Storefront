@@ -1,7 +1,26 @@
 import React from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Breakdown from './Breakdown';
 import ReviewsList from './ReviewsList';
+
+const ReviewsAndRatingsDiv = styled.section`
+  padding: 5px;
+  background-color: lightblue;
+  display: flex;
+  justify-content: space-evenly;
+  `;
+
+const BreakdownWrapper = styled.div`
+  background-color: lightgrey;
+  width: 300px;
+  `;
+
+const ListWrapper = styled.div`
+  background-color: lightgreen;
+  width: 800px;
+  padding-right: 200px;
+  `;
 
 class Ratings extends React.Component {
   constructor(props) {
@@ -16,15 +35,17 @@ class Ratings extends React.Component {
   render() {
     const productNum = this.props.product;
     return (
-      <div id="ratings-reviews">
+      <section>
         <h2>Ratings & Reviews</h2>
-        <div id="breakdown">
-          <Breakdown productNum={productNum} />
-        </div>
-        <div id="reviews-list">
-          <ReviewsList productNum={productNum} />
-        </div>
-      </div>
+        <ReviewsAndRatingsDiv>
+          <BreakdownWrapper>
+            <Breakdown productNum={productNum} />
+          </BreakdownWrapper>
+          <ListWrapper>
+            <ReviewsList productNum={productNum} />
+          </ListWrapper>
+        </ReviewsAndRatingsDiv>
+      </section>
     );
   }
 }

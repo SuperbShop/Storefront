@@ -7,13 +7,13 @@ import fetch from './fetchers.js';
 
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
-  background-color: lightblue;
+  background-color: lightgrey;
   display: flex;
   justify-content: space-evenly;
   `;
 
-const BreakdownWrapper = styled.div`
-  background-color: lightgrey;
+  const BreakdownWrapper = styled.div`
+  background-color: lightblue;
   width: 300px;
   `;
 

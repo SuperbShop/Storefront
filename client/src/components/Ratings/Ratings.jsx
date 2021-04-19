@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Breakdown from './Breakdown';
 import ReviewsList from './ReviewsList';
+import fetch from './fetchers.js';
 
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
@@ -21,27 +22,54 @@ const ListWrapper = styled.div`
   width: 800px;
   `;
 
+const StyledTitle = styled.h2`
+  color: red;
+  `;
+
 class Ratings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // property: true,
-      // make state equal to props.product
+      // reviewsMetaData: {},
+      // reviewsData: {},
     };
+  }
+
+  componentDidMount() {
+    const { product } = this.props;
+    fetch.metaGetter(product)
+      .then((res) => {
+        this.setState({
+          reviewsMetaData: res,
+        });
+      })
+      .then(() => {
+        fetch.listGetter(product)
+          .then((res2) => {
+            this.setState({
+              reviewsData: res2,
+            });
+          });
+      })
+      .catch((err) => console.error(err));
   }
   // pass props from above into Breakdown & ReviewsList
 
   render() {
     const productNum = this.props.product;
+    const reviewMetaInfo = this.state.reviewsMetaData;
+    const reviewListInfo = this.state.reviewsData;
     return (
       <section>
-        <h2>Ratings & Reviews</h2>
+        <StyledTitle>
+          Ratings & Reviews
+        </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown productNum={productNum} />
+            <Breakdown productNum={productNum} meta={reviewMetaInfo} />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList productNum={productNum} />
+            <ReviewsList productNum={productNum} list={reviewListInfo} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </section>

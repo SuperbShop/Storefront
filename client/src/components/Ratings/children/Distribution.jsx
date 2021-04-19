@@ -1,7 +1,8 @@
 import React from 'react';
 
-const Distribution = () => (
+const Distribution = (props) => (
   <div id="distribution">
+    {console.log('distribution props', props.dist)}
     <p>Bar graph</p>
     <p>5</p>
     <p>4</p>

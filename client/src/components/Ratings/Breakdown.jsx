@@ -18,25 +18,23 @@ class Breakdown extends React.Component {
     // send GET to /reviews?product_id=props.product
     $.ajax({
       method: 'GET',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${productId}`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/meta?product_id=${productId}`,
       headers: {
         Authorization: config.API_KEY,
       },
       success: (data) => {
         let sum = 0;
-        let recommendations = 0;
-        console.log(data);
-        for (let i = 0; i < data.results.length; i++) {
-          sum += data.results[i].rating;
-          if (data.results[i].recommend) {
-            recommendations++;
-          }
+        let reviewQuantity = 0;
+        const ratingsArray = Object.keys(data.ratings);
+        for (let i = 0; i < ratingsArray.length; i += 1) {
+          sum += ratingsArray[i] * data.ratings[ratingsArray[i]];
+          reviewQuantity += Number(data.ratings[ratingsArray[i]]);
         }
-        console.log(sum);
         this.setState({
-          productData: data,
-          avgRating: sum / data.results.length,
-          percentThatRecommend: (recommendations / data.results.length) * 100,
+          ratingsDistribution: data.ratings,
+          productChararacteristics: data.characteristics,
+          avgRating: sum / reviewQuantity,
+          percentThatRecommend: 100 * (Number(data.recommended.true) / reviewQuantity),
         });
       },
       error: (err) => console.log(err),
@@ -47,16 +45,18 @@ class Breakdown extends React.Component {
     const average = this.state.avgRating || 0;
     // need to incorporate the star graphic
     const percent = this.state.percentThatRecommend || 0;
+    const ratingsDist = this.state.ratingsDistribution;
+    const productChars = this.state.productChararacteristics;
     return (
       <div id="breakdown">
-        <strong>{average}</strong>
+        <h2>{average}</h2>
         <p>
           {percent}
           % of reviews recommend this product
         </p>
         <section>
-          <Distribution />
-          <ProductFactors />
+          <Distribution dist={ratingsDist} />
+          <ProductFactors chars={productChars} />
         </section>
       </div>
     );

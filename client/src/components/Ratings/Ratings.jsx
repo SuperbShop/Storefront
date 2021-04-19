@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Breakdown from './Breakdown';
 import ReviewsList from './ReviewsList';
 
@@ -13,19 +14,24 @@ class Ratings extends React.Component {
   // pass props from above into Breakdown & ReviewsList
 
   render() {
+    const productNum = this.props.product;
     return (
       <div id="ratings-reviews">
-        <h2>Ratings</h2>
+        <h2>Ratings & Reviews</h2>
         <div id="breakdown">
-          <Breakdown productNum={this.props.product} />
+          <Breakdown productNum={productNum} />
         </div>
         <div id="reviews-list">
           ReviewsList
-          <ReviewsList productNum={this.props.product} />
+          <ReviewsList productNum={productNum} />
         </div>
       </div>
     );
   }
 }
+
+Ratings.propTypes = {
+  product: PropTypes.string.isRequired,
+};
 
 export default Ratings;

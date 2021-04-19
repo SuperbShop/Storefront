@@ -1,5 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import {
+  FacebookShareButton, TwitterShareButton, PinterestShareButton,
+  FacebookIcon, TwitterIcon, PinterestIcon,
+} from 'react-share';
 import StarRatings from './StarRatings';
 
 const ProductWrapper = styled.div`
@@ -21,6 +25,10 @@ const Category = styled.h2`
   text-transform: uppercase;
 `;
 
+const SocialMediaButton = styled.span`
+  padding-right: 10px;
+`;
+
 class ProductInfo extends React.Component {
   constructor(props) {
     super(props);
@@ -32,7 +40,7 @@ class ProductInfo extends React.Component {
     const { currentProduct, selectedStyle, productRatings } = this.props;
     const { name, category } = currentProduct;
     const { original_price, sale_price } = selectedStyle;
-
+    const url = 'http://127.0.0.1:8080/';
     return (
       <ProductWrapper>
         {productRatings.length > 0
@@ -41,6 +49,22 @@ class ProductInfo extends React.Component {
         <Category>{category}</Category>
 
         <Title>{name}</Title>
+        <SocialMediaButton>
+          <FacebookShareButton url={url} quote="cool product!" hashtag="ootd">
+            <FacebookIcon round size={30} />
+          </FacebookShareButton>
+        </SocialMediaButton>
+        <SocialMediaButton>
+          <TwitterShareButton url={url} title="Check out this product" hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}>
+            <TwitterIcon round size={30} />
+          </TwitterShareButton>
+        </SocialMediaButton>
+        <SocialMediaButton>
+          <PinterestShareButton url={url} media={url} description="check out this product!">
+            <PinterestIcon round size={30} />
+          </PinterestShareButton>
+        </SocialMediaButton>
+
       </ProductWrapper>
     );
   }

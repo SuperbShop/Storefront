@@ -35,6 +35,7 @@ class StarRatings extends React.Component {
       <StarWrapper>
         <ReactStars
           size={15}
+          edit={false}
           isHalf
           value={avgRating}
           emptyIcon={<FontAwesomeIcon icon={farStar} />}

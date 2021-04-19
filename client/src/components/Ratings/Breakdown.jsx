@@ -24,17 +24,17 @@ class Breakdown extends React.Component {
         Authorization: config.API_KEY,
       },
       success: (data) => {
-        let sum = 0;
+        let reviewSum = 0;
         let reviewQuantity = 0;
         const ratingsArray = Object.keys(data.ratings);
         for (let i = 0; i < ratingsArray.length; i += 1) {
-          sum += ratingsArray[i] * data.ratings[ratingsArray[i]];
+          reviewSum += ratingsArray[i] * data.ratings[ratingsArray[i]];
           reviewQuantity += Number(data.ratings[ratingsArray[i]]);
         }
         this.setState({
           ratingsDistribution: data.ratings,
           productChararacteristics: data.characteristics,
-          avgRating: sum / reviewQuantity,
+          avgRating: reviewSum / reviewQuantity,
           percentThatRecommend: 100 * (Number(data.recommended.true) / reviewQuantity),
         });
       },

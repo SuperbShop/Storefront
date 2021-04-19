@@ -39,7 +39,6 @@ class ReviewsList extends React.Component {
   }
 
   openCreateReviewModal() {
-    console.log('toggling create modal');
     this.setState({
       renderCreate: !this.state.renderCreate,
     });
@@ -47,7 +46,11 @@ class ReviewsList extends React.Component {
 
   render() {
     const reviews = this.state.list || [];
-    const createReviewElement = this.state.renderCreate ? <CreateReview /> : '';
+    const createReviewElement = this.state.renderCreate ? <CreateReview productId={this.props.productNum} /> : '';
+
+    // conditionally render more reviews button on if there are more reviews.
+    const moreReviewsButton = <button type="button" onClick={this.fetchMoreReviews}>MORE REVIEWS</button>;
+
     return (
       <div id="tiles">
         <p>
@@ -56,7 +59,7 @@ class ReviewsList extends React.Component {
           reviews, sorted by relevance
         </p>
         {reviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
-        <button type="button" onClick={this.fetchMoreReviews}>MORE REVIEWS</button>
+        {moreReviewsButton}
         <button type="button" onClick={this.openCreateReviewModal}>ADD A REVIEW</button>
         {createReviewElement}
       </div>

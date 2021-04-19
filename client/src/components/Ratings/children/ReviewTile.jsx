@@ -9,8 +9,8 @@ class ReviewTile extends React.Component {
   }
 
   render() {
-    var recommendation = this.props.review.recommend ? 'I recommend this product' : '';
-    var response = this.props.review.response ? this.props.review.response : '';
+    const recommendation = this.props.review.recommend ? 'I recommend this product' : '';
+    const response = this.props.review.response ? this.props.review.response : '';
     return (
       <div id="review-tile">
         <p>{this.props.review.rating} Stars</p>

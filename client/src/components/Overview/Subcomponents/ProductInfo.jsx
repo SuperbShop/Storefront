@@ -39,8 +39,8 @@ class ProductInfo extends React.Component {
   render() {
     const { currentProduct, selectedStyle, productRatings } = this.props;
     const { name, category } = currentProduct;
-    const { original_price, sale_price } = selectedStyle;
     const url = 'http://127.0.0.1:8080/';
+
     return (
       <ProductWrapper>
         {productRatings.length > 0
@@ -49,6 +49,7 @@ class ProductInfo extends React.Component {
         <Category>{category}</Category>
 
         <Title>{name}</Title>
+
         <SocialMediaButton>
           <FacebookShareButton url={url} quote="cool product!" hashtag="ootd">
             <FacebookIcon round size={30} />

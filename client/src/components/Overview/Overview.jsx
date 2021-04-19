@@ -8,7 +8,7 @@ import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';
 import StyleSelector from './Subcomponents/StyleSelector';
-// import AddToCart from './AddToCart';
+import AddToCart from './Subcomponents/AddToCart';
 
 axios.defaults.headers.common.Authorization = config.TOKEN; // authorization for all requests
 
@@ -106,6 +106,7 @@ class Overview extends React.Component {
     const {
       currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
     } = this.state;
+
     return (
       <Wrapper>
         <TopWrapper>
@@ -123,18 +124,13 @@ class Overview extends React.Component {
               styles={productStyles}
               handleStyleChange={this.handleStyleChange}
             />
+            <AddToCart />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">
           <div className="Description">
             <Description currentProduct={currentProduct} />
           </div>
-          {/*
-          <div className="AddToCart">
-            AddToCart
-            <AddToCart />
-          </div> */}
-
         </div>
       </Wrapper>
     );

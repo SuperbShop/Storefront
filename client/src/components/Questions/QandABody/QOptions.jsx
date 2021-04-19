@@ -12,23 +12,41 @@ class QOptions extends React.Component {
 
   onClick() {
     this.setState({
-      helpful: true,
+      helpful: !this.state.helpful,
     });
+    console.log(this.props);
   }
 
   render() {
-    const { helpfulCount } = this.state;
+    const { helpfulness } = this.props;
+    const isHelpful = this.state.helpful;
+    const helpful = helpfulness + 1;
     return (
       <div className="options container">
         <span className="option helpful">
           Helpful?
           <button type="submit" onClick={this.onClick}>
-            Yes (
-            {helpfulCount}
-            )
+            { isHelpful
+              ? (
+                <h3>
+                  Yes (
+                  {helpful}
+                  )
+                </h3>
+              )
+              : (
+                <h3>
+                  Yes (
+                  {helpfulness}
+                  )
+                </h3>
+              ) }
           </button>
         </span>
-        <span className="option report"><p>Add Answer</p></span>
+        { !this.state.reported
+          ? <button className="option report" onClick={this.onClickReport}>Report</button>
+          : <h3>Reported</h3> }
+        <span className="option addAnswer"><p>Add Answer</p></span>
       </div>
     );
   }

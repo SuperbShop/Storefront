@@ -5,18 +5,23 @@ class ABody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
+      answersDisplayed: 2,
     };
   }
-  // onChange() {
 
-  // }
-  // clickHandler(e) {
-  //   const { value } = e.target;
-
-  // }
+  displayMore () {
+    this.setState({
+      answersDisplayed: answersDisplayed + 2,
+    });
+  }
 
   render() {
+    const { answer } = this.props;
+    const { body } = answer;
+    const { answerer_name } = answer;
+    const { date } = answer;
+    const { helpfulness } = answer;
+    console.log(answer);
     return (
       <div className="A-Body">
         <span>
@@ -24,13 +29,22 @@ class ABody extends React.Component {
         </span>
         <span className="answer">
           <p>
-            Icing macaroon bear claw jelly beans chocolate cake.
-            Cookie oat cake chocolate halvah jelly cake cotton candy souflee topping.
-            Jujubes topping cake gummies lemon drops
+            {body}
           </p>
         </span>
         <div className="a options">
-          <AOptions />
+          <AOptions
+            onClickReport={this.props.onClickReport}
+            answerer={answerer_name}
+            date={date}
+            helpfulness={helpfulness}
+            displayMore={this.displayMore}
+          />
+          { answer.photos
+            ? answer.photos.map((photo, index) => (
+              <img src={answer.photos[index]} alt="description" width="50" height="50" key={`${photo}+${index}`}></img>
+            ))
+            : <p>no photos</p>}
         </div>
       </div>
     );

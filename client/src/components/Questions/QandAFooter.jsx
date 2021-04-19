@@ -7,13 +7,6 @@ class QandAFooter extends React.Component {
       search: true,
     };
   }
-  // onChange() {
-
-  // }
-  // clickHandler(e) {
-  //   const { value } = e.target;
-
-  // }
 
   render() {
     return (

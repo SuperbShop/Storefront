@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import Image from 'react-bootstrap/Image';
 import Price from './Price';
 
 const StyleWrapper = styled.div`
@@ -57,28 +58,25 @@ class StyleSelector extends React.Component {
     } = this.props.selectedStyle;
     const { styles } = this.props;
 
-    if (name) {
-      return (
-        <StyleWrapper>
-          <Price price={original_price} sale={sale_price} />
-          <StyleText>Style &gt;</StyleText>
-          <CurrentStyle>{name}</CurrentStyle>
-          <ThumbWrapper>
-            {
+    return (
+      <StyleWrapper>
+        <Price price={original_price} sale={sale_price} />
+        <StyleText>Style &gt;</StyleText>
+        <CurrentStyle>{name}</CurrentStyle>
+        <ThumbWrapper>
+          {
             styles.map((style, index) => (
               <Thumbnail
                 key={index + 1}
-                src={style.photos[0].thumbnail_url}
+                src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
                 onClick={() => this.handleClick(style.style_id, style.name)}
               />
             ))
           }
-          </ThumbWrapper>
+        </ThumbWrapper>
 
-        </StyleWrapper>
-      );
-    }
-    return <div>Loading...</div>;
+      </StyleWrapper>
+    );
   }
 }
 

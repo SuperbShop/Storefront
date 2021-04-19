@@ -9,12 +9,14 @@ class ReviewTile extends React.Component {
   }
 
   render() {
+    console.log('from tile', this.props.review);
+    var recommendation = this.props.review.recommend ? 'I recommend this product' : '';
     return (
       <div id="review-tile">
-        <p>Star Rating</p>
-        <strong>Review summary text</strong>
-        <p>I recommend this product - checkmark</p>
-        <p>Review body</p>
+        <p>{this.props.review.rating} Stars</p>
+        <strong>{this.props.review.summary}</strong>
+        <p>{recommendation}</p>
+        <p>{this.props.review.body}</p>
         <p>Sales team response</p>
         <button type="button">Helpful?</button>
       </div>

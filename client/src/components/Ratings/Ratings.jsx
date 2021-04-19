@@ -22,7 +22,6 @@ class Ratings extends React.Component {
           <Breakdown productNum={productNum} />
         </div>
         <div id="reviews-list">
-          ReviewsList
           <ReviewsList productNum={productNum} />
         </div>
       </div>

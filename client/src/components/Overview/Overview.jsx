@@ -129,10 +129,7 @@ class Overview extends React.Component {
           <div className="Description">
             <Description currentProduct={currentProduct} />
           </div>
-          {/* <div className="StyleSelector">
-            StyleSelector
-            <StyleSelector />
-          </div>
+          {/*
           <div className="AddToCart">
             AddToCart
             <AddToCart />

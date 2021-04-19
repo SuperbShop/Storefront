@@ -43,19 +43,24 @@ import styled from 'styled-components';
 
 const NoSale = styled.div`
   padding: 15px 0;
+  font-size: 13px;
+  font-weight: 300;
 `;
 const OnSale = styled.div`
   padding: 15px 0;
+  font-size: 13px;
+  font-weight: 300;
 `;
 
 const RegularPrice = styled.span`
   text-decoration: line-through;
-  font-size: 13px;
+
 `;
 
 const SalePrice = styled.span`
   color: red;
-  font-size: 13px;
+  padding-left: 5px;
+  font-weight: 700;
 `;
 
 const Price = ({price, sale}) => {

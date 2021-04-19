@@ -30,16 +30,15 @@ const Thumbnail = styled.img`
   margin: 5px;
   object-fit: cover;
   &:hover {
-    border: 2px solid #000;
-    opacity: 0.5
+    border: 2px solid #535353;
+    opacity: 0.5;
   }
 `;
 class StyleSelector extends React.Component {
   constructor(props) {
     super(props);
-    const { name } = this.props.selectedStyle
     this.state = {
-      selectedStyle: name,
+      selectedStyle: null,
     };
     this.handleClick = this.handleClick.bind(this);
   }

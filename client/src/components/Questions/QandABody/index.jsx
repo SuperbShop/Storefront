@@ -6,7 +6,6 @@ class QandABody extends React.Component {
     super(props);
     this.state = {
       QandA: [],
-      reRendered: false,
     };
   }
 

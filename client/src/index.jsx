@@ -20,9 +20,9 @@ class App extends React.Component {
     return (
       <div>
         <section className="overview module"><Overview productId={productId} /></section>
-        {/* <section className="questions module"><Questions product={product} /></section>
+        <section className="questions module"><Questions product={product} /></section>
         <section className="ratings module"><Ratings product={product} /></section>
-        <section className="related-items module"><RelatedItems product={product} /></section> */}
+        <section className="related-items module"><RelatedItems product={product} /></section>
       </div>
     );
   }

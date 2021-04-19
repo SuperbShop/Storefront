@@ -11,13 +11,16 @@ class Questions extends React.Component {
       QandA: {
         product_id: 0,
         results: [{
-          answers: {0: {
-            answerer_name: 'default',
-            body: 'default',
-            date: 'default',
-            helpfulness: 0,
-            id: 0,
-            photos:['default']}},
+          answers: {
+            0: {
+              answerer_name: 'default',
+              body: 'default',
+              date: 'default',
+              helpfulness: 0,
+              id: 0,
+              photos: ['default'],
+            },
+          },
           asker_name: 'default',
           question_body: 'default',
           question_date: '2019-01-17T00:00:00.000Z',
@@ -35,12 +38,6 @@ class Questions extends React.Component {
     this.getProduct(product);
   }
 
-  report() {
-    this.setState({
-      reported: true,
-    })
-  }
-
   getProduct(id) {
     $.ajax({
       method: 'GET',
@@ -54,6 +51,12 @@ class Questions extends React.Component {
         });
       },
       error: (error) => { console.log(error); },
+    });
+  }
+
+  report() {
+    this.setState({
+      reported: true,
     });
   }
 

@@ -6,15 +6,23 @@ class QOptions extends React.Component {
     this.state = {
       helpful: false,
       helpfulCount: 0,
+      reported: false,
     };
-    this.onClick = this.onClick.bind(this);
+    this.onClickHelpful = this.onClickHelpful.bind(this);
+    this.onClickReport = this.onClickReport.bind(this);
   }
 
-  onClick() {
+  onClickHelpful() {
     this.setState({
       helpful: !this.state.helpful,
     });
-    console.log(this.props);
+  }
+
+  onClickReport() {
+    this.setState({
+      reported: true,
+    });
+    this.props.onClickReport();
   }
 
   render() {
@@ -25,7 +33,7 @@ class QOptions extends React.Component {
       <div className="options container">
         <span className="option helpful">
           Helpful?
-          <button type="submit" onClick={this.onClick}>
+          <button type="submit" onClick={this.onClickHelpful}>
             { isHelpful
               ? (
                 <h3>

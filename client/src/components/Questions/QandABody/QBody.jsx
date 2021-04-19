@@ -10,36 +10,29 @@ class QBody extends React.Component {
       question: 'default',
       numDisplayed: 2,
       reported: false,
+      helpful: false,
     };
     this.onCLickDisplay = this.onClickDisplay.bind(this);
     this.onClickReport = this.onClickReport.bind(this);
+    this.report = this.report.bind(this);
   }
 
   componentDidMount() {
     const { question } = this.props;
     this.setState({
-      question,
+      question: question,
     });
-    console.log(this.props);
-  }
-
-  report() {
-    this.setState({
-      reported: true,
-    });
-    const $this = $(this);
-    console.log($this);
-    $this.toggleClass('reported');
-    if ($this.hasClass('reported')) {
-      $this.test('Report');
-    } else {
-      $this.text('Reported');
-    }
-    console.log(this.state.reported);
   }
 
   onClickDisplay() {
     this.displayMore();
+  }
+
+  onClickHelpful() {
+    const { helpful } = this.state;
+    this.setState({
+      helpful: !helpful,
+    });
   }
 
   onClickReport() {
@@ -48,9 +41,23 @@ class QBody extends React.Component {
   }
 
   displayMore() {
+    const { numDisplayed } = this.state;
     this.setState({
-      numDisplayed: this.state.numDisplayed + 2,
+      numDisplayed: numDisplayed + 2,
     });
+  }
+
+  report() {
+    this.setState({
+      reported: true,
+    });
+    const $this = $(this);
+    $this.toggleClass('reported');
+    if ($this.hasClass('reported')) {
+      $this.text('Report');
+    } else {
+      $this.text('Reported');
+    }
   }
 
   render() {
@@ -72,7 +79,11 @@ class QBody extends React.Component {
         </span>
         <div className="options-upper">
           <div className="QOptions">
-            <QOptions helpfulness={question_helpfulness} />
+            <QOptions
+              helpfulness={question_helpfulness}
+              onClickHelpful={this.onClickHelpful}
+              onClickReport={this.onClickReport}
+            />
           </div>
         </div>
         { ansDisplayed.map((answer, index) => (

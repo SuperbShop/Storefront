@@ -31,13 +31,10 @@
     "bootstrap": "^4.6.0",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
-<<<<<<< HEAD
-    "moment": "^2.29.1",
-=======
     "live-server": "^1.2.1",
+    "moment": "^2.29.1",
     "mongoose": "^5.12.4",
     "prop-types": "^15.7.2",
->>>>>>> 15129066e8adb21a4eb0c402521eb7f70bae20cf
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-dom": "^17.0.2",

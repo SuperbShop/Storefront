@@ -6,18 +6,16 @@ class AOptions extends React.Component {
     super(props);
     this.state = {
       helpful: false,
-      helpfulCount: 0,
       reported: false,
     };
-    this.onClick = this.onClick.bind(this);
+    this.onClickHelpful = this.onClickHelpful.bind(this);
     this.onClickReport = this.onClickReport.bind(this);
   }
 
-  onClick() {
+  onClickHelpful() {
     this.setState({
       helpful: !this.state.helpful,
     });
-    console.log(this.props);
   }
 
   onClickReport() {
@@ -30,22 +28,21 @@ class AOptions extends React.Component {
   render() {
     const { answerer } = this.props;
     const { date } = this.props;
-    const { helpfulness } = this.props;
-    const helpful = helpfulness + 1;
     const isHelpful = this.state.helpful;
-    // console.log(this.props);
+    const { helpfulness } = this.props;
+    const helpfulClicked = helpfulness + 1;
     return (
       <div className="options container">
         <span className="option username">{answerer}</span>
         <span className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').fromNow()}</span>
         <span className="option helpful">
           Helpful?
-          <button type="submit" onClick={this.onClick}>
+          <button type="submit" onClick={this.onClickHelpful}>
             { isHelpful
               ? (
                 <h3>
                   Yes (
-                  {helpful}
+                  {helpfulClicked}
                   )
                 </h3>
               )

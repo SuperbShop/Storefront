@@ -9,19 +9,19 @@ class ABody extends React.Component {
     };
   }
 
-  displayMore () {
+  displayMore() {
     this.setState({
       answersDisplayed: answersDisplayed + 2,
     });
   }
 
   render() {
+    console.log('ABODY PROPS: ', this.props);
     const { answer } = this.props;
     const { body } = answer;
     const { answerer_name } = answer;
     const { date } = answer;
     const { helpfulness } = answer;
-    console.log(answer);
     return (
       <div className="A-Body">
         <span>

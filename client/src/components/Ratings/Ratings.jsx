@@ -7,19 +7,21 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       // property: true,
+      // make state equal to props.product
     };
   }
+  // pass props from above into Breakdown & ReviewsList
 
   render() {
     return (
       <div id="ratings-reviews">
         <h2>Ratings</h2>
         <div id="breakdown">
-          <Breakdown />
+          <Breakdown productNum={this.props.product} />
         </div>
         <div id="reviews-list">
           ReviewsList
-          <ReviewsList />
+          <ReviewsList productNum={this.props.product} />
         </div>
       </div>
     );

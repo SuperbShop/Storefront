@@ -1,4 +1,6 @@
 import React from 'react';
+import ReviewTile from './children/ReviewTile';
+import CreateReview from './children/CreateReview';
 
 class ReviewsList extends React.Component {
   constructor(props) {
@@ -10,7 +12,13 @@ class ReviewsList extends React.Component {
 
   render() {
     return (
-      <p>This is the ReviewsList component</p>
+      <div id="tiles">
+        <p>This is the ReviewsList component</p>
+        <ReviewTile />
+        <ReviewTile />
+        <p>Hardcoded CreateReview</p>
+        <CreateReview />
+      </div>
     );
   }
 }

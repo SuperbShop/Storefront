@@ -40,8 +40,8 @@ const Description = ({ currentProduct }) => (
     <RightDiv>
       <Features>
         {currentProduct.features
-        && currentProduct.features.map((item) => (
-          <li key={currentProduct.id += 1}>
+        && currentProduct.features.map((item, index) => (
+          <li key={index += 1}>
             <FontAwesomeIcon icon={faCheck} /> {item.feature}: {item.value}
           </li>
         ))}

@@ -11,7 +11,7 @@ class ProductFactors extends React.Component {
   render() {
     return (
       <div id="product-factors">
-        {console.log('characteristics props', this.props.chars)}
+        {/* {console.log('characteristics props', this.props.chars)} */}
         <p>These are the product factors</p>
         <p>This product has fit, comfort factors</p>
       </div>

@@ -1,15 +1,16 @@
 import React from 'react';
 
-const Distribution = (props) => (
-  <div id="distribution">
-    {console.log('distribution props', props.dist)}
-    <p>Bar graph</p>
-    <p>5</p>
-    <p>4</p>
-    <p>3</p>
-    <p>2</p>
-    <p>1</p>
-  </div>
-);
+const Distribution = ({ dist }) => {
+  console.log('distdata', dist);
+  return (
+    <div id="distribution">
+      <button className="ReviewFilter" type="button">5 stars</button>
+      <button className="ReviewFilter" type="button">4 stars</button>
+      <button className="ReviewFilter" type="button">3 stars</button>
+      <button className="ReviewFilter" type="button">2 stars</button>
+      <button className="ReviewFilter" type="button">1 stars</button>
+    </div>
+  );
+};
 
 export default Distribution;

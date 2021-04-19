@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 import Distribution from './children/Distribution';
 import ProductFactors from './children/ProductFactors';
 import config from '../../../../config';
@@ -62,5 +63,9 @@ class Breakdown extends React.Component {
     );
   }
 }
+
+Breakdown.propTypes = {
+  productNum: PropTypes.string.isRequired,
+};
 
 export default Breakdown;

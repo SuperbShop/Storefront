@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 import Price from './Price';
 
 const StyleWrapper = styled.div`
@@ -29,26 +30,33 @@ const Thumbnail = styled.img`
   margin: 5px;
   object-fit: cover;
   &:hover {
-    border: 2px solid #000
+    border: 2px solid #000;
+    opacity: 0.5
   }
 `;
 class StyleSelector extends React.Component {
   constructor(props) {
     super(props);
-    const { selectedStyle } = props;
+    const { name } = this.props.selectedStyle
     this.state = {
-      selectedStyle: selectedStyle.name,
+      selectedStyle: name,
     };
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(id, name) {
+    const { handleStyleChange } = this.props;
+    handleStyleChange(id);
+    this.setState({
+      selectedStyle: name,
+    });
   }
 
   render() {
     const {
       name, sale_price, original_price, style_id, photos,
     } = this.props.selectedStyle;
-
     const { styles } = this.props;
-    const { selectedStyle } = this.state;
-    console.log(styles);
 
     if (name) {
       return (
@@ -58,8 +66,12 @@ class StyleSelector extends React.Component {
           <CurrentStyle>{name}</CurrentStyle>
           <ThumbWrapper>
             {
-            styles.map((style) => (
-              <Thumbnail src={style.photos[0].thumbnail_url} />
+            styles.map((style, index) => (
+              <Thumbnail
+                key={index + 1}
+                src={style.photos[0].thumbnail_url}
+                onClick={() => this.handleClick(style.style_id, style.name)}
+              />
             ))
           }
           </ThumbWrapper>

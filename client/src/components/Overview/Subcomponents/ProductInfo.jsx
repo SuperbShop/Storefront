@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Price from './Price';
 import StarRatings from './StarRatings';
-// import Styles from './StarRatings';
-// import Selector from './Selector';
 
 const ProductWrapper = styled.div`
   margin: 0;
@@ -40,6 +37,7 @@ class ProductInfo extends React.Component {
       <ProductWrapper>
         {productRatings.length > 0
         && <StarRatings ratings={productRatings} />}
+
         <Category>{category}</Category>
 
         <Title>{name}</Title>

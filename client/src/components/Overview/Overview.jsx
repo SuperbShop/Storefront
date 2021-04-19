@@ -44,10 +44,18 @@ class Overview extends React.Component {
       productRatings: [],
       stylePhotos: [],
     };
+    this.handleStyleChange = this.handleStyleChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchProduct();
+  }
+
+  handleStyleChange(id) {
+    const { productStyles } = this.state;
+    this.setState({
+      selectedStyle: productStyles.find((style) => style.style_id === id),
+    });
   }
 
   fetchProduct() {
@@ -110,7 +118,11 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               productRatings={productRatings}
             />
-            <StyleSelector selectedStyle={selectedStyle} styles={productStyles} />
+            <StyleSelector
+              selectedStyle={selectedStyle}
+              styles={productStyles}
+              handleStyleChange={this.handleStyleChange}
+            />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">

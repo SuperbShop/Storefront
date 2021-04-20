@@ -1,9 +1,16 @@
 import React from 'react';
 import $ from 'jquery';
+import styled from 'styled-components';
 import config from '../../../../config';
 import ReviewTile from './children/ReviewTile';
 import CreateReview from './children/CreateReview';
 import fetch from './fetchers.js';
+
+const TilesWrapper = styled.div`
+  background-color: lightblue;
+  max-height: 700px;
+  overflow-y: auto;
+  `;
 
 class ReviewsList extends React.Component {
   constructor(props) {
@@ -49,13 +56,9 @@ class ReviewsList extends React.Component {
   }
 
   showMoreReviews() {
-    // onclick from more reviews button
-    // change slice state - so that it allows for more videos to be shown
-    console.log('fetchMoreReviews');
-
     this.setState({
       sliceBy: this.state.sliceBy += 2,
-    })
+    });
   }
 
   openCreateReviewModal() {
@@ -66,14 +69,13 @@ class ReviewsList extends React.Component {
 
   render() {
     let slicedReviews = this.state.reviewsData.slice(0, this.state.sliceBy) || [];
-    const createReviewElement = this.state.renderCreate ? <CreateReview productId={this.props.productNum} /> : '';
-
     let moreReviewsButton;
     if (this.state.sliceBy < this.state.reviewsData.length) {
       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
     } else {
       moreReviewsButton = '';
     }
+    const createReviewElement = this.state.renderCreate ? <CreateReview productId={this.props.productNum} /> : '';
 
     return (
       <div id="tiles">
@@ -82,7 +84,9 @@ class ReviewsList extends React.Component {
           {' '}
           reviews, sorted by relevance
         </p>
-        {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
+        <TilesWrapper>
+          {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
+        </TilesWrapper>
         {moreReviewsButton}
         <button type="button" onClick={this.openCreateReviewModal}>ADD A REVIEW</button>
         {createReviewElement}

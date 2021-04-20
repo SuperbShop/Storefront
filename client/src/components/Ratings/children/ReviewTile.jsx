@@ -19,13 +19,18 @@ const ResponseTag = styled.p`
   background-color: grey;
   `;
 
+const ThumbnailImage = styled.img`
+  height: 40px;
+  `;
+
 class ReviewTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // state of the helpful tile?
-      // onClick for yes or no, changes this state up or down
+      showMore: false,
     };
+    this.logImageUrl = this.logImageUrl.bind(this);
+    this.handleHelpfulClick = this.handleHelpfulClick.bind(this);
   }
 
   handleHelpfulClick(event) {
@@ -45,13 +50,43 @@ class ReviewTile extends React.Component {
     });
   }
 
+  logImageUrl(event) {
+    console.log('id of image clicked:', event.target.src);
+  }
+
   render() {
     let recommendation;
     if (this.props.review.recommend) {
-      recommendation = <p><FontAwesomeIcon icon={faCheck} /> I recommend this product</p>;
+      recommendation = (
+        <p>
+          <FontAwesomeIcon icon={faCheck} />
+          {' '}
+          I recommend this product
+        </p>
+      );
     } else {
       recommendation = '';
     }
+    ///////////////////////////////////////////////////////
+    // NEED TO REWORK THIS FOR SHOW MORE BUTTON ///////////
+    ///////////////////////////////////////////////////////
+    let body;
+    if (this.props.review.photos.length > 0) {
+      body = (
+        <div>
+          <div>
+            {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.logImageUrl} key={photo.id} src={photo.url} />)}
+          </div>
+          <div>
+            {this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}
+          </div>
+        </div>
+      );
+    } else {
+      body = <p>{this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}</p>;
+    }
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
@@ -73,12 +108,12 @@ class ReviewTile extends React.Component {
           {moment(this.props.review.date).format('LL')}
         </p>
         <h3>{this.props.review.summary}</h3>
-        <p>{this.props.review.body}</p>
+        <div>{body}</div>
         {recommendation}
         <ResponseTag>{response}</ResponseTag>
         <p>
           Helpful?
-          <button type="button" onClick={this.handleHelpfulClick.bind(this)}>Yes</button>
+          <button type="button" onClick={this.handleHelpfulClick}>Yes</button>
           ({helpful})
         </p>
       </TileDiv>

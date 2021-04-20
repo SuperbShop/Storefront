@@ -18,6 +18,7 @@ class ReviewsList extends React.Component {
       reviewsData: [],
       renderCreate: false,
       filterBy: 'none',
+      sortBy: 'relevance',
       sliceBy: 2,
     };
 
@@ -66,22 +67,65 @@ class ReviewsList extends React.Component {
     });
   }
 
+  handleDropdownSelect(e) {
+    if (e.target.value === 'helpful') {
+      console.log('change sortBy to helpful');
+      this.setState({
+        sortBy: 'helpful',
+      });
+    } else if (e.target.value === 'newest') {
+      console.log('change sortBy to newest');
+      this.setState({
+        sortBy: 'newest',
+      });
+    } else {
+      console.log('change sortBy to relevance');
+      this.setState({
+        sortBy: 'relevance',
+      });
+    }
+  }
+
   render() {
-    let slicedReviews = this.state.reviewsData.slice(0, this.state.sliceBy) || [];
+    let sortedReviews;
+    if (this.state.sortBy === 'newest') {
+      sortedReviews = this.state.reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (this.state.sortBy === 'helpful') {
+      sortedReviews = this.state.reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
+    } else {
+      sortedReviews = this.state.reviewsData.sort((a, b) => {
+        if (a.helpfulness === b.helpfulness) {
+          return new Date(b.date) - new Date(a.date);
+        }
+        return b.helpfulness - a.helpfulness;
+      });
+    }
+
+    const slicedReviews = sortedReviews.slice(0, this.state.sliceBy) || [];
     let moreReviewsButton;
     if (this.state.sliceBy < this.state.reviewsData.length) {
       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
     } else {
       moreReviewsButton = '';
     }
+
     const createReviewElement = this.state.renderCreate ? <CreateReview productId={this.props.productNum} /> : '';
+    const sortDropdown = (
+      <select onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
+        <option value="relevance">relevance</option>
+        <option value="newest">newest</option>
+        <option value="helpful">helpful</option>
+      </select>
+    );
 
     return (
       <div id="tiles">
         <p>
           {this.state.reviewsData.length}
           {' '}
-          reviews, sorted by relevance
+          reviews, sorted by
+          {' '}
+          {sortDropdown}
         </p>
         <TilesWrapper>
           {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}

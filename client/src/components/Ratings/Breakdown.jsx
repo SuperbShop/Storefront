@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
 import Distribution from './children/Distribution';
 import ProductFactors from './children/ProductFactors';
 
@@ -49,12 +51,16 @@ class Breakdown extends React.Component {
     // need to incorporate the star graphi
     return (
       <BreakdownSection>
-      <ScoreAndStarsContainer>
-        <OverallScoreh2>
-          {average}
-        </OverallScoreh2>
-        <h3>Stars placeholder</h3>
-      </ScoreAndStarsContainer>
+        <ScoreAndStarsContainer>
+          <OverallScoreh2>
+            {average}
+          </OverallScoreh2>
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+        </ScoreAndStarsContainer>
         <p>
           {percent}
           % of reviews recommend this product

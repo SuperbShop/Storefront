@@ -1,4 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const TileDiv = styled.div`
+  display: grid;
+  grid-template-areas:
+    'a . b'
+    'c c c'
+    'd d d'
+    'e . .'
+    'f f f'
+    'g . .';
+  background-color: orange;
+  margin: 5px;
+  padding: 5px;
+  `;
 
 class ReviewTile extends React.Component {
   constructor(props) {
@@ -9,11 +24,13 @@ class ReviewTile extends React.Component {
   }
 
   render() {
+    console.log(this.props);
     const recommendation = this.props.review.recommend ? 'I recommend this product' : '';
-    const response = this.props.review.response ? this.props.review.response : '';
+    const response = this.props.review.response ? 'Response: ' + this.props.review.response : '';
     return (
-      <div id="review-tile">
+      <TileDiv>
         <p>{this.props.review.rating} Stars</p>
+        <p>{this.props.review.reviewer_name}, {this.props.review.date}</p>
         <strong>{this.props.review.summary}</strong>
         <p>{recommendation}</p>
         <p>{this.props.review.body}</p>
@@ -24,7 +41,7 @@ class ReviewTile extends React.Component {
           ({this.props.review.helpfulness})
           <button type="button">No</button>
         </p>
-      </div>
+      </TileDiv>
     );
   }
 }

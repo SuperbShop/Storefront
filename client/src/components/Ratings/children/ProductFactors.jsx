@@ -1,22 +1,37 @@
 import React from 'react';
+import styled from 'styled-components';
 
-class ProductFactors extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // factors: [length, fit]
-    };
-  }
+const CharsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: yellow;
+  `;
 
-  render() {
-    return (
-      <div id="product-factors">
-        {/* {console.log('characteristics props', this.props.chars)} */}
-        <p>These are the product factors</p>
-        <p>This product has fit, comfort factors</p>
-      </div>
-    );
+const ProductFactors = (props) => {
+  let fitVal;
+  let comfortVal;
+  let lengthVal;
+  let qualityVal;
+
+  if (props.chars) {
+    var relevantChars = Object.keys(props.chars);
+    // maybe map through relevantChars and invoke a Slider component
+    // slider needs to reflect value and name of characteristic
+    // business reqs details the labels to these sliders
+
+    fitVal = 'Fit: ' + props.chars.Fit.value;
+    comfortVal = 'Comfort: ' + props.chars.Comfort.value;
+    lengthVal = 'Length: ' + props.chars.Length.value;
+    qualityVal = 'Quality: ' + props.chars.Quality.value;
   }
-}
+  return (
+    <CharsContainer>
+      <p>{fitVal}</p>
+      <p>{comfortVal}</p>
+      <p>{lengthVal}</p>
+      <p>{qualityVal}</p>
+    </CharsContainer>
+  );
+};
 
 export default ProductFactors;

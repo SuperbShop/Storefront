@@ -9,9 +9,14 @@ const BreakdownSection = styled.section`
   flex-direction: column;
   `;
 
-const OverallScore = styled.h2`
-  font-size: 50px;
+const OverallScoreh2 = styled.h2`
+  font-size: 50px;h2
   color: blue;
+  `;
+
+const ScoreAndStarsContainer = styled.div`
+  display: flex;
+  background-color: pink;
   `;
 
 class Breakdown extends React.Component {
@@ -24,7 +29,6 @@ class Breakdown extends React.Component {
   }
 
   render() {
-    console.log('props from breakdown', this.props);
     let reviewSum = 0;
     let reviewQuantity = 0;
     let percent = 0;
@@ -45,10 +49,12 @@ class Breakdown extends React.Component {
     // need to incorporate the star graphi
     return (
       <BreakdownSection>
-        <OverallScore>
+      <ScoreAndStarsContainer>
+        <OverallScoreh2>
           {average}
-        </OverallScore>
+        </OverallScoreh2>
         <h3>Stars placeholder</h3>
+      </ScoreAndStarsContainer>
         <p>
           {percent}
           % of reviews recommend this product

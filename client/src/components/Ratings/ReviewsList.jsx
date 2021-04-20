@@ -25,7 +25,6 @@ class ReviewsList extends React.Component {
         Authorization: config.API_KEY,
       },
       success: (data) => {
-        console.log('listdata', data.results);
         this.setState({
           list: data.results,
         });

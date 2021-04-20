@@ -65,6 +65,7 @@ class StyleSelector extends React.Component {
     super(props);
     this.state = {
       selectedStyle: null,
+      style_id: null,
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -74,6 +75,7 @@ class StyleSelector extends React.Component {
     handleStyleChange(id);
     this.setState({
       selectedStyle: name,
+      style_id: id,
     });
   }
 
@@ -84,9 +86,9 @@ class StyleSelector extends React.Component {
     const { styles } = this.props;
 
     const checkmark = {
-      position: "absolute",
-      right: "0",
-      color: "#fb3640"
+      position: 'absolute',
+      right: '0',
+      color: '#fb3640',
     };
 
     return (
@@ -101,9 +103,8 @@ class StyleSelector extends React.Component {
                 return (
                   <SelectedImageWrapper>
                     <SelectedImage
-                      key={index + 1}
+                      key={style.style_id}
                       src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
-                      onClick={() => this.handleClick(style.style_id, style.name)}
                     />
                     <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
                   </SelectedImageWrapper>
@@ -111,7 +112,7 @@ class StyleSelector extends React.Component {
               }
               return (
                 <Thumbnail
-                  key={index + 1}
+                  key={style.style_id}
                   src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
                   onClick={() => this.handleClick(style.style_id, style.name)}
                 />

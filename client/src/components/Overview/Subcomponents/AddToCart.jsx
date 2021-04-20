@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import SizeSelector from './SizeSelector';
-import QuantitySelector from './QuantitySelector';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import SizeSelector from './SizeSelector';
+import QuantitySelector from './QuantitySelector';
 
 const AddToCartWrapper = styled.div`
   padding-top: 10px;
@@ -25,16 +26,37 @@ const RightDiv = styled.div`
   float: right;
 `;
 
-const AddToBag = styled.button`
+const AddBtn = styled.button`
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
   color: #535353;
   padding: 15px;
-  width: 100%;
+  width: 75%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
+
+const LikeBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #535353;
+  padding: 15px;
+  width: 20%;
+  border: 1px solid #535353;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  &:hover {
+    background-color: red;
+    transition: 0.5s;
+  }
+`;
+
+const AddWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;
 
 class AddToCart extends React.Component {
@@ -56,7 +78,7 @@ class AddToCart extends React.Component {
   resetThenSet(quantity, size) {
     if (arguments.length === 1) {
       this.setState({
-        quantity
+        quantity,
       });
     } else {
       this.setState((prevState) => ({
@@ -86,7 +108,7 @@ class AddToCart extends React.Component {
       <AddToCartWrapper>
         <SelectorsWrapper>
           <LeftDiv>
-            <SizeSelector title={"SELECT SIZE"} skus={this.props.skus} resetThenSet={this.resetThenSet} />
+            <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
           </LeftDiv>
           <RightDiv>
             {!this.state.isSizeSelected
@@ -109,7 +131,14 @@ class AddToCart extends React.Component {
           )}
           </RightDiv>
         </SelectorsWrapper>
-        <AddToBag>Add To Bag <FontAwesomeIcon icon={faPlus} /></AddToBag>
+        <AddWrapper>
+          <AddBtn>
+            Add To Bag
+            <FontAwesomeIcon icon={faPlus} />
+          </AddBtn>
+          <LikeBtn><FontAwesomeIcon icon={farHeart} /></LikeBtn>
+        </AddWrapper>
+
 
       </AddToCartWrapper>
     );

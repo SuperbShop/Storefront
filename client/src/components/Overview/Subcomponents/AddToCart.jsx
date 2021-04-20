@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const AddToCartWrapper = styled.div`
   padding-top: 10px;
@@ -21,6 +23,18 @@ const LeftDiv = styled.div`
 const RightDiv = styled.div`
   width: 40%;
   float: right;
+`;
+
+const AddToBag = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #535353;
+  padding: 15px;
+  width: 100%;
+  border: 1px solid #535353;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
 class AddToCart extends React.Component {
@@ -95,7 +109,8 @@ class AddToCart extends React.Component {
           )}
           </RightDiv>
         </SelectorsWrapper>
-        <button>Add To Bag</button>
+        <AddToBag>Add To Bag <FontAwesomeIcon icon={faPlus} /></AddToBag>
+
       </AddToCartWrapper>
     );
   }

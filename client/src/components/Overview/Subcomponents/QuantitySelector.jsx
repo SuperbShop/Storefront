@@ -13,7 +13,7 @@ const DDHeader = styled.button`
   background-color: #fff;
   color: #535353;
   padding: 15px;
-  width: 50%;
+  width: 100%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
@@ -23,7 +23,7 @@ const DDTitle = styled.div`
 `;
 
 const DDList = styled.div`
-  width: 50%;
+  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 

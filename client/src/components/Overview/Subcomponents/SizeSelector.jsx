@@ -13,7 +13,7 @@ const DDHeader = styled.button`
   align-items: center;
   background-color: #fff;
   color: #535353;
-  padding: 10px;
+  padding: 15px;
   width: 100%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -24,6 +24,7 @@ const DDTitle = styled.div`
 `;
 
 const DDList = styled.div`
+  width: 100%;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 `;
 
@@ -68,6 +69,12 @@ class SizeSelector extends React.Component {
     this.setState((prevState) => ({
       isListOpen: !prevState.isListOpen,
     }));
+  }
+
+  checkInStock(item) {
+    if (item.quantity < 1) {
+      this.setState({ inStock: false});
+    }
   }
 
   render() {

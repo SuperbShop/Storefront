@@ -10,8 +10,17 @@ const AddToCartWrapper = styled.div`
 `;
 
 const SelectorsWrapper = styled.div`
-  padding-top: 10px;
   display: flex;
+  padding: 1rem 0;
+`;
+
+const LeftDiv = styled.div`
+  width: 60%;
+  float: left;
+`;
+const RightDiv = styled.div`
+  width: 40%;
+  float: right;
 `;
 
 class AddToCart extends React.Component {
@@ -24,15 +33,16 @@ class AddToCart extends React.Component {
       quantity: null,
       isSizeSelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+      isInStock: true,
     };
     this.resetThenSet = this.resetThenSet.bind(this);
-    this.sizeChangeChecker = this.sizeChangeChecker.bind(this);
+    this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
   }
 
   resetThenSet(quantity, size) {
     if (arguments.length === 1) {
       this.setState({
-        quantity,
+        quantity
       });
     } else {
       this.setState((prevState) => ({
@@ -41,15 +51,19 @@ class AddToCart extends React.Component {
         available: quantity,
         isSizeSelected: !prevState.isSizeSelected,
         headerQuantity: 1,
-      }), () => this.sizeChangeChecker());
+      }), () => this.sizeChangeHandler());
     }
   }
 
-  sizeChangeChecker() {
+  sizeChangeHandler() {
     if (this.state.prevSize !== this.state.size) {
       this.setState({ isSizeSelected: true });
     } else {
-      this.setState((prevState) => ({ isSizeSelected: true, headerQuantity: prevState.quantity }));
+      this.setState((prevState) => ({
+        isSizeSelected: true,
+        headerQuantity: 1,
+        quantity: prevState.quantity,
+      }));
     }
   }
 
@@ -57,8 +71,11 @@ class AddToCart extends React.Component {
     return (
       <AddToCartWrapper>
         <SelectorsWrapper>
-          <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
-          {!this.state.isSizeSelected
+          <LeftDiv>
+            <SizeSelector title={"SELECT SIZE"} skus={this.props.skus} resetThenSet={this.resetThenSet} />
+          </LeftDiv>
+          <RightDiv>
+            {!this.state.isSizeSelected
           && (
           <QuantitySelector
             title="-"
@@ -67,7 +84,7 @@ class AddToCart extends React.Component {
             resetThenSet={this.resetThenSet}
           />
           )}
-          {this.state.isSizeSelected
+            {this.state.isSizeSelected
           && (
           <QuantitySelector
             title={this.state.headerQuantity}
@@ -76,8 +93,9 @@ class AddToCart extends React.Component {
             resetThenSet={this.resetThenSet}
           />
           )}
+          </RightDiv>
         </SelectorsWrapper>
-        <button>Add To Cart</button>
+        <button>Add To Bag</button>
       </AddToCartWrapper>
     );
   }

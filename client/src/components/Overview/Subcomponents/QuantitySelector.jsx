@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-const DDWrapper = styled.span`
+const DDWrapper = styled.div`
 `;
 
 const DDHeader = styled.button`
@@ -12,7 +12,7 @@ const DDHeader = styled.button`
   align-items: center;
   background-color: #fff;
   color: #535353;
-  padding: 10px;
+  padding: 15px;
   width: 50%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;

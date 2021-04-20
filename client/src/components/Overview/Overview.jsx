@@ -106,7 +106,6 @@ class Overview extends React.Component {
     const {
       currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
     } = this.state;
-
     return (
       <Wrapper>
         <TopWrapper>

@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import $ from 'jquery';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../../config';
 
 const TileDiv = styled.div`
@@ -10,6 +12,10 @@ const TileDiv = styled.div`
   padding: 5px;
   min-height: 260px;
   max-height: 260px;
+  `;
+
+const ResponseTag = styled.p`
+  background-color: grey;
   `;
 
 class ReviewTile extends React.Component {
@@ -39,28 +45,34 @@ class ReviewTile extends React.Component {
   }
 
   render() {
-    const recommendation = this.props.review.recommend ? 'I recommend this product' : '';
-    const response = this.props.review.response ? `Response: ${this.props.review.response}` : '';
+    let recommendation;
+    if (this.props.review.recommend) {
+      recommendation = <p><FontAwesomeIcon icon={faCheck} /> I recommend this product</p>;
+    } else {
+      recommendation = '';
+    }
+    // const recommendation = this.props.review.recommend ? 'I recommend this product' : '';
+    const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
       <TileDiv>
-          <p>
-            {this.props.review.rating}
-            {' '}
+        <p>
+          {this.props.review.rating}
+          {' '}
           Stars
         </p>
-          <p>
-            {this.props.review.reviewer_name}
+        <p>
+          {this.props.review.reviewer_name}
           ,
           {' '}
-            {moment(this.props.review.date).format('LL')}
-          </p>
-          <h3>{this.props.review.summary}</h3>
-          <p>{this.props.review.body}</p>
-          <p>{recommendation}</p>
-          <p>{response}</p>
-          <p>
-            Helpful?
+          {moment(this.props.review.date).format('LL')}
+        </p>
+        <h3>{this.props.review.summary}</h3>
+        <p>{this.props.review.body}</p>
+        {recommendation}
+        <ResponseTag>{response}</ResponseTag>
+        <p>
+          Helpful?
           <button type="button" onClick={this.handleHelpfulClick.bind(this)}>Yes</button>
           ({helpful})
         </p>

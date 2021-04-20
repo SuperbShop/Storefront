@@ -20,6 +20,12 @@
   },
   "homepage": "https://github.com/ecomm-Labs/catwalk#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-brands-svg-icons": "^5.15.3",
+    "@fortawesome/free-regular-svg-icons": "^5.15.3",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "babel-loader": "^8.2.2",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",

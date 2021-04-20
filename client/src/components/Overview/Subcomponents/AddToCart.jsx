@@ -2,17 +2,56 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import SizeSelector from './SizeSelector';
+import QuantitySelector from './QuantitySelector';
 
 class AddToCart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      size: null,
+      prevSize: null,
+      available: null,
+      quantity: null,
+      isSizeSelected: false,
+      maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
     };
+    this.resetThenSet = this.resetThenSet.bind(this);
+    this.sizeChangeChecker = this.sizeChangeChecker.bind(this);
+  }
+
+  resetThenSet(quantity, size) {
+    if (arguments.length === 1) {
+      this.setState({
+        quantity,
+      });
+    } else {
+      this.setState((prevState) => ({
+        prevSize: prevState.size,
+        size,
+        quantity,
+        isSizeSelected: !prevState.isSizeSelected,
+        headerQuantity: 1,
+      }), () => this.sizeChangeChecker());
+    }
+  }
+
+  sizeChangeChecker() {
+    if (this.state.prevSize !== this.state.size) {
+      this.setState({ isSizeSelected: true });
+    } else {
+      this.setState((prevState) => ({ isSizeSelected: true, headerQuantity: prevState.quantity }));
+    }
   }
 
   render() {
-    return (<h1>Add to cart</h1>);
+    return (
+      <div>
+        <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
+        <QuantitySelector />
+        <button>Add To Cart</button>
+      </div>
+    );
   }
 }
 

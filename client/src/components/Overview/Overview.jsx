@@ -124,7 +124,7 @@ class Overview extends React.Component {
               styles={productStyles}
               handleStyleChange={this.handleStyleChange}
             />
-            <AddToCart />
+            <AddToCart skus={selectedStyle.skus} />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">

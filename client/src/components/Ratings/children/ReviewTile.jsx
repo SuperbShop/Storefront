@@ -4,6 +4,7 @@ import $ from 'jquery';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
 import config from '../../../../../config';
 
 const TileDiv = styled.div`
@@ -51,7 +52,6 @@ class ReviewTile extends React.Component {
     } else {
       recommendation = '';
     }
-    // const recommendation = this.props.review.recommend ? 'I recommend this product' : '';
     const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
@@ -60,6 +60,11 @@ class ReviewTile extends React.Component {
           {this.props.review.rating}
           {' '}
           Stars
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
+          <FontAwesomeIcon icon={faStar} />
         </p>
         <p>
           {this.props.review.reviewer_name}

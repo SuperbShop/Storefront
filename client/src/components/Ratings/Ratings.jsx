@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Breakdown from './Breakdown';
-import ReviewsList from './ReviewsList';
+import Breakdown from './children/Breakdown';
+import ReviewsList from './children/ReviewsList';
 import fetch from './fetchers.js';
 
 const ReviewsAndRatingsDiv = styled.section`

@@ -1,10 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
-import config from '../../../../config';
-import ReviewTile from './children/ReviewTile';
-import CreateReview from './children/CreateReview';
-import fetch from './fetchers.js';
+import config from '../../../../../config';
+import ReviewTile from './grandchildren/ReviewTile';
+import CreateReview from './grandchildren/CreateReview';
+import fetch from '../fetchers.js';
 
 const TilesWrapper = styled.div`
   max-height: 700px;

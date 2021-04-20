@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import Distribution from './children/Distribution';
-import ProductFactors from './children/ProductFactors';
+import Distribution from './grandchildren/Distribution';
+import ProductFactors from './grandchildren/ProductFactors';
 
 const BreakdownSection = styled.section`
   display: flex;
@@ -43,7 +43,7 @@ class Breakdown extends React.Component {
         reviewSum += ratingsArray[i] * this.props.meta.ratings[ratingsArray[i]];
         reviewQuantity += Number(this.props.meta.ratings[ratingsArray[i]]);
       }
-      average = reviewSum / reviewQuantity;
+      average = (reviewSum / reviewQuantity).toFixed(1);
       percent = 100 * (Number(this.props.meta.recommended.true) / reviewQuantity) || 0;
       ratingsDist = this.props.meta.ratings;
       productChars = this.props.meta.characteristics;

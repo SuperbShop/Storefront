@@ -5,7 +5,7 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import config from '../../../../../config';
+import config from '../../../../../../config';
 
 const TileDiv = styled.div`
   background-color: orange;

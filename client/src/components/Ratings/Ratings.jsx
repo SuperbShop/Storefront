@@ -32,6 +32,7 @@ class Ratings extends React.Component {
     this.state = {
       // reviewsMetaData: {},
       // reviewsData: {},
+      // filterBy: (for reviewList rendering) - need to pass this down to ReviewsList
     };
   }
 
@@ -43,21 +44,12 @@ class Ratings extends React.Component {
           reviewsMetaData: res,
         });
       })
-      .then(() => {
-        fetch.listGetter(product)
-          .then((res2) => {
-            this.setState({
-              reviewsData: res2,
-            });
-          });
-      })
       .catch((err) => console.error(err));
   }
 
   render() {
     const productNum = this.props.product;
     const reviewMetaInfo = this.state.reviewsMetaData;
-    const reviewListInfo = this.state.reviewsData;
     return (
       <section>
         <StyledTitle>
@@ -68,7 +60,7 @@ class Ratings extends React.Component {
             <Breakdown productNum={productNum} meta={reviewMetaInfo} />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList productNum={productNum} list={reviewListInfo} />
+            <ReviewsList productNum={productNum} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </section>

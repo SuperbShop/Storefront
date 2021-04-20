@@ -1,12 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import $ from 'jquery';
+import moment from 'moment';
 import config from '../../../../../config';
 
 const TileDiv = styled.div`
   background-color: orange;
   margin: 5px;
   padding: 5px;
+  min-height: 260px;
+  max-height: 260px;
   `;
 
 class ReviewTile extends React.Component {
@@ -41,23 +44,23 @@ class ReviewTile extends React.Component {
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
       <TileDiv>
-        <p>
-          {this.props.review.rating}
-          {' '}
+          <p>
+            {this.props.review.rating}
+            {' '}
           Stars
         </p>
-        <p>
-          {this.props.review.reviewer_name}
+          <p>
+            {this.props.review.reviewer_name}
           ,
           {' '}
-          {this.props.review.date}
-        </p>
-        <h3>{this.props.review.summary}</h3>
-        <p>{this.props.review.body}</p>
-        <p>{recommendation}</p>
-        <p>{response}</p>
-        <p>
-          Helpful?
+            {moment(this.props.review.date).format('LL')}
+          </p>
+          <h3>{this.props.review.summary}</h3>
+          <p>{this.props.review.body}</p>
+          <p>{recommendation}</p>
+          <p>{response}</p>
+          <p>
+            Helpful?
           <button type="button" onClick={this.handleHelpfulClick.bind(this)}>Yes</button>
           ({helpful})
         </p>

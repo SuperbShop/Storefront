@@ -7,7 +7,6 @@ import CreateReview from './children/CreateReview';
 import fetch from './fetchers.js';
 
 const TilesWrapper = styled.div`
-  background-color: lightblue;
   max-height: 700px;
   overflow-y: auto;
   `;

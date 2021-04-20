@@ -39,6 +39,8 @@ class ReviewsList extends React.Component {
   }
 
   fetchMoreReviews() {
+    // onclick from more reviews button
+    // change slice state - so that it allows for more videos to be shown
     console.log('fetchMoreReviews');
   }
 

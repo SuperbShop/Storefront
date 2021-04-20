@@ -15,7 +15,12 @@ class ReviewsList extends React.Component {
   }
 
   componentDidMount() {
-    // need to rework this request for pagination
+    // get rid of this request
+    // going to have a state - that starts at 2
+    // slice the array of results from 0, state (2)
+    // also need to write logic for checking for filters
+
+    // refactor this to make use of the props being passed rather than this GET
     // var url1 = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${this.props.productNum}`;
     const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23146';
     $.ajax({

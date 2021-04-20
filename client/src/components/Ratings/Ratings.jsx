@@ -12,7 +12,7 @@ const ReviewsAndRatingsDiv = styled.section`
   justify-content: space-evenly;
   `;
 
-  const BreakdownWrapper = styled.div`
+const BreakdownWrapper = styled.div`
   background-color: lightblue;
   width: 300px;
   `;
@@ -53,7 +53,6 @@ class Ratings extends React.Component {
       })
       .catch((err) => console.error(err));
   }
-  // pass props from above into Breakdown & ReviewsList
 
   render() {
     const productNum = this.props.product;

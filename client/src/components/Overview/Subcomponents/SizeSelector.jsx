@@ -3,15 +3,43 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
 
-const DDWrapper = styled.div``;
+const DDWrapper = styled.div`
+  padding-right: 10px;
+`;
 
-const DDHeader = styled.button``;
+const DDHeader = styled.button`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #535353;
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #535353;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
 
-const DDTitle = styled.div``;
+const DDTitle = styled.div`
+  font-weight: 500;
+`;
 
-const DDList = styled.div``;
+const DDList = styled.div`
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+`;
 
-const DDListItems = styled.button``;
+const DDListItems = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  color: #535353;
+  padding: 10px;
+  width: 100%;
+  border-style: none;
+  &:hover {
+    border: 1px solid #535353;
+  }
+`;
 
 class SizeSelector extends React.Component {
   constructor(props) {
@@ -22,19 +50,10 @@ class SizeSelector extends React.Component {
     };
     this.selectItem = this.selectItem.bind(this);
     this.toggleList = this.toggleList.bind(this);
-    this.closeMenu = this.closeMenu.bind(this);
-    this.openMenu = this.openMenu.bind(this);
   }
 
   componentDidMount() {
     const { isListOpen } = this.state;
-    setTimeout(() => {
-      if (isListOpen) {
-        window.addEventListener('click', this.closeMenu);
-      } else {
-        window.removeEventListener('click', this.closeMenu);
-      }
-    }, 0);
   }
 
   selectItem(item) {
@@ -51,18 +70,6 @@ class SizeSelector extends React.Component {
     }));
   }
 
-  closeMenu() {
-    this.setState({
-      isListOpen: false,
-    });
-  }
-
-  openMenu() {
-    this.setState({
-      isListOpen: true,
-    });
-  }
-
   render() {
     const { isListOpen, headerTitle } = this.state;
     const { skus } = this.props;
@@ -72,21 +79,22 @@ class SizeSelector extends React.Component {
         <DDHeader onClick={this.toggleList}>
           <DDTitle>{headerTitle}</DDTitle>
           {isListOpen
-            ? <FontAwesomeIcon icon={faAngleUp} size="2x" />
-            : <FontAwesomeIcon icon={faAngleDown} size="2x" />}
-          {isListOpen && (
-            <DDList role="list">
-              {Object.values(skus).map((item) => (
-                item.quantity > 0
+            ? <FontAwesomeIcon icon={faAngleUp} />
+            : <FontAwesomeIcon icon={faAngleDown} />}
+        </DDHeader>
+        {isListOpen && (
+        <DDList role="list">
+          {Object.values(skus).map((item) => (
+            item.quantity > 0
                 && (
                   <DDListItems type="button" key={item.size} onClick={() => this.selectItem(item)}>
                     {item.size}
                   </DDListItems>
                 )
-              ))}
-            </DDList>
-          )}
-        </DDHeader>
+          ))}
+        </DDList>
+        )}
+
       </DDWrapper>
     );
   }

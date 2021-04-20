@@ -5,6 +5,15 @@ import axios from 'axios';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
 
+const AddToCartWrapper = styled.div`
+  padding-top: 10px;
+`;
+
+const SelectorsWrapper = styled.div`
+  padding-top: 10px;
+  display: flex;
+`;
+
 class AddToCart extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +38,7 @@ class AddToCart extends React.Component {
       this.setState((prevState) => ({
         prevSize: prevState.size,
         size,
-        quantity,
+        available: quantity,
         isSizeSelected: !prevState.isSizeSelected,
         headerQuantity: 1,
       }), () => this.sizeChangeChecker());
@@ -46,11 +55,30 @@ class AddToCart extends React.Component {
 
   render() {
     return (
-      <div>
-        <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
-        <QuantitySelector />
+      <AddToCartWrapper>
+        <SelectorsWrapper>
+          <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
+          {!this.state.isSizeSelected
+          && (
+          <QuantitySelector
+            title="-"
+            quantity={this.state.maxQuantity}
+            available={this.state.available}
+            resetThenSet={this.resetThenSet}
+          />
+          )}
+          {this.state.isSizeSelected
+          && (
+          <QuantitySelector
+            title={this.state.headerQuantity}
+            quantity={this.state.maxQuantity}
+            available={this.state.available}
+            resetThenSet={this.resetThenSet}
+          />
+          )}
+        </SelectorsWrapper>
         <button>Add To Cart</button>
-      </div>
+      </AddToCartWrapper>
     );
   }
 }

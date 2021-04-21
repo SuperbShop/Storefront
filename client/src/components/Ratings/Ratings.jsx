@@ -14,7 +14,7 @@ const ReviewsAndRatingsDiv = styled.section`
 
 const BreakdownWrapper = styled.div`
   background-color: lightblue;
-  width: 300px;
+  width: 350px;
   `;
 
 const ListWrapper = styled.div`
@@ -32,8 +32,10 @@ class Ratings extends React.Component {
     this.state = {
       // reviewsMetaData: {},
       // reviewsData: {},
-      // filterBy: (for reviewList rendering) - need to pass this down to ReviewsList
+      filterBy: [],
     };
+
+    this.handleFilterBy = this.handleFilterBy.bind(this);
   }
 
   componentDidMount() {
@@ -47,6 +49,19 @@ class Ratings extends React.Component {
       .catch((err) => console.error(err));
   }
 
+  handleFilterBy(value) {
+    let newFilterState = this.state.filterBy.slice();
+    if (!newFilterState.includes(value)) {
+      newFilterState.push(value);
+    } else {
+      let index = newFilterState.indexOf(value);
+      newFilterState.splice(index, 1);
+    }
+    this.setState({
+      filterBy: newFilterState,
+    });
+  }
+
   render() {
     const productNum = this.props.product;
     const reviewMetaInfo = this.state.reviewsMetaData;
@@ -57,10 +72,10 @@ class Ratings extends React.Component {
         </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown productNum={productNum} meta={reviewMetaInfo} />
+            <Breakdown filterBy={this.handleFilterBy} productNum={productNum} meta={reviewMetaInfo} />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList productNum={productNum} />
+          <ReviewsList filterState={this.state.filterBy} productNum={productNum} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </section>

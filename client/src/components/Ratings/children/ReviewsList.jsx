@@ -17,7 +17,7 @@ class ReviewsList extends React.Component {
     this.state = {
       reviewsData: [],
       renderCreate: false,
-      filterBy: 'none',
+      filterBy: [],
       sortBy: 'relevance',
       sliceBy: 2,
     };
@@ -53,6 +53,23 @@ class ReviewsList extends React.Component {
       },
       error: (err) => console.log(err),
     });
+
+    // console.log('props from reviewslist');
+    // this.setState({
+    //   reviewsData: this.props.reviewsData,
+    // })
+
+    // let filterByArray = [];
+    // if (this.props.filterBy.length > 0) {
+    //   for (let i = 0; i < this.state.reviewsData.length; i++) {
+    //     if (this.props.filterBy.includes(this.state.reviewsData[i].rating)) {
+    //       filterByArray.push(this.state.reviewsData[i]);
+    //     }
+    //   }
+    //   this.setState({
+    //     reviewsData: filterByArray,
+    //   });
+    // }
   }
 
   showMoreReviews() {
@@ -69,17 +86,14 @@ class ReviewsList extends React.Component {
 
   handleDropdownSelect(e) {
     if (e.target.value === 'helpful') {
-      console.log('change sortBy to helpful');
       this.setState({
         sortBy: 'helpful',
       });
     } else if (e.target.value === 'newest') {
-      console.log('change sortBy to newest');
       this.setState({
         sortBy: 'newest',
       });
     } else {
-      console.log('change sortBy to relevance');
       this.setState({
         sortBy: 'relevance',
       });
@@ -87,6 +101,25 @@ class ReviewsList extends React.Component {
   }
 
   render() {
+    console.log('props from reviewslist', this.props);
+
+    // if this.props.filterBy length > 0
+    // iterate through reviewsData
+    // if rating exists in this.props.filterby
+    // push to new array
+    // set state of reviewsData equal to that new array
+    // let filterByArray = [];
+    // if (this.props.filterBy.length > 0) {
+    //   for (let i = 0; i < this.state.reviewsData.length; i++) {
+    //     if (this.props.filterBy.includes(this.state.reviewsData[i].rating)) {
+    //       filterByArray.push(this.state.reviewsData[i]);
+    //     }
+    //   }
+    //   this.setState({
+    //     reviewsData: filterByArray,
+    //   });
+    // }
+
     let sortedReviews;
     if (this.state.sortBy === 'newest') {
       sortedReviews = this.state.reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -100,8 +133,21 @@ class ReviewsList extends React.Component {
         return b.helpfulness - a.helpfulness;
       });
     }
+    console.log('sortedreviews', sortedReviews);
+    let sortedFilteredReviews = [];
+    if (sortedReviews.length > 0) {
+      for (let i = 0; i < sortedReviews.length; i++) {
+        if (this.props.filterState.includes(sortedReviews[i].rating.toString())) {
+          sortedFilteredReviews.push(sortedReviews[i]);
+        }
+      }
+    }
+    console.log('filteredsorted', sortedFilteredReviews);
+    if (sortedFilteredReviews.length === 0) {
+      sortedFilteredReviews = sortedReviews;
+    }
 
-    const slicedReviews = sortedReviews.slice(0, this.state.sliceBy) || [];
+    const slicedReviews = sortedFilteredReviews.slice(0, this.state.sliceBy) || [];
     let moreReviewsButton;
     if (this.state.sliceBy < this.state.reviewsData.length) {
       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;

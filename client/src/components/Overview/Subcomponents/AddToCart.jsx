@@ -89,10 +89,15 @@ class AddToCart extends React.Component {
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleClick() {
     this.setState({ liked: !this.state.liked });
+  }
+
+  handleSubmit() {
+    alert(`${this.props.productName} (${this.props.styleName})\nSize: ${this.state.size} - qty: ${this.state.quantity}`);
   }
 
   sizeChangeHandler() {
@@ -152,7 +157,7 @@ class AddToCart extends React.Component {
           </RightDiv>
         </SelectorsWrapper>
         <AddWrapper>
-          <AddBtn>
+          <AddBtn onClick={this.handleSubmit}>
             Add To Bag
             <FontAwesomeIcon icon={faPlus} />
           </AddBtn>

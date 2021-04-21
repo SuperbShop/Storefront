@@ -25,7 +25,6 @@ const CurrentStyle = styled.span`
 
 const ThumbWrapper = styled.div`
   padding-top: 1.5rem;
-
 `;
 const Thumbnail = styled.img`
   justify-content: space-between;

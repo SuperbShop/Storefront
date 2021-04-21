@@ -32,31 +32,42 @@ const Features = styled.ul`
 `;
 
 const Description = ({ currentProduct }) => (
-  <DescWrapper>
-    <LeftDiv>
-      <Slogan>{currentProduct.slogan}</Slogan>
-      <Body>{currentProduct.description}</Body>
-    </LeftDiv>
-    <RightDiv>
-      <Features>
-        {currentProduct.features
+  (currentProduct.slogan || currentProduct.description)
+    ? (
+      <DescWrapper>
+        <LeftDiv>
+          <Slogan>{currentProduct.slogan}</Slogan>
+          <Body>{currentProduct.description}</Body>
+        </LeftDiv>
+        <RightDiv>
+          <Features>
+            {currentProduct.features
         && currentProduct.features.map((item, index) => {
           if (item.value) {
             return (
               <li key={index += 1}>
-                <FontAwesomeIcon icon={faCheck} /> {item.feature}: {item.value}
+                <FontAwesomeIcon icon={faCheck} />
+                {' '}
+                {item.feature}
+                :
+                {' '}
+                {item.value}
               </li>
-            )
+            );
           }
           return (
             <li key={index += 1}>
-              <FontAwesomeIcon icon={faCheck} /> {item.feature}
+              <FontAwesomeIcon icon={faCheck} />
+              {' '}
+              {item.feature}
             </li>
-          )
-          })}
-      </Features>
-    </RightDiv>
+          );
+        })}
+          </Features>
+        </RightDiv>
 
-  </DescWrapper>
+      </DescWrapper>
+    ) : null
+
 );
 export default Description;

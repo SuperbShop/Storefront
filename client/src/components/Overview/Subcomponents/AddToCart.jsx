@@ -19,11 +19,11 @@ const SelectorsWrapper = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  width: 60%;
+  width: 70%;
   float: left;
 `;
 const RightDiv = styled.div`
-  width: 40%;
+  width: 30%;
   float: right;
 `;
 

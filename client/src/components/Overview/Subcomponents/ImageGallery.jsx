@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 
 const GalleryWrapper = styled.div`
-  padding-right: 3rem;
+  padding-right: 1.5rem;
 `;
 const ImageWrapper = styled.img`
   object-fit: cover;

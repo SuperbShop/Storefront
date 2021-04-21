@@ -25,12 +25,12 @@ const TopWrapper = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  width: 70%;
+  width: 65%;
   float: left;
 `;
 
 const RightDiv = styled.div`
-  width: 30%;
+  width: 35%;
   float: right;
 `;
 

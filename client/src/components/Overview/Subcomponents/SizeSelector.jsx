@@ -19,6 +19,12 @@ const DDHeader = styled.button`
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   font-weight: 500;
   font-size: 15px;
+  &:hover {
+    border: 1px solid #535353;
+    background-color: #000;
+    transition: 0.5s;
+    color: #fff;
+  }
 `;
 
 const DDTitle = styled.div`
@@ -41,6 +47,9 @@ const DDListItems = styled.button`
   border-style: none;
   &:hover {
     border: 1px solid #535353;
+    background-color: #000;
+    transition: 0.5s;
+    color: #fff;
   }
 `;
 

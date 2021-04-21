@@ -28,18 +28,24 @@ const RightDiv = styled.div`
 `;
 
 const AddBtn = styled.button`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #fff;
-  color: #535353;
-  padding: 15px;
-  width: 75%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #fff;
+color: #535353;
+padding: 15px;
+width: 75%;
+border: 1px solid #535353;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+font-weight: 500;
+font-size: 15px;
+text-transform: uppercase;
+&:hover {
   border: 1px solid #535353;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  text-transform: uppercase;
-  font-weight: 500;
-  font-size: 15px;
+  background-color: #000;
+  transition: 0.5s;
+  color: #fff;
+}
 `;
 
 const LikeBtn = styled.button`
@@ -52,6 +58,13 @@ const LikeBtn = styled.button`
   width: 20%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+  &:hover {
+    border: 1px solid #535353;
+    background-color: #000;
+    transition: 0.5s;
+    color: #fff;
+  }
 `;
 
 const AddWrapper = styled.div`
@@ -145,7 +158,7 @@ class AddToCart extends React.Component {
           </AddBtn>
 
           {this.state.liked
-            ? <LikeBtn onClick={this.handleClick}><FontAwesomeIcon icon={faHeart} /></LikeBtn>
+            ? <LikeBtn onClick={this.handleClick}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
             : <LikeBtn onClick={this.handleClick}><FontAwesomeIcon icon={farHeart} /></LikeBtn>}
         </AddWrapper>
 

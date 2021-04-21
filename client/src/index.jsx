@@ -10,7 +10,7 @@ class App extends React.Component {
     super();
     this.state = {
       product: '23145',
-      productId: 23147,
+      productId: 23145,
     };
   }
 

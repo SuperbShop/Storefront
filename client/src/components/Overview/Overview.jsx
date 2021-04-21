@@ -104,13 +104,13 @@ class Overview extends React.Component {
 
   render() {
     const {
-      currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
+      currentProduct, productStyles, selectedStyle, productRatings,
     } = this.state;
     return (
       <Wrapper>
         <TopWrapper>
           <LeftDiv>
-            <ImageGallery photos={stylePhotos} selectedStyle={selectedStyle} />
+            <ImageGallery selectedStyle={selectedStyle} />
           </LeftDiv>
           <RightDiv>
             <ProductInfo

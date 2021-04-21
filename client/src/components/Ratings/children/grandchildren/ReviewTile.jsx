@@ -43,7 +43,6 @@ const StyleDiv = styled.div`
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   `;
 
-
 class ReviewTile extends React.Component {
   constructor(props) {
     super(props);
@@ -98,9 +97,9 @@ class ReviewTile extends React.Component {
     } else {
       recommendation = '';
     }
-    ///////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////
     // NEED TO REWORK THIS FOR SHOW MORE BUTTON ///////////
-    ///////////////////////////////////////////////////////
+    /// ////////////////////////////////////////////////////
     // let body;
     // if (this.props.review.photos.length > 0) {
     //   body = (
@@ -125,7 +124,7 @@ class ReviewTile extends React.Component {
     if (this.props.review.photos.length > 0) {
       body = (
         <div>
-          {this.props.review.photos.map(photo => {
+          {this.props.review.photos.map((photo) => {
             if (this.state.modalPhoto === photo.url) {
               return (
                 <Modal>
@@ -148,7 +147,7 @@ class ReviewTile extends React.Component {
             );
           })}
           <div>
-          {this.props.review.body}
+            {this.props.review.body}
           </div>
         </div>
       );
@@ -160,8 +159,8 @@ class ReviewTile extends React.Component {
     // if you click a photo
     // body + photos + modal around one photo
 
-    //////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////
+    /// ///////////////////////////////////////////////////
     const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
@@ -189,7 +188,9 @@ class ReviewTile extends React.Component {
         <p>
           Helpful?
           <button type="button" onClick={this.handleHelpfulClick}>Yes</button>
-          ({helpful})
+          (
+          {helpful}
+          )
         </p>
       </TileDiv>
     );

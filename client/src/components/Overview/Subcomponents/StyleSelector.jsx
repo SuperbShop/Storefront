@@ -98,26 +98,30 @@ class StyleSelector extends React.Component {
         <CurrentStyle>{name}</CurrentStyle>
         <ThumbWrapper>
           {
-            styles.map((style, index) => {
-              if (style_id === style.style_id) {
-                return (
-                  <SelectedImageWrapper>
-                    <SelectedImage
+            styles.map((style, index) => (
+              <React.Fragment key={index}>
+                {
+                (style.style_id === style_id)
+                  ? (
+                    <SelectedImageWrapper>
+                      <SelectedImage
+                        key={style.style_id}
+                        src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      />
+                      <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
+                    </SelectedImageWrapper>
+                  )
+                  : (
+                    <Thumbnail
                       key={style.style_id}
                       src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      onClick={() => this.handleClick(style.style_id, style.name)}
                     />
-                    <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
-                  </SelectedImageWrapper>
-                );
+                  )
               }
-              return (
-                <Thumbnail
-                  key={style.style_id}
-                  src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
-                  onClick={() => this.handleClick(style.style_id, style.name)}
-                />
-              );
-            })
+
+              </React.Fragment>
+            ))
           }
         </ThumbWrapper>
 

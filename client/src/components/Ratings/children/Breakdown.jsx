@@ -13,12 +13,10 @@ const BreakdownSection = styled.section`
 
 const OverallScoreh2 = styled.h2`
   font-size: 50px;
-  color: blue;
   `;
 
 const ScoreAndStarsContainer = styled.div`
   display: flex;
-  background-color: pink;
   `;
 
 class Breakdown extends React.Component {

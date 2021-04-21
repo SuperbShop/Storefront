@@ -8,11 +8,11 @@ import { faStar } from '@fortawesome/free-regular-svg-icons';
 import config from '../../../../../../config';
 
 const TileDiv = styled.div`
-  background-color: orange;
-  margin: 5px;
   padding: 5px;
-  min-height: 260px;
-  max-height: 260px;
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
+  min-height: 280px;
+  max-height: 280px;
   `;
 
 const ResponseTag = styled.p`
@@ -21,6 +21,7 @@ const ResponseTag = styled.p`
 
 const ThumbnailImage = styled.img`
   height: 40px;
+  margin: 5px;
   `;
 
 class ReviewTile extends React.Component {

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const CharsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: yellow;
+  border: 1px solid grey;
   `;
 
 const ProductFactors = (props) => {

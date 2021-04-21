@@ -7,23 +7,19 @@ import fetch from './fetchers.js';
 
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
-  background-color: lightgrey;
   display: flex;
   justify-content: space-evenly;
   `;
 
 const BreakdownWrapper = styled.div`
-  background-color: lightblue;
   width: 350px;
   `;
 
 const ListWrapper = styled.div`
-  background-color: lightgreen;
   width: 800px;
   `;
 
 const StyledTitle = styled.h2`
-  color: red;
   `;
 
 class Ratings extends React.Component {

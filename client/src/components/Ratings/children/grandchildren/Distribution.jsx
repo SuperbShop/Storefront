@@ -8,7 +8,6 @@ const FlexboxDiv = styled.div`
   `;
 
 const ButtonContainer = styled.div`
-  background-color: red;
   flex-direction: column;
   width: 70px;
   text-align: center;
@@ -16,19 +15,18 @@ const ButtonContainer = styled.div`
   line-height: 1.9;
   `;
 const TableContainer = styled.div`
-  background-color: #CBC3E3;
   width: 100%;
   color: white;
-  font-size: 50px;
+  border: 1px solid grey;
   `;
 
 const QuantityContainer = styled.div`
-  background-color: pink;
-  color: white;
+  border: 1px solid grey;
   width: 25px;
   `;
 
 const StyledButton = styled.button`
+  background-color: white;
   height: 1.5em;
   width: 52px;
   border: none;
@@ -54,11 +52,11 @@ class Distribution extends React.Component {
   handleRatingFilterClick(event) {
     this.props.filterBy(event.target.id);
 
-    let newLocalFilters = this.state.localFilters.slice();
+    const newLocalFilters = this.state.localFilters.slice();
     if (!newLocalFilters.includes(event.target.id)) {
       newLocalFilters.push(event.target.id);
     } else {
-      let index = newLocalFilters.indexOf(event.target.id);
+      const index = newLocalFilters.indexOf(event.target.id);
       newLocalFilters.splice(index, 1);
     }
     this.setState({
@@ -69,20 +67,20 @@ class Distribution extends React.Component {
   // NEED TO FIGURE OUT HOW TO DO THIS - NEEDS TO CLEAR FILTERS LOCALLY AND ON RATINGSJSX
   handleClearFiltersClick() {
     console.log('clear filters');
-    this.state.localFilters.forEach(value => this.props.filterBy(value));
+    // this.state.localFilters.forEach((value) => this.props.filterBy(value));
   }
 
   render() {
     let filterStatus;
     if (this.state.localFilters.length > 0) {
       let filtersString = 'Reviews filtered by: ';
-      this.state.localFilters.forEach(num => filtersString += num + ', ');
+      this.state.localFilters.forEach((num) => filtersString += `${num}, `);
 
       filterStatus = (
-      <StyledSpan>
-        {filtersString}
-        <button onClick={this.handleClearFiltersClick} id="ClearFilters">Clear</button>
-      </StyledSpan>
+        <StyledSpan>
+          {filtersString}
+          <button onClick={this.handleClearFiltersClick} id="ClearFilters">Clear</button>
+        </StyledSpan>
       );
     } else {
       filterStatus = '';
@@ -91,11 +89,11 @@ class Distribution extends React.Component {
       <div>
         <FlexboxDiv>
           <ButtonContainer>
-          <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5">5 stars</StyledButton>
-          <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="4">4 stars</StyledButton>
-          <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="3">3 stars</StyledButton>
-          <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="2">2 stars</StyledButton>
-          <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5">5 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="4">4 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="3">3 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="2">2 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 stars</StyledButton>
           </ButtonContainer>
           <TableContainer>Table Container</TableContainer>
           <QuantityContainer>#</QuantityContainer>

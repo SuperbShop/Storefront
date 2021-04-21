@@ -22,8 +22,6 @@ class ImageGallery extends React.Component {
 
   render() {
     const { selectedStyle } = this.props;
-    // console.log(photos);
-    console.log(selectedStyle.photos);
     return (
       <GalleryWrapper>
         <Carousel>

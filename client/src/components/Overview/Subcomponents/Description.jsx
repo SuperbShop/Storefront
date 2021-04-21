@@ -45,7 +45,7 @@ const Description = ({ currentProduct }) => (
         && currentProduct.features.map((item, index) => {
           if (item.value) {
             return (
-              <li key={index += 1}>
+              <li key={index}>
                 <FontAwesomeIcon icon={faCheck} />
                 {' '}
                 {item.feature}
@@ -56,7 +56,7 @@ const Description = ({ currentProduct }) => (
             );
           }
           return (
-            <li key={index += 1}>
+            <li key={index}>
               <FontAwesomeIcon icon={faCheck} />
               {' '}
               {item.feature}

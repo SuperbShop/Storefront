@@ -16,7 +16,7 @@ const TileDiv = styled.div`
   `;
 
 const ResponseTag = styled.p`
-  background-color: grey;
+  background-color: lightgrey;
   `;
 
 const ThumbnailImage = styled.img`

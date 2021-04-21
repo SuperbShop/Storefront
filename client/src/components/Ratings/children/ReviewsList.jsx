@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import config from '../../../../../config';
 import ReviewTile from './grandchildren/ReviewTile';
 import CreateReview from './grandchildren/CreateReview';
-import fetch from '../fetchers.js';
+// import fetch from '../fetchers.js';
 
 const TilesWrapper = styled.div`
   max-height: 700px;
@@ -53,23 +53,6 @@ class ReviewsList extends React.Component {
       },
       error: (err) => console.log(err),
     });
-
-    // console.log('props from reviewslist');
-    // this.setState({
-    //   reviewsData: this.props.reviewsData,
-    // })
-
-    // let filterByArray = [];
-    // if (this.props.filterBy.length > 0) {
-    //   for (let i = 0; i < this.state.reviewsData.length; i++) {
-    //     if (this.props.filterBy.includes(this.state.reviewsData[i].rating)) {
-    //       filterByArray.push(this.state.reviewsData[i]);
-    //     }
-    //   }
-    //   this.setState({
-    //     reviewsData: filterByArray,
-    //   });
-    // }
   }
 
   showMoreReviews() {

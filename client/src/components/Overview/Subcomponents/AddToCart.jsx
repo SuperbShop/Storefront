@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
 
@@ -36,6 +37,9 @@ const AddBtn = styled.button`
   width: 75%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 15px;
 `;
 
 const LikeBtn = styled.button`
@@ -48,10 +52,6 @@ const LikeBtn = styled.button`
   width: 20%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  &:hover {
-    background-color: red;
-    transition: 0.5s;
-  }
 `;
 
 const AddWrapper = styled.div`
@@ -70,9 +70,28 @@ class AddToCart extends React.Component {
       isSizeSelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       isInStock: true,
+      liked: false,
+      selectedSKU: null,
     };
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    this.setState({ liked: !this.state.liked });
+  }
+
+  sizeChangeHandler() {
+    if (this.state.prevSize !== this.state.size) {
+      this.setState({ isSizeSelected: true });
+    } else {
+      this.setState((prevState) => ({
+        isSizeSelected: true,
+        headerQuantity: 1,
+        quantity: prevState.quantity,
+      }));
+    }
   }
 
   resetThenSet(quantity, size) {
@@ -88,18 +107,6 @@ class AddToCart extends React.Component {
         isSizeSelected: !prevState.isSizeSelected,
         headerQuantity: 1,
       }), () => this.sizeChangeHandler());
-    }
-  }
-
-  sizeChangeHandler() {
-    if (this.state.prevSize !== this.state.size) {
-      this.setState({ isSizeSelected: true });
-    } else {
-      this.setState((prevState) => ({
-        isSizeSelected: true,
-        headerQuantity: 1,
-        quantity: prevState.quantity,
-      }));
     }
   }
 
@@ -136,9 +143,11 @@ class AddToCart extends React.Component {
             Add To Bag
             <FontAwesomeIcon icon={faPlus} />
           </AddBtn>
-          <LikeBtn><FontAwesomeIcon icon={farHeart} /></LikeBtn>
-        </AddWrapper>
 
+          {this.state.liked
+            ? <LikeBtn onClick={this.handleClick}><FontAwesomeIcon icon={faHeart} /></LikeBtn>
+            : <LikeBtn onClick={this.handleClick}><FontAwesomeIcon icon={farHeart} /></LikeBtn>}
+        </AddWrapper>
 
       </AddToCartWrapper>
     );

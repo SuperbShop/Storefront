@@ -17,6 +17,8 @@ const DDHeader = styled.button`
   width: 100%;
   border: 1px solid #535353;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-weight: 500;
+  font-size: 15px;
 `;
 
 const DDTitle = styled.div`

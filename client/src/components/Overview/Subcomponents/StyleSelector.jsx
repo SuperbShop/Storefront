@@ -57,7 +57,7 @@ const SelectedImage = styled.img`
   margin: 5px;
   object-fit: cover;
   opacity: 1;
-  border: 2px solid #fb3640;
+  border: 2px solid #e63946;
 `;
 
 class StyleSelector extends React.Component {
@@ -88,7 +88,7 @@ class StyleSelector extends React.Component {
     const checkmark = {
       position: 'absolute',
       right: '0',
-      color: '#fb3640',
+      color: '#e63946',
     };
 
     return (

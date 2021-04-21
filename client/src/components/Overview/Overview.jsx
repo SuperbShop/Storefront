@@ -110,7 +110,7 @@ class Overview extends React.Component {
       <Wrapper>
         <TopWrapper>
           <LeftDiv>
-            <ImageGallery photos={stylePhotos} />
+            <ImageGallery photos={stylePhotos} selectedStyle={selectedStyle} />
           </LeftDiv>
           <RightDiv>
             <ProductInfo

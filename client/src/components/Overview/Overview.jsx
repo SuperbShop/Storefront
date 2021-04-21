@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
-import config from '../../../../config';
+import config from '/config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';
 import StyleSelector from './Subcomponents/StyleSelector';
-// import AddToCart from './AddToCart';
+import AddToCart from './Subcomponents/AddToCart';
 
 axios.defaults.headers.common.Authorization = config.TOKEN; // authorization for all requests
 
@@ -44,10 +44,18 @@ class Overview extends React.Component {
       productRatings: [],
       stylePhotos: [],
     };
+    this.handleStyleChange = this.handleStyleChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchProduct();
+  }
+
+  handleStyleChange(id) {
+    const { productStyles } = this.state;
+    this.setState({
+      selectedStyle: productStyles.find((style) => style.style_id === id),
+    });
   }
 
   fetchProduct() {
@@ -110,22 +118,22 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               productRatings={productRatings}
             />
-            <StyleSelector selectedStyle={selectedStyle} styles={productStyles} />
+            <StyleSelector
+              selectedStyle={selectedStyle}
+              styles={productStyles}
+              handleStyleChange={this.handleStyleChange}
+            />
+            <AddToCart
+              skus={selectedStyle.skus}
+              productName={currentProduct.name}
+              styleName={selectedStyle.name}
+            />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">
           <div className="Description">
             <Description currentProduct={currentProduct} />
           </div>
-          {/* <div className="StyleSelector">
-            StyleSelector
-            <StyleSelector />
-          </div>
-          <div className="AddToCart">
-            AddToCart
-            <AddToCart />
-          </div> */}
-
         </div>
       </Wrapper>
     );

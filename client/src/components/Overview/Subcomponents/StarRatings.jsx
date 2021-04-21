@@ -35,12 +35,13 @@ class StarRatings extends React.Component {
       <StarWrapper>
         <ReactStars
           size={15}
+          edit={false}
           isHalf
           value={avgRating}
           emptyIcon={<FontAwesomeIcon icon={farStar} />}
           filledIcon={<FontAwesomeIcon icon={faStar} />}
           halfIcon={<FontAwesomeIcon icon={faStarHalfAlt} />}
-          activeColor="#fce38a"
+          // activeColor="#fce38a"
         />
         <ReviewWrapper>
           <a href="#Reviews">Read {totalCount} reviews</a>

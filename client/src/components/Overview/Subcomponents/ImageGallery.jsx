@@ -11,24 +11,27 @@ const ImageWrapper = styled.img`
   height: 80vh;
 `;
 
-const ImageGallery = ({ photos }) => {
-  const [photoUrl, setPhotoUrl] = useState('');
-  const [currentPhoto, setCurrentPhoto] = useState();
-  const [index, setIndex] = useState(0);
+class ImageGallery extends React.Component {
+  constructor(props) {
+    super(props);
+    const { photos } = props;
+    this.state = {
+      currentPhoto: photos[0]
+    };
+  }
 
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
-
-  return (
-    <GalleryWrapper>
-      <Carousel>
-        {photos.map((photo, index) => (
-          <Carousel.Item key={index += 1}><ImageWrapper src={photo.url} alt="product" /></Carousel.Item>
-        ))}
-      </Carousel>
-    </GalleryWrapper>
-  );
-};
+  render() {
+    const { photos, currentPhoto } = this.props;
+    return (
+      <GalleryWrapper>
+        <Carousel>
+          {photos.map((photo, index) => (
+            <Carousel.Item key={index += 1}><ImageWrapper src={photo.url || 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081'} alt="product" /></Carousel.Item>
+          ))}
+        </Carousel>
+      </GalleryWrapper>
+    );
+  }
+}
 
 export default ImageGallery;

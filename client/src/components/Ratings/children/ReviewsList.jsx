@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import config from '../../../../../config';
 import ReviewTile from './grandchildren/ReviewTile';
 import CreateReview from './grandchildren/CreateReview';
+import Modal from './grandchildren/Modal';
 // import fetch from '../fetchers.js';
 
 const TilesWrapper = styled.div`
@@ -117,7 +118,6 @@ class ReviewsList extends React.Component {
       moreReviewsButton = '';
     }
 
-    const createReviewElement = this.state.renderCreate ? <CreateReview productId={this.props.productNum} /> : '';
     const sortDropdown = (
       <select onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
         <option value="relevance">relevance</option>
@@ -125,6 +125,11 @@ class ReviewsList extends React.Component {
         <option value="helpful">helpful</option>
       </select>
     );
+    const createReviewElement = this.state.renderCreate ? (
+    <Modal>
+      <CreateReview productId={this.props.productNum} />
+    </Modal> )
+       : '';
 
     return (
       <div id="tiles">

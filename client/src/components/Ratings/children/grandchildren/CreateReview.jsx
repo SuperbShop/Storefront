@@ -1,4 +1,19 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const CenteredDiv = styled.div`
+  position: absolute;
+  background-color: lightgrey;
+  left: 0;
+  right: 0;
+  top: 30%;
+  bottom: 0;
+  margin: auto;
+  width: 90%;
+  height: 70%;
+  text-align:center;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  `;
 
 class CreateReview extends React.Component {
   constructor(props) {
@@ -14,7 +29,7 @@ class CreateReview extends React.Component {
 
   render() {
     return (
-      <div>
+      <CenteredDiv>
         <form id="create-new-review" method="post">
           <strong>
             Create A Review for
@@ -67,7 +82,7 @@ class CreateReview extends React.Component {
 
           <button type="submit">Submit</button>
         </form>
-      </div>
+        </CenteredDiv>
     );
   }
 }

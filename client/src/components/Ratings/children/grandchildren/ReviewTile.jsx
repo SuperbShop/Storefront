@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import config from '../../../../../../config';
+import Modal from './Modal';
 
 const TileDiv = styled.div`
   padding: 5px;
@@ -24,11 +25,31 @@ const ThumbnailImage = styled.img`
   margin: 5px;
   `;
 
+const FullsizeImage = styled.img`
+  height: 85%;
+  `;
+
+const StyleDiv = styled.div`
+  position: absolute;
+  background-color: lightgrey;
+  left: 0;
+  right: 0;
+  top: 30%;
+  bottom: 0;
+  margin: auto;
+  width: 90%;
+  height: 70%;
+  text-align:center;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  `;
+
+
 class ReviewTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showMore: false,
+      modalPhoto: 'none',
     };
     this.logImageUrl = this.logImageUrl.bind(this);
     this.handleHelpfulClick = this.handleHelpfulClick.bind(this);
@@ -53,6 +74,15 @@ class ReviewTile extends React.Component {
 
   logImageUrl(event) {
     console.log('id of image clicked:', event.target.src);
+    if (this.state.modalPhoto !== event.target.src) {
+      this.setState({
+        modalPhoto: event.target.src,
+      });
+    } else {
+      this.setState({
+        modalPhoto: 'none',
+      });
+    }
   }
 
   render() {
@@ -71,21 +101,65 @@ class ReviewTile extends React.Component {
     ///////////////////////////////////////////////////////
     // NEED TO REWORK THIS FOR SHOW MORE BUTTON ///////////
     ///////////////////////////////////////////////////////
-    let body;
+    // let body;
+    // if (this.props.review.photos.length > 0) {
+    //   body = (
+    //     <div>
+    //       <div>
+    //         {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.logImageUrl} key={photo.id} src={photo.url} />)}
+    //       </div>
+    //       <div>
+    //         {this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}
+    //       </div>
+    //     </div>
+    //   );
+    // } else {
+    //   body = <p>{this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}</p>;
+    // }
+
+    let body = (
+      <div>
+        {this.props.review.body}
+      </div>
+    );
     if (this.props.review.photos.length > 0) {
       body = (
         <div>
+          {this.props.review.photos.map(photo => {
+            if (this.state.modalPhoto === photo.url) {
+              return (
+                <Modal>
+                  <StyleDiv>
+                    <FullsizeImage
+                      key={photo.id}
+                      src={photo.url}
+                      onClick={this.logImageUrl}
+                    />
+                  </StyleDiv>
+                </Modal>
+              );
+            }
+            return (
+              <ThumbnailImage
+                key={photo.id}
+                src={photo.url}
+                onClick={this.logImageUrl}
+              />
+            );
+          })}
           <div>
-            {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.logImageUrl} key={photo.id} src={photo.url} />)}
-          </div>
-          <div>
-            {this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}
+          {this.props.review.body}
           </div>
         </div>
       );
-    } else {
-      body = <p>{this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}</p>;
     }
+
+    // body
+    // if there are photos
+    // body + photos
+    // if you click a photo
+    // body + photos + modal around one photo
+
     //////////////////////////////////////////////////////
     //////////////////////////////////////////////////////
     const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
@@ -109,7 +183,7 @@ class ReviewTile extends React.Component {
           {moment(this.props.review.date).format('LL')}
         </p>
         <h3>{this.props.review.summary}</h3>
-        <div>{body}</div>
+        {body}
         {recommendation}
         <ResponseTag>{response}</ResponseTag>
         <p>

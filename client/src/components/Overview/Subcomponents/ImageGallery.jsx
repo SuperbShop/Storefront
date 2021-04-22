@@ -62,19 +62,18 @@ const Wrapper = styled.div`
 //   }
 // }
 
-const ImageGallery = ({photos}) => {
+const ImageGallery = ({ photos, selectedStyle }) => {
   const [current, setCurrent] = useState(0);
-  const length = photos.length;
 
   const nextSlide = () => {
-    setCurrent(current === length - 1 ? 0 : current + 1);
+    setCurrent(current === selectedStyle.photos.length - 1 ? 0 : current + 1);
   };
 
   const prevSlide = () => {
-    setCurrent(current === 0 ? length - 1 : current - 1);
+    setCurrent(current === 0 ? selectedStyle.photos.length - 1 : current - 1);
   };
 
-  if (!Array.isArray(photos) || photos.length === 0) {
+  if (!Array.isArray(selectedStyle.photos) || selectedStyle.photos.length === 0) {
     return null;
   }
 
@@ -82,12 +81,11 @@ const ImageGallery = ({photos}) => {
     <section className="slider">
       <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
       <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />
-      {photos.map((photo, index) => {
-        return (
-          <div className={index === current ? 'slide active' : 'slide'} key={index}>
-            {index === current && (<Image src={photo.url} alt="product" />) }
-
-          </div>)})}
+      {selectedStyle.photos.map((photo, index) => (
+        <div className={index === current ? 'slide active' : 'slide'} key={index}>
+          {index === current && (<Image src={photo.url} alt="product" />) }
+        </div>
+      ))}
     </section>
   );
 };

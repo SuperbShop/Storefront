@@ -12,6 +12,16 @@ const TilesWrapper = styled.div`
   overflow-y: auto;
   `;
 
+const PageBlockerModalDiv = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.8;
+  background-color: rgba(128,128,128,0.5);
+  `;
+
 class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
@@ -126,9 +136,12 @@ class ReviewsList extends React.Component {
       </select>
     );
     const createReviewElement = this.state.renderCreate ? (
-    <Modal>
-      <CreateReview toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
-    </Modal> )
+      <PageBlockerModalDiv>
+        <Modal>
+          <CreateReview toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
+        </Modal>
+      </PageBlockerModalDiv>
+    )
        : '';
 
     return (

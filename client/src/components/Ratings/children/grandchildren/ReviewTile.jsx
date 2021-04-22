@@ -40,7 +40,18 @@ const ImageModalDiv = styled.div`
   width: 90%;
   height: 70%;
   text-align:center;
+  z-index: 2;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  `;
+
+const PageBlockerModalDiv = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.6;
+  background-color: rgba(128,128,128,0.5);
   `;
 
 class ReviewTile extends React.Component {
@@ -127,15 +138,17 @@ class ReviewTile extends React.Component {
           {this.props.review.photos.map((photo) => {
             if (this.state.modalPhoto === photo.url) {
               return (
-                <Modal>
-                  <ImageModalDiv>
-                    <FullsizeImage
-                      key={photo.id}
-                      src={photo.url}
-                      onClick={this.handleImageClick}
-                    />
-                  </ImageModalDiv>
-                </Modal>
+                <PageBlockerModalDiv>
+                  <Modal>
+                      <ImageModalDiv>
+                        <FullsizeImage
+                          key={photo.id}
+                          src={photo.url}
+                          onClick={this.handleImageClick}
+                        />
+                      </ImageModalDiv>
+                  </Modal>
+                </PageBlockerModalDiv>
               );
             }
             return (

@@ -23,7 +23,7 @@ class ReviewsList extends React.Component {
       sliceBy: 2,
     };
 
-    this.openCreateReviewModal = this.openCreateReviewModal.bind(this);
+    this.toggleCreateReviewModal = this.toggleCreateReviewModal.bind(this);
     this.showMoreReviews = this.showMoreReviews.bind(this);
   }
 
@@ -62,7 +62,7 @@ class ReviewsList extends React.Component {
     });
   }
 
-  openCreateReviewModal() {
+  toggleCreateReviewModal() {
     this.setState({
       renderCreate: !this.state.renderCreate,
     });
@@ -127,7 +127,7 @@ class ReviewsList extends React.Component {
     );
     const createReviewElement = this.state.renderCreate ? (
     <Modal>
-      <CreateReview productId={this.props.productNum} />
+      <CreateReview toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
     </Modal> )
        : '';
 
@@ -144,7 +144,7 @@ class ReviewsList extends React.Component {
           {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
         </TilesWrapper>
         {moreReviewsButton}
-        <button type="button" onClick={this.openCreateReviewModal}>ADD A REVIEW</button>
+        <button type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</button>
         {createReviewElement}
       </div>
     );

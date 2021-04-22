@@ -12,7 +12,7 @@ const BreakdownSection = styled.section`
   `;
 
 const OverallScoreh2 = styled.h2`
-  font-size: 50px;
+  font-size: 60px;
   margin-left: 5%;
   `;
 
@@ -22,6 +22,14 @@ const PercentLine = styled.p`
 
 const ScoreAndStarsContainer = styled.div`
   display: flex;
+  border: 1px solid green;
+  `;
+
+const StarsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+  margin-left: 3%;
   `;
 
 class Breakdown extends React.Component {
@@ -58,11 +66,13 @@ class Breakdown extends React.Component {
           <OverallScoreh2>
             {average}
           </OverallScoreh2>
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
+          <StarsContainer>
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+          </StarsContainer>
         </ScoreAndStarsContainer>
         <PercentLine>
           {percent}

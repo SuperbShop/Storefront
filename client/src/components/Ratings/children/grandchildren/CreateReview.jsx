@@ -14,6 +14,11 @@ const CenteredDiv = styled.div`
   text-align:center;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   `;
+const ExitButtonWrapper = styled.div`
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  `;
 
 class CreateReview extends React.Component {
   constructor(props) {
@@ -21,14 +26,22 @@ class CreateReview extends React.Component {
     this.state = {
       // product idk
     };
+    this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
   }
 
   handleFormSubmission() {
     // post to API - need the url meaning we need the item ID passed down through props
   }
 
+  handleExitButtonClick() {
+    this.props.toggleCreateReviewModal();
+    console.log('it happened');
+  }
+
   render() {
+    console.log('fromcreate', this.props);
     return (
+      <React.Fragment>
       <CenteredDiv>
         <form id="create-new-review" method="post">
           <strong>
@@ -82,7 +95,11 @@ class CreateReview extends React.Component {
 
           <button type="submit">Submit</button>
         </form>
+          <ExitButtonWrapper>
+            <button id="exitbutton" onClick={this.handleExitButtonClick}>X</button>
+          </ExitButtonWrapper>
         </CenteredDiv>
+        </React.Fragment>
     );
   }
 }

@@ -29,7 +29,7 @@ const FullsizeImage = styled.img`
   height: 85%;
   `;
 
-const StyleDiv = styled.div`
+const ImageModalDiv = styled.div`
   position: absolute;
   background-color: lightgrey;
   left: 0;
@@ -50,7 +50,7 @@ class ReviewTile extends React.Component {
       showMore: false,
       modalPhoto: 'none',
     };
-    this.logImageUrl = this.logImageUrl.bind(this);
+    this.handleImageClick = this.handleImageClick.bind(this);
     this.handleHelpfulClick = this.handleHelpfulClick.bind(this);
   }
 
@@ -71,7 +71,7 @@ class ReviewTile extends React.Component {
     });
   }
 
-  logImageUrl(event) {
+  handleImageClick(event) {
     console.log('id of image clicked:', event.target.src);
     if (this.state.modalPhoto !== event.target.src) {
       this.setState({
@@ -105,7 +105,7 @@ class ReviewTile extends React.Component {
     //   body = (
     //     <div>
     //       <div>
-    //         {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.logImageUrl} key={photo.id} src={photo.url} />)}
+    //         {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.handleImageClick} key={photo.id} src={photo.url} />)}
     //       </div>
     //       <div>
     //         {this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}
@@ -128,13 +128,13 @@ class ReviewTile extends React.Component {
             if (this.state.modalPhoto === photo.url) {
               return (
                 <Modal>
-                  <StyleDiv>
+                  <ImageModalDiv>
                     <FullsizeImage
                       key={photo.id}
                       src={photo.url}
-                      onClick={this.logImageUrl}
+                      onClick={this.handleImageClick}
                     />
-                  </StyleDiv>
+                  </ImageModalDiv>
                 </Modal>
               );
             }
@@ -142,7 +142,7 @@ class ReviewTile extends React.Component {
               <ThumbnailImage
                 key={photo.id}
                 src={photo.url}
-                onClick={this.logImageUrl}
+                onClick={this.handleImageClick}
               />
             );
           })}

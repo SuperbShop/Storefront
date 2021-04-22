@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import $ from 'jquery';
 
 const CenteredDiv = styled.div`
   position: absolute;
@@ -14,6 +15,9 @@ const CenteredDiv = styled.div`
   text-align:center;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   border: 2px solid green;
+  `;
+
+const EachInputWrapper = styled.div`
   `;
 
 const ExitButtonWrapper = styled.div`
@@ -31,7 +35,11 @@ const FormChildrenContainer = styled.div`
   line-height: 1.7em;
   `;
 
-const EachInputWrapper = styled.div`
+const CharWorstBestWrapper = styled.div`
+  display: flex;
+  border: 1px solid red;
+  justify-content: space-between;
+  font-size: 12px;
   `;
 
 const ModalTitleWrapper = styled.div`
@@ -43,17 +51,27 @@ const CharsRadioWrapper = styled.div`
   flex-direction: column;
   `;
 
-const radioRowWrapper = styled.div`
+const RadioRowWrapper = styled.div`
   display: flex;
+  justify-content: space-between;
   `;
 
 class CreateReview extends React.Component {
   constructor(props) {
     super(props);
+    this.charsObject = {
+      "Size": ["A size too small", "1/2 a size too small", "Perfect", "1/2 a size too big", "A size too wide"],
+      "Width": ["Too narrow", "Slightly narrow", "Perfect", "Slightly wide", "Too wide"],
+      "Comfort": ["Uncomfortable", "Slighty uncomfortable", "Ok", "Comfortable", "Perfect"],
+      "Quality": ["Poor", "Below average", "What I expected", "Pretty great", "Perfect"],
+      "Length": ["Runs short", "Runs slightly short", "Perfect", "Runs slightly long", "Runs long"],
+      "Fit": ["Runs tight", "Runs slightly tight", "Perfect", "Runs slightly long", "Runs long"],
+    };
     this.state = {
       // product idk
     };
     this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
+    this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
   }
 
   handleFormSubmission() {
@@ -64,21 +82,51 @@ class CreateReview extends React.Component {
     this.props.toggleCreateReviewModal();
   }
 
-  renderCharsRadioButtons(name, lowest, highest) {
-    return (
-      <>
-        {name}
-        <radioRowWrapper>
-        <input type="radio" required="required" name="RecommendOption" value={lowest} />
-        <input type="radio" required="required" name="RecommendOption" value="Yes" />
-        <input type="radio" required="required" name="RecommendOption" value="Yes" />
-        <input type="radio" required="required" name="RecommendOption" value="Yes" />
-        <input type="radio" required="required" name="RecommendOption" value={highest} />
-        </radioRowWrapper>
-      </>
-    )
+  handleCharRadioClick(event) {
+    console.log('name', event.target.name);
+    console.log('value', event.target.value);
+    console.log('chars', this.charsObject[event.target.name][event.target.value - 1]);
+    $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
   }
 
+  renderCharsRadioButtons(name) {
+    return (
+      <>
+        <div id={`choice${name}`}>{name}: None selected</div>
+        <RadioRowWrapper>
+        <input type="radio" onClick={this.handleCharRadioClick} className={`Class-${this.props.productId}`} required="required" name={`${name}`} value="1" />
+        <input type="radio" onClick={this.handleCharRadioClick} className={`Class-${this.props.productId}`} required="required" name={`${name}`} value="2" />
+        <input type="radio" onClick={this.handleCharRadioClick} className={`Class-${this.props.productId}`} required="required" name={`${name}`} value="3" />
+        <input type="radio" onClick={this.handleCharRadioClick} className={`Class-${this.props.productId}`} required="required" name={`${name}`} value="4" />
+        <input type="radio" onClick={this.handleCharRadioClick} className={`Class-${this.props.productId}`} required="required" name={`${name}`} value="5" />
+        </RadioRowWrapper>
+        <CharWorstBestWrapper>
+          <div>
+            {this.charsObject[name][0]}
+          </div>
+          <div>
+            {this.charsObject[name][4]}
+          </div>
+        </CharWorstBestWrapper>
+      </>
+    );
+  }
+
+  // {propsArray.map((prop) => {
+  //   let descriptions = [];
+  //   if (prop === 'Size') {
+  //     descriptions = ['A size too small', 'A size too wide'];
+  //   } else if (prop === 'Width') {
+  //     descriptions = ['Too narrow', 'Too wide'];
+  //   } else if (prop === 'Comfort') {
+  //     descriptions = ['Uncomfortable', 'Perfect'];
+  //   } else if (prop === 'Quality') {
+  //     descriptions = ['Poor', 'Perfect'];
+  //   } else if (prop === 'Length') {
+  //     descriptions = ['Runs short', 'Runs long'];
+  //   } else {
+  //     descriptions = ['Runs tight', 'Runs long'];
+  //   }
   render() {
     console.log('fromcreate', this.props);
 

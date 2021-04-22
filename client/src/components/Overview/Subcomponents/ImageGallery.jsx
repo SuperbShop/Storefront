@@ -18,14 +18,11 @@ const Image = styled.img`
 `;
 
 const Thumbnail = styled.img`
-  justify-content: space-between;
-  align-items: center;
-  border-radius: 50%;
-  height: 60px;
-  width: 60px;
-  margin: 5px;
+  height: 65px;
+  width: 65px;
   object-fit: cover;
-  opacity: 0.5;
+  border: 2px solid #fff;
+  margin: 10px;
 `;
 
 const ImageGallery = ({ photos, selectedStyle }) => {
@@ -44,15 +41,23 @@ const ImageGallery = ({ photos, selectedStyle }) => {
   }
 
   return (
-    <section className="slider">
-      <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-      <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />
-      {selectedStyle.photos.map((photo, index) => (
-        <div className={index === current ? 'slide active' : 'slide'} key={index}>
-          {index === current && (<Image src={photo.url} alt="product" />) }
-        </div>
-      ))}
-    </section>
+    <div>
+      <section className="thumb-slider">
+        {selectedStyle.photos.map((photo, index) => (
+          <Thumbnail src={photo.thumbnail_url} alt="product" />
+        ))}
+      </section>
+      <section className="slider">
+        <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
+        <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />
+        {selectedStyle.photos.map((photo, index) => (
+          <div className={index === current ? 'slide active' : 'slide'} key={index}>
+            {index === current && (<Image src={photo.url} alt="product" />) }
+          </div>
+        ))}
+      </section>
+
+    </div>
   );
 };
 

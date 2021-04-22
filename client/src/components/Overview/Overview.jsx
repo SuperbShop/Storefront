@@ -111,7 +111,7 @@ class Overview extends React.Component {
 
       <Wrapper>
         <TopWrapper>
-          <LeftDiv>{photos ? <ImageGallery selectedStyle={selectedStyle} photos={photos} /> : null }
+          <LeftDiv>{photos ? <ImageGallery photos={photos} /> : null }
           </LeftDiv>
           <RightDiv>
             <ProductInfo

@@ -4,7 +4,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const ImageGallery = ({ selectedStyle, photos }) => {
+const ImageGallery = ({  photos }) => {
   const [current, setCurrent] = useState(0);
   const [thumbnail, setThumbnail] = useState(0);
   // const [index, setIndex] = useState(0);
@@ -12,7 +12,7 @@ const ImageGallery = ({ selectedStyle, photos }) => {
   // const [thumbnails, setThumbnails] = useState([]);
 
   const nextSlide = () => {
-    if (current !== selectedStyle.photos.length - 1) {
+    if (current !== photos.length - 1) {
       setCurrent(current + 1);
       setThumbnail(thumbnail + 1);
     }
@@ -49,14 +49,14 @@ const ImageGallery = ({ selectedStyle, photos }) => {
     alert('expandedView');
   };
 
-  if (!Array.isArray(selectedStyle.photos) || selectedStyle.photos.length === 0) {
+  if (!Array.isArray(photos) || photos.length === 0) {
     return null;
   }
 
   return (
     <div>
       <section className="thumb-slider">
-        {selectedStyle.photos.map((photo, index) => (
+        {photos.map((photo, index) => (
           <img
             className={index === current ? 'thumbnail active' : 'thumbnail'}
             key={index}
@@ -70,8 +70,8 @@ const ImageGallery = ({ selectedStyle, photos }) => {
         {
       current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
 }
-        {current === selectedStyle.photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
-        {selectedStyle.photos.map((photo, index) => (
+        {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+        {photos.map((photo, index) => (
           <div className={index === current ? 'slide active' : 'slide'} key={index} onClick={expandedView}>
             {index === current && (<img className="image" src={photo.url} alt="product" />) }
           </div>

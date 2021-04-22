@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import Distribution from './grandchildren/Distribution';
 import ProductFactors from './grandchildren/ProductFactors';
 
@@ -31,6 +32,13 @@ const StarsContainer = styled.div`
   margin-left: 3%;
   `;
 
+const StarsOuter = styled.div`
+  display: inline-block;
+  position: relative;
+  overflow-x: hidden;
+  width: 100%;
+  `;
+
 class Breakdown extends React.Component {
   constructor(props) {
     super(props);
@@ -57,7 +65,16 @@ class Breakdown extends React.Component {
       percent = (100 * (Number(this.props.meta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
       ratingsDist = this.props.meta.ratings;
       productChars = this.props.meta.characteristics;
+      var averagePercentage = average / 5;
     }
+    const StarsInner = styled.div`
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: ${averagePercentage * 100}%;
+      `;
     // need to incorporate the star graphi
     return (
       <BreakdownSection>
@@ -65,12 +82,21 @@ class Breakdown extends React.Component {
           <OverallScoreh2>
             {average}
           </OverallScoreh2>
-          <StarsContainer>
+           <StarsContainer>
+            <StarsOuter>
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
+            <StarsInner>
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            </StarsInner>
+            </StarsOuter>
           </StarsContainer>
         </ScoreAndStarsContainer>
         <PercentLine>

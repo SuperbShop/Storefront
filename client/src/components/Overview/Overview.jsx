@@ -106,11 +106,12 @@ class Overview extends React.Component {
     const {
       currentProduct, productStyles, selectedStyle, productRatings, stylePhotos,
     } = this.state;
+    const { photos } = selectedStyle;
     return (
+
       <Wrapper>
         <TopWrapper>
-          <LeftDiv>
-            <ImageGallery selectedStyle={selectedStyle} photos={stylePhotos} />
+          <LeftDiv>{photos ? <ImageGallery selectedStyle={selectedStyle} photos={photos} /> : null }
           </LeftDiv>
           <RightDiv>
             <ProductInfo

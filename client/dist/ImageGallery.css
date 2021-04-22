@@ -4,13 +4,21 @@
   display: flex;
   justify-content: center;
 }
+
+.image {
+  object-fit: cover;
+  width: 100%;
+  height: 80vh;
+  cursor: zoom-in;
+  padding-right: 10px;
+}
 .thumb-slider {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
-  z-index: 9;
+  z-index: 10;
 }
 
 .right-arrow {
@@ -58,3 +66,17 @@
 .hidden {
   visibility: hidden;
 }
+
+.thumbnail {
+  height: 65px;
+  width: 65px;
+  object-fit: cover;
+  border: 2px solid #000;
+  margin: 10px;
+  opacity: 1;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.thumbnail.active {
+  border: 3px solid #f44336;
+};

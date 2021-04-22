@@ -1,43 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
-const GalleryWrapper = styled.div`
-  padding-right: 1.5rem;
-`;
-const Image = styled.img`
-  object-fit: cover;
-  width: 100%;
-  height: 80vh;
-  cursor: -moz-zoom-in;
-  cursor: -webkit-zoom-in;
-  cursor: zoom-in;
-  padding-right: 10px;
-`;
-
-const Thumbnail = styled.img`
-  height: 65px;
-  width: 65px;
-  object-fit: cover;
-  border: 2px solid #fff;
-  margin: 10px;
-`;
-
-const ImageGallery = ({ photos, selectedStyle }) => {
+const ImageGallery = ({ selectedStyle, photos }) => {
   const [current, setCurrent] = useState(0);
   const [thumbnail, setThumbnail] = useState(0);
+  const [index, setIndex] = useState(0);
+  const [images, setImages] = useState([]);
+  const [thumbnails, setThumbnails] = useState([]);
+
   const nextSlide = () => {
     if (current !== selectedStyle.photos.length - 1) {
       setCurrent(current + 1);
+      setThumbnail(thumbnail + 1);
     }
+  };
+
+  const getImages = () => {
+    const arr = [];
+    for (let i = 0; i < photos.length; i++) {
+      arr.push(photos[i].url);
+    }
+    setImages(arr);
+  };
+
+  const handleClick = (index) => {
+    console.log(index.target.value);
   };
 
   const prevSlide = () => {
     if (current !== 0) {
       setCurrent(current - 1);
+      setThumbnail(thumbnail - 1);
     }
+  };
+
+  useEffect(() => {
+    getImages();
+  }, [photos]);
+
+  const expandedView = () => {
+    alert('expandedView');
   };
 
   if (!Array.isArray(selectedStyle.photos) || selectedStyle.photos.length === 0) {
@@ -48,17 +53,22 @@ const ImageGallery = ({ photos, selectedStyle }) => {
     <div>
       <section className="thumb-slider">
         {selectedStyle.photos.map((photo, index) => (
-          <Thumbnail key={index} src={photo.thumbnail_url} alt="product" />
+          <img
+            className={index === current ? 'thumbnail active' : 'thumbnail'}
+            key={index}
+            src={photo.thumbnail_url}
+            alt="product"
+          />
         ))}
       </section>
       <section className="slider">
         {
-        current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
+      current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
 }
         {current === selectedStyle.photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
         {selectedStyle.photos.map((photo, index) => (
-          <div className={index === current ? 'slide active' : 'slide'} key={index}>
-            {index === current && (<Image src={photo.url} alt="product" />) }
+          <div className={index === current ? 'slide active' : 'slide'} key={index} onClick={expandedView}>
+            {index === current && (<img className="image" src={photo.url} alt="product" />) }
           </div>
         ))}
       </section>

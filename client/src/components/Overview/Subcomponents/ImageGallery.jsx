@@ -27,13 +27,17 @@ const Thumbnail = styled.img`
 
 const ImageGallery = ({ photos, selectedStyle }) => {
   const [current, setCurrent] = useState(0);
-
+  const [thumbnail, setThumbnail] = useState(0);
   const nextSlide = () => {
-    setCurrent(current === selectedStyle.photos.length - 1 ? 0 : current + 1);
+    if (current !== selectedStyle.photos.length - 1) {
+      setCurrent(current + 1);
+    }
   };
 
   const prevSlide = () => {
-    setCurrent(current === 0 ? selectedStyle.photos.length - 1 : current - 1);
+    if (current !== 0) {
+      setCurrent(current - 1);
+    }
   };
 
   if (!Array.isArray(selectedStyle.photos) || selectedStyle.photos.length === 0) {
@@ -44,12 +48,14 @@ const ImageGallery = ({ photos, selectedStyle }) => {
     <div>
       <section className="thumb-slider">
         {selectedStyle.photos.map((photo, index) => (
-          <Thumbnail src={photo.thumbnail_url} alt="product" />
+          <Thumbnail key={index} src={photo.thumbnail_url} alt="product" />
         ))}
       </section>
       <section className="slider">
-        <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-        <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />
+        {
+        current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
+}
+        {current === selectedStyle.photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
         {selectedStyle.photos.map((photo, index) => (
           <div className={index === current ? 'slide active' : 'slide'} key={index}>
             {index === current && (<Image src={photo.url} alt="product" />) }

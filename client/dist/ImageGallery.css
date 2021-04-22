@@ -54,3 +54,7 @@
   opacity: 1;
   transition-duration: 1.5s;
 }
+
+.hidden {
+  visibility: hidden;
+}

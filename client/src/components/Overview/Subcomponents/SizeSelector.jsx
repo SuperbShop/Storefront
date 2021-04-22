@@ -56,9 +56,10 @@ const DDListItems = styled.button`
 class SizeSelector extends React.Component {
   constructor(props) {
     super(props);
+    const { title } = this.props;
     this.state = {
       isListOpen: false,
-      headerTitle: this.props.title,
+      headerTitle: title,
     };
     this.selectItem = this.selectItem.bind(this);
     this.toggleList = this.toggleList.bind(this);

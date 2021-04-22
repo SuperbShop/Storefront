@@ -45,28 +45,27 @@ const Description = ({ currentProduct }) => (
         </LeftDiv>
         <RightDiv>
           <Features>
-            {currentProduct.features
-        && currentProduct.features.map((item, index) => {
-          if (item.value) {
-            return (
-              <li key={index}>
-                <FontAwesomeIcon icon={faCheck} />
-                {' '}
-                {item.feature}
-                :
-                {' '}
-                {item.value}
-              </li>
-            );
-          }
-          return (
-            <li key={index}>
-              <FontAwesomeIcon icon={faCheck} />
-              {' '}
-              {item.feature}
-            </li>
-          );
-        })}
+            {currentProduct.features.map((item, index) => {
+              if (item.value) {
+                return (
+                  <li key={index}>
+                    <FontAwesomeIcon icon={faCheck} />
+                    {' '}
+                    {item.feature}
+                    :
+                    {' '}
+                    {item.value}
+                  </li>
+                );
+              }
+              return (
+                <li key={index}>
+                  <FontAwesomeIcon icon={faCheck} />
+                  {' '}
+                  {item.feature}
+                </li>
+              );
+            })}
           </Features>
         </RightDiv>
 

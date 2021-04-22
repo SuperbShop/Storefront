@@ -7,9 +7,9 @@ import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 const ImageGallery = ({ selectedStyle, photos }) => {
   const [current, setCurrent] = useState(0);
   const [thumbnail, setThumbnail] = useState(0);
-  const [index, setIndex] = useState(0);
-  const [images, setImages] = useState([]);
-  const [thumbnails, setThumbnails] = useState([]);
+  // const [index, setIndex] = useState(0);
+  // const [images, setImages] = useState([]);
+  // const [thumbnails, setThumbnails] = useState([]);
 
   const nextSlide = () => {
     if (current !== selectedStyle.photos.length - 1) {
@@ -18,16 +18,20 @@ const ImageGallery = ({ selectedStyle, photos }) => {
     }
   };
 
-  const getImages = () => {
-    const arr = [];
-    for (let i = 0; i < photos.length; i++) {
-      arr.push(photos[i].url);
-    }
-    setImages(arr);
-  };
+  // const getImages = () => {
+  //   const imagesArr = [];
+  //   const thumbsArr = [];
+  //   for (let i = 0; i < photos.length; i++) {
+  //     imagesArr.push(photos[i].url);
+  //     thumbsArr.push(photos[i].thumbnail_url);
+  //   }
+  //   setImages(imagesArr);
+  //   setThumbnails(thumbsArr);
+  // };
 
   const handleClick = (index) => {
-    console.log(index.target.value);
+    setCurrent(index);
+    setThumbnail(index);
   };
 
   const prevSlide = () => {
@@ -37,9 +41,9 @@ const ImageGallery = ({ selectedStyle, photos }) => {
     }
   };
 
-  useEffect(() => {
-    getImages();
-  }, [photos]);
+  // useEffect(() => {
+  //   getImages();
+  // }, [photos]);
 
   const expandedView = () => {
     alert('expandedView');
@@ -58,6 +62,7 @@ const ImageGallery = ({ selectedStyle, photos }) => {
             key={index}
             src={photo.thumbnail_url}
             alt="product"
+            onClick={() => handleClick(index)}
           />
         ))}
       </section>

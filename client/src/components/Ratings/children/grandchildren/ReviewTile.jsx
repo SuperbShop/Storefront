@@ -63,6 +63,7 @@ class ReviewTile extends React.Component {
     };
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleHelpfulClick = this.handleHelpfulClick.bind(this);
+    this.handleReportClick = this.handleReportClick.bind(this);
   }
 
   handleHelpfulClick(event) {
@@ -80,6 +81,20 @@ class ReviewTile extends React.Component {
       },
       error: (err) => console.error(err),
     });
+  }
+
+  handleReportClick(event) {
+    event.target.disabled = true;
+    $.ajax({
+      method: 'PUT',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${this.props.review.review_id}/report`,
+      headers: {
+        Authorization: config.API_KEY,
+      },
+      success: (res) => console.log(res),
+      error: (err) => console.error(err),
+    });
+
   }
 
   handleImageClick(event) {
@@ -198,13 +213,14 @@ class ReviewTile extends React.Component {
         {body}
         {recommendation}
         <ResponseTag>{response}</ResponseTag>
-        <p>
+        <div>
           Helpful?
           <button type="button" onClick={this.handleHelpfulClick}>Yes</button>
           (
           {helpful}
           )
-        </p>
+          <button type="button" onClick={this.handleReportClick}>Report</button>
+        </div>
       </TileDiv>
     );
   }

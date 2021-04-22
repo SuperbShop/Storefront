@@ -72,7 +72,6 @@ const ProductFactors = (props) => {
             <DescWrapper key={`${prop}${props.productNum}${Math.random()}`} >
               <Descriptions key={`${prop}${props.productNum}${Math.random()}`} >{descriptions[0]}</Descriptions>
               <Descriptions key={`${prop}${props.productNum}${Math.random()}`} >{descriptions[1]}</Descriptions>
-              <Descriptions key={`${prop}${props.productNum}`} >{descriptions[1]}</Descriptions>
             </DescWrapper>
           </CharsContainer>
         );

@@ -28,40 +28,6 @@ const Thumbnail = styled.img`
   opacity: 0.5;
 `;
 
-const Wrapper = styled.div`
-  display: flex;
-`;
-
-// class ImageGallery extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = {
-//       currentImageIndex: 0,
-//       currentImage: null,
-//     };
-//   }
-
-//   render() {
-//     const { selectedStyle } = this.props;
-//     return (
-//       <GalleryWrapper>
-//         <Carousel fade>
-//           {selectedStyle.photos && selectedStyle.photos.map((photo, index) => (
-//             <Carousel.Item key={index}>
-//               <Image src={photo.url || 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081'} alt="product" />
-//             </Carousel.Item>
-//           ))}
-//         </Carousel>
-//         <Wrapper>
-//           {selectedStyle.photos && selectedStyle.photos.map((photo, index) => (
-//             <Thumbnail key={index} src={photo.thumbnail_url || 'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png?format=jpg&quality=90&v=1530129081'} alt="product" />
-//           ))}
-//         </Wrapper>
-//       </GalleryWrapper>
-//     );
-//   }
-// }
-
 const ImageGallery = ({ photos, selectedStyle }) => {
   const [current, setCurrent] = useState(0);
 

@@ -18,6 +18,9 @@ const LeftDiv = styled.div`
 const RightDiv = styled.div`
   width: 30%;
   float: right;
+  justify-content: left;
+  align-items: center;
+  display: flex;
 `;
 
 const Slogan = styled.h3`
@@ -27,6 +30,7 @@ const Body = styled.p`
   color: #929292;
 `;
 const Features = styled.ul`
+
   list-style-type: none;
   line-height: 200%;
 `;

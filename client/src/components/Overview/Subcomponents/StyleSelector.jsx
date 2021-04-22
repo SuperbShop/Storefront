@@ -42,6 +42,7 @@ const Thumbnail = styled.img`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transform: scale(1.5);
     transition: transform 0.5s;
+    cursor: pointer;
   }
 `;
 const SelectedImageWrapper = styled.span`

@@ -13,6 +13,11 @@ const BreakdownSection = styled.section`
 
 const OverallScoreh2 = styled.h2`
   font-size: 50px;
+  margin-left: 5%;
+  `;
+
+const PercentLine = styled.p`
+  margin-left: 5%;
   `;
 
 const ScoreAndStarsContainer = styled.div`
@@ -59,10 +64,10 @@ class Breakdown extends React.Component {
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
         </ScoreAndStarsContainer>
-        <p>
+        <PercentLine>
           {percent}
           % of reviews recommend this product
-        </p>
+        </PercentLine>
         <section>
           <Distribution filterBy={this.props.filterBy} dist={ratingsDist} />
           <ProductFactors chars={productChars} />

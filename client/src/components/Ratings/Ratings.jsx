@@ -12,11 +12,13 @@ const ReviewsAndRatingsDiv = styled.section`
   `;
 
 const BreakdownWrapper = styled.div`
+  border: 1px solid red;
   width: 350px;
   `;
 
 const ListWrapper = styled.div`
   width: 800px;
+  border: 1px solid blue;
   `;
 
 const StyledTitle = styled.h2`

@@ -3,24 +3,28 @@ import styled from 'styled-components';
 import $ from 'jquery';
 
 const FlexboxDiv = styled.div`
+  border: 1px solid orange;
   display: flex;
   flex-direction: column;
   `;
 
 const ButtonContainer = styled.div`
+  border: 1px solid green;
   display: flex;
   flex-direction: row;
-  text-align: center;
   align-items: center;
+  justify-content: flex-start;
   width: 100%;
   height: 30px;
   `;
 
 const QuantityContainer = styled.div`
-margin-left: 25px;
+  cursor: pointer;
+  margin-left: 12%;
   `;
 
 const StyledButton = styled.button`
+  cursor: pointer;
   background-color: white;
   width: 25%;
   text-decoration: underline;
@@ -29,6 +33,7 @@ const StyledButton = styled.button`
   `;
 
 const BackdropDiv = styled.div`
+  cursor: pointer;
   background-color: lightgrey;
   position: relative;
   height: 0.5em;
@@ -36,6 +41,7 @@ const BackdropDiv = styled.div`
   `;
 
 const StyledSpan = styled.span`
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   `;
@@ -88,20 +94,24 @@ class Distribution extends React.Component {
       filterStatus = '';
     }
 
-    let graphData = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
-    let percentGraphData = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+    const graphData = {
+      1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
+    };
+    const percentGraphData = {
+      1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
+    };
 
     let mostCommonReview = 0;
     let allScores = [];
     if (this.props.dist !== undefined) {
       allScores = Object.keys(this.props.dist);
-      allScores.forEach(score => {
+      allScores.forEach((score) => {
         graphData[score] = Number(this.props.dist[score]);
         if (Number(this.props.dist[score]) > mostCommonReview) {
           mostCommonReview = score;
         }
       });
-      for (var key in graphData) {
+      for (const key in graphData) {
         if (key !== mostCommonReview) {
           percentGraphData[key] = (graphData[key] / graphData[mostCommonReview]) * 100;
         }
@@ -148,7 +158,7 @@ class Distribution extends React.Component {
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5button">5 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="5Backdrop">
-              <ScoreDiv5 onClick={this.handleRatingFilterClick} id="5ScoreDiv"></ScoreDiv5>
+              <ScoreDiv5 onClick={this.handleRatingFilterClick} id="5ScoreDiv" />
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="5Quantity">{graphData[5]}</QuantityContainer>
           </ButtonContainer>
@@ -156,7 +166,7 @@ class Distribution extends React.Component {
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="4">4 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="4Backdrop">
-              <ScoreDiv4 onClick={this.handleRatingFilterClick} id="4ScoreDiv"></ScoreDiv4>
+              <ScoreDiv4 onClick={this.handleRatingFilterClick} id="4ScoreDiv" />
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="4Quantity">{graphData[4]}</QuantityContainer>
           </ButtonContainer>
@@ -164,7 +174,7 @@ class Distribution extends React.Component {
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="3">3 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="3Backdrop">
-              <ScoreDiv3 onClick={this.handleRatingFilterClick} id="3ScoreDiv"></ScoreDiv3>
+              <ScoreDiv3 onClick={this.handleRatingFilterClick} id="3ScoreDiv" />
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="3Quantity">{graphData[3]}</QuantityContainer>
           </ButtonContainer>
@@ -172,7 +182,7 @@ class Distribution extends React.Component {
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="2">2 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="2Backdrop">
-              <ScoreDiv2 onClick={this.handleRatingFilterClick} id="2ScoreDiv"></ScoreDiv2>
+              <ScoreDiv2 onClick={this.handleRatingFilterClick} id="2ScoreDiv" />
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="2Quantity">{graphData[2]}</QuantityContainer>
           </ButtonContainer>
@@ -180,7 +190,7 @@ class Distribution extends React.Component {
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="1Backdrop">
-              <ScoreDiv1 onClick={this.handleRatingFilterClick} id="1ScoreDiv"></ScoreDiv1>
+              <ScoreDiv1 onClick={this.handleRatingFilterClick} id="1ScoreDiv" />
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{graphData[1]}</QuantityContainer>
           </ButtonContainer>

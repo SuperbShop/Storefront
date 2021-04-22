@@ -80,7 +80,7 @@ class Breakdown extends React.Component {
         </PercentLine>
         <section>
           <Distribution filterBy={this.props.filterBy} dist={ratingsDist} />
-          <ProductFactors chars={productChars} />
+          <ProductFactors productNum={this.props.productNum} chars={productChars} />
         </section>
       </BreakdownSection>
     );

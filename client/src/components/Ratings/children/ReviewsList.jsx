@@ -138,7 +138,7 @@ class ReviewsList extends React.Component {
     const createReviewElement = this.state.renderCreate ? (
       <PageBlockerModalDiv>
         <Modal>
-          <CreateReview toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
+          <CreateReview metaInfo={this.props.meta} toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
         </Modal>
       </PageBlockerModalDiv>
     )

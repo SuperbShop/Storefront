@@ -31,12 +31,10 @@ const DescWrapper = styled.div`
   `;
 
 const ProductFactors = (props) => {
-  console.log('PF props', props);
   const propsArray = [];
   if (props.chars) {
     for (const key in props.chars) {
       propsArray.push(key);
-      console.log(`${key}`, props.chars[key].value);
     }
   }
 
@@ -58,10 +56,10 @@ const ProductFactors = (props) => {
           descriptions = ['Runs tight', 'Runs long'];
         }
         return (
-          <CharsContainer>
-            <CharTitle>{prop}</CharTitle>
-            <BackdropDiv>
-              <div style={{
+          <CharsContainer key={`${prop}${props.productNum}${Math.random()}`}>
+            <CharTitle key={`${prop}${props.productNum}${Math.random()}`} >{prop}</CharTitle>
+            <BackdropDiv key={`${prop}${props.productNum}${Math.random()}`} >
+              <div key={`${prop}${props.productNum}${Math.random()}`} style={{
                 position: 'absolute',
                 width: '0',
                 height: '0',
@@ -71,9 +69,10 @@ const ProductFactors = (props) => {
               }}
               />
             </BackdropDiv>
-            <DescWrapper>
-              <Descriptions>{descriptions[0]}</Descriptions>
-              <Descriptions>{descriptions[1]}</Descriptions>
+            <DescWrapper key={`${prop}${props.productNum}${Math.random()}`} >
+              <Descriptions key={`${prop}${props.productNum}${Math.random()}`} >{descriptions[0]}</Descriptions>
+              <Descriptions key={`${prop}${props.productNum}${Math.random()}`} >{descriptions[1]}</Descriptions>
+              <Descriptions key={`${prop}${props.productNum}`} >{descriptions[1]}</Descriptions>
             </DescWrapper>
           </CharsContainer>
         );

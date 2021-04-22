@@ -73,7 +73,7 @@ class Ratings extends React.Component {
             <Breakdown filterBy={this.handleFilterBy} productNum={productNum} meta={reviewMetaInfo} />
           </BreakdownWrapper>
           <ListWrapper>
-          <ReviewsList filterState={this.state.filterBy} productNum={productNum} />
+          <ReviewsList filterState={this.state.filterBy} meta={reviewMetaInfo} productNum={productNum} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </section>

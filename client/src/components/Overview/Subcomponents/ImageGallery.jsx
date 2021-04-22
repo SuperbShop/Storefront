@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import Carousel from 'react-bootstrap/Carousel';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
-const ImageGallery = ({  photos }) => {
+const ImageGallery = ({ photos }) => {
   const [current, setCurrent] = useState(0);
   const [thumbnail, setThumbnail] = useState(0);
   // const [index, setIndex] = useState(0);
@@ -59,10 +58,11 @@ const ImageGallery = ({  photos }) => {
         {photos.map((photo, index) => (
           <img
             className={index === current ? 'thumbnail active' : 'thumbnail'}
-            key={index}
+            key={photo.thumbnail_url}
             src={photo.thumbnail_url}
             alt="product"
             onClick={() => handleClick(index)}
+            aria-hidden="true"
           />
         ))}
       </section>
@@ -72,7 +72,7 @@ const ImageGallery = ({  photos }) => {
 }
         {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
         {photos.map((photo, index) => (
-          <div className={index === current ? 'slide active' : 'slide'} key={index} onClick={expandedView}>
+          <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={expandedView} aria-hidden="true">
             {index === current && (<img className="image" src={photo.url} alt="product" />) }
           </div>
         ))}
@@ -80,6 +80,14 @@ const ImageGallery = ({  photos }) => {
 
     </div>
   );
+};
+
+ImageGallery.propTypes = {
+  photos: PropTypes.arrayOf(PropTypes.shape({})),
+};
+
+ImageGallery.defaultProps = {
+  photos: [],
 };
 
 export default ImageGallery;

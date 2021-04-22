@@ -22,7 +22,6 @@ const PercentLine = styled.p`
 
 const ScoreAndStarsContainer = styled.div`
   display: flex;
-  border: 1px solid green;
   `;
 
 const StarsContainer = styled.div`

@@ -19,8 +19,9 @@ const BackdropDiv = styled.div`
   margin-left: 5%;
   `;
 
-const Descriptions = styled.p`
+const Descriptions = styled.div`
   font-size: 12px;
+  margin-top: 4px;
   `;
 
 const DescWrapper = styled.div`

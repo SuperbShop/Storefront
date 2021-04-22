@@ -10,7 +10,6 @@ import Modal from './Modal';
 
 const TileDiv = styled.div`
   padding: 5px;
-  border-top: 1px solid grey;
   border-bottom: 1px solid grey;
   min-height: 280px;
   max-height: 280px;
@@ -94,7 +93,6 @@ class ReviewTile extends React.Component {
       success: (res) => console.log(res),
       error: (err) => console.error(err),
     });
-
   }
 
   handleImageClick(event) {

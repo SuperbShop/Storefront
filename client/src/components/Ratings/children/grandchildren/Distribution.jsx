@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import $ from 'jquery';
 
 const FlexboxDiv = styled.div`
-  border: 1px solid orange;
   display: flex;
   flex-direction: column;
   `;
 
 const ButtonContainer = styled.div`
-  border: 1px solid green;
   display: flex;
   flex-direction: row;
   align-items: center;

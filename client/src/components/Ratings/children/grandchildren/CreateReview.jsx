@@ -66,7 +66,7 @@ class CreateReview extends React.Component {
 
   renderCharsRadioButtons(name, lowest, highest) {
     return (
-      <React.Fragment>
+      <>
         {name}
         <radioRowWrapper>
         <input type="radio" required="required" name="RecommendOption" value={lowest} />
@@ -75,7 +75,7 @@ class CreateReview extends React.Component {
         <input type="radio" required="required" name="RecommendOption" value="Yes" />
         <input type="radio" required="required" name="RecommendOption" value={highest} />
         </radioRowWrapper>
-      </React.Fragment>
+      </>
     )
   }
 
@@ -87,7 +87,7 @@ class CreateReview extends React.Component {
     console.log(charsArray);
 
     return (
-      <React.Fragment>
+      <>
       <CenteredDiv>
         <form id="create-new-review" method="post">
           <FormChildrenContainer>
@@ -154,7 +154,7 @@ class CreateReview extends React.Component {
             <button id="exitbutton" onClick={this.handleExitButtonClick}>X</button>
           </ExitButtonWrapper>
         </CenteredDiv>
-        </React.Fragment>
+        </>
     );
   }
 }

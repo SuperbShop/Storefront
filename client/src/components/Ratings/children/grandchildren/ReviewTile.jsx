@@ -5,14 +5,21 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
+import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../../../config';
 import Modal from './Modal';
 
-const TileDiv = styled.div`
+const TileContainer = styled.div`
   padding: 5px;
   border-bottom: 1px solid grey;
   min-height: 280px;
   max-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  `;
+
+const TileItem = styled.div`
   `;
 
 const ResponseTag = styled.p`
@@ -51,6 +58,12 @@ const PageBlockerModalDiv = styled.div`
   height: 100vh;
   opacity: 0.6;
   background-color: rgba(128,128,128,0.5);
+  `;
+
+const StarsOuter = styled.div`
+  display: inline-block;
+  position: relative;
+  overflow-x: hidden;
   `;
 
 class ReviewTile extends React.Component {
@@ -187,39 +200,62 @@ class ReviewTile extends React.Component {
 
     /// ///////////////////////////////////////////////////
     /// ///////////////////////////////////////////////////
+    const StarsInner = styled.div`
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: ${this.props.review.rating * 20}%;
+      `;
+
     const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
-      <TileDiv>
-        <p>
-          {this.props.review.rating}
-          {' '}
-          Stars
+       <TileContainer>
+        <TileItem>
+          <StarsOuter>
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
           <FontAwesomeIcon icon={faStar} />
-        </p>
-        <p>
+          <StarsInner>
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+            <FontAwesomeIcon icon={solidStar} />
+          </StarsInner>
+          </StarsOuter>
+        </TileItem>
+        <TileItem>
           {this.props.review.reviewer_name}
           ,
           {' '}
           {moment(this.props.review.date).format('LL')}
-        </p>
+        </TileItem>
+        <TileItem>
         <h3>{this.props.review.summary}</h3>
+        </TileItem>
+        <TileItem>
         {body}
+        </TileItem>
+        <TileItem>
         {recommendation}
+        </TileItem>
+        <TileItem>
         <ResponseTag>{response}</ResponseTag>
-        <div>
+        </TileItem>
+        <TileItem>
           Helpful?
           <button type="button" onClick={this.handleHelpfulClick}>Yes</button>
           (
           {helpful}
           )
           <button type="button" onClick={this.handleReportClick}>Report</button>
-        </div>
-      </TileDiv>
+        </TileItem>
+      </TileContainer>
     );
   }
 }

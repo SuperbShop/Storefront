@@ -18,6 +18,7 @@ const CenteredDiv = styled.div`
   `;
 
 const EachInputWrapper = styled.div`
+  border: 1px dotted blue;
   `;
 
 const ExitButtonWrapper = styled.div`
@@ -37,7 +38,6 @@ const FormChildrenContainer = styled.div`
 
 const CharWorstBestWrapper = styled.div`
   display: flex;
-  border: 1px solid red;
   justify-content: space-between;
   font-size: 12px;
   `;
@@ -59,6 +59,9 @@ const RadioRowWrapper = styled.div`
 class CreateReview extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      // product idk
+    };
     this.charsObject = {
       "Size": ["A size too small", "1/2 a size too small", "Perfect", "1/2 a size too big", "A size too wide"],
       "Width": ["Too narrow", "Slightly narrow", "Perfect", "Slightly wide", "Too wide"],
@@ -67,11 +70,9 @@ class CreateReview extends React.Component {
       "Length": ["Runs short", "Runs slightly short", "Perfect", "Runs slightly long", "Runs long"],
       "Fit": ["Runs tight", "Runs slightly tight", "Perfect", "Runs slightly long", "Runs long"],
     };
-    this.state = {
-      // product idk
-    };
     this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
+    this.updateLengthDetails = this.updateLengthDetails.bind(this);
   }
 
   handleFormSubmission() {
@@ -83,10 +84,16 @@ class CreateReview extends React.Component {
   }
 
   handleCharRadioClick(event) {
-    console.log('name', event.target.name);
-    console.log('value', event.target.value);
-    console.log('chars', this.charsObject[event.target.name][event.target.value - 1]);
     $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
+  }
+
+  updateLengthDetails(event) {
+    console.log(event.target.value.length);
+    if (event.target.value.length < 50) {
+      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+    } else {
+      $('#ReviewBodyLengthDetails').text('Minimum reached');
+    }
   }
 
   renderCharsRadioButtons(name) {
@@ -112,28 +119,8 @@ class CreateReview extends React.Component {
     );
   }
 
-  // {propsArray.map((prop) => {
-  //   let descriptions = [];
-  //   if (prop === 'Size') {
-  //     descriptions = ['A size too small', 'A size too wide'];
-  //   } else if (prop === 'Width') {
-  //     descriptions = ['Too narrow', 'Too wide'];
-  //   } else if (prop === 'Comfort') {
-  //     descriptions = ['Uncomfortable', 'Perfect'];
-  //   } else if (prop === 'Quality') {
-  //     descriptions = ['Poor', 'Perfect'];
-  //   } else if (prop === 'Length') {
-  //     descriptions = ['Runs short', 'Runs long'];
-  //   } else {
-  //     descriptions = ['Runs tight', 'Runs long'];
-  //   }
   render() {
-    console.log('fromcreate', this.props);
-
-    let charsSelector = 'yo';
     var charsArray = Object.keys(this.props.metaInfo.characteristics);
-    console.log(charsArray);
-
     return (
       <>
       <CenteredDiv>
@@ -175,7 +162,8 @@ class CreateReview extends React.Component {
 
           <EachInputWrapper id="ReviewBody">
             Review body:*
-            <textarea id="ReviewBodyText" required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+            <textarea id="ReviewBodyText" onKeyUp={this.updateLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+            <div id="ReviewBodyLengthDetails">Minimum required characters left: 50</div>
           </EachInputWrapper>
 
           <EachInputWrapper id="UploadYourPhotos">

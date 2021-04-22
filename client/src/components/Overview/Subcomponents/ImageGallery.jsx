@@ -14,10 +14,7 @@ const Image = styled.img`
   cursor: -moz-zoom-in;
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
-  &:hover {
-    transform: scale(1.5);
-    transition: transform 0.5s;
-  }
+  padding-right: 10px;
 `;
 
 const Thumbnail = styled.img`
@@ -84,10 +81,13 @@ const ImageGallery = ({photos}) => {
   return (
     <section className="slider">
       <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-      {photos.map((photo, index) => (
-        <img className="image" key={index} src={photo.url} alt="product" />
-      ))}
       <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />
+      {photos.map((photo, index) => {
+        return (
+          <div className={index === current ? 'slide active' : 'slide'} key={index}>
+            {index === current && (<Image src={photo.url} alt="product" />) }
+
+          </div>)})}
     </section>
   );
 };

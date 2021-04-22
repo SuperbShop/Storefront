@@ -31,7 +31,7 @@ const StyledButton = styled.button`
 const BackdropDiv = styled.div`
   background-color: lightgrey;
   position: relative;
-  height: 0.6em;
+  height: 0.5em;
   width: 50%;
   `;
 
@@ -88,8 +88,8 @@ class Distribution extends React.Component {
       filterStatus = '';
     }
 
-    let graphData = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-    let adjustedGraphData = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    let graphData = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+    let percentGraphData = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
 
     let mostCommonReview = 0;
     let allScores = [];
@@ -103,45 +103,43 @@ class Distribution extends React.Component {
       });
       for (var key in graphData) {
         if (key !== mostCommonReview) {
-          adjustedGraphData[key] = (graphData[key] / graphData[mostCommonReview]) * 100;
+          percentGraphData[key] = (graphData[key] / graphData[mostCommonReview]) * 100;
         }
       }
-      adjustedGraphData[mostCommonReview] = 100;
+      percentGraphData[mostCommonReview] = 100;
     }
 
     const ScoreDiv5 = styled.div`
       position: absolute;
       background-color: green;
-      height: 0.6em;
-      width: ${adjustedGraphData[5]}%;
+      height: 0.5em;
+      width: ${percentGraphData[5]}%;
       `;
 
     const ScoreDiv4 = styled.div`
       position: absolute;
       background-color: green;
-      height: 0.6em;
-      width: ${adjustedGraphData[4]}%;
+      height: 0.5em;
+      width: ${percentGraphData[4]}%;
       `;
     const ScoreDiv3 = styled.div`
       position: absolute;
       background-color: green;
-      height: 0.6em;
-      width: ${adjustedGraphData[3]}%;
+      height: 0.5em;
+      width: ${percentGraphData[3]}%;
       `;
     const ScoreDiv2 = styled.div`
       position: absolute;
       background-color: green;
-      height: 0.6em;
-      width: ${adjustedGraphData[2]}%;
+      height: 0.5em;
+      width: ${percentGraphData[2]}%;
       `;
     const ScoreDiv1 = styled.div`
       position: absolute;
       background-color: green;
-      height: 0.6em;
-      width: ${adjustedGraphData[1]}%;
+      height: 0.5em;
+      width: ${percentGraphData[1]}%;
       `;
-
-
 
     return (
       <div>
@@ -193,36 +191,5 @@ class Distribution extends React.Component {
     );
   }
 }
-// ratings distrubition data is brought to this component in props
-// need to display it in a chart
-// need to make all the below buttons filter ReviewsList by that rating
 
 export default Distribution;
-
-
-{/* <div>
-        <FlexboxDiv>
-          <ButtonContainer>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5">5 stars</StyledButton>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="4">4 stars</StyledButton>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="3">3 stars</StyledButton>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="2">2 stars</StyledButton>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 stars</StyledButton>
-          </ButtonContainer>
-          <TableContainer>
-            <ScoreDiv></ScoreDiv>
-            <BackdropDiv></BackdropDiv>
-            <ScoreDiv></ScoreDiv>
-            <BackdropDiv></BackdropDiv>
-            <ScoreDiv></ScoreDiv>
-            <BackdropDiv></BackdropDiv>
-            <ScoreDiv></ScoreDiv>
-            <BackdropDiv></BackdropDiv>
-            <ScoreDiv></ScoreDiv>
-            <BackdropDiv></BackdropDiv>
-          </TableContainer>
-          <QuantityContainer>#</QuantityContainer>
-        </FlexboxDiv>
-        {filterStatus}
-
-      </div> */}

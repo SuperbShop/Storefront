@@ -42,7 +42,7 @@ class Breakdown extends React.Component {
         reviewQuantity += Number(this.props.meta.ratings[ratingsArray[i]]);
       }
       average = (reviewSum / reviewQuantity).toFixed(1);
-      percent = 100 * (Number(this.props.meta.recommended.true) / reviewQuantity) || 0;
+      percent = (100 * (Number(this.props.meta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
       ratingsDist = this.props.meta.ratings;
       productChars = this.props.meta.characteristics;
     }

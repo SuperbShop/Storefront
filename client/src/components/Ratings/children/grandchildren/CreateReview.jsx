@@ -73,6 +73,8 @@ class CreateReview extends React.Component {
     this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
     this.updateLengthDetails = this.updateLengthDetails.bind(this);
+    this.logfiles = this.logfiles.bind(this);
+    this.validateForm = this.validateForm.bind(this);
   }
 
   handleFormSubmission() {
@@ -117,6 +119,32 @@ class CreateReview extends React.Component {
         </CharWorstBestWrapper>
       </>
     );
+  }
+
+  logfiles(event) {
+    // HARDCODING ONE IMAGE FILE FOR EACH
+    // MUST SELECT ALL IMAGES AT ONCE FOR THIS TO WORK
+    $('#UploadedImages').empty();
+    let imgFiles = Object.keys(event.target.files);
+    console.log('array', imgFiles.length);
+    imgFiles.forEach(file => $('#UploadedImages').append('<img src=https://picsum.photos/40 />'));
+    if (event.target.files.length >= 5) {
+      console.log('should remove');
+      $('input').remove('#ImgUpload');
+    }
+  }
+
+  validateForm() {
+    // if
+    // overall rating stars has a value
+    // recommend radio has a value
+    // characteristics radios have values
+    // review body has 50+ chars
+    // nickname has value
+    // email has value - and format - @ and dot
+    // if any return false - return false
+    // message: "You must enter the following" - array of messages based on what went false
+    // else return true
   }
 
   render() {
@@ -168,7 +196,8 @@ class CreateReview extends React.Component {
 
           <EachInputWrapper id="UploadYourPhotos">
             Upload your photos:
-            <button type="button">Upload here</button>
+            <input type="file" onChange={this.logfiles} id="ImgUpload" multiple name="img[]" accept="image/*" />
+              <div id="UploadedImages"></div>
           </EachInputWrapper>
 
           <EachInputWrapper id="WhatIsYourNickname">
@@ -183,7 +212,7 @@ class CreateReview extends React.Component {
             For authentication reasons, you will not be emailed
           </EachInputWrapper>
 
-          <button type="submit">Submit</button>
+          <button type="submit" onClick={this.validateForm}>Submit</button>
           </FormChildrenContainer>
         </form>
           <ExitButtonWrapper>

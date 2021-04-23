@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import Image from 'react-bootstrap/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import Price from './Price';
@@ -63,27 +63,19 @@ const SelectedImage = styled.img`
 class StyleSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedStyle: null,
-      style_id: null,
-    };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(id, name) {
+  handleClick(id) {
     const { handleStyleChange } = this.props;
     handleStyleChange(id);
-    this.setState({
-      selectedStyle: name,
-      style_id: id,
-    });
   }
 
   render() {
+    const { selectedStyle, styles } = this.props;
     const {
-      name, sale_price, original_price, style_id, photos,
-    } = this.props.selectedStyle;
-    const { styles } = this.props;
+      name, sale_price, original_price, style_id,
+    } = selectedStyle;
 
     const checkmark = {
       position: 'absolute',
@@ -98,8 +90,8 @@ class StyleSelector extends React.Component {
         <CurrentStyle>{name}</CurrentStyle>
         <ThumbWrapper>
           {
-            styles.map((style, index) => (
-              <React.Fragment key={index}>
+            styles.map((style) => (
+              <React.Fragment key={style.style_id}>
                 {
                 (style.style_id === style_id)
                   ? (
@@ -119,7 +111,6 @@ class StyleSelector extends React.Component {
                     />
                   )
               }
-
               </React.Fragment>
             ))
           }

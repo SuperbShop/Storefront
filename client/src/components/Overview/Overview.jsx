@@ -42,7 +42,6 @@ class Overview extends React.Component {
       productStyles: [],
       selectedStyle: {},
       productRatings: [],
-      stylePhotos: [],
     };
     this.handleStyleChange = this.handleStyleChange.bind(this);
   }
@@ -84,7 +83,6 @@ class Overview extends React.Component {
         this.setState({
           productStyles: res.data.results,
           selectedStyle: res.data.results[0],
-          stylePhotos: res.data.results[0].photos,
         });
       })
       .catch((err) => console.error(err));

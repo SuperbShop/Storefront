@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle,
+  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 // import Modal from './Modal';
@@ -18,7 +18,7 @@ const ImageGallery = ({ photos }) => {
     }
   };
 
-  const imageClicked = () => {
+  const closeModal = () => {
     setSelectedImg(null);
   };
 
@@ -48,10 +48,11 @@ const ImageGallery = ({ photos }) => {
         }
             {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
             {photos.map((photo, index) => (
-              <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} onClick={imageClicked} aria-hidden="true">
+              <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
                 {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
               </div>
             ))}
+            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={closeModal} />
           </section>
           <section className="modal-icons">
             {photos.map((photo, index) => (

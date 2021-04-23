@@ -51,7 +51,7 @@
 }
 
 
-.right-arrow:hover, .left-arrow:hover {
+.right-arrow:hover, .left-arrow:hover, .closeBtn:hover, .expand:hover {
   background-color: #000;
   transition: 0.5s;
   color: #fff;
@@ -104,6 +104,7 @@
   height: 80vh;
   box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
   border: 3px solid white;
+  cursor: cell;
 }
 
 .expand {
@@ -114,6 +115,7 @@
   z-index: 200;
   padding: 10px;
 }
+
 
 .modal-slide {
   opacity: 0;
@@ -127,7 +129,7 @@
   align-items: center;
   position: absolute;
   z-index: 999;
-  top: 85%;
+  top: 84%;
   left: 45%;
 }
 
@@ -138,13 +140,26 @@
   align-items: center;
   font-size: 10px;
   margin: 10px;
-  opacity: 1;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  border: 1px solid #000;
+  border-radius: 50%;
 }
 .dots.active {
-  color: #000;
+  color: #f44336;
+  font-size: 15px;
 }
 .dots:hover {
   color: #000;
   transition: 0.5s;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12%;
+  right: 220px;
+  font-size: 3rem;
+  color: #000;
+  z-index: 200;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px;
 }

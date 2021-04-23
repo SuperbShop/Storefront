@@ -73,7 +73,7 @@ class Breakdown extends React.Component {
       left: 0;
       white-space: nowrap;
       overflow: hidden;
-      width: ${averagePercentage * 100}%;
+      width: ${(averagePercentage) * 100}%;
       `;
     // need to incorporate the star graphi
     return (

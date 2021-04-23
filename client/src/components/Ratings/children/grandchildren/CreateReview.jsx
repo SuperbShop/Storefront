@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import config from '../../../../../../config.js';
 
 const CenteredDiv = styled.div`
   position: absolute;
@@ -59,7 +60,6 @@ const SubmitWrapper = styled.div`
 //   font-size: 12px;
 //   `;
 
-
 // const CharsRadioWrapper = styled.div`
 //   display: flex;
 //   flex-direction: column;
@@ -107,6 +107,19 @@ class CreateReview extends React.Component {
     this.updateLengthDetails = this.updateLengthDetails.bind(this);
     this.logfiles = this.logfiles.bind(this);
     this.validateForm = this.validateForm.bind(this);
+  }
+
+  componentDidMount() {
+    // request to get the product name
+    $.ajax({
+      method: 'GET',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${this.props.productId}`,
+      headers: {
+        'Authorization': config.API_KEY,
+      },
+      success: (data) => this.setState({ productName: data.name}),
+      error: (err) => console.log(err),
+    });
   }
 
   handleFormSubmission() {
@@ -194,8 +207,8 @@ class CreateReview extends React.Component {
           <form id="create-new-review" method="post">
             <EachInputWrapper>
               <strong>
-                Create A Review for
-            {this.props.productId}
+                <h4>Write Your Review</h4>
+                <h5>About the {this.state.productName || ''}</h5>
               </strong>
             </EachInputWrapper>
             <FloatLeft>
@@ -219,9 +232,9 @@ class CreateReview extends React.Component {
             </EachInputWrapper>
             <EachInputWrapper id="recommend">
               Do you recommend this product?*
-            <input type="radio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
+            <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
               <label htmlFor="YesRecommend">Yes</label>
-              <input type="radio" id="NoRecommend" name="RecommendOption" value="No" />
+              <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
               <label htmlFor="NoRecommend">No</label>
             </EachInputWrapper>
             <EachInputWrapper id="ReviewSummary">

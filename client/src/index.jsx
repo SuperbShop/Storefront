@@ -30,6 +30,8 @@ const clickTracker = (WrappedComponent, module) => (props) => (
 );
 
 const TrackedOverview = clickTracker(Overview, 'Overview');
+const TrackedQuestions = clickTracker(Questions, 'Q&A');
+const TrackedRatings = clickTracker(Ratings, 'Ratings');
 
 class App extends React.Component {
   constructor() {

@@ -104,7 +104,7 @@ class Questions extends React.Component {
       method: 'GET',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/qa/questions?product_id=${id}`,
       headers: {
-        Authorization: config.api_token,
+        Authorization: config.TOKEN,
       },
       success: (data) => {
         console.log('id: ', id);

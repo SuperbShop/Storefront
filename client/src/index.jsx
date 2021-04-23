@@ -13,8 +13,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23146',
-      productId: 23146,
+      product: '23145',
+      productId: 23145,
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,

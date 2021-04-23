@@ -4,7 +4,7 @@
   "description": "FEC ecommerce app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "react-dev": "webpack --mode=development --watch",
     "live-server": "live-server client/dist/",
     "start": "nodemon server/index.js"
@@ -29,6 +29,7 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "enzyme": "^3.11.0",
     "express": "^4.17.1",
     "jquery": "^3.6.0",
     "live-server": "^1.2.1",

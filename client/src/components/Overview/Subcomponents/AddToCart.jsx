@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
@@ -19,11 +18,11 @@ const SelectorsWrapper = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  width: 60%;
+  width: 70%;
   float: left;
 `;
 const RightDiv = styled.div`
-  width: 40%;
+  width: 30%;
   float: right;
 `;
 
@@ -82,21 +81,28 @@ class AddToCart extends React.Component {
       quantity: null,
       isSizeSelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
-      isInStock: true,
       liked: false,
-      selectedSKU: null,
     };
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleLikeClicked = this.handleLikeClicked.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleClick() {
-    this.setState({ liked: !this.state.liked });
+  handleLikeClicked() {
+    const { liked } = this.state;
+    this.setState({ liked: !liked });
+  }
+
+  handleSubmit() {
+    const { productName, styleName } = this.props;
+    const { size, quantity } = this.state;
+    alert(`${productName} (${styleName})\nSize: ${size} - qty: ${quantity}`);
   }
 
   sizeChangeHandler() {
-    if (this.state.prevSize !== this.state.size) {
+    const { prevSize, size } = this.state;
+    if (prevSize !== size) {
       this.setState({ isSizeSelected: true });
     } else {
       this.setState((prevState) => ({
@@ -124,47 +130,67 @@ class AddToCart extends React.Component {
   }
 
   render() {
+    const {
+      liked, isSizeSelected, available, maxQuantity, headerQuantity,
+    } = this.state;
+    const { skus } = this.props;
     return (
       <AddToCartWrapper>
         <SelectorsWrapper>
           <LeftDiv>
-            <SizeSelector title="SELECT SIZE" skus={this.props.skus} resetThenSet={this.resetThenSet} />
+            <SizeSelector title="SELECT SIZE" skus={skus} resetThenSet={this.resetThenSet} />
           </LeftDiv>
           <RightDiv>
-            {!this.state.isSizeSelected
+            {!isSizeSelected
           && (
           <QuantitySelector
             title="-"
-            quantity={this.state.maxQuantity}
-            available={this.state.available}
+            quantity={maxQuantity}
+            available={available}
             resetThenSet={this.resetThenSet}
           />
           )}
-            {this.state.isSizeSelected
+            {isSizeSelected
           && (
           <QuantitySelector
-            title={this.state.headerQuantity}
-            quantity={this.state.maxQuantity}
-            available={this.state.available}
+            title={headerQuantity}
+            quantity={maxQuantity}
+            available={available}
             resetThenSet={this.resetThenSet}
           />
           )}
           </RightDiv>
         </SelectorsWrapper>
         <AddWrapper>
-          <AddBtn>
+          <AddBtn onClick={this.handleSubmit}>
             Add To Bag
             <FontAwesomeIcon icon={faPlus} />
           </AddBtn>
 
-          {this.state.liked
-            ? <LikeBtn onClick={this.handleClick}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
-            : <LikeBtn onClick={this.handleClick}><FontAwesomeIcon icon={farHeart} /></LikeBtn>}
+          {liked
+            ? <LikeBtn onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
+            : (
+              <LikeBtn onClick={this.handleLikeClicked}>
+                <FontAwesomeIcon icon={farHeart} />
+              </LikeBtn>
+            )}
         </AddWrapper>
 
       </AddToCartWrapper>
     );
   }
 }
+
+AddToCart.propTypes = {
+  skus: PropTypes.shape({}),
+  productName: PropTypes.string,
+  styleName: PropTypes.string,
+};
+
+AddToCart.defaultProps = {
+  skus: {},
+  productName: '',
+  styleName: '',
+};
 
 export default AddToCart;

@@ -29,4 +29,14 @@ const Price = ({ price, sale }) => (
   </PriceWrapper>
 );
 
+Price.propTypes = {
+  price: PropTypes.string,
+  sale: PropTypes.string,
+};
+
+Price.defaultProps = {
+  price: null,
+  sale: null,
+};
+
 export default Price;

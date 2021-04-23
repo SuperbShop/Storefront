@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
-import config from '/config';
+import config from '../../../../config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';
@@ -25,12 +26,12 @@ const TopWrapper = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  width: 70%;
+  width: 65%;
   float: left;
 `;
 
 const RightDiv = styled.div`
-  width: 30%;
+  width: 35%;
   float: right;
 `;
 
@@ -42,7 +43,6 @@ class Overview extends React.Component {
       productStyles: [],
       selectedStyle: {},
       productRatings: [],
-      stylePhotos: [],
     };
     this.handleStyleChange = this.handleStyleChange.bind(this);
   }
@@ -84,7 +84,6 @@ class Overview extends React.Component {
         this.setState({
           productStyles: res.data.results,
           selectedStyle: res.data.results[0],
-          stylePhotos: res.data.results[0].photos,
         });
       })
       .catch((err) => console.error(err));
@@ -104,13 +103,15 @@ class Overview extends React.Component {
 
   render() {
     const {
-      currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
+      currentProduct, productStyles, selectedStyle, productRatings,
     } = this.state;
+    const { photos } = selectedStyle;
     return (
+
       <Wrapper>
         <TopWrapper>
           <LeftDiv>
-            <ImageGallery photos={stylePhotos} />
+            <ImageGallery photos={photos} />
           </LeftDiv>
           <RightDiv>
             <ProductInfo

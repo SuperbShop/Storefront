@@ -1,7 +1,7 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import Image from 'react-bootstrap/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import Price from './Price';
@@ -25,7 +25,6 @@ const CurrentStyle = styled.span`
 
 const ThumbWrapper = styled.div`
   padding-top: 1.5rem;
-
 `;
 const Thumbnail = styled.img`
   justify-content: space-between;
@@ -43,6 +42,7 @@ const Thumbnail = styled.img`
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transform: scale(1.5);
     transition: transform 0.5s;
+    cursor: pointer;
   }
 `;
 const SelectedImageWrapper = styled.span`
@@ -63,27 +63,19 @@ const SelectedImage = styled.img`
 class StyleSelector extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedStyle: null,
-      style_id: null,
-    };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(id, name) {
+  handleClick(id) {
     const { handleStyleChange } = this.props;
     handleStyleChange(id);
-    this.setState({
-      selectedStyle: name,
-      style_id: id,
-    });
   }
 
   render() {
+    const { selectedStyle, styles } = this.props;
     const {
-      name, sale_price, original_price, style_id, photos,
-    } = this.props.selectedStyle;
-    const { styles } = this.props;
+      name, sale_price, original_price, style_id,
+    } = selectedStyle;
 
     const checkmark = {
       position: 'absolute',
@@ -98,26 +90,29 @@ class StyleSelector extends React.Component {
         <CurrentStyle>{name}</CurrentStyle>
         <ThumbWrapper>
           {
-            styles.map((style, index) => {
-              if (style_id === style.style_id) {
-                return (
-                  <SelectedImageWrapper>
-                    <SelectedImage
+            styles.map((style) => (
+              <React.Fragment key={style.style_id}>
+                {
+                (style.style_id === style_id)
+                  ? (
+                    <SelectedImageWrapper>
+                      <SelectedImage
+                        key={style.style_id}
+                        src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      />
+                      <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
+                    </SelectedImageWrapper>
+                  )
+                  : (
+                    <Thumbnail
                       key={style.style_id}
                       src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      onClick={() => this.handleClick(style.style_id, style.name)}
                     />
-                    <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
-                  </SelectedImageWrapper>
-                );
+                  )
               }
-              return (
-                <Thumbnail
-                  key={style.style_id}
-                  src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
-                  onClick={() => this.handleClick(style.style_id, style.name)}
-                />
-              );
-            })
+              </React.Fragment>
+            ))
           }
         </ThumbWrapper>
 

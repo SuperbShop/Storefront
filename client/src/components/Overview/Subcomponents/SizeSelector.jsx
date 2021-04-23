@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const DDWrapper = styled.div`
   padding-right: 10px;
@@ -56,16 +57,13 @@ const DDListItems = styled.button`
 class SizeSelector extends React.Component {
   constructor(props) {
     super(props);
+    const { title } = this.props;
     this.state = {
       isListOpen: false,
-      headerTitle: this.props.title,
+      headerTitle: title,
     };
     this.selectItem = this.selectItem.bind(this);
     this.toggleList = this.toggleList.bind(this);
-  }
-
-  componentDidMount() {
-    const { isListOpen } = this.state;
   }
 
   selectItem(item) {
@@ -80,12 +78,6 @@ class SizeSelector extends React.Component {
     this.setState((prevState) => ({
       isListOpen: !prevState.isListOpen,
     }));
-  }
-
-  checkInStock(item) {
-    if (item.quantity < 1) {
-      this.setState({ inStock: false});
-    }
   }
 
   render() {
@@ -117,4 +109,11 @@ class SizeSelector extends React.Component {
     );
   }
 }
+
+SizeSelector.propTypes = {
+  title: PropTypes.string.isRequired,
+  resetThenSet: PropTypes.func.isRequired,
+  skus: PropTypes.shape({}).isRequired,
+};
+
 export default SizeSelector;

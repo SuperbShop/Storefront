@@ -4,18 +4,17 @@ import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
 import RelatedItems from './components/RelatedItems/RelatedItems';
+import styled from 'styled-components';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23145',
       productId: 23145,
     };
   }
 
   render() {
-    const { product } = this.state;
     const { productId } = this.state;
     return (
       <div>

@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import {
   FacebookShareButton, TwitterShareButton, PinterestShareButton,
   FacebookIcon, TwitterIcon, PinterestIcon,
 } from 'react-share';
+import PropTypes from 'prop-types';
 import StarRatings from './StarRatings';
 
 const ProductWrapper = styled.div`
@@ -37,7 +39,7 @@ class ProductInfo extends React.Component {
   }
 
   render() {
-    const { currentProduct, selectedStyle, productRatings } = this.props;
+    const { currentProduct, productRatings } = this.props;
     const { name, category } = currentProduct;
     const url = 'http://127.0.0.1:8080/';
 
@@ -71,15 +73,17 @@ class ProductInfo extends React.Component {
   }
 }
 
-// ProductInfo.propTypes = {
-//   currentProduct: PropTypes.object.isRequired,
-//   name: PropTypes.string.isRequired,
-//   category: PropTypes.string.isRequired,
-//   description: PropTypes.string,
-// };
+ProductInfo.propTypes = {
+  currentProduct: PropTypes.shape({}).isRequired,
+  productRatings: PropTypes.arrayOf(PropTypes.shape({})),
+  name: PropTypes.string,
+  category: PropTypes.string,
+};
 
-// ProductInfo.defaultProps = {
-//   description: null,
-// };
+ProductInfo.defaultProps = {
+  productRatings: [],
+  name: '',
+  category: '',
+};
 
 export default ProductInfo;

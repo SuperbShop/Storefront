@@ -22,7 +22,7 @@ const AnswerText = styled.div`
   display: inline;
 `;
 
-const ImageCarousel = styled.div`
+const ImageWrapper = styled.div`
   margin: 10px;
   height: 100px;
   border: 2px solid white;
@@ -67,14 +67,14 @@ class ABody extends React.Component {
         </AnswerText>
         { photos
           ? photos.map((photo, index) => (
-            <ImageCarousel key={`${photo}+${index}`}>
+            <ImageWrapper key={`${photo}+${index}`} onClick={this.props.toggleImageCarouselModal}>
               <img
                 src={photos[index]}
                 alt="description"
                 width="100"
                 height="100"
               />
-            </ImageCarousel>
+            </ImageWrapper>
           ))
           : null }
         <div className="a options">

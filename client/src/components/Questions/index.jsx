@@ -108,6 +108,8 @@ class Questions extends React.Component {
         Authorization: config.api_token,
       },
       success: (data) => {
+        console.log('id: ', id);
+        console.log('data: ', data);
         this.setState({
           QandA: data,
         });
@@ -128,13 +130,15 @@ class Questions extends React.Component {
         <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
         <button type="submit" onClick={this.productIdDown}>-</button>
-        <QandAHeader total={numOfTotalQs} QandA={QandA} />
+        <QandAHeader total={numOfTotalQs} QandA={QandA} toggleAskQuestionModal={this.props.toggleAskQuestionModal}/>
         <QandABody
           QandA={QandA}
           questionsDisplayed={questionsDisplayed}
           collapse={this.collapse}
           displayMore={this.displayMore}
-          openModal={this.props.openModal}
+          toggleAskQuestionModal={this.props.toggleAskQuestionModal}
+          toggleAddAnswerModal={this.props.toggleAddAnswerModal}
+          toggleImageCarouselModal={this.props.toggleImageCarouselModal}
         />
       </AppBody>
     );

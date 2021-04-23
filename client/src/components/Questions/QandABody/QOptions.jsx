@@ -59,7 +59,7 @@ class QOptions extends React.Component {
         { !this.state.reported
           ? <QButton className="option report" onClick={this.onClickReport}>Report</QButton>
           : <span> Reported </span> }
-        <QButton type="submit">  Add Answer</QButton>
+        <QButton type="submit" onClick={this.props.toggleAddAnswerModal}>  Add Answer</QButton>
       </QOptionsContainer>
     );
   }

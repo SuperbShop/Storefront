@@ -27,19 +27,16 @@ const QandABody = (props) => {
   const lengthTest = (results.length > 2
   && results.length > displayArr.length
   && displayArr.length > 0);
-
-  const { showAskQuestion, setShowAskQuestion } = props;
-
-  const openModal = () => {
-    setShowModal(prev => !prev);
-  };
-  console.log('results: ',results);
   return (
     <QuestionComponent>
-      {/* <AskQuestion showModal={showAskQuestion} setShowModal={setShowAskQuestion} /> */}
       <QuestionBodyComp className="QA-Body">
         { displayArr.map((result, index) => (
-          <QBody question={result} key={`${index}`} report={report} />
+          <QBody question={result}
+            key={`${index}`}
+            report={report}
+            toggleAddAnswerModal={props.toggleAddAnswerModal}
+            toggleImageCarouselModal={props.toggleImageCarouselModal}
+            />
         ))}
       </QuestionBodyComp>
       <QandAFooter
@@ -48,7 +45,7 @@ const QandABody = (props) => {
         lengthTest={lengthTest}
         questionsDisplayed={questionsDisplayed}
         questions={QuestionArr}
-        openModal={props.openModal}
+        toggleAskQuestionModal={props.toggleAskQuestionModal}
       />
     </QuestionComponent>
   );

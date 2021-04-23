@@ -149,6 +149,7 @@ class QBody extends React.Component {
                 helpfulness={question_helpfulness}
                 onClickHelpful={this.onClickHelpful}
                 onClickReport={this.onClickReport}
+                toggleAddAnswerModal={this.props.toggleAddAnswerModal}
               />
             </div>
           </div>
@@ -163,6 +164,7 @@ class QBody extends React.Component {
                 answer={answer}
                 onClickReport={this.onClickReport}
                 key={`answer ${index}`}
+                toggleImageCarouselModal={this.props.toggleImageCarouselModal}
               />
             ))}
             { lengthTest.moreToDisplay

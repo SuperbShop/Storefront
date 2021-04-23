@@ -70,7 +70,7 @@ class QandAHeader extends React.Component {
         />
         { truthTest
           ? <div></div>
-          : <AddQButton>Add A Question</AddQButton>}
+          : <AddQButton onClick={this.props.toggleAskQuestionModal}>Add A Question</AddQButton>}
         { truthTest2
           ? searchQuestions(search, QandA.results).map((result, index) => (
           <QBody question={result} key={`${index}`} />))

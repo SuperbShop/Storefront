@@ -16,11 +16,6 @@ const QandAFooter = (props) => {
   const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
   const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
-  const [showModal, setShowModal] = useState(false);
-
-  const openModal = () => {
-    setShowModal(prev => !prev);
-  };
   return (
     <div className="QA Footer Question-Buttons">
       { moreToDisplay
@@ -31,7 +26,7 @@ const QandAFooter = (props) => {
         ? <FooterButton type="submit" onClick={collapse}>No More Questions... Collapse?</FooterButton>
         : null
       }
-      <FooterButton type="submit" onClick={props.openModal}>Add A Question</FooterButton>
+      <FooterButton type="submit" onClick={props.toggleAskQuestionModal}>Add A Question</FooterButton>
     </div>
   );
 }

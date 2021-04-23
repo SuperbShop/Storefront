@@ -27,10 +27,8 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.3",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
-    "babel-loader": "^8.2.2",
-    "jquery": "^3.6.0",
-    "moment": "^2.29.1",
     "axios": "^0.21.1",
+    "babel-loader": "^8.2.2",
     "bootstrap": "^4.6.0",
     "enzyme": "^3.11.0",
     "express": "^4.17.1",
@@ -47,6 +45,7 @@
     "react-modal": "^3.13.1",
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^5.2.0",
+<<<<<<< HEAD
     "styled-components": "^5.2.3",
     "underscore": "^1.13.0",
     "webpack": "^5.33.1",
@@ -54,6 +53,15 @@
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
     "shortid": "^2.2.16"
+=======
+    "react-scripts": "^4.0.3",
+    "react-share": "^4.4.0",
+    "shortid": "^2.2.16",
+    "styled-components": "^5.2.3",
+    "underscore": "^1.13.0",
+    "webpack": "^5.33.1",
+    "webpack-cli": "^4.6.0"
+>>>>>>> e5e8be3abfae79fd5c1b326d9ce5fc7bef00cfc8
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

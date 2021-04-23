@@ -180,17 +180,11 @@ class CreateReview extends React.Component {
   }
 
   handleStarIconClick() {
-    console.log(event.target.id + ' was clicked')
-
+    const ratingWords = ["Poor", "Fair", "Average", "Good", "Best"];
     $('#InnerStars').width(`${event.target.id * 20}%`);
     $('#HiddenRatingInput').val(`${event.target.id}`);
-
-
-
-    // change width of inner stars to id * 20
-    // set hidden text box value to id
+    $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`)
   }
-
 
   render() {
     var charsArray = Object.keys(this.props.metaInfo.characteristics);
@@ -206,7 +200,7 @@ class CreateReview extends React.Component {
             </EachInputWrapper>
             <FloatLeft>
             <EachInputWrapper id="overall-rating">
-              Overall Rating:*
+              <p id="RatingText">Overall Rating:*</p>
               <HiddenRating type="text" id="HiddenRatingInput" />
             <StarsOuter>
                 <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />

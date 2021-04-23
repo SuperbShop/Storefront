@@ -7,6 +7,7 @@ import RelatedItems from './components/RelatedItems/RelatedItems';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
+import styled from 'styled-components';
 
 class App extends React.Component {
   constructor() {

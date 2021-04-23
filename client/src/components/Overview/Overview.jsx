@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -8,7 +9,7 @@ import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';
 import StyleSelector from './Subcomponents/StyleSelector';
-// import AddToCart from './AddToCart';
+import AddToCart from './Subcomponents/AddToCart';
 
 axios.defaults.headers.common.Authorization = config.TOKEN; // authorization for all requests
 
@@ -25,12 +26,12 @@ const TopWrapper = styled.div`
 `;
 
 const LeftDiv = styled.div`
-  width: 70%;
+  width: 65%;
   float: left;
 `;
 
 const RightDiv = styled.div`
-  width: 30%;
+  width: 35%;
   float: right;
 `;
 
@@ -42,12 +43,19 @@ class Overview extends React.Component {
       productStyles: [],
       selectedStyle: {},
       productRatings: [],
-      stylePhotos: [],
     };
+    this.handleStyleChange = this.handleStyleChange.bind(this);
   }
 
   componentDidMount() {
     this.fetchProduct();
+  }
+
+  handleStyleChange(id) {
+    const { productStyles } = this.state;
+    this.setState({
+      selectedStyle: productStyles.find((style) => style.style_id === id),
+    });
   }
 
   fetchProduct() {
@@ -76,7 +84,6 @@ class Overview extends React.Component {
         this.setState({
           productStyles: res.data.results,
           selectedStyle: res.data.results[0],
-          stylePhotos: res.data.results[0].photos,
         });
       })
       .catch((err) => console.error(err));
@@ -96,13 +103,15 @@ class Overview extends React.Component {
 
   render() {
     const {
-      currentProduct, productStyles, selectedStyle, stylePhotos, productRatings,
+      currentProduct, productStyles, selectedStyle, productRatings,
     } = this.state;
+    const { photos } = selectedStyle;
     return (
+
       <Wrapper>
         <TopWrapper>
           <LeftDiv>
-            <ImageGallery photos={stylePhotos} />
+            <ImageGallery photos={photos} />
           </LeftDiv>
           <RightDiv>
             <ProductInfo
@@ -110,22 +119,22 @@ class Overview extends React.Component {
               selectedStyle={selectedStyle}
               productRatings={productRatings}
             />
-            <StyleSelector selectedStyle={selectedStyle} styles={productStyles} />
+            <StyleSelector
+              selectedStyle={selectedStyle}
+              styles={productStyles}
+              handleStyleChange={this.handleStyleChange}
+            />
+            <AddToCart
+              skus={selectedStyle.skus}
+              productName={currentProduct.name}
+              styleName={selectedStyle.name}
+            />
           </RightDiv>
         </TopWrapper>
         <div className="ProductOverview">
           <div className="Description">
             <Description currentProduct={currentProduct} />
           </div>
-          {/* <div className="StyleSelector">
-            StyleSelector
-            <StyleSelector />
-          </div>
-          <div className="AddToCart">
-            AddToCart
-            <AddToCart />
-          </div> */}
-
         </div>
       </Wrapper>
     );

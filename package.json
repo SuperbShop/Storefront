@@ -34,10 +34,8 @@
     "bootstrap": "^4.6.0",
     "enzyme": "^3.11.0",
     "express": "^4.17.1",
-    "jquery": "^3.6.0",
     "live-server": "^1.2.1",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
     "mongoose": "^5.12.4",
     "popper.js": "^1.16.1",
     "prop-types": "^15.7.2",
@@ -52,12 +50,10 @@
     "styled-components": "^5.2.3",
     "underscore": "^1.13.0",
     "webpack": "^5.33.1",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.6.0",
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
-    "shortid": "^2.2.16",
-    "styled-components": "^5.2.3",
-    "underscore": "^1.13.0"
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

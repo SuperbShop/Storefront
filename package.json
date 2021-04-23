@@ -45,15 +45,6 @@
     "react-modal": "^3.13.1",
     "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^5.2.0",
-<<<<<<< HEAD
-    "styled-components": "^5.2.3",
-    "underscore": "^1.13.0",
-    "webpack": "^5.33.1",
-    "webpack-cli": "^4.6.0",
-    "react-scripts": "^4.0.3",
-    "react-share": "^4.4.0",
-    "shortid": "^2.2.16"
-=======
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
     "shortid": "^2.2.16",
@@ -61,7 +52,6 @@
     "underscore": "^1.13.0",
     "webpack": "^5.33.1",
     "webpack-cli": "^4.6.0"
->>>>>>> e5e8be3abfae79fd5c1b326d9ce5fc7bef00cfc8
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",

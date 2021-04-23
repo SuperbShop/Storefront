@@ -131,7 +131,6 @@ class Questions extends React.Component {
 
         <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
-        <span><strong>{QandA.product_id}</strong></span>
         <button type="submit" onClick={this.productIdDown}>-</button>
 
         <QandAHeader

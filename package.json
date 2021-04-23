@@ -52,7 +52,7 @@
     "styled-components": "^5.2.3",
     "underscore": "^1.13.0",
     "webpack": "^5.33.1",
-    "webpack-cli": "^4.6.0"
+    "webpack-cli": "^4.6.0",
     "react-scripts": "^4.0.3",
     "react-share": "^4.4.0",
     "shortid": "^2.2.16",

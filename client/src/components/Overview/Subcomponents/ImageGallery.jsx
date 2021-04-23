@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes
+  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 // import Modal from './Modal';
@@ -56,7 +56,8 @@ const ImageGallery = ({ photos }) => {
           </section>
           <section className="modal-icons">
             {photos.map((photo, index) => (
-              <FontAwesomeIcon icon={faCircle}
+              <FontAwesomeIcon
+                icon={faCircle}
                 className={index === current ? 'dots active' : 'dots'}
                 key={photo.thumbnail_url}
                 src={photo.thumbnail_url}

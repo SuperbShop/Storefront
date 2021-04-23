@@ -186,7 +186,7 @@ class ReviewsList extends React.Component {
 ReviewsList.propTypes = {
   meta: PropTypes.object,
   filterState: PropTypes.array,
-  productNum: PropTypes.string.isRequired,
+  // productNum: PropTypes.string.isRequired,
 };
 
 ReviewsList.defaultProps = {

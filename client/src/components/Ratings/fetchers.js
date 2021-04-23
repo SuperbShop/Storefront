@@ -6,7 +6,7 @@ const fetchersObject = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/meta?product_id=${id}`,
     headers: {
-      Authorization: config.API_KEY,
+      Authorization: config.TOKEN,
     },
     success: (data) => resolve(data),
     error: (err) => reject(err),
@@ -15,7 +15,7 @@ const fetchersObject = {
     method: 'GET',
     url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${id}&limit=2`,
     headers: {
-      Authorization: config.API_KEY,
+      Authorization: config.TOKEN,
     },
     success: (data) => resolve(data),
     error: (err) => reject(err),

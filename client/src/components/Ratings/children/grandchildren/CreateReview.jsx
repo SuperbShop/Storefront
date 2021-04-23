@@ -98,7 +98,7 @@ class CreateReview extends React.Component {
       method: 'GET',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${this.props.productId}`,
       headers: {
-        Authorization: config.API_KEY,
+        Authorization: config.TOKEN,
       },
       success: (data) => this.setState({ productName: data.name }),
       error: (err) => console.error(err),

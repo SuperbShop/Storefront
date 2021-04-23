@@ -1,5 +1,23 @@
 import React from 'react';
 import moment from 'moment';
+import styled from 'styled-components';
+
+const AOptionsContainer = styled.div`
+  color: black;
+  width: 45%;
+  height: 15%;
+  display: inline;
+  padding: 5px;
+`;
+
+const AOption = styled.button`
+  background: none!important;
+  border: none;
+  padding: 5px;
+  color: black;
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 class AOptions extends React.Component {
   constructor(props) {
@@ -26,39 +44,26 @@ class AOptions extends React.Component {
   }
 
   render() {
-    const { answerer } = this.props;
-    const { date } = this.props;
+    const { answerer, date, helpfulness } = this.props;
     const isHelpful = this.state.helpful;
-    const { helpfulness } = this.props;
     const helpfulClicked = helpfulness + 1;
     return (
-      <div className="options container">
+      <AOptionsContainer className="options container">
         <span className="option username">{answerer}</span>
         <span className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').fromNow()}</span>
         <span className="option helpful">
           Helpful?
-          <button type="submit" onClick={this.onClickHelpful}>
+          <AOption type="submit" onClick={this.onClickHelpful}>
             { isHelpful
-              ? (
-                <h3>
-                  Yes (
-                  {helpfulClicked}
-                  )
-                </h3>
-              )
-              : (
-                <h3>
-                  Yes (
-                  {helpfulness}
-                  )
-                </h3>
-              ) }
-          </button>
+              ? (<div>Yes (<strong>{helpfulClicked}</strong>)</div>)
+              : (<div>Yes ({helpfulness})</div>)
+            }
+          </AOption>
         </span>
         { !this.state.reported
-          ? <button className="option report" onClick={this.onClickReport}>Report</button>
-          : <h3>Reported</h3> }
-      </div>
+          ? <AOption className="option report" onClick={this.onClickReport}>Report</AOption>
+          : <span>Reported</span> }
+      </AOptionsContainer>
     );
   }
 }

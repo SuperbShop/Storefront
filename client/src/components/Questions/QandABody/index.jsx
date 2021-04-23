@@ -1,31 +1,57 @@
 import React from 'react';
+import styled from 'styled-components';
 import QBody from './QBody';
+import QandAFooter from '../QandAFooter';
 
-class QandABody extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      QandA: [],
-    };
-  }
+const QuestionComponent = styled.div`
+  background-color: rgb(190, 190, 190);
+  max-height: 10%;
+  overflow: scroll;
+`;
+const QuestionBodyComp = styled.div`
+  width: 100%;
+`;
+const sortByQHelpful = (arr) => {
+  const copy = arr.slice();
+  copy.sort((question, nextQ) => ((question.question_helpfulness > nextQ.question_helpfulness)
+    ? -1 : 1));
+  return copy;
+};
 
-  componentDidMount() {
-    const { QandA } = this.props;
-    this.setState({
-      QandA: QandA,
-    });
-  }
+const QandABody = (props) => {
+  const results = props.QandA.results;
+  const report = props.report;
+  const questionsDisplayed = props.questionsDisplayed;
+  const QuestionArr = sortByQHelpful(results);
+  const displayArr = QuestionArr.slice(0, questionsDisplayed);
+  const lengthTest = (results.length > 2
+  && results.length > displayArr.length
+  && displayArr.length > 0);
 
-  render() {
-    const { results } = this.props.QandA;
-    return (
-      <section className="QA-Body">
-        { results.map((result, index) => (
-          <QBody question={result} key={`${index}`} />
+  const { showAskQuestion, setShowAskQuestion } = props;
+
+  const openModal = () => {
+    setShowModal(prev => !prev);
+  };
+  console.log('results: ',results);
+  return (
+    <QuestionComponent>
+      {/* <AskQuestion showModal={showAskQuestion} setShowModal={setShowAskQuestion} /> */}
+      <QuestionBodyComp className="QA-Body">
+        { displayArr.map((result, index) => (
+          <QBody question={result} key={`${index}`} report={report} />
         ))}
-      </section>
-    );
-  }
-}
+      </QuestionBodyComp>
+      <QandAFooter
+        displayMore={props.displayMore}
+        collapse={props.collapse}
+        lengthTest={lengthTest}
+        questionsDisplayed={questionsDisplayed}
+        questions={QuestionArr}
+        openModal={props.openModal}
+      />
+    </QuestionComponent>
+  );
+};
 
 export default QandABody;

@@ -1,11 +1,24 @@
 import React from 'react';
+import styled from 'styled-components';
+
+const QOptionsContainer = styled.div`
+  float: right;
+`;
+
+const QButton = styled.button`
+  background: none!important;
+  border: none;
+  padding: 5px;
+  color: white;
+  text-decoration: underline;
+  cursor: pointer;
+`;
 
 class QOptions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       helpful: false,
-      helpfulCount: 0,
       reported: false,
     };
     this.onClickHelpful = this.onClickHelpful.bind(this);
@@ -28,34 +41,26 @@ class QOptions extends React.Component {
   render() {
     const { helpfulness } = this.props;
     const isHelpful = this.state.helpful;
-    const helpful = helpfulness + 1;
+    const helpfulClicked = helpfulness + 1;
     return (
-      <div className="options container">
+      <QOptionsContainer className="options container">
         <span className="option helpful">
           Helpful?
-          <button type="submit" onClick={this.onClickHelpful}>
+          <QButton type="submit" onClick={this.onClickHelpful}>
             { isHelpful
               ? (
-                <h3>
-                  Yes (
-                  {helpful}
-                  )
-                </h3>
+                <div>Yes <strong>({helpfulClicked})</strong></div>
               )
               : (
-                <h3>
-                  Yes (
-                  {helpfulness}
-                  )
-                </h3>
+                <div>Yes ({helpfulness})</div>
               ) }
-          </button>
+          </QButton>
         </span>
         { !this.state.reported
-          ? <button className="option report" onClick={this.onClickReport}>Report</button>
-          : <h3>Reported</h3> }
-        <span className="option addAnswer"><p>Add Answer</p></span>
-      </div>
+          ? <QButton className="option report" onClick={this.onClickReport}>Report</QButton>
+          : <span> Reported </span> }
+        <QButton type="submit">  Add Answer</QButton>
+      </QOptionsContainer>
     );
   }
 }

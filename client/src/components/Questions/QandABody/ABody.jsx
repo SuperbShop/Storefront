@@ -1,52 +1,94 @@
 import React from 'react';
+import styled from 'styled-components';
 import AOptions from './AOptions';
+
+const AnswerBody = styled.div`
+  background-color: rgb(220, 220, 220);
+  height: 15%;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 98%;
+  margin: 0 auto;
+  display: grid;
+`;
+
+const AnswerOptions = styled.div`
+  background-color: rgb(220, 220, 220);
+  padding: 5px;
+`;
+
+const AnswerText = styled.div`
+  padding: 5px;
+  display: inline;
+`;
+
+const ImageCarousel = styled.div`
+  margin: 10px;
+  height: 100px;
+  border: 2px solid white;
+  display: inline-block;
+`;
 
 class ABody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      answersDisplayed: 2,
+      reported: false,
     };
+    this.report = this.report.bind(this);
+  }
+
+  report() {
+    const { onClickReport } = this.props;
+    onClickReport();
+    this.setState({
+      reported: true,
+    });
   }
 
   displayMore() {
+    const { answersDisplayed } = this.state;
     this.setState({
       answersDisplayed: answersDisplayed + 2,
     });
   }
 
   render() {
-    console.log('ABODY PROPS: ', this.props);
-    const { answer } = this.props;
-    const { body } = answer;
-    const { answerer_name } = answer;
-    const { date } = answer;
-    const { helpfulness } = answer;
+    const {
+      body, answerer_name, date, helpfulness, photos,
+    } = this.props.answer;
     return (
-      <div className="A-Body">
-        <span>
-          <strong>A: </strong>
-        </span>
-        <span className="answer">
-          <p>
+      <AnswerBody>
+
+        <AnswerText>
+          <span className="answer">
             {body}
-          </p>
-        </span>
+          </span>
+        </AnswerText>
+        { photos
+          ? photos.map((photo, index) => (
+            <ImageCarousel key={`${photo}+${index}`}>
+              <img
+                src={photos[index]}
+                alt="description"
+                width="100"
+                height="100"
+              />
+            </ImageCarousel>
+          ))
+          : null }
         <div className="a options">
-          <AOptions
-            onClickReport={this.props.onClickReport}
-            answerer={answerer_name}
-            date={date}
-            helpfulness={helpfulness}
-            displayMore={this.displayMore}
-          />
-          { answer.photos
-            ? answer.photos.map((photo, index) => (
-              <img src={answer.photos[index]} alt="description" width="50" height="50" key={`${photo}+${index}`}></img>
-            ))
-            : <p>no photos</p>}
+          <AnswerOptions>
+            <AOptions
+              onClickReport={this.report}
+              answerer={answerer_name}
+              date={date}
+              helpfulness={helpfulness}
+            />
+          </AnswerOptions>
         </div>
-      </div>
+
+      </AnswerBody>
     );
   }
 }

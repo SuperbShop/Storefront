@@ -1,9 +1,10 @@
+/* eslint-disable no-console */
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 // import $ from 'jquery';
 import PropTypes from 'prop-types';
-import config from '/config';
+import config from '../../../../config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
 import ImageGallery from './Subcomponents/ImageGallery';

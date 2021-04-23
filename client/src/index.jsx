@@ -1,10 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import styled from 'styled-components';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
-import RelatedItems from './components/RelatedItems/RelatedItems';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
@@ -21,7 +19,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
   // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
-    // console.log(info);
+    console.log(info);
     window.clicks.push(info);
   }}
   >
@@ -30,7 +28,8 @@ const clickTracker = (WrappedComponent, module) => (props) => (
 );
 
 const TrackedOverview = clickTracker(Overview, 'Overview');
-const TrackedQuestions = clickTracker(Questions, 'Questions');
+const TrackedQuestions = clickTracker(Questions, 'Q&A');
+const TrackedRatings = clickTracker(Ratings, 'Ratings');
 
 class App extends React.Component {
   constructor() {
@@ -139,8 +138,7 @@ class App extends React.Component {
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
         </section>
-        <section className="ratings module"><Ratings product={product} /></section>
-        <section className="related-items module"><RelatedItems product={product} /></section>
+        <section className="ratings module"><TrackedRatings product={product} /></section>
       </>
     );
   }

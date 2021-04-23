@@ -1,4 +1,4 @@
-/* eslint-disable react/prop-types */
+
 import React from 'react';
 import $ from 'jquery';
 import styled from 'styled-components';
@@ -60,7 +60,7 @@ class QBody extends React.Component {
       question: 'default',
       numDisplayed: 2,
       reported: false,
-      helpful: false,
+      markedHelpful: false,
     };
     this.onCLickDisplay = this.onClickDisplay.bind(this);
     this.onClickReportQ = this.onClickReportQ.bind(this);
@@ -79,9 +79,9 @@ class QBody extends React.Component {
   }
 
   onClickHelpful() {
-    const { helpful } = this.state;
+    const { markedHelpful } = this.state;
     this.setState({
-      helpful: !helpful,
+      markedHelpful: !markedHelpful,
     });
   }
 
@@ -127,55 +127,67 @@ class QBody extends React.Component {
       answers,
       question_helpfulness,
     } = this.props.question;
+    const { toggleAddAnswerModal, toggleImageCarouselModal} = this.props;
     const ansArr = sortByAHelpful(answers);
     const ansDisplayed = ansArr.slice(0, numDisplayed);
-    // If the number of answers displayed is less than the total available
     const lengthTest = {
-      moreToDisplay: ansArr.length > 2 && ansDisplayed.length < ansArr.length,
-      currentlyDisplayingAll: ansDisplayed.length >= ansArr.length && ansArr.length > 2,
-      test3: ansArr.length === 1,
+      moreToDisplay: (ansArr.length > 2 && ansDisplayed.length < ansArr.length),
+      currentlyDisplayingAll: (ansDisplayed.length >= ansArr.length && ansArr.length > 2),
     };
     return (
       <QuestionDiv>
+
         <QuestionHeader>
-          <span>
+          <div className="q icon">
             <h3>
               Q:
+            </h3>
+          </div>
+
+          <div className="q text">
+            <h3>
               {question_body}
             </h3>
-          </span>
-          <div className="options-upper">
-            <div className="QOptions">
-              <QOptions
-                helpfulness={question_helpfulness}
-                onClickHelpful={this.onClickHelpful}
-                onClickReport={this.onClickReport}
-                toggleAddAnswerModal={this.props.toggleAddAnswerModal}
-              />
-            </div>
+          </div>
+
+          <div className="q options">
+            <QOptions
+              helpfulness={question_helpfulness}
+              onClickHelpful={this.onClickHelpful}
+              onClickReport={this.onClickReport}
+              toggleAddAnswerModal={toggleAddAnswerModal}
+            />
           </div>
         </QuestionHeader>
+
         <AnswerWrapper>
-          <span>
+          <div className="a icon">
             <h3>
               A:
             </h3>
+          </div>
+
+          <span className="answer-display">
             { ansDisplayed.map((answer, index) => (
-              <ABody
-                answer={answer}
-                onClickReport={this.onClickReport}
-                key={`answer ${index}`}
-                toggleImageCarouselModal={this.props.toggleImageCarouselModal}
-              />
+              answer.body
+              ? <ABody
+                  answer={answer}
+                  onClickReport={this.onClickReport}
+                  key={`answer ${index}`}
+                  toggleImageCarouselModal={toggleImageCarouselModal}
+                />
+              : null
             ))}
             { lengthTest.moreToDisplay
               ? <LoadOption type="submit" onClick={this.onCLickDisplay}>See More Answers</LoadOption>
-              : <div></div>}
+              : null}
             { lengthTest.currentlyDisplayingAll
               ? <LoadOption type="submit" onClick={this.onClickCollapse}>No More Answers to Display... Collapse?</LoadOption>
-              : <div></div>}
+              : null }
           </span>
+
         </AnswerWrapper>
+
       </QuestionDiv>
     );
   }

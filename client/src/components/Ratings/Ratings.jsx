@@ -54,7 +54,6 @@ class Ratings extends React.Component {
       const { filterBy } = this.state;
       let newFilterState = [];
       newFilterState = filterBy.slice();
-      // const newFilterState = this.state.filterBy.slice();
       if (!newFilterState.includes(value)) {
         newFilterState.push(value);
       } else {

@@ -35,6 +35,7 @@ class ReviewsList extends React.Component {
 
     this.toggleCreateReviewModal = this.toggleCreateReviewModal.bind(this);
     this.showMoreReviews = this.showMoreReviews.bind(this);
+    this.showLessReviews = this.showLessReviews.bind(this);
   }
 
   componentDidMount() {
@@ -69,6 +70,13 @@ class ReviewsList extends React.Component {
   showMoreReviews() {
     this.setState({
       sliceBy: this.state.sliceBy += 2,
+    });
+  }
+
+  showLessReviews() {
+    console.log('should happen');
+    this.setState({
+      sliceBy: 2,
     });
   }
 
@@ -125,7 +133,7 @@ class ReviewsList extends React.Component {
     if (this.state.sliceBy < this.state.reviewsData.length) {
       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
     } else {
-      moreReviewsButton = '';
+      moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
     }
 
     const sortDropdown = (

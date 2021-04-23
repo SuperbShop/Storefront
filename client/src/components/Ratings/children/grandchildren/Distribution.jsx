@@ -74,6 +74,10 @@ class Distribution extends React.Component {
   handleClearFiltersClick() {
     console.log('clear filters');
     // this.state.localFilters.forEach((value) => this.props.filterBy(value));
+    this.props.filterBy(0);
+    this.setState({
+      localFilters: [],
+    });
   }
 
   render() {

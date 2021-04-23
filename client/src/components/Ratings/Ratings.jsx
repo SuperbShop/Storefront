@@ -27,7 +27,7 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       filterBy: [],
-    };
+    }
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
   }
@@ -44,19 +44,27 @@ class Ratings extends React.Component {
   }
 
   handleFilterBy(value) {
-    const { filterBy } = this.state;
-    let newFilterState = [];
-    newFilterState = filterBy.slice();
-    // const newFilterState = this.state.filterBy.slice();
-    if (!newFilterState.includes(value)) {
-      newFilterState.push(value);
+    if (value === 0) {
+      console.log('empty');
+      let emptyFilterState = [];
+      this.setState({
+        filterBy: emptyFilterState,
+      });
     } else {
-      const index = newFilterState.indexOf(value);
-      newFilterState.splice(index, 1);
+      const { filterBy } = this.state;
+      let newFilterState = [];
+      newFilterState = filterBy.slice();
+      // const newFilterState = this.state.filterBy.slice();
+      if (!newFilterState.includes(value)) {
+        newFilterState.push(value);
+      } else {
+        const index = newFilterState.indexOf(value);
+        newFilterState.splice(index, 1);
+      }
+      this.setState({
+        filterBy: newFilterState,
+      });
     }
-    this.setState({
-      filterBy: newFilterState,
-    });
   }
 
   render() {

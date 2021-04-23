@@ -51,8 +51,8 @@ class Questions extends React.Component {
   }
 
   componentDidMount() {
-    const { product } = this.props;
-    this.getProduct(product);
+    const { productId } = this.props;
+    this.getProduct(productId.toString());
   }
 
   displayMore() {
@@ -104,11 +104,9 @@ class Questions extends React.Component {
       method: 'GET',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/qa/questions?product_id=${id}`,
       headers: {
-        Authorization: config.api_token,
+        Authorization: config.TOKEN,
       },
       success: (data) => {
-        console.log('id: ', id);
-        console.log('data: ', data);
         this.setState({
           QandA: data,
         });
@@ -133,6 +131,7 @@ class Questions extends React.Component {
 
         <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
+        <span><strong>{QandA.product_id}</strong></span>
         <button type="submit" onClick={this.productIdDown}>-</button>
 
         <QandAHeader

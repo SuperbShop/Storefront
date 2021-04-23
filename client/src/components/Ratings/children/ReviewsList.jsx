@@ -154,7 +154,7 @@ class ReviewsList extends React.Component {
     return (
       <div id="tiles">
         <p>
-          {this.state.reviewsData.length}
+          {sortedFilteredReviews.length}
           {' '}
           reviews, sorted by
           {' '}

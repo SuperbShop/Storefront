@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faArrowUp, faArrowDown,
+  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand,
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 // import Modal from './Modal';
@@ -18,7 +18,7 @@ const ImageGallery = ({ photos }) => {
     }
   };
 
-  const imageClicked = (e) => {
+  const imageClicked = () => {
     setSelectedImg(null);
   };
 
@@ -77,6 +77,8 @@ const ImageGallery = ({ photos }) => {
             {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
             {photos.map((photo, index) => (
               <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={() => setSelectedImg(photo.url)} aria-hidden="true">
+                {' '}
+                <FontAwesomeIcon icon={faExpand} className="expand" onClick={() => setSelectedImg(photo.url)} />
                 {index === current && (<img className="image" src={photo.url} alt="product" />) }
               </div>
             ))}

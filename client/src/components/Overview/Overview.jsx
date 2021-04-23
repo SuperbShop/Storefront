@@ -43,7 +43,6 @@ class Overview extends React.Component {
       selectedStyle: {},
       productRatings: [],
       stylePhotos: [],
-      expandedView: false,
     };
     this.handleStyleChange = this.handleStyleChange.bind(this);
   }
@@ -103,18 +102,11 @@ class Overview extends React.Component {
       .catch((err) => console.error(err));
   }
 
-  handleExpandedView() {
-    this.setState(prevState => ({
-      expandedView: !prevState.expandedView,
-    }));
-  }
-
   render() {
     const {
-      currentProduct, productStyles, selectedStyle, productRatings, stylePhotos, expandedView,
+      currentProduct, productStyles, selectedStyle, productRatings,
     } = this.state;
     const { photos } = selectedStyle;
-    console.log(expandedView);
     return (
 
       <Wrapper>

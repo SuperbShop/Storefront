@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand,
+  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 // import Modal from './Modal';
@@ -41,17 +41,31 @@ const ImageGallery = ({ photos }) => {
   return (
     <div className="gallery">
       { selectedImg ? (
-        <section className="backdrop">
-          {
+        <div>
+          <section className="backdrop">
+            {
       current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
         }
-          {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
-          {photos.map((photo, index) => (
-            <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} onClick={imageClicked} aria-hidden="true">
-              {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
-            </div>
-          ))}
-        </section>
+            {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+            {photos.map((photo, index) => (
+              <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} onClick={imageClicked} aria-hidden="true">
+                {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
+              </div>
+            ))}
+          </section>
+          <section className="modal-icons">
+            {photos.map((photo, index) => (
+              <FontAwesomeIcon icon={faCircle}
+                className={index === current ? 'dots active' : 'dots'}
+                key={photo.thumbnail_url}
+                src={photo.thumbnail_url}
+                alt="product"
+                onClick={() => handleClick(index)}
+                aria-hidden="true"
+              />
+            ))}
+          </section>
+        </div>
       ) : (
         <div>
           <section className="thumb-slider">

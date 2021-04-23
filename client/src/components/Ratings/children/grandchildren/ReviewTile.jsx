@@ -70,12 +70,13 @@ class ReviewTile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showMore: false,
+      showMoreChars: false,
       modalPhoto: 'none',
     };
     this.handleImageClick = this.handleImageClick.bind(this);
     this.handleHelpfulClick = this.handleHelpfulClick.bind(this);
     this.handleReportClick = this.handleReportClick.bind(this);
+    this.handleShowMoreClick = this.handleShowMoreClick.bind(this);
   }
 
   handleHelpfulClick(event) {
@@ -121,8 +122,17 @@ class ReviewTile extends React.Component {
     }
   }
 
+  handleShowMoreClick() {
+    this.setState({
+      showMoreChars: !this.state.showMoreChars,
+    });
+  }
+
   render() {
     let recommendation;
+    let bodyAndShowMore;
+    let photoBody;
+
     if (this.props.review.recommend) {
       recommendation = (
         <p>
@@ -134,32 +144,40 @@ class ReviewTile extends React.Component {
     } else {
       recommendation = '';
     }
-    /// ////////////////////////////////////////////////////
-    // NEED TO REWORK THIS FOR SHOW MORE BUTTON ///////////
-    /// ////////////////////////////////////////////////////
-    // let body;
-    // if (this.props.review.photos.length > 0) {
-    //   body = (
-    //     <div>
-    //       <div>
-    //         {this.props.review.photos.map((photo) => <ThumbnailImage onClick={this.handleImageClick} key={photo.id} src={photo.url} />)}
-    //       </div>
-    //       <div>
-    //         {this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}
-    //       </div>
-    //     </div>
-    //   );
-    // } else {
-    //   body = <p>{this.state.showMore ? this.props.review.body : this.props.review.body.slice(0, 250)}</p>;
-    // }
 
-    let body = (
-      <div>
-        {this.props.review.body}
-      </div>
-    );
+    // REVIEW BODY SLICING - CAN CHANGE THIS TO 250 LATER!!!!!
+    if (this.props.review.body.length < 15) {
+      bodyAndShowMore = (
+        <div id="yo">
+          {this.props.review.body}
+        </div>
+      );
+    } else if (this.props.review.body.length > 15 && this.state.showMoreChars === false) {
+      bodyAndShowMore = (
+        <div>
+          <div id="sup">
+            {this.props.review.body.slice(0, 15)}
+          </div>
+          <div>
+            <button type="button" onClick={this.handleShowMoreClick}>Show More</button>
+          </div>
+        </div>
+      );
+    } else {
+      bodyAndShowMore = (
+        <div>
+          <div id="sup">
+            {this.props.review.body}
+          </div>
+          <div>
+            <button type="button" onClick={this.handleShowMoreClick}>Show Less</button>
+          </div>
+        </div>
+      );
+    }
+
     if (this.props.review.photos.length > 0) {
-      body = (
+      photoBody = (
         <div>
           {this.props.review.photos.map((photo) => {
             if (this.state.modalPhoto === photo.url) {
@@ -185,21 +203,10 @@ class ReviewTile extends React.Component {
               />
             );
           })}
-          <div>
-            {this.props.review.body}
-          </div>
         </div>
       );
     }
 
-    // body
-    // if there are photos
-    // body + photos
-    // if you click a photo
-    // body + photos + modal around one photo
-
-    /// ///////////////////////////////////////////////////
-    /// ///////////////////////////////////////////////////
     const StarsInner = styled.div`
       position: absolute;
       top: 0;
@@ -239,7 +246,8 @@ class ReviewTile extends React.Component {
         <h3>{this.props.review.summary}</h3>
         </TileItem>
         <TileItem>
-        {body}
+        {photoBody}
+        {bodyAndShowMore}
         </TileItem>
         <TileItem>
         {recommendation}

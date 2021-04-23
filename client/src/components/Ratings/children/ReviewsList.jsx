@@ -74,7 +74,6 @@ class ReviewsList extends React.Component {
   }
 
   showLessReviews() {
-    console.log('should happen');
     this.setState({
       sliceBy: 2,
     });

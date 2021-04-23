@@ -39,82 +39,84 @@ const StarsOuter = styled.div`
   width: 100%;
   `;
 
-class Breakdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      // avgRating: 0,
-      // percentThatRecommend: 0,
-    };
-  }
-
-  render() {
-    let reviewSum = 0;
-    let reviewQuantity = 0;
-    let percent = 0;
-    let average = 0;
-    let ratingsDist;
-    let productChars;
-    if (this.props.meta !== undefined) {
-      const ratingsArray = Object.keys(this.props.meta.ratings);
-      for (let i = 0; i < ratingsArray.length; i += 1) {
-        reviewSum += ratingsArray[i] * this.props.meta.ratings[ratingsArray[i]];
-        reviewQuantity += Number(this.props.meta.ratings[ratingsArray[i]]);
-      }
-      average = (reviewSum / reviewQuantity).toFixed(1);
-      percent = (100 * (Number(this.props.meta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
-      ratingsDist = this.props.meta.ratings;
-      productChars = this.props.meta.characteristics;
-      var averagePercentage = average / 5;
+const Breakdown = (props) => {
+  let reviewSum = 0;
+  let reviewQuantity = 0;
+  let percent = 0;
+  let average = 0;
+  let averagePercentage = 0;
+  let ratingsDist;
+  let productChars;
+  const { meta, filterBy, productNum } = props;
+  if (meta !== undefined) {
+    const ratingsArray = Object.keys(meta.ratings);
+    for (let i = 0; i < ratingsArray.length; i += 1) {
+      reviewSum += ratingsArray[i] * meta.ratings[ratingsArray[i]];
+      reviewQuantity += Number(meta.ratings[ratingsArray[i]]);
     }
-    const StarsInner = styled.div`
-      position: absolute;
-      top: 0;
-      left: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      width: ${(averagePercentage) * 100}%;
-      `;
-    // need to incorporate the star graphi
-    return (
-      <BreakdownSection>
-        <ScoreAndStarsContainer>
-          <OverallScoreh2>
-            {average}
-          </OverallScoreh2>
-           <StarsContainer>
-            <StarsOuter>
+    average = (reviewSum / reviewQuantity).toFixed(1);
+    percent = (100 * (Number(meta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
+    ratingsDist = meta.ratings;
+    productChars = meta.characteristics;
+    averagePercentage = average / 5;
+  }
+  const StarsInner = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    width: ${(averagePercentage) * 100}%;
+    `;
+  return (
+    <BreakdownSection>
+      <ScoreAndStarsContainer>
+        <OverallScoreh2>
+          {average}
+        </OverallScoreh2>
+        <StarsContainer>
+          <StarsOuter>
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
             <StarsInner>
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
             </StarsInner>
-            </StarsOuter>
-          </StarsContainer>
-        </ScoreAndStarsContainer>
-        <PercentLine>
-          {percent}
-          % of reviews recommend this product
-        </PercentLine>
-        <section>
-          <Distribution filterBy={this.props.filterBy} dist={ratingsDist} />
-          <ProductFactors productNum={this.props.productNum} chars={productChars} />
-        </section>
-      </BreakdownSection>
-    );
-  }
-}
+          </StarsOuter>
+        </StarsContainer>
+      </ScoreAndStarsContainer>
+      <PercentLine>
+        {percent}
+        % of reviews recommend this product
+      </PercentLine>
+      <section>
+        <Distribution filterBy={filterBy} dist={ratingsDist} />
+        <ProductFactors productNum={productNum} chars={productChars} />
+      </section>
+    </BreakdownSection>
+  );
+};
 
 Breakdown.propTypes = {
   productNum: PropTypes.string.isRequired,
-  meta: PropTypes.object
+  meta: PropTypes.shape({
+    ratings: PropTypes.object,
+    productId: PropTypes.string,
+    characteristics: PropTypes.object,
+    recommended: PropTypes.object,
+  }),
+  filterBy: PropTypes.func,
 };
+
+// Breakdown.defaultProps = {
+//   meta: {},
+//   filterBy: {},
+// };
 
 export default Breakdown;

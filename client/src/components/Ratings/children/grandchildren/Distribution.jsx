@@ -84,7 +84,7 @@ class Distribution extends React.Component {
     let filterStatus;
     if (this.state.localFilters.length > 0) {
       let filtersString = 'Reviews filtered by: ';
-      this.state.localFilters.forEach((num) => filtersString += `${num}, `);
+      this.state.localFilters.sort((a, b) => a - b).forEach((num) => filtersString += `${num}, `);
 
       filterStatus = (
         <StyledSpan>

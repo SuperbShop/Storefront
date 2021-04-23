@@ -101,12 +101,8 @@ class CreateReview extends React.Component {
         Authorization: config.API_KEY,
       },
       success: (data) => this.setState({ productName: data.name }),
-      error: (err) => console.log(err),
+      error: (err) => console.error(err),
     });
-  }
-
-  handleFormSubmission() {
-    // post to API - need the url meaning we need the item ID passed down through props
   }
 
   handleExitButtonClick() {
@@ -115,6 +111,13 @@ class CreateReview extends React.Component {
 
   handleCharRadioClick(event) {
     $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
+  }
+
+  handleStarIconClick() {
+    const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
+    $('#InnerStars').width(`${event.target.id * 20}%`);
+    $('#HiddenRatingInput').val(`${event.target.id}`);
+    $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
   updateLengthDetails(event) {
@@ -137,13 +140,6 @@ class CreateReview extends React.Component {
       console.log('should remove');
       $('input').remove('#ImgUpload');
     }
-  }
-
-  handleStarIconClick() {
-    const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
-    $('#InnerStars').width(`${event.target.id * 20}%`);
-    $('#HiddenRatingInput').val(`${event.target.id}`);
-    $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
   render() {
@@ -217,12 +213,15 @@ class CreateReview extends React.Component {
               <EachInputWrapper id="characteristics">
                 Please rate the product characteristics*
                 {/* <CharsRadioWrapper> */}
-                {charsArray.map((char) => <CharsRadioButtons
-                charsArray={charsArray}
-                charsObject={this.charsObject}
-                handleCharRadioClick={this.handleCharRadioClick}
-                key={char}
-                name={char} />)}
+                {charsArray.map((char) => (
+                  <CharsRadioButtons
+                    charsArray={charsArray}
+                    charsObject={this.charsObject}
+                    handleCharRadioClick={this.handleCharRadioClick}
+                    key={char}
+                    name={char}
+                  />
+                ))}
                 {/* </CharsRadioWrapper> */}
               </EachInputWrapper>
               <EachInputWrapper id="UploadYourPhotos">
@@ -236,7 +235,7 @@ class CreateReview extends React.Component {
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>
-            <button id="exitbutton" onClick={this.handleExitButtonClick}>X</button>
+            <button type="button" id="exitbutton" onClick={this.handleExitButtonClick}>X</button>
           </ExitButtonWrapper>
         </CenteredDiv>
       </>

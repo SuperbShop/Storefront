@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
@@ -39,6 +40,14 @@ const StarsOuter = styled.div`
   width: 100%;
   `;
 
+const StarsInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  `;
+
 const Breakdown = (props) => {
   let reviewSum = 0;
   let reviewQuantity = 0;
@@ -59,15 +68,9 @@ const Breakdown = (props) => {
     ratingsDist = meta.ratings;
     productChars = meta.characteristics;
     averagePercentage = average / 5;
+    $('.StarsInner').width(`${averagePercentage * 100}%`);
   }
-  const StarsInner = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    width: ${(averagePercentage) * 100}%;
-    `;
+
   return (
     <BreakdownSection>
       <ScoreAndStarsContainer>
@@ -81,7 +84,7 @@ const Breakdown = (props) => {
             <FontAwesomeIcon key={3} icon={faStar} />
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
-            <StarsInner>
+            <StarsInner className="StarsInner">
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />

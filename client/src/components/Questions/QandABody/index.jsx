@@ -4,7 +4,7 @@ import QBody from './QBody';
 import QandAFooter from '../QandAFooter';
 
 const QuestionComponent = styled.div`
-  background-color: rgb(190, 190, 190);
+  background-color: #fff;
   max-height: 10%;
   overflow: scroll;
 `;
@@ -19,11 +19,19 @@ const sortByQHelpful = (arr) => {
 };
 
 const QandABody = (props) => {
+  const {
+    report,
+    questionsDisplayed,
+    toggleAddAnswerModal,
+    toggleImageCarouselModal,
+    toggleAskQuestionModal,
+    collapse,
+    displayMore,
+  } = props;
   const results = props.QandA.results;
-  const report = props.report;
-  const questionsDisplayed = props.questionsDisplayed;
-  const QuestionArr = sortByQHelpful(results);
-  const displayArr = QuestionArr.slice(0, questionsDisplayed);
+
+  const questionArr = sortByQHelpful(results);
+  const displayArr = questionArr.slice(0, questionsDisplayed);
   const lengthTest = (results.length > 2
   && results.length > displayArr.length
   && displayArr.length > 0);
@@ -31,21 +39,22 @@ const QandABody = (props) => {
     <QuestionComponent>
       <QuestionBodyComp className="QA-Body">
         { displayArr.map((result, index) => (
-          <QBody question={result}
+          <QBody
+            question={result}
             key={`${index}`}
             report={report}
-            toggleAddAnswerModal={props.toggleAddAnswerModal}
-            toggleImageCarouselModal={props.toggleImageCarouselModal}
-            />
+            toggleAddAnswerModal={toggleAddAnswerModal}
+            toggleImageCarouselModal={toggleImageCarouselModal}
+          />
         ))}
       </QuestionBodyComp>
       <QandAFooter
-        displayMore={props.displayMore}
-        collapse={props.collapse}
+        displayMore={displayMore}
+        collapse={collapse}
         lengthTest={lengthTest}
         questionsDisplayed={questionsDisplayed}
-        questions={QuestionArr}
-        toggleAskQuestionModal={props.toggleAskQuestionModal}
+        questions={questionArr}
+        toggleAskQuestionModal={toggleAskQuestionModal}
       />
     </QuestionComponent>
   );

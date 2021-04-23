@@ -3,11 +3,10 @@ import $ from 'jquery';
 import styled from 'styled-components';
 import QandAHeader from './QandAHeader';
 import QandABody from './QandABody';
-// import QandAFooter from './QandAFooter';
 import config from '../../../../config';
 
 const AppBody = styled.div`
-  background-color: rgb(190, 190, 190);
+  background-color: #fff;
   width: 100%;
   display: flex-box;
   justify-content: center;
@@ -122,23 +121,33 @@ class Questions extends React.Component {
     const {
       QandA,
       questionsDisplayed,
-      showAskQuestion,
     } = this.state;
+    const {
+      toggleAskQuestionModal,
+      toggleAddAnswerModal,
+      toggleImageCarouselModal
+    } = this.props;
     const numOfTotalQs = QandA.results.length;
     return (
       <AppBody className="QuestionsAndAnswers">
+
         <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
         <button type="submit" onClick={this.productIdDown}>-</button>
-        <QandAHeader total={numOfTotalQs} QandA={QandA} toggleAskQuestionModal={this.props.toggleAskQuestionModal}/>
+
+        <QandAHeader
+          total={numOfTotalQs}
+          QandA={QandA}
+          toggleAskQuestionModal={toggleAskQuestionModal}
+        />
         <QandABody
           QandA={QandA}
           questionsDisplayed={questionsDisplayed}
           collapse={this.collapse}
           displayMore={this.displayMore}
-          toggleAskQuestionModal={this.props.toggleAskQuestionModal}
-          toggleAddAnswerModal={this.props.toggleAddAnswerModal}
-          toggleImageCarouselModal={this.props.toggleImageCarouselModal}
+          toggleAskQuestionModal={toggleAskQuestionModal}
+          toggleAddAnswerModal={toggleAddAnswerModal}
+          toggleImageCarouselModal={toggleImageCarouselModal}
         />
       </AppBody>
     );

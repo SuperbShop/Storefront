@@ -24,14 +24,15 @@ const QuestionDiv = styled.div`
 `;
 
 const QuestionHeader = styled.div`
-  color: white;
+  color: black;
   height: 15%;
   float: right;
   border-radius: 10px 10px 0 0;
   padding: 10px 15px;
-  background-color: black;
+  background-color: white;
   display: flex;
   flex-direction: row;
+  margin: 10 auto 10 auto;
 `;
 
 const AnswerWrapper = styled.div`

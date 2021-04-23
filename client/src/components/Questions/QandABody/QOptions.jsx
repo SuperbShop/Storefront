@@ -9,7 +9,6 @@ const QButton = styled.button`
   background: none!important;
   border: none;
   padding: 5px;
-  color: white;
   text-decoration: underline;
   cursor: pointer;
 `;

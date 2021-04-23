@@ -12,7 +12,13 @@ const FooterButton = styled.button`
 `;
 
 const QandAFooter = (props) => {
-  const { questionsDisplayed, questions, displayMore, collapse } = props;
+  const {
+    questions,
+    questionsDisplayed,
+    displayMore,
+    collapse,
+    toggleAskQuestionModal
+  } = props;
   const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
   const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
@@ -26,9 +32,9 @@ const QandAFooter = (props) => {
         ? <FooterButton type="submit" onClick={collapse}>No More Questions... Collapse?</FooterButton>
         : null
       }
-      <FooterButton type="submit" onClick={props.toggleAskQuestionModal}>Add A Question</FooterButton>
+      <FooterButton type="submit" onClick={toggleAskQuestionModal}>Add A Question</FooterButton>
     </div>
   );
-}
+};
 
 export default QandAFooter;

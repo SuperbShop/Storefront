@@ -76,17 +76,17 @@ const Breakdown = (props) => {
         </OverallScoreh2>
         <StarsContainer>
           <StarsOuter>
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
-            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon key={1} icon={faStar} />
+            <FontAwesomeIcon key={2} icon={faStar} />
+            <FontAwesomeIcon key={3} icon={faStar} />
+            <FontAwesomeIcon key={4} icon={faStar} />
+            <FontAwesomeIcon key={5} icon={faStar} />
             <StarsInner>
-              <FontAwesomeIcon icon={solidStar} />
-              <FontAwesomeIcon icon={solidStar} />
-              <FontAwesomeIcon icon={solidStar} />
-              <FontAwesomeIcon icon={solidStar} />
-              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon key={10} icon={solidStar} />
+              <FontAwesomeIcon key={11} icon={solidStar} />
+              <FontAwesomeIcon key={12} icon={solidStar} />
+              <FontAwesomeIcon key={13} icon={solidStar} />
+              <FontAwesomeIcon key={14} icon={solidStar} />
             </StarsInner>
           </StarsOuter>
         </StarsContainer>
@@ -103,18 +103,18 @@ const Breakdown = (props) => {
   );
 };
 
-Breakdown.propTypes = {
-  productNum: PropTypes.string.isRequired,
-  meta: PropTypes.shape({
-    ratings: PropTypes.object,
-    productId: PropTypes.string,
-    characteristics: PropTypes.object,
-    recommended: PropTypes.object,
-  }),
-  filterBy: PropTypes.func,
-};
+// Breakdown.propTypes = {
+//   productNum: PropTypes.string.isRequired,
+//   meta: PropTypes.shape({
+//     ratings: PropTypes.object,
+//     productId: PropTypes.string,
+//     characteristics: PropTypes.object,
+//     recommended: PropTypes.object,
+//   }),
+//   filterBy: PropTypes.func,
+// };
 
-// Breakdown.defaultProps = {
+// // Breakdown.defaultProps = {
 //   meta: {},
 //   filterBy: {},
 // };

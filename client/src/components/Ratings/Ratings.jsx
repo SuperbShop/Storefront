@@ -27,7 +27,7 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       filterBy: [],
-    }
+    };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
   }
@@ -45,8 +45,7 @@ class Ratings extends React.Component {
 
   handleFilterBy(value) {
     if (value === 0) {
-      console.log('empty');
-      let emptyFilterState = [];
+      const emptyFilterState = [];
       this.setState({
         filterBy: emptyFilterState,
       });

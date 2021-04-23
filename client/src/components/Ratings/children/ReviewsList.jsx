@@ -1,5 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import config from '../../../../../config';
 import ReviewTile from './grandchildren/ReviewTile';
@@ -28,7 +29,6 @@ class ReviewsList extends React.Component {
     this.state = {
       reviewsData: [],
       renderCreate: false,
-      filterBy: [],
       sortBy: 'relevance',
       sliceBy: 2,
     };
@@ -51,7 +51,7 @@ class ReviewsList extends React.Component {
     //   })
     //   .catch((err) => console.error(err));
 
-    const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23146';
+    const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23159';
     $.ajax({
       method: 'GET',
       url: url2,
@@ -63,25 +63,7 @@ class ReviewsList extends React.Component {
           reviewsData: data.results,
         });
       },
-      error: (err) => console.log(err),
-    });
-  }
-
-  showMoreReviews() {
-    this.setState({
-      sliceBy: this.state.sliceBy += 2,
-    });
-  }
-
-  showLessReviews() {
-    this.setState({
-      sliceBy: 2,
-    });
-  }
-
-  toggleCreateReviewModal() {
-    this.setState({
-      renderCreate: !this.state.renderCreate,
+      error: (err) => console.error(err),
     });
   }
 
@@ -101,14 +83,43 @@ class ReviewsList extends React.Component {
     }
   }
 
+  toggleCreateReviewModal() {
+    this.setState({
+      renderCreate: !this.state.renderCreate,
+    });
+  }
+
+  showLessReviews() {
+    this.setState({
+      sliceBy: 2,
+    });
+  }
+
+  showMoreReviews() {
+    this.setState({
+      sliceBy: this.state.sliceBy += 2,
+    });
+  }
+
   render() {
+    const {
+      sortBy,
+      reviewsData,
+      sliceBy,
+      renderCreate,
+    } = this.state;
+    const {
+      meta,
+      filterState,
+      productNum,
+    } = this.props;
     let sortedReviews;
-    if (this.state.sortBy === 'newest') {
-      sortedReviews = this.state.reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (this.state.sortBy === 'helpful') {
-      sortedReviews = this.state.reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
+    if (sortBy === 'newest') {
+      sortedReviews = reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+    } else if (sortBy === 'helpful') {
+      sortedReviews = reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
     } else {
-      sortedReviews = this.state.reviewsData.sort((a, b) => {
+      sortedReviews = reviewsData.sort((a, b) => {
         if (a.helpfulness === b.helpfulness) {
           return new Date(b.date) - new Date(a.date);
         }
@@ -117,8 +128,8 @@ class ReviewsList extends React.Component {
     }
     let sortedFilteredReviews = [];
     if (sortedReviews.length > 0) {
-      for (let i = 0; i < sortedReviews.length; i++) {
-        if (this.props.filterState.includes(sortedReviews[i].rating.toString())) {
+      for (let i = 0; i < sortedReviews.length; i += 1) {
+        if (filterState.includes(sortedReviews[i].rating.toString())) {
           sortedFilteredReviews.push(sortedReviews[i]);
         }
       }
@@ -127,9 +138,9 @@ class ReviewsList extends React.Component {
       sortedFilteredReviews = sortedReviews;
     }
 
-    const slicedReviews = sortedFilteredReviews.slice(0, this.state.sliceBy) || [];
+    const slicedReviews = sortedFilteredReviews.slice(0, sliceBy) || [];
     let moreReviewsButton;
-    if (this.state.sliceBy < this.state.reviewsData.length) {
+    if (sliceBy < reviewsData.length) {
       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
     } else {
       moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
@@ -142,14 +153,18 @@ class ReviewsList extends React.Component {
         <option value="helpful">helpful</option>
       </select>
     );
-    const createReviewElement = this.state.renderCreate ? (
+    const createReviewElement = renderCreate ? (
       <PageBlockerModalDiv>
         <Modal>
-          <CreateReview metaInfo={this.props.meta} toggleCreateReviewModal={this.toggleCreateReviewModal} productId={this.props.productNum} />
+          <CreateReview
+            metaInfo={meta}
+            toggleCreateReviewModal={this.toggleCreateReviewModal}
+            productId={productNum}
+          />
         </Modal>
       </PageBlockerModalDiv>
     )
-       : '';
+      : '';
 
     return (
       <div id="tiles">
@@ -170,5 +185,16 @@ class ReviewsList extends React.Component {
     );
   }
 }
+
+ReviewsList.propTypes = {
+  meta: PropTypes.object,
+  filterState: PropTypes.array,
+  productNum: PropTypes.string.isRequired,
+};
+
+ReviewsList.defaultProps = {
+  filterState: [],
+  meta: {},
+};
 
 export default ReviewsList;

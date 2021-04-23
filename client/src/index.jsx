@@ -1,10 +1,8 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import styled from 'styled-components';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
-import RelatedItems from './components/RelatedItems/RelatedItems';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
@@ -37,8 +35,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23147',
-      productId: 23147,
+      product: '23145',
+      productId: 23145,
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
@@ -130,7 +128,7 @@ class App extends React.Component {
         />
         <section className="overview module"><TrackedOverview productId={productId} /></section>
         <section className="questions module">
-          <Questions
+          <TrackedQuestions
             productId={productId}
             product={product}
             incrementClick={this.incrementProduct}
@@ -140,8 +138,7 @@ class App extends React.Component {
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
         </section>
-        <section className="ratings module"><Ratings product={product} /></section>
-        <section className="related-items module"><RelatedItems product={product} /></section>
+        <section className="ratings module"><TrackedRatings product={product} /></section>
       </>
     );
   }

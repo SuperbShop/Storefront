@@ -1,38 +1,94 @@
 import React from 'react';
+import styled from 'styled-components';
 import AOptions from './AOptions';
+
+const AnswerBody = styled.div`
+  background-color: rgb(220, 220, 220);
+  height: 15%;
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 98%;
+  margin: 0 auto;
+  display: grid;
+`;
+
+const AnswerOptions = styled.div`
+  background-color: rgb(220, 220, 220);
+  padding: 5px;
+`;
+
+const AnswerText = styled.div`
+  padding: 5px;
+  display: inline;
+`;
+
+const ImageWrapper = styled.div`
+  margin: 10px;
+  height: 100px;
+  border: 2px solid white;
+  display: inline-block;
+`;
 
 class ABody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: '',
+      reported: false,
     };
+    this.report = this.report.bind(this);
   }
-  // onChange() {
 
-  // }
-  // clickHandler(e) {
-  //   const { value } = e.target;
+  report() {
+    const { onClickReport } = this.props;
+    onClickReport();
+    this.setState({
+      reported: true,
+    });
+  }
 
-  // }
+  displayMore() {
+    const { answersDisplayed } = this.state;
+    this.setState({
+      answersDisplayed: answersDisplayed + 2,
+    });
+  }
 
   render() {
+    const {
+      body, answerer_name, date, helpfulness, photos,
+    } = this.props.answer;
     return (
-      <div className="A-Body">
-        <span>
-          <strong>A: </strong>
-        </span>
-        <span className="answer">
-          <p>
-            Icing macaroon bear claw jelly beans chocolate cake.
-            Cookie oat cake chocolate halvah jelly cake cotton candy souflee topping.
-            Jujubes topping cake gummies lemon drops
-          </p>
-        </span>
+      <AnswerBody>
+
+        <AnswerText>
+          <span className="answer">
+            {body}
+          </span>
+        </AnswerText>
+        { photos
+          ? photos.map((photo, index) => (
+            <ImageWrapper key={`${photo}+${index}`} onClick={this.props.toggleImageCarouselModal}>
+              <img
+                src={photos[index]}
+                alt="description"
+                width="100"
+                height="100"
+              />
+            </ImageWrapper>
+          ))
+          : null }
         <div className="a options">
-          <AOptions />
+          <AnswerOptions>
+            <AOptions
+              onClickReport={this.report}
+              answerer={answerer_name}
+              date={date}
+              helpfulness={helpfulness}
+            />
+          </AnswerOptions>
         </div>
-      </div>
+
+      </AnswerBody>
     );
   }
 }

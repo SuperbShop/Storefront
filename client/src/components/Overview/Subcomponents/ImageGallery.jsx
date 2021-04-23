@@ -4,7 +4,6 @@ import {
   faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-// import Modal from './Modal';
 
 const ImageGallery = ({ photos }) => {
   const [current, setCurrent] = useState(0);

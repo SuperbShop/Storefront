@@ -4,7 +4,7 @@ import {
   faArrowLeft, faArrowRight, faArrowUp, faArrowDown,
 } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
-import Modal from './Modal';
+// import Modal from './Modal';
 
 const ImageGallery = ({ photos }) => {
   const [current, setCurrent] = useState(0);
@@ -16,6 +16,10 @@ const ImageGallery = ({ photos }) => {
       setCurrent(current + 1);
       setThumbnail(thumbnail + 1);
     }
+  };
+
+  const imageClicked = (e) => {
+    setSelectedImg(null);
   };
 
   const handleClick = (index) => {
@@ -37,7 +41,17 @@ const ImageGallery = ({ photos }) => {
   return (
     <div className="gallery">
       { selectedImg ? (
-        <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg} />
+        <section className="backdrop">
+          {
+      current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
+        }
+          {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+          {photos.map((photo, index) => (
+            <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} onClick={imageClicked} aria-hidden="true">
+              {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
+            </div>
+          ))}
+        </section>
       ) : (
         <div>
           <section className="thumb-slider">

@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 const DescWrapper = styled.div`
   margin: 3rem;
@@ -35,20 +37,21 @@ const Features = styled.ul`
   line-height: 200%;
 `;
 
-const Description = ({ currentProduct }) => (
-  (currentProduct.slogan || currentProduct.description)
+const Description = ({ currentProduct }) => {
+  const { slogan, description, features } = currentProduct;
+  return ((slogan || description)
     ? (
       <DescWrapper>
         <LeftDiv>
-          <Slogan>{currentProduct.slogan}</Slogan>
-          <Body>{currentProduct.description}</Body>
+          <Slogan>{slogan}</Slogan>
+          <Body>{description}</Body>
         </LeftDiv>
         <RightDiv>
           <Features>
-            {currentProduct.features.map((item, index) => {
+            {features.map((item) => {
               if (item.value) {
                 return (
-                  <li key={index}>
+                  <li key={item.value}>
                     <FontAwesomeIcon icon={faCheck} />
                     {' '}
                     {item.feature}
@@ -59,7 +62,7 @@ const Description = ({ currentProduct }) => (
                 );
               }
               return (
-                <li key={index}>
+                <li key={item.feature}>
                   <FontAwesomeIcon icon={faCheck} />
                   {' '}
                   {item.feature}
@@ -70,7 +73,18 @@ const Description = ({ currentProduct }) => (
         </RightDiv>
 
       </DescWrapper>
-    ) : null
+    ) : null);
+};
 
-);
+Description.propTypes = {
+  currentProduct: PropTypes.shape({}).isRequired,
+  slogan: PropTypes.string,
+  description: PropTypes.string,
+};
+
+Description.defaultProps = {
+  slogan: '',
+  description: '',
+};
+
 export default Description;

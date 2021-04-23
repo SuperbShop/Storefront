@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Breakdown from './children/Breakdown';
 import ReviewsList from './children/ReviewsList';
-import fetch from './fetchers.js';
+import fetch from './fetchers';
 
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
@@ -12,13 +12,11 @@ const ReviewsAndRatingsDiv = styled.section`
   `;
 
 const BreakdownWrapper = styled.div`
-  border: 1px solid red;
   width: 350px;
   `;
 
 const ListWrapper = styled.div`
   width: 800px;
-  border: 1px solid blue;
   `;
 
 const StyledTitle = styled.h2`
@@ -28,8 +26,6 @@ class Ratings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // reviewsMetaData: {},
-      // reviewsData: {},
       filterBy: [],
     };
 
@@ -48,11 +44,14 @@ class Ratings extends React.Component {
   }
 
   handleFilterBy(value) {
-    let newFilterState = this.state.filterBy.slice();
+    const { filterBy } = this.state;
+    let newFilterState = [];
+    newFilterState = filterBy.slice();
+    // const newFilterState = this.state.filterBy.slice();
     if (!newFilterState.includes(value)) {
       newFilterState.push(value);
     } else {
-      let index = newFilterState.indexOf(value);
+      const index = newFilterState.indexOf(value);
       newFilterState.splice(index, 1);
     }
     this.setState({
@@ -61,22 +60,22 @@ class Ratings extends React.Component {
   }
 
   render() {
-    const productNum = this.props.product;
-    const reviewMetaInfo = this.state.reviewsMetaData;
+    const { product } = this.props;
+    const { reviewsMetaData, filterBy } = this.state;
     return (
-      <section>
+      <>
         <StyledTitle>
           Ratings & Reviews
         </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown filterBy={this.handleFilterBy} productNum={productNum} meta={reviewMetaInfo} />
+            <Breakdown filterBy={this.handleFilterBy} productNum={product} meta={reviewsMetaData} />
           </BreakdownWrapper>
           <ListWrapper>
-          <ReviewsList filterState={this.state.filterBy} meta={reviewMetaInfo} productNum={productNum} />
+            <ReviewsList filterState={filterBy} meta={reviewsMetaData} productNum={product} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
-      </section>
+      </>
     );
   }
 }

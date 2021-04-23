@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
+import styled from 'styled-components';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
@@ -7,7 +8,28 @@ import RelatedItems from './components/RelatedItems/RelatedItems';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
-import styled from 'styled-components';
+
+// store clicks object
+window.clicks = [];
+
+const time = new Date();
+
+const clickTracker = (WrappedComponent, module) => (props) => (
+  // For each click on the page, capture:
+  // Element of the page which was clicked
+  // Time of click
+  // Module clicked
+  <div onClick={(event) => {
+    const info = { element: event.target, time, module };
+    console.log(info);
+    window.clicks.push(info);
+  }}
+  >
+    <WrappedComponent {...props} />
+  </div>
+);
+
+const TrackedOverview = clickTracker(Overview, 'Overview');
 
 class App extends React.Component {
   constructor() {
@@ -104,7 +126,7 @@ class App extends React.Component {
           showImageCarouselModal={showImageCarouselModal}
           toggleImageCarouselModal={this.toggleImageCarouselModal}
         />
-        <section className="overview module"><Overview productId={productId} /></section>
+        <section className="overview module"><TrackedOverview productId={productId} /></section>
         <section className="questions module">
           <Questions
             productId={productId}

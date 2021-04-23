@@ -21,7 +21,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
   // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
-    console.log(info);
+    // console.log(info);
     window.clicks.push(info);
   }}
   >
@@ -30,6 +30,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
 );
 
 const TrackedOverview = clickTracker(Overview, 'Overview');
+const TrackedQuestions = clickTracker(Questions, 'Questions');
 
 class App extends React.Component {
   constructor() {
@@ -128,7 +129,7 @@ class App extends React.Component {
         />
         <section className="overview module"><TrackedOverview productId={productId} /></section>
         <section className="questions module">
-          <Questions
+          <TrackedQuestions
             productId={productId}
             product={product}
             incrementClick={this.incrementProduct}

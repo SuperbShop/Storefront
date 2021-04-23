@@ -25,16 +25,16 @@ class Questions extends React.Component {
         results: [{
           answers: {
             0: {
-              answerer_name: 'default',
-              body: 'default',
-              date: 'default',
+              answerer_name: '',
+              body: '',
+              date: '',
               helpfulness: 0,
               id: 0,
-              photos: ['default'],
+              photos: [''],
             },
           },
-          asker_name: 'default',
-          question_body: 'default',
+          asker_name: '',
+          question_body: '',
           question_date: '2019-01-17T00:00:00.000Z',
           question_helpfulness: 0,
           question_id: 1017420,

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalfAlt } from '@fortawesome/free-solid-svg-icons';
 import { faStar as farStar } from '@fortawesome/free-regular-svg-icons';
 import ReactStars from 'react-rating-stars-component';
+import PropTypes from 'prop-types';
 
 const StarWrapper = styled.div`
   display: flex;
@@ -28,7 +29,9 @@ class StarRatings extends React.Component {
     let avgRating = 0;
     const totalCount = ratings.length;
     if (totalCount > 0) {
-      ratings.forEach((item) => totalRating += item.rating);
+      ratings.forEach((item) => {
+        totalRating += item.rating;
+      });
       avgRating = totalRating / totalCount;
     }
     return (
@@ -41,14 +44,23 @@ class StarRatings extends React.Component {
           emptyIcon={<FontAwesomeIcon icon={farStar} />}
           filledIcon={<FontAwesomeIcon icon={faStar} />}
           halfIcon={<FontAwesomeIcon icon={faStarHalfAlt} />}
-          // activeColor="#fce38a"
         />
         <ReviewWrapper>
-          <a href="#Reviews">Read {totalCount} reviews</a>
+          <a href="#Reviews">
+            Read
+            {' '}
+            {totalCount}
+            {' '}
+            reviews
+          </a>
         </ReviewWrapper>
       </StarWrapper>
     );
   }
 }
+
+StarRatings.propTypes = {
+  ratings: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
 
 export default StarRatings;

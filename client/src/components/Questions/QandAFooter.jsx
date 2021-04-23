@@ -1,29 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-class QandAFooter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      search: true,
-    };
-  }
-  // onChange() {
+const FooterButton = styled.button`
+  color: white;
+  background-color: black;
+  border: 5px solid white;
+  border-radius: 30px;
+  display: grid;
+  padding: 15px 25px;
+  margin: 15px auto 0 auto;
+`;
 
-  // }
-  // clickHandler(e) {
-  //   const { value } = e.target;
+const QandAFooter = (props) => {
+  const {
+    questions,
+    questionsDisplayed,
+    displayMore,
+    collapse,
+    toggleAskQuestionModal
+  } = props;
+  const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
+  const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
-  // }
-
-  render() {
-    return (
-
-      <div className="QA Footer Question-Buttons">
-        <button type="submit">More Answered Questions</button>
-        <button type="submit">Add A Question</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="QA Footer Question-Buttons">
+      { moreToDisplay
+        ? <FooterButton type="submit" onClick={displayMore}>More Answered Questions</FooterButton>
+        : null
+      }
+      { lessToDisplay
+        ? <FooterButton type="submit" onClick={collapse}>No More Questions... Collapse?</FooterButton>
+        : null
+      }
+      <FooterButton type="submit" onClick={toggleAskQuestionModal}>Add A Question</FooterButton>
+    </div>
+  );
+};
 
 export default QandAFooter;

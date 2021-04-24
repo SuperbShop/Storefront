@@ -138,7 +138,12 @@ class ReviewsList extends React.Component {
       if (sliceBy < list.length) {
         moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
       } else {
-        moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
+        console.log(list.length);
+        if (list.length >= 0 && list.length <= 2) {
+          moreReviewsButton = '';
+        } else {
+          moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
+        }
       }
       // console.log('list', reviewsList.results);
     }

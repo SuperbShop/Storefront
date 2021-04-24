@@ -9,6 +9,7 @@ const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 100px;
   `;
 
 const BreakdownWrapper = styled.div`

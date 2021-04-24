@@ -75,7 +75,7 @@ class Distribution extends React.Component {
   }
 
   handleRatingFilterClick(event) {
-    if (this.props.ratings[event.target.id[0]] === 0) {
+    if (this.props.ratings[event.target.id[0]] === 0 || this.props.ratings[event.target.id[0]] === undefined) {
       return;
     }
     this.props.filterFunc(event.target.id[0]);

@@ -24,7 +24,7 @@ const TileItem = styled.div`
   `;
 
 const ResponseTag = styled.p`
-line-height: 2;
+  line-height: 2;
   background-color: lightgrey;
   `;
 
@@ -40,6 +40,7 @@ const FullsizeImage = styled.img`
   height: 85%;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   border: 1px solid grey;
+  cursor: pointer;
   `;
 
 const ImageModalDiv = styled.div`

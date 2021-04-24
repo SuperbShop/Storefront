@@ -62,7 +62,7 @@ class Distribution extends React.Component {
   }
 
   handleRatingFilterClick(event) {
-    if (this.graphData[event.target.id[0]] === 0) {
+    if (this.props.ratings[event.target.id[0]] === 0) {
       return;
     }
     this.props.filterFunc(event.target.id[0]);
@@ -105,22 +105,21 @@ class Distribution extends React.Component {
       filterStatus = '';
     }
 
-    let mostCommonReview = 0;
+    let frequencyOfMostCommonScore = 1;
     let allScores = [];
     if (this.props.ratings !== undefined) {
+      console.log(this.props.ratings);
       allScores = Object.keys(this.props.ratings);
-      allScores.forEach((score) => {
-        this.graphData[score] = Number(this.props.ratings[score]);
-        if (Number(this.props.ratings[score]) > mostCommonReview) {
-          mostCommonReview = score;
-        }
-      });
-      for (const key in this.graphData) {
-        if (key !== mostCommonReview) {
-          this.percentGraphData[key] = (this.graphData[key] / this.graphData[mostCommonReview]) * 100;
+      for (let i = 0; i < allScores.length; i += 1) {
+        if (Number(this.props.ratings[allScores[i]]) > frequencyOfMostCommonScore) {
+          frequencyOfMostCommonScore = Number(this.props.ratings[allScores[i]]);
         }
       }
-      this.percentGraphData[mostCommonReview] = 100;
+      console.log('mostcommon', frequencyOfMostCommonScore);
+      for (let i = 1; i < 6; i += 1) {
+        this.percentGraphData[i] = (Number(this.props.ratings[i]) / frequencyOfMostCommonScore) * 100;
+      }
+      console.log('PGD', this.percentGraphData);
     }
 
     const ScoreDiv5 = styled.div`
@@ -164,7 +163,7 @@ class Distribution extends React.Component {
             <BackdropDiv onClick={this.handleRatingFilterClick} id="5Backdrop">
               <ScoreDiv5 onClick={this.handleRatingFilterClick} id="5ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="5Quantity">{this.graphData[5]}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="5Quantity">{this.props.ratings ? this.props.ratings[5] : 0}</QuantityContainer>
           </ButtonContainer>
 
           <ButtonContainer>
@@ -172,7 +171,7 @@ class Distribution extends React.Component {
             <BackdropDiv onClick={this.handleRatingFilterClick} id="4Backdrop">
               <ScoreDiv4 onClick={this.handleRatingFilterClick} id="4ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="4Quantity">{this.graphData[4]}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="4Quantity">{this.props.ratings ? this.props.ratings[4] : 0}</QuantityContainer>
           </ButtonContainer>
 
           <ButtonContainer>
@@ -180,7 +179,7 @@ class Distribution extends React.Component {
             <BackdropDiv onClick={this.handleRatingFilterClick} id="3Backdrop">
               <ScoreDiv3 onClick={this.handleRatingFilterClick} id="3ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="3Quantity">{this.graphData[3]}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="3Quantity">{this.props.ratings ? this.props.ratings[3] : 0}</QuantityContainer>
           </ButtonContainer>
 
           <ButtonContainer>
@@ -188,7 +187,7 @@ class Distribution extends React.Component {
             <BackdropDiv onClick={this.handleRatingFilterClick} id="2Backdrop">
               <ScoreDiv2 onClick={this.handleRatingFilterClick} id="2ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="2Quantity">{this.graphData[2]}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="2Quantity">{this.props.ratings ? this.props.ratings[2] : 0}</QuantityContainer>
           </ButtonContainer>
 
           <ButtonContainer>
@@ -196,7 +195,7 @@ class Distribution extends React.Component {
             <BackdropDiv onClick={this.handleRatingFilterClick} id="1Backdrop">
               <ScoreDiv1 onClick={this.handleRatingFilterClick} id="1ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{this.graphData[1]}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{this.props.ratings ? this.props.ratings[1] : 0}</QuantityContainer>
           </ButtonContainer>
 
         </FlexboxDiv>

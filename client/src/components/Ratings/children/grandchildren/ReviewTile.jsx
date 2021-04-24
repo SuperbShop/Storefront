@@ -83,6 +83,10 @@ const TileButton = styled.button`
   text-decoration: underline;
   `;
 
+const ShowMoreButtonStyle = {
+  color: 'rgb(128, 128, 128)',
+};
+
 class ReviewTile extends React.Component {
   constructor(props) {
     super(props);
@@ -175,7 +179,7 @@ class ReviewTile extends React.Component {
             {this.props.review.body.slice(0, 250)}
           </div>
           <div>
-            <button type="button" onClick={this.handleShowMoreClick}>Show More</button>
+            <TileButton style={ShowMoreButtonStyle} type="button" onClick={this.handleShowMoreClick}>Show More</TileButton>
           </div>
         </div>
       );
@@ -186,7 +190,7 @@ class ReviewTile extends React.Component {
             {this.props.review.body}
           </div>
           <div>
-            <button type="button" onClick={this.handleShowMoreClick}>Show Less</button>
+            <TileButton style={ShowMoreButtonStyle} type="button" onClick={this.handleShowMoreClick}>Show Less</TileButton>
           </div>
         </div>
       );

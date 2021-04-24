@@ -4,6 +4,8 @@ import styled from 'styled-components';
 const CharsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 55px;
+  margin-top: 10px;
   `;
 const CharTitle = styled.p`
   width: 20%;
@@ -15,11 +17,13 @@ const BackdropDiv = styled.div`
   position: relative;
   background: lightgrey;
   width: 80%;
-  height: 0.5em;
+  height: 0.3em;
   margin-left: 5%;
   `;
 
 const Descriptions = styled.div`
+  color: grey;
+  font-weight: 0.5;
   font-size: 12px;
   margin-top: 4px;
   `;
@@ -68,7 +72,7 @@ const ProductFactors = (props) => {
                 style={{
                   position: 'absolute',
                   width: '0',
-                  height: '0',
+                  height: '2px',
                   border: '9px solid transparent',
                   borderTopColor: 'black',
                   left: chars[prop].value ? `${chars[prop].value * 17}%` : '0',
@@ -87,7 +91,6 @@ const ProductFactors = (props) => {
 };
 
 export default ProductFactors;
-
 
 // charName
 // charDiv

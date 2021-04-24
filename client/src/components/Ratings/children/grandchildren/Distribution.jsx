@@ -35,7 +35,7 @@ const BackdropDiv = styled.div`
   cursor: pointer;
   background-color: lightgrey;
   position: relative;
-  height: 0.5em;
+  height: 0.4em;
   width: 50%;
   `;
 
@@ -135,32 +135,32 @@ class Distribution extends React.Component {
     const ScoreDiv5 = styled.div`
       position: absolute;
       background-color: limegreen;
-      height: 0.5em;
+      height: 0.4em;
       width: ${this.percentGraphData[5]}%;
       `;
 
     const ScoreDiv4 = styled.div`
       position: absolute;
       background-color: limegreen;
-      height: 0.5em;
+      height: 0.4em;
       width: ${this.percentGraphData[4]}%;
       `;
     const ScoreDiv3 = styled.div`
       position: absolute;
       background-color: limegreen;
-      height: 0.5em;
+      height: 0.4em;
       width: ${this.percentGraphData[3]}%;
       `;
     const ScoreDiv2 = styled.div`
       position: absolute;
       background-color: limegreen;
-      height: 0.5em;
+      height: 0.4em;
       width: ${this.percentGraphData[2]}%;
       `;
     const ScoreDiv1 = styled.div`
       position: absolute;
       background-color: limegreen;
-      height: 0.5em;
+      height: 0.4em;
       width: ${this.percentGraphData[1]}%;
       `;
 

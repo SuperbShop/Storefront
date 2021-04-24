@@ -2,11 +2,9 @@ import React from 'react';
 import $ from 'jquery';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-// import config from '../../../../../config';
 import ReviewTile from './grandchildren/ReviewTile';
 import CreateReview from './grandchildren/CreateReview';
 import Modal from './grandchildren/Modal';
-import fetch from '../fetchers';
 
 const TilesWrapper = styled.div`
   max-height: 700px;
@@ -36,39 +34,6 @@ class ReviewsList extends React.Component {
     this.toggleCreateReviewModal = this.toggleCreateReviewModal.bind(this);
     this.showMoreReviews = this.showMoreReviews.bind(this);
     this.showLessReviews = this.showLessReviews.bind(this);
-  }
-
-  componentDidMount() {
-    const {
-      reviewsList,
-      reviewsMeta,
-      filterState,
-      productId,
-    } = this.props;
-    // const productId = this.props.productId;
-    // console.log('ididi', productId)
-    // fetch.listGetter(productId)
-    //   .then((res) => {
-    //     this.setState({
-    //       reviewsData: res.results,
-    //     });
-    //   })
-    //   .catch((err) => console.error(err));
-
-    // const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23159';
-    // $.ajax({
-    //   method: 'GET',
-    //   url: url2,
-    //   headers: {
-    //     Authorization: config.API_KEY,
-    //   },
-    //   success: (data) => {
-    //     this.setState({
-    //       reviewsData: data.results,
-    //     });
-    //   },
-    //   error: (err) => console.error(err),
-    // });
   }
 
   handleDropdownSelect(e) {
@@ -106,10 +71,8 @@ class ReviewsList extends React.Component {
   }
 
   render() {
-    console.log('reviewlist', this.props);
     const {
       sortBy,
-      reviewsData,
       sliceBy,
       renderCreate,
     } = this.state;
@@ -117,7 +80,6 @@ class ReviewsList extends React.Component {
       reviewsList,
       reviewsMeta,
       filterState,
-      // productId,
       productName,
     } = this.props;
 
@@ -148,6 +110,7 @@ class ReviewsList extends React.Component {
         }
       }
       if (sortedFilteredReviews.length === 0) {
+        console.log('line here');
         sortedFilteredReviews = sortedReviews;
       }
 

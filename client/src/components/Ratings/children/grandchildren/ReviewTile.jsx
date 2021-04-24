@@ -102,7 +102,7 @@ class ReviewTile extends React.Component {
       method: 'PUT',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${this.props.review.review_id}/report`,
       headers: {
-        Authorization: config.API_KEY,
+        Authorization: config.TOKEN,
       },
       success: (res) => console.log(res),
       error: (err) => console.error(err),
@@ -145,18 +145,17 @@ class ReviewTile extends React.Component {
       recommendation = '';
     }
 
-    // REVIEW BODY SLICING - CAN CHANGE THIS TO 250 LATER!!!!!
-    if (this.props.review.body.length < 15) {
+    if (this.props.review.body.length < 250) {
       bodyAndShowMore = (
         <div id="yo">
           {this.props.review.body}
         </div>
       );
-    } else if (this.props.review.body.length > 15 && this.state.showMoreChars === false) {
+    } else if (this.props.review.body.length > 250 && this.state.showMoreChars === false) {
       bodyAndShowMore = (
         <div>
           <div id="sup">
-            {this.props.review.body.slice(0, 15)}
+            {this.props.review.body.slice(0, 250)}
           </div>
           <div>
             <button type="button" onClick={this.handleShowMoreClick}>Show More</button>

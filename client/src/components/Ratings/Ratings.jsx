@@ -27,6 +27,7 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       filterState: [],
+      productId: 1,
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
@@ -34,30 +35,22 @@ class Ratings extends React.Component {
 
   componentDidMount() {
     const { product } = this.props;
-    // console.log('componentdidmount', this.props.product)
-    // fetch.metaGetter(product)
-    //   .then((res) => {
-    //     console.log('fetched meta', res);
-    //     this.setState({
-    //       reviewsMetaData: res,
-    //     }, () => console.log('state set'));
-    //   })
-    //   .catch((err) => console.error(err));
 
     Promise.all([
       fetch.metaGetter(product),
       fetch.listGetter(product),
       fetch.productGetter(product),
     ])
-    .then((values => {
-      this.setState({
-        reviewsMeta: values[0],
-        reviewsList: values[1],
-        productName: values[2].name,
-        productId: values[2].id,
-      }) /*console.log('state', this.state);*/
-    }))
-    .catch((err) => console.error(err));
+      .then((values => {
+        console.log('If you see this twice, Curtis button works for Sam components');
+        this.setState({
+          reviewsMeta: values[0],
+          reviewsList: values[1],
+          productName: values[2].name,
+          productId: values[2].id,
+        });
+      }))
+      .catch((err) => console.error(err));
   }
 
   handleFilterBy(value) {
@@ -83,8 +76,22 @@ class Ratings extends React.Component {
     }
   }
 
+  componentWillReceieveProps(nextProps) {
+    console.log('recieve props');
+    var newProp = nextProps.product;
+    this.setState({
+      productId: newProp,
+    });
+  }
+
   render() {
-    const { reviewsMeta, reviewsList, productName, productId, filterState } = this.state;
+    const {
+      reviewsMeta,
+      reviewsList,
+      productName,
+      productId,
+      filterState,
+    } = this.state;
     return (
       <>
         <StyledTitle>
@@ -92,10 +99,21 @@ class Ratings extends React.Component {
         </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown key={productId} filterFunc={this.handleFilterBy} productId={productId} reviewsMeta={reviewsMeta} />
+            <Breakdown
+              key={productId}
+              filterFunc={this.handleFilterBy}
+              productId={productId}
+              reviewsMeta={reviewsMeta}
+            />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList productName={productName} reviewsList={reviewsList} filterState={filterState} reviewsMeta={reviewsMeta} productId={productId} />
+            <ReviewsList
+              productName={productName}
+              reviewsList={reviewsList}
+              filterState={filterState}
+              reviewsMeta={reviewsMeta}
+              productId={productId}
+            />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </>

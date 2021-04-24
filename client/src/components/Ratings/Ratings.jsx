@@ -34,13 +34,21 @@ class Ratings extends React.Component {
 
   componentDidMount() {
     const { product } = this.props;
+    console.log('componentdidmount', this.props.product)
     fetch.metaGetter(product)
       .then((res) => {
+        console.log('fetched meta', res);
         this.setState({
           reviewsMetaData: res,
-        });
+        }, () => console.log('state set'));
       })
       .catch((err) => console.error(err));
+
+    // Promise.all([
+    //   fetch.metaGetter(product),
+    //   fetch.listGetter(product),
+    // ])
+    // .then((values => console.log('promiseall', values)));
   }
 
   handleFilterBy(value) {
@@ -67,6 +75,7 @@ class Ratings extends React.Component {
 
   render() {
     const { product } = this.props;
+    console.log('ratings', product);
     const { reviewsMetaData, filterBy } = this.state;
     return (
       <>
@@ -75,7 +84,7 @@ class Ratings extends React.Component {
         </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown filterBy={this.handleFilterBy} productNum={product} meta={reviewsMetaData} />
+            <Breakdown key={product} filterBy={this.handleFilterBy} productNum={product} meta={reviewsMetaData} />
           </BreakdownWrapper>
           <ListWrapper>
             <ReviewsList filterState={filterBy} meta={reviewsMetaData} productNum={product} />
@@ -87,7 +96,7 @@ class Ratings extends React.Component {
 }
 
 Ratings.propTypes = {
-  product: PropTypes.string.isRequired,
+  product: PropTypes.number.isRequired,
 };
 
 export default Ratings;

@@ -49,6 +49,7 @@ const StarsInner = styled.div`
   `;
 
 const Breakdown = (props) => {
+  // console.log('breakdown', props);
   let reviewSum = 0;
   let reviewQuantity = 0;
   let percent = 0;

@@ -29,6 +29,7 @@ line-height: 2;
   `;
 
 const ThumbnailImage = styled.img`
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   cursor: pointer;
   height: 40px;
   margin: 5px;

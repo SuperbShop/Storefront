@@ -53,7 +53,6 @@ const StarsInner = styled.div`
 
 const Breakdown = (props) => {
   const { reviewsMeta, filterFunc, productId } = props;
-  console.log(reviewsMeta);
   let reviewSum = 0;
   let reviewQuantity = 0;
   let percent = 0;

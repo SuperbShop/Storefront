@@ -69,7 +69,7 @@ const ProductFactors = (props) => {
                   position: 'absolute',
                   width: '0',
                   height: '0',
-                  border: '8px solid transparent',
+                  border: '9px solid transparent',
                   borderTopColor: 'black',
                   left: chars[prop].value ? `${chars[prop].value * 17}%` : '0',
                 }}

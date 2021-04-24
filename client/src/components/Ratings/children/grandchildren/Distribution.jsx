@@ -45,6 +45,21 @@ const StyledSpan = styled.span`
   justify-content: space-between;
   `;
 
+const ClearFilterButton = styled.button`
+  margin-right: 10%;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #838383;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
+  &:hover {
+    background-color: black;
+    color: white;
+  };
+  &:select {
+    outline-color: none;
+  }
+  `;
+
 class Distribution extends React.Component {
   constructor(props) {
     super(props);
@@ -96,7 +111,7 @@ class Distribution extends React.Component {
       filterStatus = (
         <StyledSpan>
           {filtersString}
-          <button onClick={this.handleClearFiltersClick} id="ClearFilters">Clear</button>
+          <ClearFilterButton onClick={this.handleClearFiltersClick} id="ClearFilters">Clear</ClearFilterButton>
         </StyledSpan>
       );
     } else {

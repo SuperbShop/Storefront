@@ -85,7 +85,7 @@ class ReviewTile extends React.Component {
       method: 'PUT',
       url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${this.props.review.review_id}/helpful`,
       headers: {
-        Authorization: config.API_KEY,
+        Authorization: config.TOKEN,
       },
       success: () => {
         this.setState({

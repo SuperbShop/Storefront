@@ -1,12 +1,11 @@
 import React from 'react';
 
-const CharsRadioButtons = (props) => {
-  return(
+const CharsRadioButtons = (props) => (
   <>
     <div id={`choice${props.name}`}>
       {props.name}
-          : None selected
-        </div>
+      : None selected
+    </div>
     {/* <RadioRowWrapper> */}
     <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="1" />
     <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="2" />
@@ -23,7 +22,6 @@ const CharsRadioButtons = (props) => {
     </div>
     {/* </CharWorstBestWrapper> */}
   </>
-  )
-};
+);
 
 export default CharsRadioButtons;

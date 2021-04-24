@@ -84,7 +84,6 @@ class Ratings extends React.Component {
   }
 
   render() {
-    const { product } = this.props;
     const { reviewsMeta, reviewsList, productName, productId, filterState } = this.state;
     return (
       <>
@@ -96,7 +95,7 @@ class Ratings extends React.Component {
             <Breakdown key={productId} filterFunc={this.handleFilterBy} productId={productId} reviewsMeta={reviewsMeta} />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList filterState={filterState} reviewsMeta={reviewsMeta} productId={productId} />
+            <ReviewsList productName={productName} reviewsList={reviewsList} filterState={filterState} reviewsMeta={reviewsMeta} productId={productId} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </>

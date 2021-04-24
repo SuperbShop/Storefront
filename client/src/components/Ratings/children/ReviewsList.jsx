@@ -39,6 +39,12 @@ class ReviewsList extends React.Component {
   }
 
   componentDidMount() {
+    const {
+      reviewsList,
+      reviewsMeta,
+      filterState,
+      productId,
+    } = this.props;
     // const productId = this.props.productId;
     // console.log('ididi', productId)
     // fetch.listGetter(productId)
@@ -100,7 +106,7 @@ class ReviewsList extends React.Component {
   }
 
   render() {
-    // console.log('reviewlist', this.props);
+    console.log('reviewlist', this.props);
     const {
       sortBy,
       reviewsData,
@@ -108,41 +114,50 @@ class ReviewsList extends React.Component {
       renderCreate,
     } = this.state;
     const {
-      meta,
+      reviewsList,
+      reviewsMeta,
       filterState,
-      productNum,
+      // productId,
+      productName,
     } = this.props;
+
     let sortedReviews;
-    if (sortBy === 'newest') {
-      sortedReviews = reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (sortBy === 'helpful') {
-      sortedReviews = reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
-    } else {
-      sortedReviews = reviewsData.sort((a, b) => {
-        if (a.helpfulness === b.helpfulness) {
-          return new Date(b.date) - new Date(a.date);
-        }
-        return b.helpfulness - a.helpfulness;
-      });
-    }
     let sortedFilteredReviews = [];
-    if (sortedReviews.length > 0) {
-      for (let i = 0; i < sortedReviews.length; i += 1) {
-        if (filterState.includes(sortedReviews[i].rating.toString())) {
-          sortedFilteredReviews.push(sortedReviews[i]);
+    let slicedReviews = [];
+    let moreReviewsButton;
+
+    if (reviewsList) {
+      let list = reviewsList.results;
+      if (sortBy === 'newest') {
+        sortedReviews = list.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else if (sortBy === 'helpful') {
+        sortedReviews = list.sort((a, b) => b.helpfulness - a.helpfulness);
+      } else {
+        sortedReviews = list.sort((a, b) => {
+          if (a.helpfulness === b.helpfulness) {
+            return new Date(b.date) - new Date(a.date);
+          }
+          return b.helpfulness - a.helpfulness;
+        });
+      }
+      if (sortedReviews.length > 0) {
+        for (let i = 0; i < sortedReviews.length; i += 1) {
+          if (filterState.includes(sortedReviews[i].rating.toString())) {
+            sortedFilteredReviews.push(sortedReviews[i]);
+          }
         }
       }
-    }
-    if (sortedFilteredReviews.length === 0) {
-      sortedFilteredReviews = sortedReviews;
-    }
+      if (sortedFilteredReviews.length === 0) {
+        sortedFilteredReviews = sortedReviews;
+      }
 
-    const slicedReviews = sortedFilteredReviews.slice(0, sliceBy) || [];
-    let moreReviewsButton;
-    if (sliceBy < reviewsData.length) {
-      moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
-    } else {
-      moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
+      slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
+      if (sliceBy < list.length) {
+        moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
+      } else {
+        moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
+      }
+      // console.log('list', reviewsList.results);
     }
 
     const sortDropdown = (
@@ -156,9 +171,9 @@ class ReviewsList extends React.Component {
       <PageBlockerModalDiv>
         <Modal>
           <CreateReview
-            metaInfo={meta}
+            metaInfo={reviewsMeta}
             toggleCreateReviewModal={this.toggleCreateReviewModal}
-            productId={productNum}
+            productName={productName}
           />
         </Modal>
       </PageBlockerModalDiv>
@@ -186,14 +201,50 @@ class ReviewsList extends React.Component {
 }
 
 ReviewsList.propTypes = {
-  meta: PropTypes.object,
+  reviewsMeta: PropTypes.object,
   filterState: PropTypes.array,
-  // productNum: PropTypes.string.isRequired,
+  // productId: PropTypes.string.isRequired,
 };
 
 ReviewsList.defaultProps = {
   filterState: [],
-  meta: {},
+  reviewsMeta: {},
 };
 
 export default ReviewsList;
+
+
+// let sortedReviews;
+//     if (sortBy === 'newest') {
+//       sortedReviews = reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+//     } else if (sortBy === 'helpful') {
+//       sortedReviews = reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
+//     } else {
+//       sortedReviews = reviewsData.sort((a, b) => {
+//         if (a.helpfulness === b.helpfulness) {
+//           return new Date(b.date) - new Date(a.date);
+//         }
+//         return b.helpfulness - a.helpfulness;
+//       });
+//     }
+//     let sortedFilteredReviews = [];
+//     if (sortedReviews.length > 0) {
+//       for (let i = 0; i < sortedReviews.length; i += 1) {
+//         if (filterState.includes(sortedReviews[i].rating.toString())) {
+//           sortedFilteredReviews.push(sortedReviews[i]);
+//         }
+//       }
+//     }
+//     if (sortedFilteredReviews.length === 0) {
+//       sortedFilteredReviews = sortedReviews;
+//     }
+
+//     const slicedReviews = sortedFilteredReviews.slice(0, sliceBy) || [];
+//     let moreReviewsButton;
+//     if (sliceBy < reviewsData.length) {
+//       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
+//     } else {
+//       moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
+//     }
+
+

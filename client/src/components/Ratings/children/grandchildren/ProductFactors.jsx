@@ -32,7 +32,6 @@ const DescWrapper = styled.div`
   `;
 
 const ProductFactors = (props) => {
-  console.log('PFProps', props);
   const { chars, productNum } = props;
   const propsArray = [];
   if (chars) {

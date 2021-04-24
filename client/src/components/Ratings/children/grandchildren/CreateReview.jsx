@@ -92,19 +92,6 @@ class CreateReview extends React.Component {
     this.logfiles = this.logfiles.bind(this);
   }
 
-  componentDidMount() {
-    // request to get the product name
-    $.ajax({
-      method: 'GET',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${this.props.productId}`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
-      success: (data) => this.setState({ productName: data.name }),
-      error: (err) => console.error(err),
-    });
-  }
-
   handleExitButtonClick() {
     this.props.toggleCreateReviewModal();
   }
@@ -143,6 +130,7 @@ class CreateReview extends React.Component {
   }
 
   render() {
+    console.log('name', this.props.productName);
     const charsArray = Object.keys(this.props.metaInfo.characteristics);
     return (
       <>
@@ -153,7 +141,7 @@ class CreateReview extends React.Component {
                 <h4>Write Your Review</h4>
                 <h5>
                   About the
-                  {this.state.productName || ''}
+                  {this.props.productName}
                 </h5>
               </strong>
             </EachInputWrapper>

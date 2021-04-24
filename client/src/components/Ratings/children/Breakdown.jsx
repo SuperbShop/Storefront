@@ -51,7 +51,6 @@ const StarsInner = styled.div`
   `;
 
 const Breakdown = (props) => {
-  console.log('breakdown', props);
   const { reviewsMeta, filterFunc, productId } = props;
   if (productId) {}
   let reviewSum = 0;

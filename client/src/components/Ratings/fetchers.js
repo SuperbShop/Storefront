@@ -13,7 +13,7 @@ const fetchersObject = {
   })),
   listGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${id}&count=5`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${id}&count=50`,
     headers: {
       Authorization: config.TOKEN,
     },

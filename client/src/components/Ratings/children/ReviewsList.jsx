@@ -1,5 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import ReviewTile from './grandchildren/ReviewTile';
@@ -21,11 +20,33 @@ const PageBlockerModalDiv = styled.div`
   background-color: rgba(128,128,128,0.5);
   `;
 
+const ListControlButton = styled.button`
+  margin-top: 10px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #838383;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
+  &:hover {
+    background-color: black;
+    color: white;
+  };
+  &:focus {
+    outline-color: none;
+  }
+  `;
+
+const SortSelect = styled.select`
+  cursor: pointer;
+  border: none;
+  text-decoration: underline;
+  `;
+
 class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviewsData: [],
       renderCreate: false,
       sortBy: 'relevance',
       sliceBy: 2,
@@ -110,25 +131,24 @@ class ReviewsList extends React.Component {
         }
       }
       if (sortedFilteredReviews.length === 0) {
-        console.log('line here');
         sortedFilteredReviews = sortedReviews;
       }
 
       slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
       if (sliceBy < list.length) {
-        moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
       } else {
-        moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
       }
       // console.log('list', reviewsList.results);
     }
 
     const sortDropdown = (
-      <select onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
+      <SortSelect onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
         <option value="relevance">relevance</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>
-      </select>
+      </SortSelect>
     );
     const createReviewElement = renderCreate ? (
       <PageBlockerModalDiv>
@@ -156,7 +176,7 @@ class ReviewsList extends React.Component {
           {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
         </TilesWrapper>
         {moreReviewsButton}
-        <button type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</button>
+        <ListControlButton type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</ListControlButton>
         {createReviewElement}
       </div>
     );

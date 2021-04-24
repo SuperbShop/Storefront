@@ -112,7 +112,6 @@ class Ratings extends React.Component {
               reviewsList={reviewsList}
               filterState={filterState}
               reviewsMeta={reviewsMeta}
-              productId={productId}
             />
           </ListWrapper>
         </ReviewsAndRatingsDiv>

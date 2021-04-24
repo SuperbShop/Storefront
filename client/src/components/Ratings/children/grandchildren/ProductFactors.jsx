@@ -13,7 +13,7 @@ const CharTitle = styled.p`
 
 const BackdropDiv = styled.div`
   position: relative;
-  background-color: lightgrey;
+  background: lightgrey;
   width: 80%;
   height: 0.5em;
   margin-left: 5%;
@@ -70,7 +70,7 @@ const ProductFactors = (props) => {
                   width: '0',
                   height: '0',
                   border: '8px solid transparent',
-                  borderTopColor: 'green',
+                  borderTopColor: 'black',
                   left: chars[prop].value ? `${chars[prop].value * 17}%` : '0',
                 }}
               />

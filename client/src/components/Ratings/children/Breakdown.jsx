@@ -34,6 +34,7 @@ const StarsContainer = styled.div`
   `;
 
 const StarsOuter = styled.div`
+  color: rgb(128, 128, 128);
   display: inline-block;
   position: relative;
   overflow-x: hidden;
@@ -47,12 +48,12 @@ const StarsInner = styled.div`
   left: 0;
   white-space: nowrap;
   overflow: hidden;
-  width: 50%;
+  width: 100%;
   `;
 
 const Breakdown = (props) => {
   const { reviewsMeta, filterFunc, productId } = props;
-  if (productId) {}
+  console.log(reviewsMeta);
   let reviewSum = 0;
   let reviewQuantity = 0;
   let percent = 0;
@@ -77,6 +78,10 @@ const Breakdown = (props) => {
     // console.log('width', $('.StarsInside').width());
   }
 
+  const innerStarWidth = {
+    width: `${averagePercentage * 100}%`,
+  };
+
   return (
     <BreakdownSection>
       <ScoreAndStarsContainer>
@@ -90,12 +95,15 @@ const Breakdown = (props) => {
             <FontAwesomeIcon key={3} icon={faStar} />
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
-            <StarsInner className="StarsInside">
+            <StarsInner style={innerStarWidth} className="StarsInside">
+              {/* <div style={`width:${averagePercentage * 100}%`}> */}
+
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />
               <FontAwesomeIcon key={13} icon={solidStar} />
               <FontAwesomeIcon key={14} icon={solidStar} />
+              {/* </div> */}
             </StarsInner>
           </StarsOuter>
         </StarsContainer>

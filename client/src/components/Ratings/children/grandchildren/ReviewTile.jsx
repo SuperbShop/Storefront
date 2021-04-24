@@ -11,7 +11,7 @@ import Modal from './Modal';
 
 const TileContainer = styled.div`
   padding: 5px;
-  border-bottom: 1px solid grey;
+  border-top: 1px solid grey;
   min-height: 280px;
   max-height: 280px;
   display: flex;
@@ -20,13 +20,16 @@ const TileContainer = styled.div`
   `;
 
 const TileItem = styled.div`
+  font-size: 12px;
   `;
 
 const ResponseTag = styled.p`
+line-height: 2;
   background-color: lightgrey;
   `;
 
 const ThumbnailImage = styled.img`
+  cursor: pointer;
   height: 40px;
   margin: 5px;
   `;
@@ -61,9 +64,22 @@ const PageBlockerModalDiv = styled.div`
   `;
 
 const StarsOuter = styled.div`
+  color: rgb(128, 128, 128);
   display: inline-block;
   position: relative;
   overflow-x: hidden;
+  `;
+
+const AuthorDateWrapper = styled.div`
+  float: right;
+  position: relative;
+  `;
+
+const TileButton = styled.button`
+  color: #007BFF;
+  border: none;
+  background-color: white;
+  text-decoration: underline;
   `;
 
 class ReviewTile extends React.Component {
@@ -136,7 +152,7 @@ class ReviewTile extends React.Component {
     if (this.props.review.recommend) {
       recommendation = (
         <p>
-          <FontAwesomeIcon icon={faCheck} />
+          <FontAwesomeIcon style={{color:"limegreen"}} icon={faCheck} />
           {' '}
           I recommend this product
         </p>
@@ -183,13 +199,13 @@ class ReviewTile extends React.Component {
               return (
                 <PageBlockerModalDiv>
                   <Modal>
-                      <ImageModalDiv>
-                        <FullsizeImage
-                          key={photo.id}
-                          src={photo.url}
-                          onClick={this.handleImageClick}
-                        />
-                      </ImageModalDiv>
+                    <ImageModalDiv>
+                      <FullsizeImage
+                        key={photo.id}
+                        src={photo.url}
+                        onClick={this.handleImageClick}
+                      />
+                    </ImageModalDiv>
                   </Modal>
                 </PageBlockerModalDiv>
               );
@@ -207,6 +223,7 @@ class ReviewTile extends React.Component {
     }
 
     const StarsInner = styled.div`
+      color: rgb(255, 215, 0);
       position: absolute;
       top: 0;
       left: 0;
@@ -215,52 +232,55 @@ class ReviewTile extends React.Component {
       width: ${this.props.review.rating * 20}%;
       `;
 
-    const response = this.props.review.response ? `Response from seller: ${this.props.review.response}` : '';
+    const response = this.props.review.response ? <div><strong>Response from seller:</strong>{this.props.review.response}</div> : '';
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
-       <TileContainer>
+      <TileContainer>
         <TileItem>
           <StarsOuter>
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <FontAwesomeIcon icon={faStar} />
-          <StarsInner>
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-            <FontAwesomeIcon icon={solidStar} />
-          </StarsInner>
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <FontAwesomeIcon icon={faStar} />
+            <StarsInner>
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+              <FontAwesomeIcon icon={solidStar} />
+            </StarsInner>
           </StarsOuter>
         </TileItem>
         <TileItem>
-          {this.props.review.reviewer_name}
+          <AuthorDateWrapper>
+            {this.props.review.reviewer_name}
           ,
           {' '}
-          {moment(this.props.review.date).format('LL')}
+            {moment(this.props.review.date).format('LL')}
+
+          </AuthorDateWrapper>
         </TileItem>
         <TileItem>
-        <h3>{this.props.review.summary}</h3>
+          <h4>{this.props.review.summary}</h4>
         </TileItem>
         <TileItem>
-        {photoBody}
-        {bodyAndShowMore}
+          {photoBody}
+          {bodyAndShowMore}
         </TileItem>
         <TileItem>
-        {recommendation}
+          {recommendation}
         </TileItem>
         <TileItem>
-        <ResponseTag>{response}</ResponseTag>
+          <ResponseTag>{response}</ResponseTag>
         </TileItem>
         <TileItem>
-          Helpful?
-          <button type="button" onClick={this.handleHelpfulClick}>Yes</button>
+            Helpful?
+          <TileButton type="button" onClick={this.handleHelpfulClick}>Yes</TileButton>
           (
           {helpful}
-          )
-          <button type="button" onClick={this.handleReportClick}>Report</button>
+          ) |
+          <TileButton type="button" onClick={this.handleReportClick}>Report</TileButton>
         </TileItem>
       </TileContainer>
     );

@@ -31,6 +31,7 @@ const StyledButton = styled.button`
   `;
 
 const BackdropDiv = styled.div`
+  color: rgb(128, 128, 128);
   cursor: pointer;
   background-color: lightgrey;
   position: relative;
@@ -49,9 +50,6 @@ class Distribution extends React.Component {
     super(props);
     this.state = {
       filterState: [],
-    };
-    this.graphData = {
-      1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
     };
     this.percentGraphData = {
       1: 0, 2: 0, 3: 0, 4: 0, 5: 0,
@@ -108,48 +106,45 @@ class Distribution extends React.Component {
     let frequencyOfMostCommonScore = 1;
     let allScores = [];
     if (this.props.ratings !== undefined) {
-      console.log(this.props.ratings);
       allScores = Object.keys(this.props.ratings);
       for (let i = 0; i < allScores.length; i += 1) {
         if (Number(this.props.ratings[allScores[i]]) > frequencyOfMostCommonScore) {
           frequencyOfMostCommonScore = Number(this.props.ratings[allScores[i]]);
         }
       }
-      console.log('mostcommon', frequencyOfMostCommonScore);
       for (let i = 1; i < 6; i += 1) {
         this.percentGraphData[i] = (Number(this.props.ratings[i]) / frequencyOfMostCommonScore) * 100;
       }
-      console.log('PGD', this.percentGraphData);
     }
 
     const ScoreDiv5 = styled.div`
       position: absolute;
-      background-color: green;
+      background-color: limegreen;
       height: 0.5em;
       width: ${this.percentGraphData[5]}%;
       `;
 
     const ScoreDiv4 = styled.div`
       position: absolute;
-      background-color: green;
+      background-color: limegreen;
       height: 0.5em;
       width: ${this.percentGraphData[4]}%;
       `;
     const ScoreDiv3 = styled.div`
       position: absolute;
-      background-color: green;
+      background-color: limegreen;
       height: 0.5em;
       width: ${this.percentGraphData[3]}%;
       `;
     const ScoreDiv2 = styled.div`
       position: absolute;
-      background-color: green;
+      background-color: limegreen;
       height: 0.5em;
       width: ${this.percentGraphData[2]}%;
       `;
     const ScoreDiv1 = styled.div`
       position: absolute;
-      background-color: green;
+      background-color: limegreen;
       height: 0.5em;
       width: ${this.percentGraphData[1]}%;
       `;

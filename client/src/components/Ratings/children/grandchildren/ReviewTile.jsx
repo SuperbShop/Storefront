@@ -33,25 +33,26 @@ const ThumbnailImage = styled.img`
   cursor: pointer;
   height: 40px;
   margin: 5px;
+  border: 1px solid grey;
   `;
 
 const FullsizeImage = styled.img`
   height: 85%;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  border: 1px solid grey;
   `;
 
 const ImageModalDiv = styled.div`
-  position: absolute;
-  background-color: lightgrey;
+  position: fixed;
+  background-color: transparent;
   left: 0;
   right: 0;
-  top: 30%;
-  bottom: 0;
-  margin: auto;
+  top: 10%;
+  margin: 0 auto;
   width: 90%;
   height: 70%;
   text-align:center;
   z-index: 2;
-  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   `;
 
 const PageBlockerModalDiv = styled.div`

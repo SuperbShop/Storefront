@@ -4,22 +4,21 @@ import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
-import config from '../../../../../../config';
 import CharsRadioButtons from './CharsRadioButtons';
 
 const CenteredDiv = styled.div`
-  position: absolute;
+  position: fixed;
   background-color: white;
   left: 0;
   right: 0;
-  top: 30%;
-  bottom: 0;
-  margin: auto;
+  top: 5%;
+  margin: 0 auto;
   width: 90%;
-  height: 70%;
+  height: 80%;
   text-align:center;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
-  border: 2px solid green;
+  z-index: 2000;
+
   `;
 const EachInputWrapper = styled.div`
   border: 1px solid grey;
@@ -59,19 +58,22 @@ const HiddenRating = styled.input`
   display: none;
   `;
 
-const StarsInner = styled.div`
-      position: absolute;
-      top: 0;
-      left: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 50%
-      `;
 const StarsOuter = styled.div`
+  color: rgb(128, 128, 128);
   display: inline-block;
   position: relative;
   overflow-x: hidden;
   width: 100%;
+  `;
+
+const StarsInner = styled.div`
+  color: gold;
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 50%
   `;
 
 class CreateReview extends React.Component {
@@ -140,8 +142,7 @@ class CreateReview extends React.Component {
               <strong>
                 <h4>Write Your Review</h4>
                 <h5>
-                  About the
-                  {this.props.productName}
+                  About the {this.props.productName}
                 </h5>
               </strong>
             </EachInputWrapper>

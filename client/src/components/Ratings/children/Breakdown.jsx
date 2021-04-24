@@ -41,35 +41,41 @@ const StarsOuter = styled.div`
   `;
 
 const StarsInner = styled.div`
+  color: gold;
   position: absolute;
   top: 0;
   left: 0;
   white-space: nowrap;
   overflow: hidden;
+  width: 50%;
   `;
 
 const Breakdown = (props) => {
-  // console.log('breakdown', props);
+  console.log('breakdown', props);
+  const { reviewsMeta, filterFunc, productId } = props;
+  if (productId) {}
   let reviewSum = 0;
   let reviewQuantity = 0;
   let percent = 0;
   let average = 0;
   let averagePercentage = 0;
-  let ratingsDist;
+  let ratings;
   let productChars;
-  const { meta, filterBy, productNum } = props;
-  if (meta !== undefined) {
-    const ratingsArray = Object.keys(meta.ratings);
+  if (reviewsMeta !== undefined) {
+    const ratingsArray = Object.keys(reviewsMeta.ratings);
     for (let i = 0; i < ratingsArray.length; i += 1) {
-      reviewSum += ratingsArray[i] * meta.ratings[ratingsArray[i]];
-      reviewQuantity += Number(meta.ratings[ratingsArray[i]]);
+      reviewSum += ratingsArray[i] * reviewsMeta.ratings[ratingsArray[i]];
+      reviewQuantity += Number(reviewsMeta.ratings[ratingsArray[i]]);
     }
     average = (reviewSum / reviewQuantity).toFixed(1);
-    percent = (100 * (Number(meta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
-    ratingsDist = meta.ratings;
-    productChars = meta.characteristics;
+    percent = (100 * (Number(reviewsMeta.recommended.true) / reviewQuantity)).toFixed(0) || 0;
+    ratings = reviewsMeta.ratings;
+    productChars = reviewsMeta.characteristics;
     averagePercentage = average / 5;
-    $('.StarsInner').width(`${averagePercentage * 100}%`);
+    // console.log('avg', average / 5);
+    // console.log(`${averagePercentage * 100}%`);
+    // $('.StarsInside').width(`10px`); // THIS ISNT WORKING!!!!!
+    // console.log('width', $('.StarsInside').width());
   }
 
   return (
@@ -85,7 +91,7 @@ const Breakdown = (props) => {
             <FontAwesomeIcon key={3} icon={faStar} />
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
-            <StarsInner className="StarsInner">
+            <StarsInner className="StarsInside">
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />
@@ -100,27 +106,27 @@ const Breakdown = (props) => {
         % of reviews recommend this product
       </PercentLine>
       <section>
-        <Distribution filterBy={filterBy} dist={ratingsDist} />
-        <ProductFactors productNum={productNum} chars={productChars} />
+        <Distribution filterFunc={filterFunc} ratings={ratings} />
+        <ProductFactors productId={productId} chars={productChars} />
       </section>
     </BreakdownSection>
   );
 };
 
 // Breakdown.propTypes = {
-//   productNum: PropTypes.string.isRequired,
-//   meta: PropTypes.shape({
+//   productId: PropTypes.string.isRequired,
+//   reviewsMeta: PropTypes.shape({
 //     ratings: PropTypes.object,
 //     productId: PropTypes.string,
 //     characteristics: PropTypes.object,
 //     recommended: PropTypes.object,
 //   }),
-//   filterBy: PropTypes.func,
+//   filterFunc: PropTypes.func,
 // };
 
 // // Breakdown.defaultProps = {
-//   meta: {},
-//   filterBy: {},
+//   reviewsMeta: {},
+//   filterFunc: {},
 // };
 
 export default Breakdown;

@@ -26,7 +26,7 @@ class Ratings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterBy: [],
+      filterState: [],
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
@@ -34,33 +34,43 @@ class Ratings extends React.Component {
 
   componentDidMount() {
     const { product } = this.props;
-    console.log('componentdidmount', this.props.product)
-    fetch.metaGetter(product)
-      .then((res) => {
-        console.log('fetched meta', res);
-        this.setState({
-          reviewsMetaData: res,
-        }, () => console.log('state set'));
-      })
-      .catch((err) => console.error(err));
+    // console.log('componentdidmount', this.props.product)
+    // fetch.metaGetter(product)
+    //   .then((res) => {
+    //     console.log('fetched meta', res);
+    //     this.setState({
+    //       reviewsMetaData: res,
+    //     }, () => console.log('state set'));
+    //   })
+    //   .catch((err) => console.error(err));
 
-    // Promise.all([
-    //   fetch.metaGetter(product),
-    //   fetch.listGetter(product),
-    // ])
-    // .then((values => console.log('promiseall', values)));
+    Promise.all([
+      fetch.metaGetter(product),
+      fetch.listGetter(product),
+      fetch.productGetter(product),
+    ])
+    .then((values => {
+      this.setState({
+        reviewsMeta: values[0],
+        reviewsList: values[1],
+        productName: values[2].name,
+        productId: values[2].id,
+      }) /*console.log('state', this.state);*/
+    }))
+    .catch((err) => console.error(err));
   }
 
   handleFilterBy(value) {
+    // console.log('fromratings value', value);
     if (value === 0) {
       const emptyFilterState = [];
       this.setState({
-        filterBy: emptyFilterState,
+        filterState: emptyFilterState,
       });
     } else {
-      const { filterBy } = this.state;
+      const { filterState } = this.state;
       let newFilterState = [];
-      newFilterState = filterBy.slice();
+      newFilterState = filterState.slice();
       if (!newFilterState.includes(value)) {
         newFilterState.push(value);
       } else {
@@ -68,15 +78,14 @@ class Ratings extends React.Component {
         newFilterState.splice(index, 1);
       }
       this.setState({
-        filterBy: newFilterState,
+        filterState: newFilterState,
       });
     }
   }
 
   render() {
     const { product } = this.props;
-    console.log('ratings', product);
-    const { reviewsMetaData, filterBy } = this.state;
+    const { reviewsMeta, reviewsList, productName, productId, filterState } = this.state;
     return (
       <>
         <StyledTitle>
@@ -84,10 +93,10 @@ class Ratings extends React.Component {
         </StyledTitle>
         <ReviewsAndRatingsDiv>
           <BreakdownWrapper>
-            <Breakdown key={product} filterBy={this.handleFilterBy} productNum={product} meta={reviewsMetaData} />
+            <Breakdown key={productId} filterFunc={this.handleFilterBy} productId={productId} reviewsMeta={reviewsMeta} />
           </BreakdownWrapper>
           <ListWrapper>
-            <ReviewsList filterState={filterBy} meta={reviewsMetaData} productNum={product} />
+            <ReviewsList filterState={filterState} reviewsMeta={reviewsMeta} productId={productId} />
           </ListWrapper>
         </ReviewsAndRatingsDiv>
       </>

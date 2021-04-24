@@ -48,7 +48,7 @@ class Distribution extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      localFilters: [],
+      filterState: [],
     };
 
     this.handleRatingFilterClick = this.handleRatingFilterClick.bind(this);
@@ -56,9 +56,9 @@ class Distribution extends React.Component {
   }
 
   handleRatingFilterClick(event) {
-    this.props.filterBy(event.target.id[0]);
+    this.props.filterFunc(event.target.id[0]);
 
-    const newLocalFilters = this.state.localFilters.slice();
+    const newLocalFilters = this.state.filterState.slice();
     if (!newLocalFilters.includes(event.target.id[0])) {
       newLocalFilters.push(event.target.id[0]);
     } else {
@@ -66,25 +66,25 @@ class Distribution extends React.Component {
       newLocalFilters.splice(index, 1);
     }
     this.setState({
-      localFilters: newLocalFilters,
+      filterState: newLocalFilters,
     });
   }
 
   // NEED TO FIGURE OUT HOW TO DO THIS - NEEDS TO CLEAR FILTERS LOCALLY AND ON RATINGSJSX
   handleClearFiltersClick() {
     console.log('clear filters');
-    // this.state.localFilters.forEach((value) => this.props.filterBy(value));
-    this.props.filterBy(0);
+    // this.state.filterState.forEach((value) => this.props.filterBy(value));
+    this.props.filterFunc(0);
     this.setState({
-      localFilters: [],
+      filterState: [],
     });
   }
 
   render() {
     let filterStatus;
-    if (this.state.localFilters.length > 0) {
+    if (this.state.filterState.length > 0) {
       let filtersString = 'Reviews filtered by: ';
-      this.state.localFilters.sort((a, b) => a - b).forEach((num) => filtersString += `${num}, `);
+      this.state.filterState.sort((a, b) => a - b).forEach((num) => filtersString += `${num}, `);
 
       filterStatus = (
         <StyledSpan>
@@ -105,11 +105,11 @@ class Distribution extends React.Component {
 
     let mostCommonReview = 0;
     let allScores = [];
-    if (this.props.dist !== undefined) {
-      allScores = Object.keys(this.props.dist);
+    if (this.props.ratings !== undefined) {
+      allScores = Object.keys(this.props.ratings);
       allScores.forEach((score) => {
-        graphData[score] = Number(this.props.dist[score]);
-        if (Number(this.props.dist[score]) > mostCommonReview) {
+        graphData[score] = Number(this.props.ratings[score]);
+        if (Number(this.props.ratings[score]) > mostCommonReview) {
           mostCommonReview = score;
         }
       });

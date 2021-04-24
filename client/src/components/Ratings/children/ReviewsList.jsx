@@ -39,14 +39,15 @@ class ReviewsList extends React.Component {
   }
 
   componentDidMount() {
-    const product = this.props.productNum;
-    fetch.listGetter(product)
-      .then((res) => {
-        this.setState({
-          reviewsData: res.results,
-        });
-      })
-      .catch((err) => console.error(err));
+    // const productId = this.props.productId;
+    // console.log('ididi', productId)
+    // fetch.listGetter(productId)
+    //   .then((res) => {
+    //     this.setState({
+    //       reviewsData: res.results,
+    //     });
+    //   })
+    //   .catch((err) => console.error(err));
 
     // const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23159';
     // $.ajax({
@@ -99,6 +100,7 @@ class ReviewsList extends React.Component {
   }
 
   render() {
+    // console.log('reviewlist', this.props);
     const {
       sortBy,
       reviewsData,

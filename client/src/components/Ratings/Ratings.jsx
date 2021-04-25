@@ -42,7 +42,7 @@ class Ratings extends React.Component {
       fetch.listGetter(product),
       fetch.productGetter(product),
     ])
-      .then((values => {
+      .then(((values) => {
         console.log('If you see this twice, Curtis button works for Sam components');
         this.setState({
           reviewsMeta: values[0],
@@ -55,7 +55,6 @@ class Ratings extends React.Component {
   }
 
   handleFilterBy(value) {
-    // console.log('fromratings value', value);
     if (value === 0) {
       const emptyFilterState = [];
       this.setState({
@@ -77,13 +76,12 @@ class Ratings extends React.Component {
     }
   }
 
-  componentWillReceieveProps(nextProps) {
-    console.log('recieve props');
-    var newProp = nextProps.product;
-    this.setState({
-      productId: newProp,
-    });
-  }
+  // componentWillReceieveProps(nextProps) {
+  //   const newProp = nextProps.product;
+  //   this.setState({
+  //     productId: newProp,
+  //   });
+  // }
 
   render() {
     const {

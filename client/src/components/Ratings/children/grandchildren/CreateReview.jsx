@@ -266,7 +266,6 @@ class CreateReview extends React.Component {
   }
 
   updateLengthDetails(event) {
-    console.log(event.target.value.length);
     if (event.target.value.length < 50) {
       $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
     } else {
@@ -279,16 +278,13 @@ class CreateReview extends React.Component {
     // MUST SELECT ALL IMAGES AT ONCE FOR THIS TO WORK
     $('#UploadedImages').empty();
     const imgFiles = Object.keys(event.target.files);
-    console.log('array', imgFiles.length);
     imgFiles.forEach(() => $('#UploadedImages').append('<img style="padding: 5px;" src=https://picsum.photos/40 />'));
     if (event.target.files.length >= 5) {
-      console.log('should remove');
       $('input').remove('#ImgUpload');
     }
   }
 
   render() {
-    console.log('name', this.props.productName);
     const charsArray = Object.keys(this.props.metaInfo.characteristics);
     return (
       <>
@@ -296,7 +292,10 @@ class CreateReview extends React.Component {
           <form id="create-new-review" method="post">
             <TitleWrapper>
               <strong>
-                <h4>Write your review about the {this.props.productName}</h4>
+                <h4>
+                  Write your review about the
+                  {this.props.productName}
+                </h4>
               </strong>
             </TitleWrapper>
             <FloatLeft>
@@ -323,7 +322,7 @@ class CreateReview extends React.Component {
                 </RatingWrapper>
                 <RecommendWrapper id="recommend">
                   Do you recommend this product?*
-                <label htmlFor="YesRecommend">Yes</label>
+                  <label htmlFor="YesRecommend">Yes</label>
                   <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
                   <label htmlFor="NoRecommend">No</label>
                   <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
@@ -338,7 +337,7 @@ class CreateReview extends React.Component {
 
               <ReviewBodyWrapper id="ReviewBody">
                 <ReviewBodyTitle>
-                Review body:*
+                  Review body:*
                 </ReviewBodyTitle>
                 <ReviewBodyTextArea id="ReviewBodyText" onKeyUp={this.updateLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
                 <ReviewBodyCharCount id="ReviewBodyLengthDetails">Minimum required characters left: 50</ReviewBodyCharCount>
@@ -347,23 +346,23 @@ class CreateReview extends React.Component {
               <NicknameAndEmailWrapper>
                 <NicknameWrapper id="WhatIsYourNickname">
                   <NicknameAndEmailTitle>
-                  What is your nickname?*
+                    What is your nickname?*
 
                   </NicknameAndEmailTitle>
                   <StyledInput id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
                   <PrivacyWrapper>
-                  For privacy reasons, do not use your full name or email address
-                    </PrivacyWrapper>
+                    For privacy reasons, do not use your full name or email address
+                  </PrivacyWrapper>
                 </NicknameWrapper>
 
                 <EmailWrapper id="WhatIsYourEmail">
                   <NicknameAndEmailTitle>
-                  What is your email?*
+                    What is your email?*
 
                   </NicknameAndEmailTitle>
                   <StyledInput id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
                   <PrivacyWrapper>
-                  For authentication reasons, you will not be emailed
+                    For authentication reasons, you will not be emailed
                   </PrivacyWrapper>
                 </EmailWrapper>
               </NicknameAndEmailWrapper>
@@ -389,7 +388,7 @@ class CreateReview extends React.Component {
               <PhotoUploadWrapper id="UploadYourPhotos">
                 <PhotoUploadUpper>
                   Upload photos:
-                <input type="file" onChange={this.logfiles} id="ImgUpload" multiple name="img[]" accept="image/*" />
+                  <input type="file" onChange={this.logfiles} id="ImgUpload" multiple name="img[]" accept="image/*" />
                 </PhotoUploadUpper>
 
                 <PhotoUploadLower id="UploadedImages" />

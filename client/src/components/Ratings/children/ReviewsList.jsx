@@ -200,39 +200,3 @@ ReviewsList.defaultProps = {
 };
 
 export default ReviewsList;
-
-
-// let sortedReviews;
-//     if (sortBy === 'newest') {
-//       sortedReviews = reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-//     } else if (sortBy === 'helpful') {
-//       sortedReviews = reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
-//     } else {
-//       sortedReviews = reviewsData.sort((a, b) => {
-//         if (a.helpfulness === b.helpfulness) {
-//           return new Date(b.date) - new Date(a.date);
-//         }
-//         return b.helpfulness - a.helpfulness;
-//       });
-//     }
-//     let sortedFilteredReviews = [];
-//     if (sortedReviews.length > 0) {
-//       for (let i = 0; i < sortedReviews.length; i += 1) {
-//         if (filterState.includes(sortedReviews[i].rating.toString())) {
-//           sortedFilteredReviews.push(sortedReviews[i]);
-//         }
-//       }
-//     }
-//     if (sortedFilteredReviews.length === 0) {
-//       sortedFilteredReviews = sortedReviews;
-//     }
-
-//     const slicedReviews = sortedFilteredReviews.slice(0, sliceBy) || [];
-//     let moreReviewsButton;
-//     if (sliceBy < reviewsData.length) {
-//       moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
-//     } else {
-//       moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
-//     }
-
-

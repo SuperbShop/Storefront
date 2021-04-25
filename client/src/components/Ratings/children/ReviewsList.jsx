@@ -87,7 +87,7 @@ class ReviewsList extends React.Component {
 
   showMoreReviews() {
     this.setState({
-      sliceBy: this.state.sliceBy += 2,
+      sliceBy: this.state.sliceBy += 4,
     });
   }
 
@@ -138,7 +138,6 @@ class ReviewsList extends React.Component {
       if (sliceBy < list.length) {
         moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
       } else {
-        console.log(list.length);
         if (list.length >= 0 && list.length <= 2) {
           moreReviewsButton = '';
         } else {

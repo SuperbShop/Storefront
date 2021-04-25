@@ -28,7 +28,6 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       filterState: [],
-      productId: 1,
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);

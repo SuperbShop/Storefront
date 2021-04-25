@@ -49,14 +49,9 @@ const FloatRight = styled.div`
 
 const RatingAndRecommendWrapper = styled.div`
   display: flex;
+  align-items: center;
   height: 20%;
   width: 100%;
-  `;
-
-const RatingWrapper = styled.div`
-  width: 200px;
-  float: left;
-  margin-left: 5%;
   `;
 
 const RecommendWrapper = styled.div`
@@ -214,22 +209,34 @@ const HiddenRating = styled.input`
   display: none;
   `;
 
+const RatingWrapper = styled.div`
+  border: 1px solid grey;
+  width: 200px;
+  float: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  `;
+
 const StarsOuter = styled.div`
+  border: 1px solid blue;
   color: rgb(128, 128, 128);
   display: inline-block;
   position: relative;
   overflow-x: hidden;
-  width: 100%;
+  width: 100px;
+  height: 25px;
   `;
 
 const StarsInner = styled.div`
+  border: 1px solid red;
   color: gold;
   position: absolute;
   top: 0;
   left: 0;
   white-space: nowrap;
-  overflow: hidden;
-  width: 50%
+  overflow-x hidden;
+  width: 0;
   `;
 
 class CreateReview extends React.Component {
@@ -261,6 +268,7 @@ class CreateReview extends React.Component {
   handleStarIconClick() {
     const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
     $('#InnerStars').width(`${event.target.id * 20}%`);
+    console.log('width', $('#InnerStars').width());
     $('#HiddenRatingInput').val(`${event.target.id}`);
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
@@ -300,11 +308,11 @@ class CreateReview extends React.Component {
             </TitleWrapper>
             <FloatLeft>
               <RatingAndRecommendWrapper>
+                  <HiddenRating type="text" required="required" id="HiddenRatingInput" />
                 <RatingWrapper id="overall-rating">
                   <div id="RatingText">Overall Rating:*</div>
                   {/* maybe make this hidden rating a radio input
                  - that way it makes more sense that its required? */}
-                  <HiddenRating type="text" required="required" id="HiddenRatingInput" />
                   <StarsOuter>
                     <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />
                     <FontAwesomeIcon icon={faStar} id="2" onClick={this.handleStarIconClick} />

@@ -28,6 +28,7 @@ const StyledButton = styled.button`
   text-decoration: underline;
   line-height: normal;
   border: none;
+  font-size: 14px;
   `;
 
 const BackdropDiv = styled.div`
@@ -43,6 +44,13 @@ const StyledSpan = styled.span`
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  `;
+
+const FilterStatusWrapper = styled.div`
+  color: rgb(128, 128, 128);
+  font-size: 12px;
+  margin-left: 5%;
+  margin-right: 5%;
   `;
 
 const ClearFilterButton = styled.button`
@@ -106,7 +114,7 @@ class Distribution extends React.Component {
     let filterStatus;
     if (this.state.filterState.length > 0) {
       let filtersString = 'Reviews filtered by: ';
-      this.state.filterState.sort((a, b) => a - b).forEach((num) => filtersString += `${num}, `);
+      this.state.filterState.sort((a, b) => a - b).forEach((num) => filtersString += `${num} `);
 
       filterStatus = (
         <StyledSpan>
@@ -201,7 +209,7 @@ class Distribution extends React.Component {
           </ButtonContainer>
 
           <ButtonContainer>
-            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 stars</StyledButton>
+            <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 star</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="1Backdrop">
               <ScoreDiv1 onClick={this.handleRatingFilterClick} id="1ScoreDiv" />
             </BackdropDiv>
@@ -209,7 +217,10 @@ class Distribution extends React.Component {
           </ButtonContainer>
 
         </FlexboxDiv>
+        <FilterStatusWrapper>
         {filterStatus}
+
+        </FilterStatusWrapper>
       </div>
     );
   }

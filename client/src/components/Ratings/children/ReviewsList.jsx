@@ -104,6 +104,7 @@ class ReviewsList extends React.Component {
       filterState,
       productName,
     } = this.props;
+    console.log(reviewsList);
 
     let sortedReviews;
     let sortedFilteredReviews = [];

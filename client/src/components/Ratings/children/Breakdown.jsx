@@ -42,7 +42,7 @@ const StarsOuter = styled.div`
   `;
 
 const StarsInner = styled.div`
-  color: gold;
+  color: #EFC050;
   position: absolute;
   top: 0;
   left: 0;

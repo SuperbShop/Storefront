@@ -16,12 +16,49 @@ const TileContainer = styled.div`
   max-height: 280px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  `;
-
-const TileItem = styled.div`
+  justify-content: space-between;
   font-size: 12px;
   `;
+
+const StarsAuthorDateWrapper = styled.div`
+  height: 15%;
+  display: flex;
+  justify-content: space-between;
+  `;
+
+const AuthorDateWrapper = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  `;
+
+const SummaryWrapper = styled.div`
+  height: 15%
+  font-size: 50px;
+  font-weight: bold;
+  `;
+
+const PhotosWrapper = styled.div`
+height: 20%;
+`;
+
+const BodyWrapper = styled.div`
+display: flex;
+height: 20%;
+`;
+
+const RecommendWrapper = styled.div`
+height: 10%;
+`;
+
+const ResponseWrapper = styled.div`
+height: 15%;
+display: flex;
+align-items: center;
+`;
+
+const HelpfulReportWrapper = styled.div`
+height: 10%;
+`;
 
 const ResponseTag = styled.p`
   line-height: 2;
@@ -71,11 +108,6 @@ const StarsOuter = styled.div`
   display: inline-block;
   position: relative;
   overflow-x: hidden;
-  `;
-
-const AuthorDateWrapper = styled.div`
-  float: right;
-  position: relative;
   `;
 
 const TileButton = styled.button`
@@ -230,7 +262,7 @@ class ReviewTile extends React.Component {
     }
 
     const StarsInner = styled.div`
-      color: rgb(255, 215, 0);
+      color: #EFC050;
       position: absolute;
       top: 0;
       left: 0;
@@ -243,7 +275,7 @@ class ReviewTile extends React.Component {
     const helpful = this.state.helpful || this.props.review.helpfulness;
     return (
       <TileContainer>
-        <TileItem>
+        <StarsAuthorDateWrapper>
           <StarsOuter>
             <FontAwesomeIcon icon={faStar} />
             <FontAwesomeIcon icon={faStar} />
@@ -258,8 +290,6 @@ class ReviewTile extends React.Component {
               <FontAwesomeIcon icon={solidStar} />
             </StarsInner>
           </StarsOuter>
-        </TileItem>
-        <TileItem>
           <AuthorDateWrapper>
             {this.props.review.reviewer_name}
           ,
@@ -267,28 +297,35 @@ class ReviewTile extends React.Component {
             {moment(this.props.review.date).format('LL')}
 
           </AuthorDateWrapper>
-        </TileItem>
-        <TileItem>
-          <h4>{this.props.review.summary}</h4>
-        </TileItem>
-        <TileItem>
+
+        </StarsAuthorDateWrapper>
+        <SummaryWrapper>
+          <h5>{this.props.review.summary}</h5>
+        </SummaryWrapper>
+        <PhotosWrapper>
           {photoBody}
+        </PhotosWrapper>
+        <BodyWrapper>
           {bodyAndShowMore}
-        </TileItem>
-        <TileItem>
+
+        </BodyWrapper>
+        <RecommendWrapper>
           {recommendation}
-        </TileItem>
-        <TileItem>
+
+        </RecommendWrapper>
+        <ResponseWrapper>
+
           <ResponseTag>{response}</ResponseTag>
-        </TileItem>
-        <TileItem>
+        </ResponseWrapper>
+        <HelpfulReportWrapper>
             Helpful?
           <TileButton type="button" onClick={this.handleHelpfulClick}>Yes</TileButton>
           (
           {helpful}
           ) |
           <TileButton type="button" onClick={this.handleReportClick}>Report</TileButton>
-        </TileItem>
+
+        </HelpfulReportWrapper>
       </TileContainer>
     );
   }

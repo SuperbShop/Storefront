@@ -55,6 +55,7 @@ class ReviewsList extends React.Component {
     this.toggleCreateReviewModal = this.toggleCreateReviewModal.bind(this);
     this.showMoreReviews = this.showMoreReviews.bind(this);
     this.showLessReviews = this.showLessReviews.bind(this);
+    this.handleDropdownSelect = this.handleDropdownSelect.bind(this);
   }
 
   handleDropdownSelect(e) {
@@ -148,7 +149,7 @@ class ReviewsList extends React.Component {
     }
 
     const sortDropdown = (
-      <SortSelect onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
+      <SortSelect onChange={this.handleDropdownSelect} name="Sort" id="SortDropdown">
         <option value="relevance">relevance</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>

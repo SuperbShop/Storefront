@@ -39,6 +39,7 @@ const FloatLeft = styled.div`
     align-items: flex-start;
     height: 80%;
     `;
+
 const FloatRight = styled.div`
     margin-right: 2%;
     width: 48%;
@@ -49,30 +50,38 @@ const FloatRight = styled.div`
 
 const RatingAndRecommendWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: space-between;
   height: 20%;
   width: 100%;
   `;
 
 const RecommendWrapper = styled.div`
-  width: 100%;
-  float: right;
+  margin-right: 5%;
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
   `;
 
 const ReviewSummaryWrapper = styled.div`
   display: flex;
-  flex-direction:
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   padding-left: 5%;
   height: 10%;
   width: 100%;
+  `;
+
+const ReviewSummaryPrompt = styled.div`
+  align-self: flex-start;
   `;
 
 const SummaryTextInput = styled.input`
   border: 1px solid grey;
   height: 40%;
   width: 70%;
-  margin-right: 10%;
+  margin-right: 5%;
+  align-self: flex-end;
   `;
 
 const ReviewBodyWrapper = styled.div`
@@ -87,8 +96,6 @@ const ReviewBodyWrapper = styled.div`
 const ReviewBodyTextArea = styled.textarea`
   height: 100%;
   margin-right: 5%;
-  margin-top: 4%;
-  margin-bottom: 4%;
   `;
 
 const ReviewBodyTitle = styled.div`
@@ -103,7 +110,7 @@ const ReviewBodyCharCount = styled.div`
   justify-content: flex-end;
   margin-right: 5%;
   padding-bottom: 5%;
-  font-size: 12px;
+  font-size: 10px;
   height: 5%;
   `;
 
@@ -134,7 +141,7 @@ padding-left: 5%;
 height: 50%;
 `;
 
-const StyledInput = styled.input`
+const StyledNicknameEmailInput = styled.input`
   width: 60%;
   margin-left: 40%;
   `;
@@ -184,6 +191,11 @@ const ExitButtonWrapper = styled.div`
   top: 0;
   `;
 
+const ExitButton = styled.button`
+  border: none;
+  background-color: white;
+  `;
+
 const SubmitWrapper = styled.div`
   position: absolute;
   bottom: 0;
@@ -210,26 +222,28 @@ const HiddenRating = styled.input`
   `;
 
 const RatingWrapper = styled.div`
-  border: 1px solid grey;
+  margin-left: 5%;
   width: 200px;
   float: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  align-items: center;
+  `;
+
+const StarsWrapper = styled.div`
+  display: flex;
+  align-items: center;
   `;
 
 const StarsOuter = styled.div`
-  border: 1px solid blue;
   color: rgb(128, 128, 128);
   display: inline-block;
   position: relative;
-  overflow-x: hidden;
-  width: 100px;
   height: 25px;
   `;
 
 const StarsInner = styled.div`
-  border: 1px solid red;
   color: gold;
   position: absolute;
   top: 0;
@@ -267,9 +281,12 @@ class CreateReview extends React.Component {
 
   handleStarIconClick() {
     const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
+    // THIS IS NOT A PERMANENT FIX
+    if (ratingWords[event.target.id - 1] === undefined) {
+      return;
+    }
     $('#InnerStars').width(`${event.target.id * 20}%`);
-    console.log('width', $('#InnerStars').width());
-    $('#HiddenRatingInput').val(`${event.target.id}`);
+    $('#HiddenRatingInput').val(`${ratingWords[event.target.id - 1]}`);
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
@@ -313,6 +330,8 @@ class CreateReview extends React.Component {
                   <div id="RatingText">Overall Rating:*</div>
                   {/* maybe make this hidden rating a radio input
                  - that way it makes more sense that its required? */}
+                 <StarsWrapper>
+
                   <StarsOuter>
                     <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />
                     <FontAwesomeIcon icon={faStar} id="2" onClick={this.handleStarIconClick} />
@@ -327,19 +346,23 @@ class CreateReview extends React.Component {
                       <FontAwesomeIcon icon={solidStar} id="5" onClick={this.handleStarIconClick} />
                     </StarsInner>
                   </StarsOuter>
+                 </StarsWrapper>
                 </RatingWrapper>
                 <RecommendWrapper id="recommend">
                   Do you recommend this product?*
+                  <div>
                   <label htmlFor="YesRecommend">Yes</label>
                   <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
                   <label htmlFor="NoRecommend">No</label>
                   <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
+
+                  </div>
                 </RecommendWrapper>
               </RatingAndRecommendWrapper>
               <ReviewSummaryWrapper id="ReviewSummary">
-                <div>
+                <ReviewSummaryPrompt>
                   Review summary:
-                </div>
+                </ReviewSummaryPrompt>
                 <SummaryTextInput id="ReviewSummaryText" maxLength="60" type="text" placeholder="Example: Best purchase ever!" />
               </ReviewSummaryWrapper>
 
@@ -357,7 +380,7 @@ class CreateReview extends React.Component {
                     What is your nickname?*
 
                   </NicknameAndEmailTitle>
-                  <StyledInput id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
+                  <StyledNicknameEmailInput id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
                   <PrivacyWrapper>
                     For privacy reasons, do not use your full name or email address
                   </PrivacyWrapper>
@@ -368,7 +391,7 @@ class CreateReview extends React.Component {
                     What is your email?*
 
                   </NicknameAndEmailTitle>
-                  <StyledInput id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
+                  <StyledNicknameEmailInput id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
                   <PrivacyWrapper>
                     For authentication reasons, you will not be emailed
                   </PrivacyWrapper>
@@ -407,7 +430,7 @@ class CreateReview extends React.Component {
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>
-            <button type="button" id="exitbutton" onClick={this.handleExitButtonClick}>X</button>
+            <ExitButton type="button" id="exitbutton" onClick={this.handleExitButtonClick}>X</ExitButton>
           </ExitButtonWrapper>
         </CenteredDiv>
       </>

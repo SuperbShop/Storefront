@@ -168,3 +168,6 @@
   transform: scale(2.5);
   object-fit: contain;
 }
+.zoomed-img {
+  overflow: hidden;
+}

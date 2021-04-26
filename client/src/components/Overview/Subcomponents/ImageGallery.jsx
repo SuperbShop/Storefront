@@ -19,7 +19,6 @@ const ImageGallery = ({ photos }) => {
 
   const handleImageZoom = () => {
     const element = document.getElementsByClassName('backdrop')[0];
-    console.log(element);
     element.classList.toggle('zoomed-img');
   };
 

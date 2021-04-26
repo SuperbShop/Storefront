@@ -4,17 +4,13 @@ const api = require('./apiHandler');
 const app = express();
 const port = 3000;
 app.use(express.json());
-app.use('/products:id', express.static('../client/dist'));
+app.use(express.static(`${__dirname}/../client/dist`));
 
 app.get('/', (req, res) => {
-  res.redirect('/products');
+  res.redirect('/api');
 });
 
-app.get('/products', (req, res) => {
-  res.send('hello world');
-});
-
-app.get('/products/:id', (req, res) => {
+app.get('/api/:id', (req, res) => {
   const { id } = req.params;
   api.fetchProducts(id, (details) => {
     res.send(details.data);

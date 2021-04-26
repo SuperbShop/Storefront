@@ -38,8 +38,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23145',
-      productId: 23145,
+      product: '23148',
+      productId: 23148,
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
@@ -141,7 +141,7 @@ class App extends React.Component {
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
         </section>
-        <section className="ratings module"><TrackedRatings product={product} /></section>
+        <section className="ratings module" id="Reviews"><TrackedRatings product={product} /></section>
       </>
     );
   }

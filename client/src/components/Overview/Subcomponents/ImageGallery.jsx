@@ -17,8 +17,10 @@ const ImageGallery = ({ photos }) => {
     }
   };
 
-  const closeModal = () => {
-    setSelectedImg(null);
+  const handleImageZoom = () => {
+    const element = document.getElementsByClassName('backdrop')[0];
+    console.log(element);
+    element.classList.toggle('zoomed-img');
   };
 
   const handleClick = (index) => {
@@ -48,10 +50,10 @@ const ImageGallery = ({ photos }) => {
             {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
             {photos.map((photo, index) => (
               <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
-                {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
+                {index === current && (<img className="backdrop" onClick={handleImageZoom} src={photo.url} alt="product" />) }
               </div>
             ))}
-            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={closeModal} />
+            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
           </section>
           <section className="modal-icons">
             {photos.map((photo, index) => (

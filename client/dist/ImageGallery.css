@@ -163,3 +163,8 @@
   user-select: none;
   padding: 10px;
 }
+
+.zoomed-img img {
+  transform: scale(2.5);
+  object-fit: contain;
+}

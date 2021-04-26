@@ -6,7 +6,7 @@ import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import $ from 'jquery';
 import PropTypes from 'prop-types';
 
-const StarWrapper = styled.div`
+const StarRatingWrapper = styled.div`
   display: flex;
   padding-bottom: 10px;
 `;
@@ -35,7 +35,7 @@ const StarsInner = styled.div`
   left: 0;
   white-space: nowrap;
   overflow: hidden;
-  color: #000;
+  color: #EFC050;
   `;
 
 class StarRating extends React.Component {
@@ -60,7 +60,7 @@ class StarRating extends React.Component {
       $('.StarsInner').width(`${averagePercentage * 100}%`);
     }
     return (
-      <StarWrapper>
+      <StarRatingWrapper>
         <StarsContainer>
           <StarsOuter>
             <FontAwesomeIcon key={1} icon={faStar} />
@@ -86,7 +86,7 @@ class StarRating extends React.Component {
             reviews
           </a>
         </ReviewWrapper>
-      </StarWrapper>
+      </StarRatingWrapper>
     );
   }
 }

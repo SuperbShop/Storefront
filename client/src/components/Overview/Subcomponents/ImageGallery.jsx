@@ -38,11 +38,11 @@ const ImageGallery = ({ photos }) => {
   if (!Array.isArray(photos) || photos.length === 0) {
     return null;
   }
-
   const settings = {
-    slidesToShow: 7,
-    slidesToScroll: 7,
+    slidesToShow: (photos.length < 7 ? photos.length : 7),
+    slidesToScroll: (photos.length < 7 ? photos.length : 7),
   };
+
   return (
     <div className="gallery">
       { selectedImg ? (

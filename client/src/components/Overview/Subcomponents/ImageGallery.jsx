@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ photos }) => {
@@ -38,6 +39,10 @@ const ImageGallery = ({ photos }) => {
     return null;
   }
 
+  const settings = {
+    slidesToShow: 7,
+    slidesToScroll: 7,
+  };
   return (
     <div className="gallery">
       { selectedImg ? (
@@ -70,21 +75,20 @@ const ImageGallery = ({ photos }) => {
         </div>
       ) : (
         <div>
-          <section className="thumb-slider">
+          {/* <section className="thumb-slider">
             {thumbnail === 0 ? <FontAwesomeIcon icon={faArrowUp} className="hidden" /> : <FontAwesomeIcon icon={faArrowUp} onWheel={prevSlide} onClick={prevSlide} />}
-
             {photos.map((photo, index) => (
               <img
                 className={index === current ? 'thumbnail active' : 'thumbnail'}
-                key={photo.thumbnail_url}
-                src={photo.thumbnail_url}
+                key={photo.url}
+                src={photo.url}
                 alt="product"
                 onClick={() => handleClick(index)}
                 aria-hidden="true"
               />
             ))}
             {thumbnail === photos.length - 1 ? <FontAwesomeIcon icon={faArrowDown} className="hidden" /> : <FontAwesomeIcon icon={faArrowDown} onWheel={nextSlide} onClick={nextSlide} />}
-          </section>
+          </section> */}
           {' '}
           <section className="slider">
             {
@@ -99,6 +103,23 @@ const ImageGallery = ({ photos }) => {
               </div>
             ))}
           </section>
+          <section className="thumb-slider">
+        <Slider {...settings}>
+          {photos.map((photo, index) => (
+            <div key={photo.thumbnail_url}>
+              <img
+                className={index === current ? 'thumbnail active' : 'thumbnail'}
+                key={photo.url}
+                src={photo.url}
+                alt="product"
+                onClick={() => handleClick(index)}
+                aria-hidden="true"
+              />
+            </div>
+          ))}
+
+        </Slider>
+      </section>
         </div>
       )}
 

@@ -107,8 +107,8 @@ class Questions extends React.Component {
         Authorization: config.TOKEN,
       },
       success: (data) => {
-        console.log('id: ', id);
-        console.log('data: ', data);
+        // console.log('id: ', id);
+        // console.log('data: ', data);
         this.setState({
           QandA: data,
         });

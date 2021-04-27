@@ -22,7 +22,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
   // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
-    console.log(info);
+    // console.log(info);
     window.clicks.push(info);
   }}
   >

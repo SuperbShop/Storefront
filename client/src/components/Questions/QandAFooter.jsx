@@ -39,7 +39,6 @@ const QandAFooter = (props) => {
   const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
   const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
-  console.log(props.questions);
   return (
     <FooterWrapper className="QA Footer Question-Buttons">
       { moreToDisplay

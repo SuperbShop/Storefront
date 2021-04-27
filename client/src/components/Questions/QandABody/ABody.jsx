@@ -5,13 +5,17 @@ import AOptions from './AOptions';
 const AnswerBody = styled.div`
   background-color: rgb(220, 220, 220);
   border: 1px solid rgb(150, 150, 150);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px 10px 0 10px;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   margin-bottom: 10px;
 `;
 
 const AnswerOptions = styled.div`
   background-color: rgb(220, 220, 220);
+  display: flex;
+  justify-content: flex-end;
   padding: 5px;
   margin: auto;
 `;
@@ -26,6 +30,10 @@ const ImageWrapper = styled.img`
   height: 100px;
   border: 2px solid black;
   display: inline-block;
+`;
+
+const ImagesDiv = styled.div`
+  display: flex;
 `;
 
 class ABody extends React.Component {
@@ -64,26 +72,34 @@ class ABody extends React.Component {
         </AnswerText>
 
         { photos
-          ? photos.map((photo, index) => (
-            <ImageWrapper
-              src={photos[index]}
-              alt="description"
-              width="100"
-              height="100"
-              onClick={this.props.toggleImageCarouselModal}
-              key={`${photo}+${index}`}
-            />
-          ))
+          ? (
+            <ImagesDiv>
+              {
+              photos.map((photo, index) => (
+                <ImageWrapper
+                  src={photos[index]}
+                  alt="description"
+                  width="100"
+                  height="100"
+                  onClick={this.props.toggleImageCarouselModal}
+                  key={`${photo}+${index}`}
+                />
+              ))
+            }
+            </ImagesDiv>
+          )
           : null }
 
         <div className="a options">
           <AnswerOptions>
-            <AOptions
-              onClickReport={this.report}
-              answerer={answerer_name}
-              date={date}
-              helpfulness={helpfulness}
-            />
+            <div>
+              <AOptions
+                onClickReport={this.report}
+                answerer={answerer_name}
+                date={date}
+                helpfulness={helpfulness}
+              />
+            </div>
           </AnswerOptions>
         </div>
 

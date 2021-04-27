@@ -15,8 +15,9 @@ const QuestionDiv = styled.div`
   background-color: white;
   border: 5px solid white;
   border-radius: 10px;
-  width: 100%;
-  margin: 0 auto;
+  width: 95%;
+  margin: 2px auto 10px auto;
+
 `;
 
 const QuestionHeader = styled.div`
@@ -32,7 +33,7 @@ const AnswerWrapper = styled.div`
   margin: 0 auto;
   width: auto;
   max-height: 300px;
-  overflow: scroll;
+  overflow-y: auto;
   grid-template-columns: 1fr 20fr;
 `;
 
@@ -53,6 +54,12 @@ const QuestionBody = styled.div`
 
 const QAIcon = styled.div`
   width: 50px;
+`;
+
+const NoAnswers = styled.div`
+  display: flex;
+  justify-content: center;
+  text-decoration: italic;
 `;
 
 class QBody extends React.Component {
@@ -114,12 +121,13 @@ class QBody extends React.Component {
     const ansArr = sortByAHelpful(answers);
     const ansDisplayed = ansArr.slice(0, numDisplayed);
     const lengthTest = {
+      isTrue: true,
       hasAnswers: ansArr.length > 0,
       moreToDisplay: (ansArr.length > 2 && ansDisplayed.length < ansArr.length),
       currentlyDisplayingAll: (ansDisplayed.length >= ansArr.length && ansArr.length > 2),
     };
 
-    return lengthTest.hasAnswers
+    return lengthTest.isTrue
       ? (
         <QuestionDiv>
 
@@ -145,37 +153,42 @@ class QBody extends React.Component {
               />
             </div>
           </QuestionHeader>
+          { lengthTest.hasAnswers
+            ? (
+              <AnswerWrapper>
+                <QAIcon className="a icon">
+                  <h3>
+                    A:
+                  </h3>
+                </QAIcon>
 
-          <AnswerWrapper>
-            <QAIcon className="a icon">
-              <h3>
-                A:
-              </h3>
-            </QAIcon>
+                <span className="answer-display">
+                  { ansDisplayed.map((answer) => (
+                    <div key={`answer ${answer.id}`}>
+                      {
+                    answer.body
+                      ? (
+                        <ABody
+                          answer={answer}
+                          onClickReport={this.report}
+                          toggleImageCarouselModal={toggleImageCarouselModal}
+                        />
+                      )
+                      : null
+                      }
+                    </div>
+                  ))}
+                  { lengthTest.moreToDisplay
+                    ? <LoadOption type="submit" onClick={this.onClickDisplay}>See More Answers</LoadOption>
+                    : null}
+                  { lengthTest.currentlyDisplayingAll
+                    ? <LoadOption type="submit" onClick={this.onClickCollapse}>No More Answers to Display... Collapse?</LoadOption>
+                    : null }
+                </span>
 
-            <span className="answer-display">
-              { ansDisplayed.map((answer, index) => (
-                answer.body
-                  ? (
-                    <ABody
-                      answer={answer}
-                      onClickReport={this.report}
-                      key={`answer ${index}`}
-                      toggleImageCarouselModal={toggleImageCarouselModal}
-                    />
-                  )
-                  : null
-              ))}
-              { lengthTest.moreToDisplay
-                ? <LoadOption type="submit" onClick={this.onClickDisplay}>See More Answers</LoadOption>
-                : null}
-              { lengthTest.currentlyDisplayingAll
-                ? <LoadOption type="submit" onClick={this.onClickCollapse}>No More Answers to Display... Collapse?</LoadOption>
-                : null }
-            </span>
-
-          </AnswerWrapper>
-
+              </AnswerWrapper>
+            )
+            : <NoAnswers>No Answers Yet!</NoAnswers> }
         </QuestionDiv>
       )
       : null;

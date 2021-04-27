@@ -17,7 +17,7 @@ const SearchBar = styled.input`
   border: 1px solid black;
   width: 100%;
   height: 50px;
-  font-size: 1.5 em;
+  font-size: 25px;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -26,8 +26,11 @@ const ButtonsWrapper = styled.div`
 `;
 
 const SearchResults = styled.div`
-  border: 3px solid black;
   background-color: grey;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 2px 5px 10px 5px;
+  max-height: 400px;
+  overflow-y: auto;
 `;
 
 const AddQButton = styled.button`
@@ -40,11 +43,9 @@ const AddQButton = styled.button`
   display: grid;
 `;
 
-const searchQuestions = (query, arr) => {
-  return arr.filter((val) => (
-    val.question_body.includes(query)
-  ))
-};
+const searchQuestions = (query, arr) => arr.filter((val) => (
+  val.question_body.includes(query)
+));
 
 class QandAHeader extends React.Component {
   constructor(props) {
@@ -80,19 +81,21 @@ class QandAHeader extends React.Component {
         />
         { atLeastOneQuestionAsked
           ? null
-          : <ButtonsWrapper>
+          : (
+            <ButtonsWrapper>
               <AddQButton onClick={toggleAskQuestionModal}>
                 + Add A Question
               </AddQButton>
             </ButtonsWrapper>
-        }
+          )}
         { searchQueryIsMoreThan3Chars
-          ? ( <SearchResults>
+          ? (
+            <SearchResults>
               { searchQuestions(search, QandA.results).map((result, index) => (
-                 <QBody question={result} key={`${index}`} />)) }
-            </SearchResults> )
-          : null
-        }
+                <QBody question={result} key={`${index}`} />)) }
+            </SearchResults>
+          )
+          : null}
       </HeaderComponent>
     );
   }

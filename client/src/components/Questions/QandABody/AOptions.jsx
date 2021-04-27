@@ -26,10 +26,6 @@ const AOptionButton = styled.button`
   cursor: pointer;
 `;
 
-const Spacer = styled.div`
-  width: 60%;
-`;
-
 class AOptions extends React.Component {
   constructor(props) {
     super(props);
@@ -67,7 +63,6 @@ class AOptions extends React.Component {
     const helpfulClicked = helpfulness + 1;
     return (
       <OptionsContainer className="options container">
-        <Spacer />
         <AOptionItem className="option username">{answerer}</AOptionItem>
         <AOptionItem className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').format('MMMM Do YYYY')}</AOptionItem>
         <AOptionItem className="option helpful">

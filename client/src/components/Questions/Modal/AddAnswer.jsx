@@ -113,8 +113,6 @@ const AddAnswer = (props) => {
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
 
-  console.log(props);
-
   return (
     <>
       { showAddAnswerModal

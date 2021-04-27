@@ -5,8 +5,7 @@ import QandAFooter from '../QandAFooter';
 
 const QuestionComponent = styled.div`
   background-color: #fff;
-  max-height: 10%;
-  overflow: scroll;
+  overflow-y: auto;
 `;
 const QuestionBodyComp = styled.div`
   width: 100%;
@@ -41,13 +40,14 @@ const QandABody = (props) => {
       <QuestionComponent>
         <QuestionBodyComp className="QA-Body">
           { displayArr.map((result) => (
-            <QBody
-              question={result}
-              key={result.id}
-              report={report}
-              toggleAddAnswerModal={toggleAddAnswerModal}
-              toggleImageCarouselModal={toggleImageCarouselModal}
-            />
+            <div key={'question'+result.id}>
+              <QBody
+                question={result}
+                report={report}
+                toggleAddAnswerModal={toggleAddAnswerModal}
+                toggleImageCarouselModal={toggleImageCarouselModal}
+              />
+            </div>
           ))}
         </QuestionBodyComp>
       </QuestionComponent>

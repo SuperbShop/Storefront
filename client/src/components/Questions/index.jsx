@@ -35,9 +35,9 @@ class Questions extends React.Component {
           },
           asker_name: '',
           question_body: '',
-          question_date: '2019-01-17T00:00:00.000Z',
+          question_date: '',
           question_helpfulness: 0,
-          question_id: 1017420,
+          question_id: 0,
           reported: false,
         }],
       },
@@ -47,12 +47,33 @@ class Questions extends React.Component {
     this.productIdDown = this.productIdDown.bind(this);
     this.displayMore = this.displayMore.bind(this);
     this.collapse = this.collapse.bind(this);
-    this.setShowAskQuestion = this.setShowAskQuestion.bind(this);
   }
 
   componentDidMount() {
-    const { product } = this.props;
-    this.getProduct(product);
+    const { productId } = this.props;
+    this.getProduct(productId.toString());
+  }
+
+  getProduct(id) {
+    $.ajax({
+      method: 'GET',
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/qa/questions?product_id=${id}`,
+      headers: {
+        Authorization: config.TOKEN,
+      },
+      success: (data) => {
+        this.setState({
+          QandA: data,
+        });
+      },
+      error: (error) => { console.log('Youre a failure', error); },
+    });
+  }
+
+  collapse() {
+    this.setState({
+      questionsDisplayed: 2,
+    });
   }
 
   displayMore() {
@@ -62,14 +83,13 @@ class Questions extends React.Component {
     });
   }
 
-  setShowAskQuestion() {
-    const { showAskQuestion } = this.state;
-    this.setState({
-      showAskQuestion: !showAskQuestion,
-    });
-  }
-
-  collapse() {
+  productIdUp() {
+    const {
+      productId,
+      incrementClick,
+    } = this.props;
+    incrementClick();
+    this.getProduct((productId + 1).toString());
     this.setState({
       questionsDisplayed: 2,
     });
@@ -87,36 +107,6 @@ class Questions extends React.Component {
     });
   }
 
-  productIdUp() {
-    const {
-      productId,
-      incrementClick,
-    } = this.props;
-    incrementClick();
-    this.getProduct((productId + 1).toString());
-    this.setState({
-      questionsDisplayed: 2,
-    });
-  }
-
-  getProduct(id) {
-    $.ajax({
-      method: 'GET',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/qa/questions?product_id=${id}`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
-      success: (data) => {
-        console.log('id: ', id);
-        console.log('data: ', data);
-        this.setState({
-          QandA: data,
-        });
-      },
-      error: (error) => { console.log('Youre a failure', error); },
-    });
-  }
-
   render() {
     const {
       QandA,
@@ -125,7 +115,7 @@ class Questions extends React.Component {
     const {
       toggleAskQuestionModal,
       toggleAddAnswerModal,
-      toggleImageCarouselModal
+      toggleImageCarouselModal,
     } = this.props;
     const numOfTotalQs = QandA.results.length;
     return (

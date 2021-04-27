@@ -22,26 +22,19 @@ const ModalWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0 auto;
-  width: 80%;
-  height: 50%;
+  width: 900px;
+  height: 600px;
   opacity: 100%;
   background: white;
   color: black;
   box-shadow: 0, 5px, 16px, rgba(0, 0, 0, 0.2);
-  grid-template-columns: 1fr 1fr;
   border-radius: 10px;
 `;
 
-const ModalImg = styled.img`
-  border-radius: 10px 0 0 10px;
-  background: black;
-  max-width: 100%;
-  height: auto;
-  width: auto;
-  margin: auto;
-`;
-
 const ModalContent = styled.div`
+  height: 80%;
+  width: 80%;
+  border: 2px solid white;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -60,9 +53,36 @@ const CloseModalButton = styled(MdClose)`
   z-index: 10;
 `;
 
+const FormInput = styled.input`
+  width: 100%;
+  height: 50px;
+  font-size: 1.5 em;
+  color: black;
+  background-color: white;
+  margin: 0 auto;
+  // border: 1px solid black;
+  width: 100%;
+  height: 50px;
+  font-size: 1.5 em;
+`;
+
+const SubmitButton = styled.button`
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+  width: 250px;
+  padding: 10px 20px;
+  margin: 15px auto;
+  display: grid;
+`;
+
+const FormHeader = styled.div`
+  text-align: center;
+`;
+
 const AskQuestion = (props) => {
-  const { showAskQuestionModal } = props;
-  const toggleModal = props.toggleAskQuestionModal;
+  const { showAskQuestionModal, toggleAskQuestionModal, productId } = props;
+  const toggleModal = toggleAskQuestionModal;
   const modalRef = useRef();
 
   const closeModal = (e) => {
@@ -88,15 +108,28 @@ const AskQuestion = (props) => {
           <PageBlockerModalDiv ref={modalRef} onClick={closeModal}>
             <Modal>
               <ModalWrapper showAskQuestionModal={showAskQuestionModal} onClick={closeModal}>
-                <ModalImg src="https://s1.cdn.autoevolution.com/images/news/2021-bmw-m3-set-to-look-like-no-other-bimmer-ever-146407_1.jpg" alt="test" />
                 <ModalContent>
-                  <h1>The New BMW M3...</h1>
+                  <CloseModalButton
+                    aria-label="Close modal"
+                    ref={modalRef}
+                    onClick={toggleModal}
+                  />
+                  <FormHeader>
+                    <h1>Ask Your Question</h1>
+                    <h3>
+                      About the `currentProduct`
+                      {/* currentProduct from props goes here */}
+                    </h3>
+                  </FormHeader>
+                  <div>Your Question: </div>
+                  <FormInput type="form" />
+                  <div>What is Your Nickname: </div>
+                  <FormInput type="form" placeholder="Example: jackson11!" />
+                  <div>Your Email: </div>
+                  <FormInput type="form" placeholder="Why did you like the product or not?" />
+                  <p>For authentication reasons, you will not be emailed</p>
+                  <SubmitButton type="submit" onClick={toggleModal}>Submit</SubmitButton>
                 </ModalContent>
-                <CloseModalButton
-                  aria-label="Close modal"
-                  ref={modalRef}
-                  onClick={toggleModal}
-                />
               </ModalWrapper>
             </Modal>
           </PageBlockerModalDiv>

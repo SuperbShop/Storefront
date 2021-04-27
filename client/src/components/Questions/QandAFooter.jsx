@@ -1,14 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
-const FooterButton = styled.button`
-  color: white;
-  background-color: black;
-  border: 5px solid white;
-  border-radius: 30px;
-  display: grid;
-  padding: 15px 25px;
-  margin: 15px auto 0 auto;
+const FooterWrapper = styled.div`
+  width: 100%;
+  display: flex-grid;
+  justify-content: center;
+  `;
+
+const Button = styled.button`
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  padding: 10px 20px;
+  margin: 15px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: 15px;
+  text-transform: uppercase;
+  &:hover {
+    border: 1px solid #535353;
+    background-color: #000;
+    transition: 0.5s;
+    color: #fff;
+  }
 `;
 
 const QandAFooter = (props) => {
@@ -22,18 +39,26 @@ const QandAFooter = (props) => {
   const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
   const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
+  console.log(props.questions);
   return (
-    <div className="QA Footer Question-Buttons">
+    <FooterWrapper className="QA Footer Question-Buttons">
       { moreToDisplay
-        ? <FooterButton type="submit" onClick={displayMore}>More Answered Questions</FooterButton>
+        ? <Button type="submit" onClick={displayMore}>More Answered Questions</Button>
         : null
       }
       { lessToDisplay
-        ? <FooterButton type="submit" onClick={collapse}>No More Questions... Collapse?</FooterButton>
+        ? <Button
+            type="submit"
+            onClick={collapse}
+          >
+            No More Questions... Collapse?
+          </Button>
         : null
       }
-      <FooterButton type="submit" onClick={toggleAskQuestionModal}>Add A Question</FooterButton>
-    </div>
+      <Button type="submit" onClick={toggleAskQuestionModal}>
+        + Add A Question
+      </Button>
+    </FooterWrapper>
   );
 };
 

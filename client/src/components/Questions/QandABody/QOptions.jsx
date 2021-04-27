@@ -2,7 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 
 const QOptionsContainer = styled.div`
-  float: right;
+  display: flex-grid;
+  flex-direction: column;
+  font-size: 0.7em;
+  position: relative;
+  padding: 5px 0 0 0;
 `;
 
 const QButton = styled.button`
@@ -55,9 +59,6 @@ class QOptions extends React.Component {
               ) }
           </QButton>
         </span>
-        { !this.state.reported
-          ? <QButton className="option report" onClick={this.onClickReport}>Report</QButton>
-          : <span> Reported </span> }
         <QButton type="submit" onClick={this.props.toggleAddAnswerModal}>  Add Answer</QButton>
       </QOptionsContainer>
     );

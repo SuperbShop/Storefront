@@ -1,6 +1,4 @@
-
 import React from 'react';
-import $ from 'jquery';
 import styled from 'styled-components';
 import QOptions from './QOptions';
 import ABody from './ABody';
@@ -17,30 +15,25 @@ const QuestionDiv = styled.div`
   background-color: white;
   border: 5px solid white;
   border-radius: 10px;
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  margin: 15px auto;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const QuestionHeader = styled.div`
   color: black;
-  height: 15%;
-  float: right;
-  border-radius: 10px 10px 0 0;
-  padding: 10px 15px;
-  background-color: white;
-  display: flex;
-  flex-direction: row;
+  display: grid;
   margin: 10 auto 10 auto;
+  grid-template-columns: 1fr 15fr 5fr;
 `;
 
 const AnswerWrapper = styled.div`
+  display: grid;
   background-color: white;
-  width: 100%;
   margin: 0 auto;
+  width: auto;
   max-height: 300px;
   overflow: scroll;
+  grid-template-columns: 1fr 20fr;
 `;
 
 const LoadOption = styled.button`
@@ -53,20 +46,26 @@ const LoadOption = styled.button`
   margin: 0 15px;
 `;
 
+const QuestionBody = styled.div`
+  display: grid;
+  margin: 0 0 15px 0;
+`;
+
+const QAIcon = styled.div`
+  width: 50px;
+`;
+
 class QBody extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       question: 'default',
       numDisplayed: 2,
-      reported: false,
       markedHelpful: false,
     };
-    this.onCLickDisplay = this.onClickDisplay.bind(this);
-    this.onClickReportQ = this.onClickReportQ.bind(this);
-    this.onClickReportA = this.onClickReportA.bind(this);
+    this.onClickDisplay = this.onClickDisplay.bind(this);
     this.onClickCollapse = this.onClickCollapse.bind(this);
-    this.report = this.report.bind(this);
+    this.displayMore = this.displayMore.bind(this);
   }
 
   componentDidMount() {
@@ -75,6 +74,7 @@ class QBody extends React.Component {
   }
 
   onClickDisplay() {
+    console.log(this);
     this.displayMore();
   }
 
@@ -85,30 +85,13 @@ class QBody extends React.Component {
     });
   }
 
-  onClickReportQ() {
-    this.report();
-    alert('REPORTED');
-  }
-
-  onClickReportA() {
-    alert('REPORTED');
-  }
-
   onClickCollapse() {
     this.collapse();
   }
 
-  report() {
-    this.props.report();
-    this.setState({
-      reported: true,
-    });
-  }
-
   displayMore() {
-    const { numDisplayed } = this.state;
     const { question } = this.props;
-    const length = question.answers.length;
+    const { length } = question.answers;
     this.setState({
       numDisplayed: length,
     });
@@ -127,70 +110,77 @@ class QBody extends React.Component {
       answers,
       question_helpfulness,
     } = this.props.question;
-    const { toggleAddAnswerModal, toggleImageCarouselModal} = this.props;
+    const { toggleAddAnswerModal, toggleImageCarouselModal } = this.props;
     const ansArr = sortByAHelpful(answers);
     const ansDisplayed = ansArr.slice(0, numDisplayed);
     const lengthTest = {
+      hasAnswers: ansArr.length > 0,
       moreToDisplay: (ansArr.length > 2 && ansDisplayed.length < ansArr.length),
       currentlyDisplayingAll: (ansDisplayed.length >= ansArr.length && ansArr.length > 2),
     };
-    return (
-      <QuestionDiv>
 
-        <QuestionHeader>
-          <div className="q icon">
-            <h3>
-              Q:
-            </h3>
-          </div>
+    return lengthTest.hasAnswers
+      ? (
+        <QuestionDiv>
 
-          <div className="q text">
-            <h3>
-              {question_body}
-            </h3>
-          </div>
+          <QuestionHeader>
+            <QAIcon className="q icon">
+              <h3>
+                Q:
+              </h3>
+            </QAIcon>
 
-          <div className="q options">
-            <QOptions
-              helpfulness={question_helpfulness}
-              onClickHelpful={this.onClickHelpful}
-              onClickReport={this.onClickReport}
-              toggleAddAnswerModal={toggleAddAnswerModal}
-            />
-          </div>
-        </QuestionHeader>
+            <QuestionBody className="q text">
+              <h3>
+                {question_body}
+              </h3>
+            </QuestionBody>
 
-        <AnswerWrapper>
-          <div className="a icon">
-            <h3>
-              A:
-            </h3>
-          </div>
+            <div className="q options">
+              <QOptions
+                helpfulness={question_helpfulness}
+                onClickHelpful={this.onClickHelpful}
+                onClickReport={this.report}
+                toggleAddAnswerModal={toggleAddAnswerModal}
+              />
+            </div>
+          </QuestionHeader>
 
-          <span className="answer-display">
-            { ansDisplayed.map((answer, index) => (
-              answer.body
-              ? <ABody
-                  answer={answer}
-                  onClickReport={this.onClickReport}
-                  key={`answer ${index}`}
-                  toggleImageCarouselModal={toggleImageCarouselModal}
-                />
-              : null
-            ))}
-            { lengthTest.moreToDisplay
-              ? <LoadOption type="submit" onClick={this.onCLickDisplay}>See More Answers</LoadOption>
-              : null}
-            { lengthTest.currentlyDisplayingAll
-              ? <LoadOption type="submit" onClick={this.onClickCollapse}>No More Answers to Display... Collapse?</LoadOption>
-              : null }
-          </span>
+          <AnswerWrapper>
+            <QAIcon className="a icon">
+              <h3>
+                A:
+              </h3>
+            </QAIcon>
 
-        </AnswerWrapper>
+            <span className="answer-display">
+              { ansDisplayed.map((answer, index) => (
+                answer.body
+                  ? (
+                    <ABody
+                      answer={answer}
+                      onClickReport={this.report}
+                      key={`answer ${index}`}
+                      toggleImageCarouselModal={toggleImageCarouselModal}
+                    />
+                  )
+                  : null
+              ))}
+              { lengthTest.moreToDisplay
+                ? <LoadOption type="submit" onClick={this.onClickDisplay}>See More Answers</LoadOption>
+                : null}
+              { lengthTest.currentlyDisplayingAll
+                ? <LoadOption type="submit" onClick={this.onClickCollapse}>No More Answers to Display... Collapse?</LoadOption>
+                : null }
+            </span>
 
-      </QuestionDiv>
-    );
+          </AnswerWrapper>
+
+        </QuestionDiv>
+      )
+      : null;
   }
 }
+// }
 
 export default QBody;

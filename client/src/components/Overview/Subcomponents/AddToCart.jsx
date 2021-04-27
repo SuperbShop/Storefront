@@ -85,6 +85,7 @@ class AddToCart extends React.Component {
       available: null,
       quantity: null,
       isSizeSelected: false,
+      isQuantitySelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       liked: false,
     };
@@ -136,7 +137,7 @@ class AddToCart extends React.Component {
 
   render() {
     const {
-      liked, isSizeSelected, available, maxQuantity, headerQuantity,
+      liked, isSizeSelected, available, maxQuantity, headerQuantity, quantity,
     } = this.state;
     const { skus } = this.props;
     const skusObj = Object.keys(skus).map((key) => skus[key]);
@@ -166,7 +167,7 @@ class AddToCart extends React.Component {
           </RightDiv>
         </SelectorsWrapper>
         <AddWrapper>
-          {isSizeSelected ? (
+          {(isSizeSelected && quantity !== null) ? (
             <AddBtn onClick={this.handleSubmit}>
               Add To Bag
               <FontAwesomeIcon icon={faPlus} />

@@ -15,11 +15,10 @@
 }
 
 .thumb-slider {
-  display: flex;
+
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: absolute;
   z-index: 10;
 }
 
@@ -71,8 +70,8 @@
 }
 
 .thumbnail {
-  height: 65px;
-  width: 65px;
+  height: 50px;
+  width: 50px;
   object-fit: cover;
   border: 2px solid #000;
   margin: 10px;
@@ -130,7 +129,7 @@
   position: absolute;
   z-index: 999;
   top: 84%;
-  left: 45%;
+  left: 38%;
 }
 
 .dots {
@@ -162,4 +161,28 @@
   cursor: pointer;
   user-select: none;
   padding: 10px;
+}
+
+.zoomed-img img {
+  transform: scale(2.5);
+  object-fit: contain;
+}
+.zoomed-img {
+  overflow: hidden;
+}
+
+.slick-next:before, .slick-prev:before {
+  color: #000 !important;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  border-radius: none;
+  border-style: none;
+}
+
+.slick-slider {
+  bottom: 70px;
+}
+.slick-next {
+  right:0px;
 }

@@ -1,3 +1,6 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import ReactDOM from 'react-dom';
 import React from 'react';
 import Overview from './components/Overview/Overview';
@@ -138,7 +141,7 @@ class App extends React.Component {
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
         </section>
-        <section className="ratings module"><TrackedRatings product={productId} /></section>
+        <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
       </>
     );
   }

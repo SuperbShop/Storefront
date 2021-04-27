@@ -247,25 +247,29 @@ class ReviewTile extends React.Component {
           {review.photos.map((photo) => {
             if (modalPhoto === photo.url) {
               return (
-                <PageBlockerModalDiv>
-                  <Modal>
-                    <ImageModalDiv>
-                      <FullsizeImage
-                        key={`${photo.id}Fullsize`}
-                        src={photo.url}
-                        onClick={this.handleImageClick}
-                      />
-                    </ImageModalDiv>
-                  </Modal>
-                </PageBlockerModalDiv>
+                <React.Fragment key={photo.id}>
+                  <PageBlockerModalDiv>
+                    <Modal>
+                      <ImageModalDiv>
+                        <FullsizeImage
+                          key={`${photo.id}Fullsize`}
+                          src={photo.url}
+                          onClick={this.handleImageClick}
+                        />
+                      </ImageModalDiv>
+                    </Modal>
+                  </PageBlockerModalDiv>
+                </React.Fragment>
               );
             }
             return (
-              <ThumbnailImage
-                key={`${photo.id}Thumbnail`}
-                src={photo.url}
-                onClick={this.handleImageClick}
-              />
+              <React.Fragment key={`${photo.id}Thumbnail`}>
+                <ThumbnailImage
+                  key={`${photo.id}Thumbnail`}
+                  src={photo.url}
+                  onClick={this.handleImageClick}
+                />
+              </React.Fragment>
             );
           })}
         </div>

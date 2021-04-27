@@ -29,7 +29,7 @@ const ImageModalDiv = styled.div`
   top: 10%;
   margin: 0 auto;
   width: 90%;
-  height: 70%;
+  height: 90%;
   text-align:center;
   z-index: 2;
 `;
@@ -38,8 +38,6 @@ const FullsizeImage = styled.img`
   object-fit: cover;
   width: 100%;
   height: 80vh;
-  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
-  border: 1px solid grey;
   cursor: pointer;
 `;
 
@@ -88,7 +86,7 @@ const ImageGallery = ({ photos }) => {
           <PageBlockerModalDiv>
             <Modal>
               <ImageModalDiv>
-                <section>
+                <section className="backdrop">
                   {
         current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
           }

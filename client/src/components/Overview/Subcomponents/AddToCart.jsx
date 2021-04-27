@@ -27,24 +27,29 @@ const RightDiv = styled.div`
 `;
 
 const AddBtn = styled.button`
-display: flex;
-justify-content: space-between;
-align-items: center;
-background-color: #fff;
-color: #535353;
-padding: 15px;
-width: 75%;
-border: 1px solid #535353;
-box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-font-weight: 500;
-font-size: 15px;
-text-transform: uppercase;
-&:hover {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  color: #535353;
+  padding: 15px;
+  width: 75%;
   border: 1px solid #535353;
-  background-color: #000;
-  transition: 0.5s;
-  color: #fff;
-}
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-weight: 500;
+  font-size: 15px;
+  text-transform: uppercase;
+  &:hover {
+    border: 1px solid #535353;
+    background-color: #000;
+    transition: 0.5s;
+    color: #fff;
+  }
+  &:disabled {
+    opacity: 0.5;
+    color: #666666;
+    cursor:not-allowed;
+  }
 `;
 
 const LikeBtn = styled.button`
@@ -80,6 +85,7 @@ class AddToCart extends React.Component {
       available: null,
       quantity: null,
       isSizeSelected: false,
+      isQuantitySelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       liked: false,
     };
@@ -131,41 +137,47 @@ class AddToCart extends React.Component {
 
   render() {
     const {
-      liked, isSizeSelected, available, maxQuantity, headerQuantity,
+      liked, isSizeSelected, available, maxQuantity, headerQuantity, quantity,
     } = this.state;
     const { skus } = this.props;
-    return (
+    const skusObj = Object.keys(skus).map((key) => skus[key]);
+
+    return (skusObj.length > 0 ? (
       <AddToCartWrapper>
         <SelectorsWrapper>
           <LeftDiv>
-            <SizeSelector title="SELECT SIZE" skus={skus} resetThenSet={this.resetThenSet} />
+            <SizeSelector title={skusObj.includes('null') ? 'OUT OF STOCK' : 'SELECT SIZE'} skus={skus} resetThenSet={this.resetThenSet} />
           </LeftDiv>
           <RightDiv>
-            {!isSizeSelected
-          && (
-          <QuantitySelector
-            title="-"
-            quantity={maxQuantity}
-            available={available}
-            resetThenSet={this.resetThenSet}
-          />
-          )}
-            {isSizeSelected
-          && (
-          <QuantitySelector
-            title={headerQuantity}
-            quantity={maxQuantity}
-            available={available}
-            resetThenSet={this.resetThenSet}
-          />
-          )}
+            {isSizeSelected ? (
+              <QuantitySelector
+                title={headerQuantity}
+                quantity={maxQuantity}
+                available={available}
+                resetThenSet={this.resetThenSet}
+              />
+            ) : (
+              <QuantitySelector
+                title="-"
+                quantity={maxQuantity}
+                available={available}
+                resetThenSet={this.resetThenSet}
+              />
+            )}
           </RightDiv>
         </SelectorsWrapper>
         <AddWrapper>
-          <AddBtn onClick={this.handleSubmit}>
-            Add To Bag
-            <FontAwesomeIcon icon={faPlus} />
-          </AddBtn>
+          {(isSizeSelected && quantity !== null) ? (
+            <AddBtn onClick={this.handleSubmit}>
+              Add To Bag
+              <FontAwesomeIcon icon={faPlus} />
+            </AddBtn>
+          ) : (
+            <AddBtn disabled>
+              Add To Bag
+              <FontAwesomeIcon icon={faPlus} />
+            </AddBtn>
+          )}
 
           {liked
             ? <LikeBtn onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
@@ -177,6 +189,8 @@ class AddToCart extends React.Component {
         </AddWrapper>
 
       </AddToCartWrapper>
+    ) : null
+
     );
   }
 }

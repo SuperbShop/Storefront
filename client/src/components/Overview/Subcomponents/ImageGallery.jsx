@@ -1,8 +1,12 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faArrowUp, faArrowDown, faExpand, faCircle, faTimes,
+  faArrowLeft, faArrowRight, faExpand, faCircle, faTimes,
 } from '@fortawesome/free-solid-svg-icons';
+import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 
 const ImageGallery = ({ photos }) => {
@@ -17,8 +21,9 @@ const ImageGallery = ({ photos }) => {
     }
   };
 
-  const closeModal = () => {
-    setSelectedImg(null);
+  const handleImageZoom = () => {
+    const element = document.getElementsByClassName('backdrop')[0];
+    element.classList.toggle('zoomed-img');
   };
 
   const handleClick = (index) => {
@@ -36,6 +41,11 @@ const ImageGallery = ({ photos }) => {
   if (!Array.isArray(photos) || photos.length === 0) {
     return null;
   }
+  const settings = {
+    slidesToShow: (photos.length < 7 ? photos.length : 7),
+    slidesToScroll: (photos.length < 7 ? photos.length : 7),
+    infinite: false,
+  };
 
   return (
     <div className="gallery">
@@ -48,10 +58,10 @@ const ImageGallery = ({ photos }) => {
             {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
             {photos.map((photo, index) => (
               <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
-                {index === current && (<img className="backdrop" src={photo.url} alt="product" />) }
+                {index === current && (<img className="backdrop" onClick={handleImageZoom} src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
               </div>
             ))}
-            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={closeModal} />
+            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
           </section>
           <section className="modal-icons">
             {photos.map((photo, index) => (
@@ -69,21 +79,6 @@ const ImageGallery = ({ photos }) => {
         </div>
       ) : (
         <div>
-          <section className="thumb-slider">
-            {thumbnail === 0 ? <FontAwesomeIcon icon={faArrowUp} className="hidden" /> : <FontAwesomeIcon icon={faArrowUp} onWheel={prevSlide} onClick={prevSlide} />}
-
-            {photos.map((photo, index) => (
-              <img
-                className={index === current ? 'thumbnail active' : 'thumbnail'}
-                key={photo.thumbnail_url}
-                src={photo.thumbnail_url}
-                alt="product"
-                onClick={() => handleClick(index)}
-                aria-hidden="true"
-              />
-            ))}
-            {thumbnail === photos.length - 1 ? <FontAwesomeIcon icon={faArrowDown} className="hidden" /> : <FontAwesomeIcon icon={faArrowDown} onWheel={nextSlide} onClick={nextSlide} />}
-          </section>
           {' '}
           <section className="slider">
             {
@@ -91,12 +86,29 @@ const ImageGallery = ({ photos }) => {
         }
             {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
             {photos.map((photo, index) => (
-              <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={() => setSelectedImg(photo.url)} aria-hidden="true">
+              <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} aria-hidden="true">
                 {' '}
-                <FontAwesomeIcon icon={faExpand} className="expand" onClick={() => setSelectedImg(photo.url)} />
-                {index === current && (<img className="image" src={photo.url} alt="product" />) }
+                <FontAwesomeIcon icon={faExpand} className="expand" onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} />
+                {index === current && (<img className="image" src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
               </div>
             ))}
+          </section>
+          <section className="thumb-slider">
+            <Slider {...settings}>
+              {photos.map((photo, index) => (
+                <div key={photo.thumbnail_url}>
+                  <img
+                    className={index === current ? 'thumbnail active' : 'thumbnail'}
+                    key={photo.url}
+                    src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                    alt="product"
+                    onClick={() => handleClick(index)}
+                    aria-hidden="true"
+                  />
+                </div>
+              ))}
+
+            </Slider>
           </section>
         </div>
       )}

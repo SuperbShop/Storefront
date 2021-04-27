@@ -83,7 +83,6 @@ class SizeSelector extends React.Component {
   render() {
     const { isListOpen, headerTitle } = this.state;
     const { skus } = this.props;
-
     return (
       <DDWrapper>
         <DDHeader onClick={this.toggleList}>

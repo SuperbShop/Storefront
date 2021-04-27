@@ -6,7 +6,7 @@ import {
   FacebookIcon, TwitterIcon, PinterestIcon,
 } from 'react-share';
 import PropTypes from 'prop-types';
-import StarRatings from './StarRatings';
+import StarRating from './StarRating';
 
 const ProductWrapper = styled.div`
   margin: 0;
@@ -46,7 +46,7 @@ class ProductInfo extends React.Component {
     return (
       <ProductWrapper>
         {productRatings.length > 0
-        && <StarRatings ratings={productRatings} />}
+        && <StarRating ratings={productRatings} />}
 
         <Category>{category}</Category>
 

@@ -75,13 +75,6 @@ class Ratings extends React.Component {
     }
   }
 
-  // componentWillReceieveProps(nextProps) {
-  //   const newProp = nextProps.product;
-  //   this.setState({
-  //     productId: newProp,
-  //   });
-  // }
-
   render() {
     const {
       reviewsMeta,
@@ -95,24 +88,27 @@ class Ratings extends React.Component {
         <StyledTitle>
           Ratings & Reviews
         </StyledTitle>
-        <ReviewsAndRatingsDiv>
-          <BreakdownWrapper>
-            <Breakdown
-              key={productId}
-              filterFunc={this.handleFilterBy}
-              productId={productId}
-              reviewsMeta={reviewsMeta}
-            />
-          </BreakdownWrapper>
-          <ListWrapper>
-            <ReviewsList
-              productName={productName}
-              reviewsList={reviewsList}
-              filterState={filterState}
-              reviewsMeta={reviewsMeta}
-            />
-          </ListWrapper>
-        </ReviewsAndRatingsDiv>
+        { this.state && productId
+          && (
+          <ReviewsAndRatingsDiv>
+            <BreakdownWrapper>
+              <Breakdown
+                key={productId}
+                filterFunc={this.handleFilterBy}
+                productId={productId}
+                reviewsMeta={reviewsMeta}
+              />
+            </BreakdownWrapper>
+            <ListWrapper>
+              <ReviewsList
+                productName={productName}
+                reviewsList={reviewsList}
+                filterState={filterState}
+                reviewsMeta={reviewsMeta}
+              />
+            </ListWrapper>
+          </ReviewsAndRatingsDiv>
+          )}
       </>
     );
   }

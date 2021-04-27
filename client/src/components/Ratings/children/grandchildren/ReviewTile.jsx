@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import $ from 'jquery';
 import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import config from '../../../../../../config';
 import Modal from './Modal';
 
@@ -115,6 +115,9 @@ const TileButton = styled.button`
   border: none;
   background-color: white;
   text-decoration: underline;
+  &:disabled {
+    color: grey;
+  };
   `;
 
 const ShowMoreButtonStyle = {
@@ -135,16 +138,17 @@ class ReviewTile extends React.Component {
   }
 
   handleHelpfulClick(event) {
+    const { review } = this.props;
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${this.props.review.review_id}/helpful`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/helpful`,
       headers: {
         Authorization: config.TOKEN,
       },
       success: () => {
         this.setState({
-          helpful: this.props.review.helpfulness + 1,
+          helpful: review.helpfulness + 1,
         });
       },
       error: (err) => console.error(err),
@@ -152,21 +156,22 @@ class ReviewTile extends React.Component {
   }
 
   handleReportClick(event) {
+    const { review } = this.props;
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${this.props.review.review_id}/report`,
+      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/report`,
       headers: {
         Authorization: config.TOKEN,
       },
-      success: (res) => console.log(res),
+      success: () => console.log('report worked'),
       error: (err) => console.error(err),
     });
   }
 
   handleImageClick(event) {
-    console.log('id of image clicked:', event.target.src);
-    if (this.state.modalPhoto !== event.target.src) {
+    const { modalPhoto } = this.state;
+    if (modalPhoto !== event.target.src) {
       this.setState({
         modalPhoto: event.target.src,
       });
@@ -178,39 +183,45 @@ class ReviewTile extends React.Component {
   }
 
   handleShowMoreClick() {
-    this.setState({
-      showMoreChars: !this.state.showMoreChars,
-    });
+    this.setState((prevState) => ({
+      showMoreChars: !prevState.showMoreChars,
+    }));
   }
 
   render() {
+    const { review } = this.props;
+    const {
+      modalPhoto,
+      showMoreChars,
+      helpful,
+    } = this.state;
     let recommendation;
     let bodyAndShowMore;
     let photoBody;
 
-    if (this.props.review.recommend) {
+    if (review.recommend) {
       recommendation = (
-        <p>
-          <FontAwesomeIcon style={{color:"limegreen"}} icon={faCheck} />
+        <div>
+          <FontAwesomeIcon style={{ color: 'limegreen' }} icon={faCheck} />
           {' '}
           I recommend this product
-        </p>
+        </div>
       );
     } else {
       recommendation = '';
     }
 
-    if (this.props.review.body.length < 250) {
+    if (review.body.length < 250) {
       bodyAndShowMore = (
         <div id="yo">
-          {this.props.review.body}
+          {review.body}
         </div>
       );
-    } else if (this.props.review.body.length > 250 && this.state.showMoreChars === false) {
+    } else if (review.body.length > 250 && showMoreChars === false) {
       bodyAndShowMore = (
         <div>
           <div id="sup">
-            {this.props.review.body.slice(0, 250)}
+            {review.body.slice(0, 250)}
           </div>
           <div>
             <TileButton style={ShowMoreButtonStyle} type="button" onClick={this.handleShowMoreClick}>Show More</TileButton>
@@ -221,7 +232,7 @@ class ReviewTile extends React.Component {
       bodyAndShowMore = (
         <div>
           <div id="sup">
-            {this.props.review.body}
+            {review.body}
           </div>
           <div>
             <TileButton style={ShowMoreButtonStyle} type="button" onClick={this.handleShowMoreClick}>Show Less</TileButton>
@@ -230,11 +241,11 @@ class ReviewTile extends React.Component {
       );
     }
 
-    if (this.props.review.photos.length > 0) {
+    if (review.photos.length > 0) {
       photoBody = (
         <div>
-          {this.props.review.photos.map((photo) => {
-            if (this.state.modalPhoto === photo.url) {
+          {review.photos.map((photo) => {
+            if (modalPhoto === photo.url) {
               return (
                 <PageBlockerModalDiv>
                   <Modal>
@@ -268,11 +279,16 @@ class ReviewTile extends React.Component {
       left: 0;
       white-space: nowrap;
       overflow: hidden;
-      width: ${this.props.review.rating * 20}%;
+      width: ${review.rating * 20}%;
       `;
 
-    const response = this.props.review.response ? <div><strong>Response from seller:</strong>{this.props.review.response}</div> : '';
-    const helpful = this.state.helpful || this.props.review.helpfulness;
+    const response = review.response ? (
+      <div>
+        <strong>Response from seller:</strong>
+        {review.response}
+      </div>
+    ) : '';
+    const helpfulValue = helpful || review.helpfulness;
     return (
       <TileContainer>
         <StarsAuthorDateWrapper>
@@ -291,16 +307,16 @@ class ReviewTile extends React.Component {
             </StarsInner>
           </StarsOuter>
           <AuthorDateWrapper>
-            {this.props.review.reviewer_name}
-          ,
-          {' '}
-            {moment(this.props.review.date).format('LL')}
+            {review.reviewer_name}
+            ,
+            {' '}
+            {moment(review.date).format('LL')}
 
           </AuthorDateWrapper>
 
         </StarsAuthorDateWrapper>
         <SummaryWrapper>
-          <h5>{this.props.review.summary}</h5>
+          <h5>{review.summary}</h5>
         </SummaryWrapper>
         <PhotosWrapper>
           {photoBody}
@@ -318,17 +334,42 @@ class ReviewTile extends React.Component {
           <ResponseTag>{response}</ResponseTag>
         </ResponseWrapper>
         <HelpfulReportWrapper>
-            Helpful?
-          <TileButton type="button" onClick={this.handleHelpfulClick}>Yes</TileButton>
+          Helpful?
+          <TileButton
+            type="button"
+            onClick={this.handleHelpfulClick}
+          >
+            Yes
+          </TileButton>
           (
-          {helpful}
+          {helpfulValue}
           ) |
-          <TileButton type="button" onClick={this.handleReportClick}>Report</TileButton>
+          <TileButton
+            type="button"
+            onClick={this.handleReportClick}
+          >
+            Report
+          </TileButton>
 
         </HelpfulReportWrapper>
       </TileContainer>
     );
   }
 }
+
+ReviewTile.propTypes = {
+  review: PropTypes.shape({
+    body: PropTypes.string,
+    date: PropTypes.string,
+    helpfulness: PropTypes.number,
+    photos: PropTypes.arrayOf(PropTypes.shape({})),
+    rating: PropTypes.number,
+    recommend: PropTypes.bool,
+    response: PropTypes.string,
+    review_id: PropTypes.number,
+    reviewer_name: PropTypes.string,
+    summary: PropTypes.string,
+  }).isRequired,
+};
 
 export default ReviewTile;

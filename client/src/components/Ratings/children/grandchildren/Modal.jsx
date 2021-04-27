@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 // We get hold of the div with the id modal that we have created in index.html
 const modalRoot = document.getElementById('modal');
 
@@ -9,18 +10,24 @@ class Modal extends React.Component {
 
     this.element = document.createElement('div');
   }
+
   // We append the created div to the div#modal
   componentDidMount() {
-    modalRoot.appendChild( this.element );
+    modalRoot.appendChild(this.element);
   }
 
   componentWillUnmount() {
-    modalRoot.removeChild( this.element );
+    modalRoot.removeChild(this.element);
   }
 
   render() {
-    return createPortal(this.props.children, this.element);
+    const { children } = this.props;
+    return createPortal(children, this.element);
   }
 }
+
+Modal.propTypes = {
+  children: PropTypes.shape({}).isRequired,
+};
 
 export default Modal;

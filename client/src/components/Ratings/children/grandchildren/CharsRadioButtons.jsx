@@ -34,7 +34,7 @@ const DescriptionsWrapper = styled.div`
 const CharsRadioButtons = (props) => (
   <>
   <CharWrapper>
-    <TitleWrapper id={`choice${props.name}`}>
+    <TitleWrapper id={`${props.name}`}>
       {props.name}
       : None selected
     </TitleWrapper>

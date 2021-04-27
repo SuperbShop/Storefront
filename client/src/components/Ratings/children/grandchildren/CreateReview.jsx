@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import config from '../../../../../../config';
 import CharsRadioButtons from './CharsRadioButtons';
 
 const CenteredDiv = styled.div`
@@ -269,6 +270,7 @@ class CreateReview extends React.Component {
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
     this.updateLengthDetails = this.updateLengthDetails.bind(this);
     this.logfiles = this.logfiles.bind(this);
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleExitButtonClick() {
@@ -286,7 +288,7 @@ class CreateReview extends React.Component {
       return;
     }
     $('#InnerStars').width(`${event.target.id * 20}%`);
-    $('#HiddenRatingInput').val(`${ratingWords[event.target.id - 1]}`);
+    $('#HiddenRatingInput').val(event.target.id);
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
@@ -309,17 +311,48 @@ class CreateReview extends React.Component {
     }
   }
 
+  handleFormSubmit() {
+    var characteristicsObj = {};
+    // for each key in this.props.metaInfo.characteristics
+    // look for getelementbyid of that name
+    // set obj[key] = value
+    var chars = Object.keys(this.props.metaInfo.characteristics)
+    chars.forEach(char => characteristicsObj[char] = document.getElementById(char).value);
+
+    $.ajax({
+      method:'POST',
+      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews',
+      headers: {
+        Authorization: config.TOKEN,
+      },
+      data: {
+        product_id: Number(this.props.metaInfo.product_id),
+        rating: document.getElementById('HiddenRatingInput').value,
+        summary: document.getElementById('ReviewSummaryText').value,
+        body: document.getElementById('ReviewBodyText').value,
+        recommend: document.getElementsByName('RecommendOption:checked').value,
+        name: document.getElementById('WhatIsYourNicknameText').value,
+        email: document.getElementById('WhatIsYourEmailText').value,
+        photos: [],
+        characteristics: characteristicsObj,
+      },
+      success: () => console.log('it worked!'),
+      error: (err) => console.log(err),
+    });
+  }
+
   render() {
+    console.log('create', this.props);
     const charsArray = Object.keys(this.props.metaInfo.characteristics);
     return (
       <>
         <CenteredDiv>
-          <form id="create-new-review" method="post">
+          <form action="https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews" method="post">
+          <input type="hidden" id="myApiKey" name="myApiKey" value={config.TOKEN}/>
             <TitleWrapper>
               <strong>
                 <h4>
-                  Write your review about the
-                  {this.props.productName}
+                  Write your review about the {this.props.productName}
                 </h4>
               </strong>
             </TitleWrapper>
@@ -426,7 +459,7 @@ class CreateReview extends React.Component {
               </PhotoUploadWrapper>
             </FloatRight>
             <SubmitWrapper>
-              <SubmitButton type="submit" onClick={this.validateForm}>SUBMIT REVIEW</SubmitButton>
+              <SubmitButton type="submit" onClick={this.handleFormSubmit}>SUBMIT REVIEW</SubmitButton>
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>
@@ -439,3 +472,5 @@ class CreateReview extends React.Component {
 }
 
 export default CreateReview;
+
+// I love this item, I bought one for each day of the week.

@@ -75,9 +75,9 @@ class ReviewsList extends React.Component {
   }
 
   toggleCreateReviewModal() {
-    this.setState({
-      renderCreate: !this.state.renderCreate,
-    });
+    this.setState((prevState) => ({
+      renderCreate: !prevState.renderCreate,
+    }));
   }
 
   showLessReviews() {
@@ -87,9 +87,9 @@ class ReviewsList extends React.Component {
   }
 
   showMoreReviews() {
-    this.setState({
-      sliceBy: this.state.sliceBy += 4,
-    });
+    this.setState((prevState) => ({
+      sliceBy: prevState.sliceBy + 4,
+    }));
   }
 
   render() {
@@ -111,7 +111,7 @@ class ReviewsList extends React.Component {
     let moreReviewsButton;
 
     if (reviewsList) {
-      let list = reviewsList.results;
+      const list = reviewsList.results;
       if (sortBy === 'newest') {
         sortedReviews = list.sort((a, b) => new Date(b.date) - new Date(a.date));
       } else if (sortBy === 'helpful') {
@@ -138,14 +138,11 @@ class ReviewsList extends React.Component {
       slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
       if (sliceBy < list.length) {
         moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
+      } else if (list.length >= 0 && list.length <= 2) {
+        moreReviewsButton = '';
       } else {
-        if (list.length >= 0 && list.length <= 2) {
-          moreReviewsButton = '';
-        } else {
-          moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
-        }
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
       }
-      // console.log('list', reviewsList.results);
     }
 
     const sortDropdown = (
@@ -189,14 +186,19 @@ class ReviewsList extends React.Component {
 }
 
 ReviewsList.propTypes = {
-  reviewsMeta: PropTypes.object,
-  filterState: PropTypes.array,
-  // productId: PropTypes.string.isRequired,
-};
-
-ReviewsList.defaultProps = {
-  filterState: [],
-  reviewsMeta: {},
+  productName: PropTypes.string.isRequired,
+  reviewsList: PropTypes.shape({
+    product: PropTypes.string,
+    page: PropTypes.number,
+    count: PropTypes.number,
+    results: PropTypes.arrayOf(PropTypes.shape({})),
+  }).isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: {},
+    characteristics: {},
+    recommended: PropTypes.bool,
+  }).isRequired,
+  filterState: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default ReviewsList;

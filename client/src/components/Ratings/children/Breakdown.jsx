@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
@@ -71,10 +70,6 @@ const Breakdown = (props) => {
     ratings = reviewsMeta.ratings;
     productChars = reviewsMeta.characteristics;
     averagePercentage = average / 5;
-    // console.log('avg', average / 5);
-    // console.log(`${averagePercentage * 100}%`);
-    // $('.StarsInside').width(`10px`); // THIS ISNT WORKING!!!!!
-    // console.log('width', $('.StarsInside').width());
   }
 
   const innerStarWidth = {
@@ -95,14 +90,11 @@ const Breakdown = (props) => {
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
             <StarsInner style={innerStarWidth} className="StarsInside">
-              {/* <div style={`width:${averagePercentage * 100}%`}> */}
-
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />
               <FontAwesomeIcon key={13} icon={solidStar} />
               <FontAwesomeIcon key={14} icon={solidStar} />
-              {/* </div> */}
             </StarsInner>
           </StarsOuter>
         </StarsContainer>
@@ -119,20 +111,14 @@ const Breakdown = (props) => {
   );
 };
 
-// Breakdown.propTypes = {
-//   productId: PropTypes.string.isRequired,
-//   reviewsMeta: PropTypes.shape({
-//     ratings: PropTypes.object,
-//     productId: PropTypes.string,
-//     characteristics: PropTypes.object,
-//     recommended: PropTypes.object,
-//   }),
-//   filterFunc: PropTypes.func,
-// };
-
-// // Breakdown.defaultProps = {
-//   reviewsMeta: {},
-//   filterFunc: {},
-// };
+Breakdown.propTypes = {
+  productId: PropTypes.number.isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: {},
+    characteristics: {},
+    recommended: PropTypes.bool,
+  }).isRequired,
+  filterFunc: PropTypes.func.isRequired,
+};
 
 export default Breakdown;

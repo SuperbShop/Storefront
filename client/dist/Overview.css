@@ -25,7 +25,7 @@
 .right-arrow {
   position: absolute;
   top: 50%;
-  right: 80px;
+  right: 10px;
   font-size: 3rem;
   color: #000;
   z-index: 200;
@@ -38,7 +38,7 @@
 .left-arrow {
   position: absolute;
   top: 50%;
-  left: 80px;
+  left: 10px;
   font-size: 3rem;
   color: #000;
   z-index: 200;
@@ -90,9 +90,20 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
 }
-.backdrop img{
+
+.backdrop img {
+  cursor: cell;
+  object-fit: contain;
+}
+
+.zoomed-img img {
+  transform: scale(2.5);
+  object-fit: contain;
+  height: 80vh;
+  width: 100%;
+}
+/* .backdrop img{
   display: block;
   position: absolute;
   justify-content: center;
@@ -104,7 +115,7 @@
   box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
   border: 3px solid white;
   cursor: cell;
-}
+} */
 
 .expand {
   position: absolute;
@@ -114,7 +125,6 @@
   z-index: 200;
   padding: 10px;
 }
-
 
 .modal-slide {
   opacity: 0;
@@ -126,10 +136,6 @@
 .modal-icons {
   justify-content: center;
   align-items: center;
-  position: absolute;
-  z-index: 999;
-  top: 84%;
-  left: 38%;
 }
 
 .dots {
@@ -139,12 +145,11 @@
   align-items: center;
   font-size: 10px;
   margin: 10px;
-  border: 1px solid #000;
-  border-radius: 50%;
 }
 .dots.active {
-  color: #f44336;
-  font-size: 15px;
+  color: #000;
+  font-size: 12px;
+  transition: 0.3s;
 }
 .dots:hover {
   color: #000;
@@ -153,22 +158,14 @@
 
 .closeBtn {
   position: absolute;
-  top: 12%;
-  right: 220px;
+  top: 0;
+  right: 0;
   font-size: 3rem;
   color: #000;
-  z-index: 200;
+  z-index: 2;
   cursor: pointer;
   user-select: none;
   padding: 10px;
-}
-
-.zoomed-img img {
-  transform: scale(2.5);
-  object-fit: contain;
-}
-.zoomed-img {
-  overflow: hidden;
 }
 
 .slick-next:before, .slick-prev:before {

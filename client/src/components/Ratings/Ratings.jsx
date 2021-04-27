@@ -9,6 +9,7 @@ const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
+  margin-bottom: 100px;
   `;
 
 const BreakdownWrapper = styled.div`
@@ -26,7 +27,7 @@ class Ratings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterBy: [],
+      filterState: [],
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
@@ -34,12 +35,21 @@ class Ratings extends React.Component {
 
   componentDidMount() {
     const { product } = this.props;
-    fetch.metaGetter(product)
-      .then((res) => {
+
+    Promise.all([
+      fetch.metaGetter(product),
+      fetch.listGetter(product),
+      fetch.productGetter(product),
+    ])
+      .then(((values) => {
+        console.log('If you see this twice, Curtis button works for Sam components');
         this.setState({
-          reviewsMetaData: res,
+          reviewsMeta: values[0],
+          reviewsList: values[1],
+          productName: values[2].name,
+          productId: values[2].id,
         });
-      })
+      }))
       .catch((err) => console.error(err));
   }
 
@@ -47,12 +57,12 @@ class Ratings extends React.Component {
     if (value === 0) {
       const emptyFilterState = [];
       this.setState({
-        filterBy: emptyFilterState,
+        filterState: emptyFilterState,
       });
     } else {
-      const { filterBy } = this.state;
+      const { filterState } = this.state;
       let newFilterState = [];
-      newFilterState = filterBy.slice();
+      newFilterState = filterState.slice();
       if (!newFilterState.includes(value)) {
         newFilterState.push(value);
       } else {
@@ -60,34 +70,52 @@ class Ratings extends React.Component {
         newFilterState.splice(index, 1);
       }
       this.setState({
-        filterBy: newFilterState,
+        filterState: newFilterState,
       });
     }
   }
 
   render() {
-    const { product } = this.props;
-    const { reviewsMetaData, filterBy } = this.state;
+    const {
+      reviewsMeta,
+      reviewsList,
+      productName,
+      productId,
+      filterState,
+    } = this.state;
     return (
       <>
         <StyledTitle>
           Ratings & Reviews
         </StyledTitle>
-        <ReviewsAndRatingsDiv>
-          <BreakdownWrapper>
-            <Breakdown filterBy={this.handleFilterBy} productNum={product} meta={reviewsMetaData} />
-          </BreakdownWrapper>
-          <ListWrapper>
-            <ReviewsList filterState={filterBy} meta={reviewsMetaData} productNum={product} />
-          </ListWrapper>
-        </ReviewsAndRatingsDiv>
+        { this.state && productId
+          && (
+          <ReviewsAndRatingsDiv>
+            <BreakdownWrapper>
+              <Breakdown
+                key={productId}
+                filterFunc={this.handleFilterBy}
+                productId={productId}
+                reviewsMeta={reviewsMeta}
+              />
+            </BreakdownWrapper>
+            <ListWrapper>
+              <ReviewsList
+                productName={productName}
+                reviewsList={reviewsList}
+                filterState={filterState}
+                reviewsMeta={reviewsMeta}
+              />
+            </ListWrapper>
+          </ReviewsAndRatingsDiv>
+          )}
       </>
     );
   }
 }
 
 Ratings.propTypes = {
-  product: PropTypes.string.isRequired,
+  product: PropTypes.number.isRequired,
 };
 
 export default Ratings;

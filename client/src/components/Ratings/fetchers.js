@@ -13,7 +13,16 @@ const fetchersObject = {
   })),
   listGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${id}&limit=2`,
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=${id}&count=50`,
+    headers: {
+      Authorization: config.TOKEN,
+    },
+    success: (data) => resolve(data),
+    error: (err) => reject(err),
+  })),
+  productGetter: (id) => new Promise((resolve, reject) => $.ajax({
+    method: 'GET',
+    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`,
     headers: {
       Authorization: config.TOKEN,
     },

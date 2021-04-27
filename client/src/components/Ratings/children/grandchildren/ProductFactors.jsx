@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CharsContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 55px;
+  margin-top: 10px;
   `;
 const CharTitle = styled.p`
   width: 20%;
@@ -13,13 +16,15 @@ const CharTitle = styled.p`
 
 const BackdropDiv = styled.div`
   position: relative;
-  background-color: lightgrey;
+  background: lightgrey;
   width: 80%;
-  height: 0.5em;
+  height: 0.3em;
   margin-left: 5%;
   `;
 
 const Descriptions = styled.div`
+  color: grey;
+  font-weight: 0.5;
   font-size: 12px;
   margin-top: 4px;
   `;
@@ -32,15 +37,8 @@ const DescWrapper = styled.div`
   `;
 
 const ProductFactors = (props) => {
-  const { chars, productNum } = props;
-  const propsArray = [];
-  if (chars) {
-    for (const key in chars) {
-      if (Object.prototype.hasOwnProperty.call(chars, key)) {
-        propsArray.push(key);
-      }
-    }
-  }
+  const { chars, productId } = props;
+  const propsArray = Object.keys(chars);
 
   return (
     <>
@@ -60,24 +58,24 @@ const ProductFactors = (props) => {
           descriptions = ['Runs tight', 'Runs long'];
         }
         return (
-          <CharsContainer key={`${prop}${productNum}${Math.random()}`}>
-            <CharTitle key={`${prop}${productNum}${Math.random()}`}>{prop}</CharTitle>
-            <BackdropDiv key={`${prop}${productNum}${Math.random()}`}>
+          <CharsContainer key={`${prop}${productId}CharContainer`}>
+            <CharTitle key={`${prop}${productId}CharTitle`}>{prop}</CharTitle>
+            <BackdropDiv key={`${prop}${productId}BackdropDiv`}>
               <div
-                key={`${prop}${productNum}${Math.random()}`}
+                key={`${prop}Div`}
                 style={{
                   position: 'absolute',
                   width: '0',
-                  height: '0',
-                  border: '8px solid transparent',
-                  borderTopColor: 'green',
+                  height: '2px',
+                  border: '9px solid transparent',
+                  borderTopColor: 'black',
                   left: chars[prop].value ? `${chars[prop].value * 17}%` : '0',
                 }}
               />
             </BackdropDiv>
-            <DescWrapper key={`${prop}${productNum}${Math.random()}`}>
-              <Descriptions key={`${prop}${productNum}${Math.random()}`}>{descriptions[0]}</Descriptions>
-              <Descriptions key={`${prop}${productNum}${Math.random()}`}>{descriptions[1]}</Descriptions>
+            <DescWrapper key={`${prop}${productId}DescWrapper`}>
+              <Descriptions key={`${prop}${productId}DescriptionLower`}>{descriptions[0]}</Descriptions>
+              <Descriptions key={`${prop}${productId}DescriptionHigher`}>{descriptions[1]}</Descriptions>
             </DescWrapper>
           </CharsContainer>
         );
@@ -86,8 +84,19 @@ const ProductFactors = (props) => {
   );
 };
 
-export default ProductFactors;
+ProductFactors.propTypes = {
+  productId: PropTypes.number.isRequired,
+  chars: PropTypes.shape({
+    Fit: PropTypes.shape({}),
+    Length: PropTypes.shape({}),
+    Comfort: PropTypes.shape({}),
+    Quality: PropTypes.shape({}),
+    Width: PropTypes.shape({}),
+    Size: PropTypes.shape({}),
+  }).isRequired,
+};
 
+export default ProductFactors;
 
 // charName
 // charDiv

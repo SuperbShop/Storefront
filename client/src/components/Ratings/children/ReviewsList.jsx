@@ -1,12 +1,9 @@
 import React from 'react';
-import $ from 'jquery';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-// import config from '../../../../../config';
 import ReviewTile from './grandchildren/ReviewTile';
 import CreateReview from './grandchildren/CreateReview';
 import Modal from './grandchildren/Modal';
-import fetch from '../fetchers';
 
 const TilesWrapper = styled.div`
   max-height: 700px;
@@ -23,11 +20,33 @@ const PageBlockerModalDiv = styled.div`
   background-color: rgba(128,128,128,0.5);
   `;
 
+const ListControlButton = styled.button`
+  margin-top: 10px;
+  margin-bottom: 25px;
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid #838383;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
+  &:hover {
+    background-color: black;
+    color: white;
+  };
+  &:focus {
+    outline-color: none;
+  }
+  `;
+
+const SortSelect = styled.select`
+  cursor: pointer;
+  border: none;
+  text-decoration: underline;
+  `;
+
 class ReviewsList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reviewsData: [],
       renderCreate: false,
       sortBy: 'relevance',
       sliceBy: 2,
@@ -36,32 +55,7 @@ class ReviewsList extends React.Component {
     this.toggleCreateReviewModal = this.toggleCreateReviewModal.bind(this);
     this.showMoreReviews = this.showMoreReviews.bind(this);
     this.showLessReviews = this.showLessReviews.bind(this);
-  }
-
-  componentDidMount() {
-    const product = this.props.productNum;
-    fetch.listGetter(product)
-      .then((res) => {
-        this.setState({
-          reviewsData: res.results,
-        });
-      })
-      .catch((err) => console.error(err));
-
-    // const url2 = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews?product_id=23159';
-    // $.ajax({
-    //   method: 'GET',
-    //   url: url2,
-    //   headers: {
-    //     Authorization: config.API_KEY,
-    //   },
-    //   success: (data) => {
-    //     this.setState({
-    //       reviewsData: data.results,
-    //     });
-    //   },
-    //   error: (err) => console.error(err),
-    // });
+    this.handleDropdownSelect = this.handleDropdownSelect.bind(this);
   }
 
   handleDropdownSelect(e) {
@@ -81,9 +75,9 @@ class ReviewsList extends React.Component {
   }
 
   toggleCreateReviewModal() {
-    this.setState({
-      renderCreate: !this.state.renderCreate,
-    });
+    this.setState((prevState) => ({
+      renderCreate: !prevState.renderCreate,
+    }));
   }
 
   showLessReviews() {
@@ -93,70 +87,78 @@ class ReviewsList extends React.Component {
   }
 
   showMoreReviews() {
-    this.setState({
-      sliceBy: this.state.sliceBy += 2,
-    });
+    this.setState((prevState) => ({
+      sliceBy: prevState.sliceBy + 4,
+    }));
   }
 
   render() {
     const {
       sortBy,
-      reviewsData,
       sliceBy,
       renderCreate,
     } = this.state;
     const {
-      meta,
+      reviewsList,
+      reviewsMeta,
       filterState,
-      productNum,
+      productName,
     } = this.props;
+
     let sortedReviews;
-    if (sortBy === 'newest') {
-      sortedReviews = reviewsData.sort((a, b) => new Date(b.date) - new Date(a.date));
-    } else if (sortBy === 'helpful') {
-      sortedReviews = reviewsData.sort((a, b) => b.helpfulness - a.helpfulness);
-    } else {
-      sortedReviews = reviewsData.sort((a, b) => {
-        if (a.helpfulness === b.helpfulness) {
-          return new Date(b.date) - new Date(a.date);
-        }
-        return b.helpfulness - a.helpfulness;
-      });
-    }
     let sortedFilteredReviews = [];
-    if (sortedReviews.length > 0) {
-      for (let i = 0; i < sortedReviews.length; i += 1) {
-        if (filterState.includes(sortedReviews[i].rating.toString())) {
-          sortedFilteredReviews.push(sortedReviews[i]);
+    let slicedReviews = [];
+    let moreReviewsButton;
+
+    if (reviewsList) {
+      const list = reviewsList.results;
+      if (sortBy === 'newest') {
+        sortedReviews = list.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } else if (sortBy === 'helpful') {
+        sortedReviews = list.sort((a, b) => b.helpfulness - a.helpfulness);
+      } else {
+        sortedReviews = list.sort((a, b) => {
+          if (a.helpfulness === b.helpfulness) {
+            return new Date(b.date) - new Date(a.date);
+          }
+          return b.helpfulness - a.helpfulness;
+        });
+      }
+      if (sortedReviews.length > 0) {
+        for (let i = 0; i < sortedReviews.length; i += 1) {
+          if (filterState.includes(sortedReviews[i].rating.toString())) {
+            sortedFilteredReviews.push(sortedReviews[i]);
+          }
         }
       }
-    }
-    if (sortedFilteredReviews.length === 0) {
-      sortedFilteredReviews = sortedReviews;
-    }
+      if (sortedFilteredReviews.length === 0) {
+        sortedFilteredReviews = sortedReviews;
+      }
 
-    const slicedReviews = sortedFilteredReviews.slice(0, sliceBy) || [];
-    let moreReviewsButton;
-    if (sliceBy < reviewsData.length) {
-      moreReviewsButton = <button type="button" onClick={this.showMoreReviews}>MORE REVIEWS</button>;
-    } else {
-      moreReviewsButton = <button type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</button>;
+      slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
+      if (sliceBy < list.length) {
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
+      } else if (list.length >= 0 && list.length <= 2) {
+        moreReviewsButton = '';
+      } else {
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
+      }
     }
 
     const sortDropdown = (
-      <select onChange={this.handleDropdownSelect.bind(this)} name="Sort" id="SortDropdown">
+      <SortSelect onChange={this.handleDropdownSelect} name="Sort" id="SortDropdown">
         <option value="relevance">relevance</option>
         <option value="newest">newest</option>
         <option value="helpful">helpful</option>
-      </select>
+      </SortSelect>
     );
     const createReviewElement = renderCreate ? (
       <PageBlockerModalDiv>
         <Modal>
           <CreateReview
-            metaInfo={meta}
+            metaInfo={reviewsMeta}
             toggleCreateReviewModal={this.toggleCreateReviewModal}
-            productId={productNum}
+            productName={productName}
           />
         </Modal>
       </PageBlockerModalDiv>
@@ -176,7 +178,7 @@ class ReviewsList extends React.Component {
           {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
         </TilesWrapper>
         {moreReviewsButton}
-        <button type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</button>
+        <ListControlButton type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</ListControlButton>
         {createReviewElement}
       </div>
     );
@@ -184,14 +186,32 @@ class ReviewsList extends React.Component {
 }
 
 ReviewsList.propTypes = {
-  meta: PropTypes.object,
-  filterState: PropTypes.array,
-  // productNum: PropTypes.string.isRequired,
-};
-
-ReviewsList.defaultProps = {
-  filterState: [],
-  meta: {},
+  productName: PropTypes.string.isRequired,
+  reviewsList: PropTypes.shape({
+    product: PropTypes.string,
+    page: PropTypes.number,
+    count: PropTypes.number,
+    results: PropTypes.arrayOf(PropTypes.shape({})),
+  }).isRequired,
+  reviewsMeta: PropTypes.shape({
+    ratings: PropTypes.shape({
+      1: PropTypes.string,
+      2: PropTypes.string,
+      3: PropTypes.string,
+      4: PropTypes.string,
+      5: PropTypes.string,
+    }).isRequired,
+    characteristics: PropTypes.shape({
+      Fit: PropTypes.shape({}),
+      Length: PropTypes.shape({}),
+      Comfort: PropTypes.shape({}),
+      Quality: PropTypes.shape({}),
+      Size: PropTypes.shape({}),
+      Width: PropTypes.shape({}),
+    }).isRequired,
+    recommended: PropTypes.shape({}),
+  }).isRequired,
+  filterState: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 export default ReviewsList;

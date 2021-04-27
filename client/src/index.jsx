@@ -141,7 +141,7 @@ class App extends React.Component {
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
         </section>
-        <section className="ratings module" id="Reviews"><TrackedRatings product={product} /></section>
+        <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
       </>
     );
   }

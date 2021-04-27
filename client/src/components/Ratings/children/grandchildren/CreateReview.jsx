@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
@@ -268,13 +269,14 @@ class CreateReview extends React.Component {
     };
     this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
-    this.updateLengthDetails = this.updateLengthDetails.bind(this);
-    this.logfiles = this.logfiles.bind(this);
+    this.updateBodyLengthDetails = this.updateBodyLengthDetails.bind(this);
+    this.handleImageUpload = this.handleImageUpload.bind(this);
     this.handleFormSubmit = this.handleFormSubmit.bind(this);
   }
 
   handleExitButtonClick() {
-    this.props.toggleCreateReviewModal();
+    const { toggleCreateReviewModal } = this.props;
+    toggleCreateReviewModal();
   }
 
   handleCharRadioClick(event) {
@@ -282,8 +284,8 @@ class CreateReview extends React.Component {
   }
 
   handleStarIconClick() {
-    const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
     // THIS IS NOT A PERMANENT FIX
+    const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
     if (ratingWords[event.target.id - 1] === undefined) {
       return;
     }
@@ -292,41 +294,23 @@ class CreateReview extends React.Component {
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
-  updateLengthDetails(event) {
-    if (event.target.value.length < 50) {
-      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
-    } else {
-      $('#ReviewBodyLengthDetails').text('Minimum reached');
-    }
-  }
-
-  logfiles(event) {
-    // HARDCODING ONE IMAGE FILE FOR EACH
-    // MUST SELECT ALL IMAGES AT ONCE FOR THIS TO WORK
-    $('#UploadedImages').empty();
-    const imgFiles = Object.keys(event.target.files);
-    imgFiles.forEach(() => $('#UploadedImages').append('<img style="padding: 5px;" src=https://picsum.photos/40 />'));
-    if (event.target.files.length >= 5) {
-      $('input').remove('#ImgUpload');
-    }
-  }
-
   handleFormSubmit() {
-    var characteristicsObj = {};
-    // for each key in this.props.metaInfo.characteristics
-    // look for getelementbyid of that name
-    // set obj[key] = value
-    var chars = Object.keys(this.props.metaInfo.characteristics)
-    chars.forEach(char => characteristicsObj[char] = document.getElementById(char).value);
+    event.preventDefault();
+    const { metaInfo } = this.props;
+    const characteristicsObj = {};
+    const chars = Object.keys(metaInfo.characteristics);
+    chars.forEach((char) => {
+      characteristicsObj[char] = document.getElementById(char).value;
+    });
 
     $.ajax({
-      method:'POST',
+      method: 'POST',
       url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews',
       headers: {
         Authorization: config.TOKEN,
       },
       data: {
-        product_id: Number(this.props.metaInfo.product_id),
+        product_id: Number(metaInfo.product_id),
         rating: document.getElementById('HiddenRatingInput').value,
         summary: document.getElementById('ReviewSummaryText').value,
         body: document.getElementById('ReviewBodyText').value,
@@ -336,59 +320,80 @@ class CreateReview extends React.Component {
         photos: [],
         characteristics: characteristicsObj,
       },
-      success: () => console.log('it worked!'),
+      success: () => console.log('form submit worked!'),
       error: (err) => console.log(err),
     });
   }
 
+  handleImageUpload(event) {
+    // HARDCODING ONE IMAGE FILE FOR EACH
+    // MUST SELECT ALL IMAGES AT ONCE FOR THIS TO WORK
+    $('#UploadedImages').empty();
+
+    const imgFiles = Object.keys(event.target.files);
+    imgFiles.forEach(() => $('#UploadedImages').append('<img style="padding: 5px;" src=https://picsum.photos/40 />'));
+    if (event.target.files.length >= 5) {
+      $('input').remove('#ImgUpload');
+    }
+  }
+
+  updateBodyLengthDetails(event) {
+    if (event.target.value.length < 50) {
+      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+    } else {
+      $('#ReviewBodyLengthDetails').text('Minimum reached');
+    }
+  }
+
   render() {
-    console.log('create', this.props);
-    const charsArray = Object.keys(this.props.metaInfo.characteristics);
+    const { metaInfo, productName } = this.props;
+    const charsArray = Object.keys(metaInfo.characteristics);
     return (
       <>
         <CenteredDiv>
           <form action="https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews" method="post">
-          <input type="hidden" id="myApiKey" name="myApiKey" value={config.TOKEN}/>
+            <input type="hidden" id="myApiKey" name="myApiKey" value={config.TOKEN} />
             <TitleWrapper>
               <strong>
                 <h4>
-                  Write your review about the {this.props.productName}
+                  Write your review about the
+                  {' '}
+                  {productName}
                 </h4>
               </strong>
             </TitleWrapper>
             <FloatLeft>
               <RatingAndRecommendWrapper>
-                  <HiddenRating type="text" required="required" id="HiddenRatingInput" />
+                <HiddenRating type="text" required="required" id="HiddenRatingInput" />
                 <RatingWrapper id="overall-rating">
                   <div id="RatingText">Overall Rating:*</div>
                   {/* maybe make this hidden rating a radio input
                  - that way it makes more sense that its required? */}
-                 <StarsWrapper>
+                  <StarsWrapper>
 
-                  <StarsOuter>
-                    <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />
-                    <FontAwesomeIcon icon={faStar} id="2" onClick={this.handleStarIconClick} />
-                    <FontAwesomeIcon icon={faStar} id="3" onClick={this.handleStarIconClick} />
-                    <FontAwesomeIcon icon={faStar} id="4" onClick={this.handleStarIconClick} />
-                    <FontAwesomeIcon icon={faStar} id="5" onClick={this.handleStarIconClick} />
-                    <StarsInner id="InnerStars">
-                      <FontAwesomeIcon icon={solidStar} id="1" onClick={this.handleStarIconClick} />
-                      <FontAwesomeIcon icon={solidStar} id="2" onClick={this.handleStarIconClick} />
-                      <FontAwesomeIcon icon={solidStar} id="3" onClick={this.handleStarIconClick} />
-                      <FontAwesomeIcon icon={solidStar} id="4" onClick={this.handleStarIconClick} />
-                      <FontAwesomeIcon icon={solidStar} id="5" onClick={this.handleStarIconClick} />
-                    </StarsInner>
-                  </StarsOuter>
-                 </StarsWrapper>
+                    <StarsOuter>
+                      <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />
+                      <FontAwesomeIcon icon={faStar} id="2" onClick={this.handleStarIconClick} />
+                      <FontAwesomeIcon icon={faStar} id="3" onClick={this.handleStarIconClick} />
+                      <FontAwesomeIcon icon={faStar} id="4" onClick={this.handleStarIconClick} />
+                      <FontAwesomeIcon icon={faStar} id="5" onClick={this.handleStarIconClick} />
+                      <StarsInner id="InnerStars">
+                        <FontAwesomeIcon icon={solidStar} id="1" onClick={this.handleStarIconClick} />
+                        <FontAwesomeIcon icon={solidStar} id="2" onClick={this.handleStarIconClick} />
+                        <FontAwesomeIcon icon={solidStar} id="3" onClick={this.handleStarIconClick} />
+                        <FontAwesomeIcon icon={solidStar} id="4" onClick={this.handleStarIconClick} />
+                        <FontAwesomeIcon icon={solidStar} id="5" onClick={this.handleStarIconClick} />
+                      </StarsInner>
+                    </StarsOuter>
+                  </StarsWrapper>
                 </RatingWrapper>
                 <RecommendWrapper id="recommend">
                   Do you recommend this product?*
                   <div>
-                  <label htmlFor="YesRecommend">Yes</label>
-                  <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
-                  <label htmlFor="NoRecommend">No</label>
-                  <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
-
+                    <label htmlFor="YesRecommend">Yes</label>
+                    <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
+                    <label htmlFor="NoRecommend">No</label>
+                    <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
                   </div>
                 </RecommendWrapper>
               </RatingAndRecommendWrapper>
@@ -403,7 +408,7 @@ class CreateReview extends React.Component {
                 <ReviewBodyTitle>
                   Review body:*
                 </ReviewBodyTitle>
-                <ReviewBodyTextArea id="ReviewBodyText" onKeyUp={this.updateLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+                <ReviewBodyTextArea id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
                 <ReviewBodyCharCount id="ReviewBodyLengthDetails">Minimum required characters left: 50</ReviewBodyCharCount>
               </ReviewBodyWrapper>
 
@@ -435,11 +440,9 @@ class CreateReview extends React.Component {
             <FloatRight>
               <CharacteristicsWrapper id="characteristics">
                 Please rate the product characteristics*
-                {/* <CharsRadioWrapper> */}
                 {charsArray.map((char) => (
                   <CharsRadioButtonWrapper key={char}>
                     <CharsRadioButtons
-                      charsArray={charsArray}
                       charsObject={this.charsObject}
                       handleCharRadioClick={this.handleCharRadioClick}
                       key={char}
@@ -447,12 +450,11 @@ class CreateReview extends React.Component {
                     />
                   </CharsRadioButtonWrapper>
                 ))}
-                {/* </CharsRadioWrapper> */}
               </CharacteristicsWrapper>
               <PhotoUploadWrapper id="UploadYourPhotos">
                 <PhotoUploadUpper>
                   Upload photos:
-                  <input type="file" onChange={this.logfiles} id="ImgUpload" multiple name="img[]" accept="image/*" />
+                  <input type="file" onChange={this.handleImageUpload} id="ImgUpload" multiple name="img[]" accept="image/*" />
                 </PhotoUploadUpper>
 
                 <PhotoUploadLower id="UploadedImages" />
@@ -471,6 +473,15 @@ class CreateReview extends React.Component {
   }
 }
 
-export default CreateReview;
+CreateReview.propTypes = {
+  productName: PropTypes.string.isRequired,
+  metaInfo: PropTypes.shape({
+    product_id: PropTypes.string,
+    characteristics: PropTypes.shape({}),
+    ratings: PropTypes.shape({}),
+    recommended: PropTypes.shape({}),
+  }).isRequired,
+  toggleCreateReviewModal: PropTypes.func.isRequired,
+};
 
-// I love this item, I bought one for each day of the week.
+export default CreateReview;

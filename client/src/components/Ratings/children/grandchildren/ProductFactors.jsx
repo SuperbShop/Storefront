@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CharsContainer = styled.div`
@@ -36,15 +37,8 @@ const DescWrapper = styled.div`
   `;
 
 const ProductFactors = (props) => {
-  const { chars, productNum } = props;
-  const propsArray = [];
-  if (chars) {
-    for (const key in chars) {
-      if (Object.prototype.hasOwnProperty.call(chars, key)) {
-        propsArray.push(key);
-      }
-    }
-  }
+  const { chars, productId } = props;
+  const propsArray = Object.keys(chars);
 
   return (
     <>
@@ -64,11 +58,11 @@ const ProductFactors = (props) => {
           descriptions = ['Runs tight', 'Runs long'];
         }
         return (
-          <CharsContainer key={`${prop}${productNum}${Math.random()}`}>
-            <CharTitle key={`${prop}${productNum}${Math.random()}`}>{prop}</CharTitle>
-            <BackdropDiv key={`${prop}${productNum}${Math.random()}`}>
+          <CharsContainer key={`${prop}${productId}CharContainer`}>
+            <CharTitle key={`${prop}${productId}CharTitle`}>{prop}</CharTitle>
+            <BackdropDiv key={`${prop}${productId}BackdropDiv`}>
               <div
-                key={`${prop}${productNum}${Math.random()}`}
+                key={`${prop}Div`}
                 style={{
                   position: 'absolute',
                   width: '0',
@@ -79,15 +73,27 @@ const ProductFactors = (props) => {
                 }}
               />
             </BackdropDiv>
-            <DescWrapper key={`${prop}${productNum}${Math.random()}`}>
-              <Descriptions key={`${prop}${productNum}${Math.random()}`}>{descriptions[0]}</Descriptions>
-              <Descriptions key={`${prop}${productNum}${Math.random()}`}>{descriptions[1]}</Descriptions>
+            <DescWrapper key={`${prop}${productId}DescWrapper`}>
+              <Descriptions key={`${prop}${productId}DescriptionLower`}>{descriptions[0]}</Descriptions>
+              <Descriptions key={`${prop}${productId}DescriptionHigher`}>{descriptions[1]}</Descriptions>
             </DescWrapper>
           </CharsContainer>
         );
       })}
     </>
   );
+};
+
+ProductFactors.propTypes = {
+  productId: PropTypes.number.isRequired,
+  chars: PropTypes.shape({
+    Fit: PropTypes.shape({}),
+    Length: PropTypes.shape({}),
+    Comfort: PropTypes.shape({}),
+    Quality: PropTypes.shape({}),
+    Width: PropTypes.shape({}),
+    Size: PropTypes.shape({}),
+  }).isRequired,
 };
 
 export default ProductFactors;

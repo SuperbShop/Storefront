@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import $ from 'jquery';
 
 const FlexboxDiv = styled.div`
   display: flex;
@@ -83,12 +83,15 @@ class Distribution extends React.Component {
   }
 
   handleRatingFilterClick(event) {
-    if (this.props.ratings[event.target.id[0]] === 0 || this.props.ratings[event.target.id[0]] === undefined) {
+    const { ratings, filterFunc } = this.props;
+    const { filterState } = this.state;
+    if (ratings[event.target.id[0]] === 0
+      || ratings[event.target.id[0]] === undefined) {
       return;
     }
-    this.props.filterFunc(event.target.id[0]);
+    filterFunc(event.target.id[0]);
 
-    const newLocalFilters = this.state.filterState.slice();
+    const newLocalFilters = filterState.slice();
     if (!newLocalFilters.includes(event.target.id[0])) {
       newLocalFilters.push(event.target.id[0]);
     } else {
@@ -100,22 +103,23 @@ class Distribution extends React.Component {
     });
   }
 
-  // NEED TO FIGURE OUT HOW TO DO THIS - NEEDS TO CLEAR FILTERS LOCALLY AND ON RATINGSJSX
   handleClearFiltersClick() {
-    console.log('clear filters');
-    // this.state.filterState.forEach((value) => this.props.filterBy(value));
-    this.props.filterFunc(0);
+    const { filterFunc } = this.props;
+    filterFunc(0);
     this.setState({
       filterState: [],
     });
   }
 
   render() {
+    const { ratings } = this.props;
+    const { filterState } = this.state;
     let filterStatus;
-    if (this.state.filterState.length > 0) {
+    if (filterState.length > 0) {
       let filtersString = 'Reviews filtered by: ';
-      this.state.filterState.sort((a, b) => a - b).forEach((num) => filtersString += `${num} `);
-
+      filterState.sort((a, b) => a - b).forEach((num) => {
+        filtersString += `${num} `;
+      });
       filterStatus = (
         <StyledSpan>
           {filtersString}
@@ -125,18 +129,17 @@ class Distribution extends React.Component {
     } else {
       filterStatus = '';
     }
-
     let frequencyOfMostCommonScore = 1;
     let allScores = [];
-    if (this.props.ratings !== undefined) {
-      allScores = Object.keys(this.props.ratings);
+    if (ratings !== undefined) {
+      allScores = Object.keys(ratings);
       for (let i = 0; i < allScores.length; i += 1) {
-        if (Number(this.props.ratings[allScores[i]]) > frequencyOfMostCommonScore) {
-          frequencyOfMostCommonScore = Number(this.props.ratings[allScores[i]]);
+        if (Number(ratings[allScores[i]]) > frequencyOfMostCommonScore) {
+          frequencyOfMostCommonScore = Number(ratings[allScores[i]]);
         }
       }
       for (let i = 1; i < 6; i += 1) {
-        this.percentGraphData[i] = (Number(this.props.ratings[i]) / frequencyOfMostCommonScore) * 100;
+        this.percentGraphData[i] = (Number(ratings[i]) / frequencyOfMostCommonScore) * 100;
       }
     }
 
@@ -175,55 +178,59 @@ class Distribution extends React.Component {
     return (
       <div>
         <FlexboxDiv>
-
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5button">5 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="5Backdrop">
               <ScoreDiv5 onClick={this.handleRatingFilterClick} id="5ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="5Quantity">{this.props.ratings ? this.props.ratings[5] : 0}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="5Quantity">{ratings ? ratings[5] : 0}</QuantityContainer>
           </ButtonContainer>
-
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="4">4 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="4Backdrop">
               <ScoreDiv4 onClick={this.handleRatingFilterClick} id="4ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="4Quantity">{this.props.ratings ? this.props.ratings[4] : 0}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="4Quantity">{ratings ? ratings[4] : 0}</QuantityContainer>
           </ButtonContainer>
-
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="3">3 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="3Backdrop">
               <ScoreDiv3 onClick={this.handleRatingFilterClick} id="3ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="3Quantity">{this.props.ratings ? this.props.ratings[3] : 0}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="3Quantity">{ratings ? ratings[3] : 0}</QuantityContainer>
           </ButtonContainer>
-
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="2">2 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="2Backdrop">
               <ScoreDiv2 onClick={this.handleRatingFilterClick} id="2ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="2Quantity">{this.props.ratings ? this.props.ratings[2] : 0}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="2Quantity">{ratings ? ratings[2] : 0}</QuantityContainer>
           </ButtonContainer>
-
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="1">1 star</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="1Backdrop">
               <ScoreDiv1 onClick={this.handleRatingFilterClick} id="1ScoreDiv" />
             </BackdropDiv>
-            <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{this.props.ratings ? this.props.ratings[1] : 0}</QuantityContainer>
+            <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{ratings ? ratings[1] : 0}</QuantityContainer>
           </ButtonContainer>
-
         </FlexboxDiv>
         <FilterStatusWrapper>
-        {filterStatus}
-
+          {filterStatus}
         </FilterStatusWrapper>
       </div>
     );
   }
 }
+
+Distribution.propTypes = {
+  filterFunc: PropTypes.func.isRequired,
+  ratings: PropTypes.shape({
+    1: PropTypes.string,
+    2: PropTypes.string,
+    3: PropTypes.string,
+    4: PropTypes.string,
+    5: PropTypes.string,
+  }).isRequired,
+};
 
 export default Distribution;

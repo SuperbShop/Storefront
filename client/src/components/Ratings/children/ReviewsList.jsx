@@ -194,9 +194,22 @@ ReviewsList.propTypes = {
     results: PropTypes.arrayOf(PropTypes.shape({})),
   }).isRequired,
   reviewsMeta: PropTypes.shape({
-    ratings: {},
-    characteristics: {},
-    recommended: PropTypes.bool,
+    ratings: PropTypes.shape({
+      1: PropTypes.string,
+      2: PropTypes.string,
+      3: PropTypes.string,
+      4: PropTypes.string,
+      5: PropTypes.string,
+    }).isRequired,
+    characteristics: PropTypes.shape({
+      Fit: PropTypes.shape({}),
+      Length: PropTypes.shape({}),
+      Comfort: PropTypes.shape({}),
+      Quality: PropTypes.shape({}),
+      Size: PropTypes.shape({}),
+      Width: PropTypes.shape({}),
+    }).isRequired,
+    recommended: PropTypes.shape({}),
   }).isRequired,
   filterState: PropTypes.arrayOf(PropTypes.number).isRequired,
 };

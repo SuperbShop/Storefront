@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const CharWrapper = styled.div`
@@ -31,33 +32,46 @@ const DescriptionsWrapper = styled.div`
   justify-content: space-between;
 `;
 
-const CharsRadioButtons = (props) => (
-  <>
-  <CharWrapper>
-    <TitleWrapper id={`${props.name}`}>
-      {props.name}
-      : None selected
-    </TitleWrapper>
-    <RadioButtonsWrapper>
-    <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="1" />
-    <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="2" />
-    <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="3" />
-    <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="4" />
-    <input type="radio" key={`${props.name}${Math.random()}`} onClick={props.handleCharRadioClick} required="required" name={`${props.name}`} value="5" />
-    </RadioButtonsWrapper>
+const CharsRadioButtons = (props) => {
+  const { name, charsObject, handleCharRadioClick } = props;
+  return (
+    <>
+      <CharWrapper>
+        <TitleWrapper id={`${name}`}>
+          {name}
+          : None selected
+        </TitleWrapper>
+        <RadioButtonsWrapper>
+          <input type="radio" key={`${name}1`} onClick={handleCharRadioClick} required="required" name={`${name}`} value="1" />
+          <input type="radio" key={`${name}2`} onClick={handleCharRadioClick} required="required" name={`${name}`} value="2" />
+          <input type="radio" key={`${name}3`} onClick={handleCharRadioClick} required="required" name={`${name}`} value="3" />
+          <input type="radio" key={`${name}4`} onClick={handleCharRadioClick} required="required" name={`${name}`} value="4" />
+          <input type="radio" key={`${name}5`} onClick={handleCharRadioClick} required="required" name={`${name}`} value="5" />
+        </RadioButtonsWrapper>
+        <DescriptionsWrapper>
+          <div>
+            {charsObject[name][0]}
+          </div>
+          <div>
+            {charsObject[name][4]}
+          </div>
+        </DescriptionsWrapper>
+      </CharWrapper>
+    </>
+  );
+};
 
-    <DescriptionsWrapper>
-
-    <div>
-      {props.charsObject[props.name][0]}
-    </div>
-    <div>
-      {props.charsObject[props.name][4]}
-    </div>
-    </DescriptionsWrapper>
-
-    </CharWrapper>
-  </>
-);
+CharsRadioButtons.propTypes = {
+  name: PropTypes.string.isRequired,
+  handleCharRadioClick: PropTypes.func.isRequired,
+  charsObject: PropTypes.shape({
+    Size: PropTypes.arrayOf(PropTypes.string),
+    Width: PropTypes.arrayOf(PropTypes.string),
+    Comfort: PropTypes.arrayOf(PropTypes.string),
+    Quality: PropTypes.arrayOf(PropTypes.string),
+    Length: PropTypes.arrayOf(PropTypes.string),
+    Fit: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired,
+};
 
 export default CharsRadioButtons;

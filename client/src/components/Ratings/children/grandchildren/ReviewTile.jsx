@@ -251,7 +251,7 @@ class ReviewTile extends React.Component {
                   <Modal>
                     <ImageModalDiv>
                       <FullsizeImage
-                        key={photo.id}
+                        key={`${photo.id}Fullsize`}
                         src={photo.url}
                         onClick={this.handleImageClick}
                       />
@@ -262,7 +262,7 @@ class ReviewTile extends React.Component {
             }
             return (
               <ThumbnailImage
-                key={photo.id}
+                key={`${photo.id}Thumbnail`}
                 src={photo.url}
                 onClick={this.handleImageClick}
               />

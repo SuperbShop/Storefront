@@ -114,9 +114,18 @@ const Breakdown = (props) => {
 Breakdown.propTypes = {
   productId: PropTypes.number.isRequired,
   reviewsMeta: PropTypes.shape({
-    ratings: {},
-    characteristics: {},
-    recommended: PropTypes.bool,
+    ratings: PropTypes.shape({}),
+    characteristics: PropTypes.shape({
+      Fit: PropTypes.shape({}),
+      Length: PropTypes.shape({}),
+      Comfort: PropTypes.shape({}),
+      Quality: PropTypes.shape({}),
+      Size: PropTypes.shape({}),
+      Width: PropTypes.shape({}),
+    }),
+    recommended: PropTypes.shape({
+      true: PropTypes.string,
+    }),
   }).isRequired,
   filterFunc: PropTypes.func.isRequired,
 };

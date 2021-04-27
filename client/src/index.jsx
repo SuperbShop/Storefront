@@ -21,8 +21,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
     const info = { element: event.target, time, module };
     console.log(info);
     window.clicks.push(info);
-  }}
-  >
+  }}>
     <WrappedComponent {...props} />
   </div>
 );
@@ -49,7 +48,8 @@ class App extends React.Component {
   }
 
   incrementProduct() {
-    const id = (parseInt(this.state.productId) + 1).toString();
+    const { productId } = this.state;
+    const id = (productId + 1).toString();
     this.setState({
       product: id,
       productId: parseInt(id),
@@ -57,7 +57,8 @@ class App extends React.Component {
   }
 
   decrementProduct() {
-    const id = (this.state.productId - 1).toString();
+    const { productId } = this.state;
+    const id = (productId - 1).toString();
     this.setState({
       product: id,
       productId: parseInt(id),
@@ -117,16 +118,25 @@ class App extends React.Component {
         <AskQuestion
           showAskQuestionModal={showAskQuestionModal}
           toggleAskQuestionModal={this.toggleAskQuestionModal}
+          productId={productId}
+          // Need to pass in current product once GET request routes through this component
         />
         <AddAnswer
           showAddAnswerModal={showAddAnswerModal}
           toggleAddAnswerModal={this.toggleAddAnswerModal}
+          // Need to pass in current product once GET request routes through this component
         />
         <ImageCarousel
           showImageCarouselModal={showImageCarouselModal}
           toggleImageCarouselModal={this.toggleImageCarouselModal}
         />
-        <section className="overview module"><TrackedOverview productId={productId} /></section>
+        <section className="overview module">
+          <TrackedOverview
+            productId={productId}
+            incrementClick={this.incrementProduct}
+            decrementClick={this.decrementProduct}
+          />
+        </section>
         <section className="questions module">
           <TrackedQuestions
             productId={productId}

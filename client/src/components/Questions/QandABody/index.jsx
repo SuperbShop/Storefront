@@ -32,31 +32,38 @@ const QandABody = (props) => {
 
   const questionArr = sortByQHelpful(results);
   const displayArr = questionArr.slice(0, questionsDisplayed);
-  const lengthTest = (results.length > 2
+  const lengthTest1 = (results.length > 2
   && results.length > displayArr.length
   && displayArr.length > 0);
+  const lengthTest2 = props.QandA.results.length > 0;
   return (
-    <QuestionComponent>
-      <QuestionBodyComp className="QA-Body">
-        { displayArr.map((result, index) => (
-          <QBody
-            question={result}
-            key={`${index}`}
-            report={report}
-            toggleAddAnswerModal={toggleAddAnswerModal}
-            toggleImageCarouselModal={toggleImageCarouselModal}
+    <>
+      <QuestionComponent>
+        <QuestionBodyComp className="QA-Body">
+          { displayArr.map((result) => (
+            <QBody
+              question={result}
+              key={result.id}
+              report={report}
+              toggleAddAnswerModal={toggleAddAnswerModal}
+              toggleImageCarouselModal={toggleImageCarouselModal}
+            />
+          ))}
+        </QuestionBodyComp>
+      </QuestionComponent>
+      { lengthTest2
+        ? (
+          <QandAFooter
+            displayMore={displayMore}
+            collapse={collapse}
+            lengthTest1={lengthTest1}
+            questionsDisplayed={questionsDisplayed}
+            questions={questionArr}
+            toggleAskQuestionModal={toggleAskQuestionModal}
           />
-        ))}
-      </QuestionBodyComp>
-      <QandAFooter
-        displayMore={displayMore}
-        collapse={collapse}
-        lengthTest={lengthTest}
-        questionsDisplayed={questionsDisplayed}
-        questions={questionArr}
-        toggleAskQuestionModal={toggleAskQuestionModal}
-      />
-    </QuestionComponent>
+        )
+        : null }
+    </>
   );
 };
 

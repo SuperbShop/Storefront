@@ -35,9 +35,9 @@ class Questions extends React.Component {
           },
           asker_name: '',
           question_body: '',
-          question_date: '2019-01-17T00:00:00.000Z',
+          question_date: '',
           question_helpfulness: 0,
-          question_id: 1017420,
+          question_id: 0,
           reported: false,
         }],
       },
@@ -47,56 +47,11 @@ class Questions extends React.Component {
     this.productIdDown = this.productIdDown.bind(this);
     this.displayMore = this.displayMore.bind(this);
     this.collapse = this.collapse.bind(this);
-    this.setShowAskQuestion = this.setShowAskQuestion.bind(this);
   }
 
   componentDidMount() {
     const { productId } = this.props;
     this.getProduct(productId.toString());
-  }
-
-  displayMore() {
-    const { questionsDisplayed } = this.state;
-    this.setState({
-      questionsDisplayed: questionsDisplayed + 2,
-    });
-  }
-
-  setShowAskQuestion() {
-    const { showAskQuestion } = this.state;
-    this.setState({
-      showAskQuestion: !showAskQuestion,
-    });
-  }
-
-  collapse() {
-    this.setState({
-      questionsDisplayed: 2,
-    });
-  }
-
-  productIdDown() {
-    const {
-      productId,
-      decrementClick,
-    } = this.props;
-    decrementClick();
-    this.getProduct((productId - 1).toString());
-    this.setState({
-      questionsDisplayed: 2,
-    });
-  }
-
-  productIdUp() {
-    const {
-      productId,
-      incrementClick,
-    } = this.props;
-    incrementClick();
-    this.getProduct((productId + 1).toString());
-    this.setState({
-      questionsDisplayed: 2,
-    });
   }
 
   getProduct(id) {
@@ -115,6 +70,43 @@ class Questions extends React.Component {
     });
   }
 
+  collapse() {
+    this.setState({
+      questionsDisplayed: 2,
+    });
+  }
+
+  displayMore() {
+    const { questionsDisplayed } = this.state;
+    this.setState({
+      questionsDisplayed: questionsDisplayed + 2,
+    });
+  }
+
+  productIdUp() {
+    const {
+      productId,
+      incrementClick,
+    } = this.props;
+    incrementClick();
+    this.getProduct((productId + 1).toString());
+    this.setState({
+      questionsDisplayed: 2,
+    });
+  }
+
+  productIdDown() {
+    const {
+      productId,
+      decrementClick,
+    } = this.props;
+    decrementClick();
+    this.getProduct((productId - 1).toString());
+    this.setState({
+      questionsDisplayed: 2,
+    });
+  }
+
   render() {
     const {
       QandA,
@@ -123,7 +115,7 @@ class Questions extends React.Component {
     const {
       toggleAskQuestionModal,
       toggleAddAnswerModal,
-      toggleImageCarouselModal
+      toggleImageCarouselModal,
     } = this.props;
     const numOfTotalQs = QandA.results.length;
     return (

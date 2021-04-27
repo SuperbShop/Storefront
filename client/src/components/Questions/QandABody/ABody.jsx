@@ -4,28 +4,27 @@ import AOptions from './AOptions';
 
 const AnswerBody = styled.div`
   background-color: rgb(220, 220, 220);
-  height: 15%;
-  border: 1px solid black;
-  border-radius: 10px;
-  width: 98%;
-  margin: 0 auto;
+  border: 1px solid rgb(150, 150, 150);
+  border-radius: 10px 10px 0 10px;
   display: grid;
+  margin-bottom: 10px;
 `;
 
 const AnswerOptions = styled.div`
   background-color: rgb(220, 220, 220);
   padding: 5px;
+  margin: auto;
 `;
 
 const AnswerText = styled.div`
-  padding: 5px;
-  display: inline;
+  text-size: 1.5em;
+  margin-left: 10px;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.img`
   margin: 10px;
   height: 100px;
-  border: 2px solid white;
+  border: 2px solid black;
   display: inline-block;
 `;
 
@@ -61,22 +60,22 @@ class ABody extends React.Component {
       <AnswerBody>
 
         <AnswerText>
-          <span className="answer">
-            {body}
-          </span>
+          {body}
         </AnswerText>
+
         { photos
           ? photos.map((photo, index) => (
-            <ImageWrapper key={`${photo}+${index}`} onClick={this.props.toggleImageCarouselModal}>
-              <img
-                src={photos[index]}
-                alt="description"
-                width="100"
-                height="100"
-              />
-            </ImageWrapper>
+            <ImageWrapper
+              src={photos[index]}
+              alt="description"
+              width="100"
+              height="100"
+              onClick={this.props.toggleImageCarouselModal}
+              key={`${photo}+${index}`}
+            />
           ))
           : null }
+
         <div className="a options">
           <AnswerOptions>
             <AOptions

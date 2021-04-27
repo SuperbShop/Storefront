@@ -2,21 +2,32 @@ import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
 
-const AOptionsContainer = styled.div`
-  color: black;
-  width: 45%;
-  height: 15%;
-  display: inline;
-  padding: 5px;
+const OptionsContainer = styled.div`
+  display: flex-grid;
+  font-size: 0.7em;
+  position: relative;
+  grid-template-columns: 1fr 1fr;
+
 `;
 
-const AOption = styled.button`
+const AOptionItem = styled.div`
+  float: right;
   background: none!important;
   border: none;
-  padding: 5px;
   color: black;
-  text-decoration: underline;
   cursor: pointer;
+  margin-right: 10px;
+`;
+
+const AOptionButton = styled.button`
+  background: none!important;
+  border: none;
+  color: black;
+  cursor: pointer;
+`;
+
+const Spacer = styled.div`
+  width: 60%;
 `;
 
 class AOptions extends React.Component {
@@ -28,6 +39,13 @@ class AOptions extends React.Component {
     };
     this.onClickHelpful = this.onClickHelpful.bind(this);
     this.onClickReport = this.onClickReport.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.setState({
+      helpful: false,
+      reported: false,
+    });
   }
 
   onClickHelpful() {
@@ -48,22 +66,21 @@ class AOptions extends React.Component {
     const isHelpful = this.state.helpful;
     const helpfulClicked = helpfulness + 1;
     return (
-      <AOptionsContainer className="options container">
-        <span className="option username">{answerer}</span>
-        <span className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').fromNow()}</span>
-        <span className="option helpful">
-          Helpful?
-          <AOption type="submit" onClick={this.onClickHelpful}>
+      <OptionsContainer className="options container">
+        <Spacer />
+        <AOptionItem className="option username">{answerer}</AOptionItem>
+        <AOptionItem className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').format('MMMM Do YYYY')}</AOptionItem>
+        <AOptionItem className="option helpful">
+          <AOptionButton type="submit" onClick={this.onClickHelpful}>
             { isHelpful
-              ? (<div>Yes (<strong>{helpfulClicked}</strong>)</div>)
-              : (<div>Yes ({helpfulness})</div>)
-            }
-          </AOption>
-        </span>
+              ? (<div>Helpful? Yes (<strong>{helpfulClicked}</strong>)</div>)
+              : (<div>Helpful? Yes ({helpfulness})</div>)}
+          </AOptionButton>
+        </AOptionItem>
         { !this.state.reported
-          ? <AOption className="option report" onClick={this.onClickReport}>Report</AOption>
+          ? <AOptionButton className="option report" onClick={this.onClickReport}>Report</AOptionButton>
           : <span>Reported</span> }
-      </AOptionsContainer>
+      </OptionsContainer>
     );
   }
 }

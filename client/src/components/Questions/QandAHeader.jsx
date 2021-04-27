@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import QBody from './QandABody/QBody';
 
 const HeaderComponent = styled.div`
-  background-color: black;
-  color: white;
-  display: flex-box;
+  color: black;
+  background-color: white;
   border: 5px solid white;
-  width: 80%;
+  width: 100%;
   margin: 0 auto 15px auto;
-  padding: 15px;
 `;
 
 const SearchBar = styled.input`
@@ -17,24 +15,36 @@ const SearchBar = styled.input`
   background-color: white;
   margin: 0 auto;
   border: 1px solid black;
-  width: 100%
+  width: 100%;
+  height: 50px;
+  font-size: 1.5 em;
+`;
+
+const ButtonsWrapper = styled.div`
+  display: grid;
+  justify-content: center;
+`;
+
+const SearchResults = styled.div`
+  border: 3px solid black;
+  background-color: grey;
 `;
 
 const AddQButton = styled.button`
-  color: white;
-  background-color: black;
-  border: 5px solid white;
-  border-radius: 30px;
+  color: black;
+  background-color: white;
+  border: 2px solid black;
+  width: 250px;
+  padding: 10px 20px;
+  margin: 15px;
   display: grid;
-  padding: 15px 25px;
-  margin: 15px auto 0 auto;
 `;
 
 const searchQuestions = (query, arr) => {
   return arr.filter((val) => (
     val.question_body.includes(query)
   ))
-}
+};
 
 class QandAHeader extends React.Component {
   constructor(props) {
@@ -53,10 +63,10 @@ class QandAHeader extends React.Component {
   }
 
   render() {
-    const truthTest = this.props.total > 0;
-    const truthTest2 = this.state.search.length > 3;
     const { search } = this.state;
-    const { QandA} = this.props;
+    const { QandA, total, toggleAskQuestionModal } = this.props;
+    const atLeastOneQuestionAsked = total > 0;
+    const searchQueryIsMoreThan3Chars = search.length > 3;
     return (
       <HeaderComponent className="q-and-a-header">
         <h2>
@@ -64,17 +74,24 @@ class QandAHeader extends React.Component {
         </h2>
         <SearchBar
           name="search"
-          value={this.state.search}
+          value={search}
           placeholder="Have A Question? Search for Answers"
           onChange={this.changeHandler}
         />
-        { truthTest
-          ? <div></div>
-          : <AddQButton onClick={this.props.toggleAskQuestionModal}>Add A Question</AddQButton>}
-        { truthTest2
-          ? searchQuestions(search, QandA.results).map((result, index) => (
-          <QBody question={result} key={`${index}`} />))
-          : <div></div>
+        { atLeastOneQuestionAsked
+          ? null
+          : <ButtonsWrapper>
+              <AddQButton onClick={toggleAskQuestionModal}>
+                + Add A Question
+              </AddQButton>
+            </ButtonsWrapper>
+        }
+        { searchQueryIsMoreThan3Chars
+          ? ( <SearchResults>
+              { searchQuestions(search, QandA.results).map((result, index) => (
+                 <QBody question={result} key={`${index}`} />)) }
+            </SearchResults> )
+          : null
         }
       </HeaderComponent>
     );

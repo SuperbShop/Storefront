@@ -35,12 +35,13 @@ const QandABody = (props) => {
   && results.length > displayArr.length
   && displayArr.length > 0);
   const lengthTest2 = props.QandA.results.length > 0;
+  console.log('DISPLAYED: ',displayArr);
   return (
     <>
       <QuestionComponent>
         <QuestionBodyComp className="QA-Body">
           { displayArr.map((result) => (
-            <div key={'question'+result.id}>
+            <div key={'question '+result.question_id}>
               <QBody
                 question={result}
                 report={report}

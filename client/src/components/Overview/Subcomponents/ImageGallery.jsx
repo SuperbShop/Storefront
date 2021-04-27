@@ -8,6 +8,40 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Modal from '../../SharedComponents/Modal';
+
+const PageBlockerModalDiv = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.6;
+  background-color: rgba(128,128,128,0.5);
+`;
+
+const ImageModalDiv = styled.div`
+  position: fixed;
+  background-color: transparent;
+  left: 0;
+  right: 0;
+  top: 10%;
+  margin: 0 auto;
+  width: 90%;
+  height: 70%;
+  text-align:center;
+  z-index: 2;
+`;
+
+const FullsizeImage = styled.img`
+  object-fit: cover;
+  width: 100%;
+  height: 80vh;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  border: 1px solid grey;
+  cursor: pointer;
+`;
 
 const ImageGallery = ({ photos }) => {
   const [current, setCurrent] = useState(0);
@@ -51,31 +85,37 @@ const ImageGallery = ({ photos }) => {
     <div className="gallery">
       { selectedImg ? (
         <div>
-          <section className="backdrop">
-            {
-      current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-        }
-            {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
-            {photos.map((photo, index) => (
-              <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
-                {index === current && (<img className="backdrop" onClick={handleImageZoom} src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
-              </div>
-            ))}
-            <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
-          </section>
-          <section className="modal-icons">
-            {photos.map((photo, index) => (
-              <FontAwesomeIcon
-                icon={faCircle}
-                className={index === current ? 'dots active' : 'dots'}
-                key={photo.thumbnail_url}
-                src={photo.thumbnail_url}
-                alt="product"
-                onClick={() => handleClick(index)}
-                aria-hidden="true"
-              />
-            ))}
-          </section>
+          <PageBlockerModalDiv>
+            <Modal>
+              <ImageModalDiv>
+                <section>
+                  {
+        current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
+          }
+                  {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+                  {photos.map((photo, index) => (
+                    <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
+                      {index === current && (<FullsizeImage onClick={handleImageZoom} src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
+                    </div>
+                  ))}
+                  <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
+                </section>
+                <section className="modal-icons">
+                  {photos.map((photo, index) => (
+                    <FontAwesomeIcon
+                      icon={faCircle}
+                      className={index === current ? 'dots active' : 'dots'}
+                      key={photo.thumbnail_url}
+                      src={photo.thumbnail_url}
+                      alt="product"
+                      onClick={() => handleClick(index)}
+                      aria-hidden="true"
+                    />
+                  ))}
+                </section>
+              </ImageModalDiv>
+            </Modal>
+          </PageBlockerModalDiv>
         </div>
       ) : (
         <div>

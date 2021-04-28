@@ -16,12 +16,59 @@ const fetchProductStyles = (id, callback) => {
     .catch((err) => console.error(err));
 };
 
-const fetchProductReviews = (id, callback) => {
-  axios.get(`${API_URL}/reviews/?product_id=${id}`)
-    .then((data) => callback(data))
+const fetchReviews = (id, cb) => {
+  axios.get(`${API_URL}/reviews?product_id=${id}&count=50`)
+    .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
+
+const fetchReviewsMeta = (id, cb) => {
+  axios.get(`${API_URL}/reviews/meta?product_id=${id}`)
+    .then((meta) => cb(meta))
+    .catch((err) => console.error(err));
+};
+
+const upvoteReview = (id, cb) => {
+  axios.put(`${API_URL}/reviews/${id}/helpful`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
+const reportReview = (id, cb) => {
+  axios.put(`${API_URL}/reviews/${id}/report`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
+const fetchQandA = (id, cb) => {
+  axios.get(`${API_URL}/qa/questions?product_id=${id}`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
+// Curtis POST request AddQuestion goes here
+// Curtis POST request AddAnswer goes here
+// [X] Curtis POST request ReportAnswer goes here
+const reportQuestion = (question_id, cb) => {
+  axios.put(`${API_URL}/qa/questions?question_id=${question_id}`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+// Curtis POST request addQuestion goes here
+// Curtis POST request QuestionHelpful goes here
+// Curtis POST request AnswerHelpful goes here
+
+// Sam POST request for [createReview] goes here
+// Sam POST request for [createReview] goes here
+// Sam POST request for [createReview] goes here
+// Sam POST request for [createReview] goes here
 
 module.exports.fetchProducts = fetchProducts;
 module.exports.fetchProductReviews = fetchProductReviews;
 module.exports.fetchProductStyles = fetchProductStyles;
+module.exports.fetchReviews = fetchReviews;
+module.exports.upvoteReview = upvoteReview;
+module.exports.reportReview = reportReview;
+module.exports.fetchReviewsMeta = fetchReviewsMeta;
+module.exports.fetchQandA = fetchQandA;
+module.exports.reportQuestion = reportQuestion;

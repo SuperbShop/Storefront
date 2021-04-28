@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "react-dev": "webpack --mode=development --watch",
+    "react-dev": "webpack --mode=production --watch",
     "live-server": "live-server client/dist/",
     "start": "nodemon server/index.js"
   },
@@ -63,6 +63,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
     "@webpack-cli/generators": "^2.0.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "babel-loader": "^8.2.2",
     "eslint": "^7.24.0",
     "eslint-config-airbnb": "^18.2.1",

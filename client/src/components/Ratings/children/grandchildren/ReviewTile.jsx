@@ -6,7 +6,6 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import config from '../../../../../../config';
 import Modal from './Modal';
 
 const TileContainer = styled.div`
@@ -60,7 +59,7 @@ const HelpfulReportWrapper = styled.div`
 height: 10%;
 `;
 
-const ResponseTag = styled.p`
+const ResponseTag = styled.div`
   line-height: 2;
   background-color: lightgrey;
   `;

@@ -17,7 +17,7 @@ const fetchProductStyles = (id, callback) => {
 };
 
 const fetchReviews = (id, cb) => {
-  axios.get(`${API_URL}/reviews?product_id=${id}`)
+  axios.get(`${API_URL}/reviews?product_id=${id}&count=50`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };

@@ -7,16 +7,70 @@ app.use(express.json());
 app.use(express.static(`${__dirname}/../client/dist`));
 
 app.get('/', (req, res) => {
-  res.redirect('/api');
+  res.sendFile(`${__dirname}/../client/dist/index.html`);
 });
 
 app.get('/api/:id', (req, res) => {
   const { id } = req.params;
   api.fetchProducts(id, (details) => {
+    res.sendFile(`${__dirname}/../client/dist/index.html`);
     res.send(details.data);
-    api.fetchProductStyles(id, (styles) => {
-      res.send(styles.data);
-    });
+  });
+});
+
+app.get('/api/:id/styles', (req, res) => {
+  const { id } = req.params;
+  api.fetchProductStyles(id, (styles) => {
+    res.send(styles.data);
+  });
+});
+
+app.get('/api/:id/reviews', (req, res) => {
+  const { id } = req.params;
+  api.fetchReviews(id, (reviews) => {
+    res.send(reviews.data);
+  });
+});
+
+app.get('/api/:id/reviews/meta', (req, res) => {
+  const { id } = req.params;
+  api.fetchReviewsMeta(id, (meta) => {
+    res.send(meta.data);
+  });
+});
+
+app.put('/api/reviews/:id/helpful', (req, res) => {
+  const { id } = req.params;
+  api.upvoteReview(id, (review) => {
+    res.send(review.data);
+  });
+});
+
+app.put('/api/reviews/:id/report', (req, res) => {
+  const { id } = req.params;
+  api.reportReview(id, (review) => {
+    res.send(review.data);
+  });
+});
+
+app.get('/api/:id/q_and_a', (req, res) => {
+  const { id } = req.params;
+  api.fetchQandA(id, (QandA) => {
+    res.send(QandA.data);
+  });
+});
+
+app.put('/api/:id/q_and_a/:question_id/report', (req, res) => {
+  const { question_id } = req.params;
+  api.reportQuestion(question_id, (QandA) => {
+    res.send(QandA.data);
+  });
+});
+
+app.get('/api/:id/q_and_a/:question_id/report', (req, res) => {
+  const { question_id } = req.params;
+  api.reportQuestion(question_id, (QandA) => {
+    res.send(QandA.data);
   });
 });
 

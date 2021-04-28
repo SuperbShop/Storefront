@@ -140,12 +140,10 @@ class ReviewTile extends React.Component {
   handleHelpfulClick(event) {
     const { review } = this.props;
     event.target.disabled = true;
+    const URL = 'http://localhost:3000';
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/helpful`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      url: `${URL}/api/reviews/${review.review_id}/helpful`,
       success: () => {
         this.setState({
           helpful: review.helpfulness + 1,
@@ -158,12 +156,10 @@ class ReviewTile extends React.Component {
   handleReportClick(event) {
     const { review } = this.props;
     event.target.disabled = true;
+    const URL = 'http://localhost:3000';
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/report`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      url: `${URL}/api/reviews/${review.review_id}/report`,
       success: () => console.log('report worked'),
       error: (err) => console.error(err),
     });

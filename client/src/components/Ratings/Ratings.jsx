@@ -42,7 +42,6 @@ class Ratings extends React.Component {
       fetch.productGetter(product),
     ])
       .then(((values) => {
-        console.log('If you see this twice, Curtis button works for Sam components');
         this.setState({
           reviewsMeta: values[0],
           reviewsList: values[1],

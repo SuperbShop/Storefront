@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 // import dependencies
 import React from 'react';
 
@@ -11,5 +12,5 @@ import '../../matchMedia';
 import Overview from './Overview';
 
 test('adds 2 + 2 to equal 4', () => {
-    expect(2 + 2).toBe(4);
-  });
+  expect(2 + 2).toBe(4);
+});

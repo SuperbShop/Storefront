@@ -20,6 +20,13 @@ app.get('/api/:id/styles', (req, res) => {
   });
 });
 
+app.get('/api/:id/reviews', (req, res) => {
+  const { id } = req.params;
+  api.fetchProductReviews(id, (details) => {
+    res.send(details.data);
+  });
+});
+
 app.listen(port, () => {
   console.log(`server is listening on port ${port}`);
 });

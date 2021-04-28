@@ -16,5 +16,12 @@ const fetchProductStyles = (id, callback) => {
     .catch((err) => console.error(err));
 };
 
+const fetchProductReviews = (id, callback) => {
+  axios.get(`${API_URL}/reviews/?product_id=${id}`)
+    .then((data) => callback(data))
+    .catch((err) => console.error(err));
+};
+
 module.exports.fetchProducts = fetchProducts;
+module.exports.fetchProductReviews = fetchProductReviews;
 module.exports.fetchProductStyles = fetchProductStyles;

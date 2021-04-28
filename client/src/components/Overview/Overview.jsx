@@ -91,7 +91,7 @@ class Overview extends React.Component {
 
   fetchProductRatings() {
     const { productId } = this.props;
-    const URL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/?product_id=${productId}`;
+    const URL = `api/${productId}/reviews`;
     axios.get(URL)
       .then((res) => {
         this.setState({

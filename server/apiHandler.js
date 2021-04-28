@@ -64,6 +64,7 @@ const reportQuestion = (question_id, cb) => {
 // Sam POST request for [createReview] goes here
 
 module.exports.fetchProducts = fetchProducts;
+module.exports.fetchProductReviews = fetchProductReviews;
 module.exports.fetchProductStyles = fetchProductStyles;
 module.exports.fetchReviews = fetchReviews;
 module.exports.upvoteReview = upvoteReview;

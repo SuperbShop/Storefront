@@ -60,7 +60,7 @@ class Overview extends React.Component {
 
   fetchProduct() {
     const { productId } = this.props;
-    const URL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${productId}`;
+    const URL = `api/${productId}`;
     axios.get(URL)
       .then((res) => {
         this.setState({
@@ -78,7 +78,7 @@ class Overview extends React.Component {
 
   fetchProductStyles() {
     const { productId } = this.props;
-    const URL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${productId}/styles`;
+    const URL = `api/${productId}/styles`;
     axios.get(URL)
       .then((res) => {
         this.setState({
@@ -91,7 +91,7 @@ class Overview extends React.Component {
 
   fetchProductRatings() {
     const { productId } = this.props;
-    const URL = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/?product_id=${productId}`;
+    const URL = `api/${productId}/reviews`;
     axios.get(URL)
       .then((res) => {
         this.setState({

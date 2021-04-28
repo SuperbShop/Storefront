@@ -25,7 +25,8 @@ const clickTracker = (WrappedComponent, module) => (props) => (
     const info = { element: event.target, time, module };
     console.log(info);
     window.clicks.push(info);
-  }}>
+  }}
+  >
     <WrappedComponent {...props} />
   </div>
 );
@@ -44,12 +45,27 @@ class App extends React.Component {
       showAskQuestionModal: false,
       showAddAnswerModal: false,
     };
+    // this.getProductId = this.getProductId.bind(this);
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
     this.toggleAskQuestionModal = this.toggleAskQuestionModal.bind(this);
     this.toggleAddAnswerModal = this.toggleAddAnswerModal.bind(this);
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
   }
+
+  // componentDidMount() {
+  //   const defaultId = 23149;
+  //   const productId = this.getProductId() || defaultId;
+  //   console.log(productId);
+  //   this.setState({
+  //     productId,
+  //   });
+  //   console.log('mounted');
+  // }
+
+  // getProductId() {
+  //   return window.location.pathname.slice(5);
+  // }
 
   incrementProduct() {
     const { productId } = this.state;
@@ -118,42 +134,40 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      <>
-        <AskQuestion
-          showAskQuestionModal={showAskQuestionModal}
-          toggleAskQuestionModal={this.toggleAskQuestionModal}
-          productId={productId}
-          // Need to pass in current product once GET request routes through this component
-        />
-        <AddAnswer
-          showAddAnswerModal={showAddAnswerModal}
-          toggleAddAnswerModal={this.toggleAddAnswerModal}
-          // Need to pass in current product once GET request routes through this component
-        />
-        <ImageCarousel
-          showImageCarouselModal={showImageCarouselModal}
-          toggleImageCarouselModal={this.toggleImageCarouselModal}
-        />
-        <section className="overview module">
-          <TrackedOverview
-            productId={productId}
-            incrementClick={this.incrementProduct}
-            decrementClick={this.decrementProduct}
-          />
-        </section>
-        <section className="questions module">
-          <TrackedQuestions
-            productId={productId}
-            product={product}
-            incrementClick={this.incrementProduct}
-            decrementClick={this.decrementProduct}
+      productId !== undefined ? (
+        <>
+          <AskQuestion
+            showAskQuestionModal={showAskQuestionModal}
             toggleAskQuestionModal={this.toggleAskQuestionModal}
+            productId={productId}
+          />
+          <AddAnswer
+            showAddAnswerModal={showAddAnswerModal}
             toggleAddAnswerModal={this.toggleAddAnswerModal}
+          />
+          <ImageCarousel
+            showImageCarouselModal={showImageCarouselModal}
             toggleImageCarouselModal={this.toggleImageCarouselModal}
           />
-        </section>
-        <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
-      </>
+          <section className="overview module">
+            <TrackedOverview
+              productId={productId}
+            />
+          </section>
+          <section className="questions module">
+            <TrackedQuestions
+              productId={productId}
+              product={product}
+              incrementClick={this.incrementProduct}
+              decrementClick={this.decrementProduct}
+              toggleAskQuestionModal={this.toggleAskQuestionModal}
+              toggleAddAnswerModal={this.toggleAddAnswerModal}
+              toggleImageCarouselModal={this.toggleImageCarouselModal}
+            />
+          </section>
+          <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
+        </>
+      ) : null
     );
   }
 }

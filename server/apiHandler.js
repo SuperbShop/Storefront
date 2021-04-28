@@ -17,7 +17,7 @@ const fetchProductStyles = (id, callback) => {
 };
 
 const fetchReviews = (id, cb) => {
-  axios.get(`${API_URL}/reviews?product_id=${id}&count=50`)
+  axios.get(`${API_URL}/reviews?product_id=${id}`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
@@ -64,7 +64,6 @@ const reportQuestion = (question_id, cb) => {
 // Sam POST request for [createReview] goes here
 
 module.exports.fetchProducts = fetchProducts;
-module.exports.fetchProductReviews = fetchProductReviews;
 module.exports.fetchProductStyles = fetchProductStyles;
 module.exports.fetchReviews = fetchReviews;
 module.exports.upvoteReview = upvoteReview;

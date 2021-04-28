@@ -9,7 +9,6 @@ app.use(express.static(`${__dirname}/../client/dist`));
 app.get('/api/:id', (req, res) => {
   const { id } = req.params;
   api.fetchProducts(id, (details) => {
-    res.sendFile(`${__dirname}/../client/dist/index.html`);
     res.send(details.data);
   });
 });
@@ -68,10 +67,6 @@ app.get('/api/:id/q_and_a/:question_id/report', (req, res) => {
   const { question_id } = req.params;
   api.reportQuestion(question_id, (QandA) => {
     res.send(QandA.data);
-
-  api.fetchProductReviews(id, (details) => {
-    res.send(details.data);
-
   });
 });
 

@@ -3,6 +3,7 @@ html, body {
   scroll-behavior: smooth;
 }
 
+/* Modal */
 .modal {
   font-size: 12px;
 }
@@ -37,7 +38,7 @@ html, body {
   border: 1px solid #cfcece;
 }
 
-
+/* Navbar Search */
 .nav-search {
   position: absolute;
   right: 20px;

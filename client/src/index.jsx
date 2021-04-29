@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
@@ -13,6 +13,11 @@ import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
 import Search from './components/SharedComponents/Search';
+import { lightTheme, darkTheme, GlobalStyles } from './components/SharedComponents/themes';
+
+const StyledApp = styled.div`
+  color: ${(props) => props.theme.fontColor};
+`;
 
 const Logo = styled.img`
   width: 75px;
@@ -62,12 +67,14 @@ class App extends React.Component {
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
+      theme: 'light',
     };
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
     this.toggleAskQuestionModal = this.toggleAskQuestionModal.bind(this);
     this.toggleAddAnswerModal = this.toggleAddAnswerModal.bind(this);
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
+    this.toggleTheme = this.toggleTheme.bind(this);
   }
 
   incrementProduct() {
@@ -127,60 +134,69 @@ class App extends React.Component {
     }
   }
 
+  toggleTheme() {
+    const { theme } = this.state;
+    (theme === 'light' ? this.setState({ theme: 'dark' }) : this.setState({ theme: 'light' }));
+  }
+
   render() {
     const {
       product,
       productId,
       showAskQuestionModal,
       showImageCarouselModal,
-      showAddAnswerModal,
+      showAddAnswerModal, theme,
     } = this.state;
 
     return (
       productId !== undefined ? (
-        <>
-          <Navbar bg="dark" variant="dark">
-            <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
-            <Search />
-          </Navbar>
-          <Message>
-            Free Shipping & Returns! - Sale / Discount
-            <em> OFFER</em>
-            {' '}
-            -
-            <a href="/"> New Product Highlight</a>
-          </Message>
-          <AskQuestion
-            showAskQuestionModal={showAskQuestionModal}
-            toggleAskQuestionModal={this.toggleAskQuestionModal}
-            productId={productId}
-          />
-          <AddAnswer
-            showAddAnswerModal={showAddAnswerModal}
-            toggleAddAnswerModal={this.toggleAddAnswerModal}
-          />
-          <ImageCarousel
-            showImageCarouselModal={showImageCarouselModal}
-            toggleImageCarouselModal={this.toggleImageCarouselModal}
-          />
-          <section className="overview module">
-            <TrackedOverview
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+          <GlobalStyles />
+          <StyledApp>
+            <Navbar bg="dark" variant="dark">
+              <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
+              <Search />
+              <button type="button" onClick={() => this.toggleTheme()}>Change Theme</button>
+            </Navbar>
+            <Message>
+              Free Shipping & Returns! - Sale / Discount
+              <em> OFFER</em>
+              {' '}
+              -
+              <a href="/"> New Product Highlight</a>
+            </Message>
+            <AskQuestion
+              showAskQuestionModal={showAskQuestionModal}
+              toggleAskQuestionModal={this.toggleAskQuestionModal}
               productId={productId}
             />
-          </section>
-          <section className="questions module">
-            <TrackedQuestions
-              productId={productId}
-              product={product}
-              incrementClick={this.incrementProduct}
-              decrementClick={this.decrementProduct}
-              toggleAskQuestionModal={this.toggleAskQuestionModal}
+            <AddAnswer
+              showAddAnswerModal={showAddAnswerModal}
               toggleAddAnswerModal={this.toggleAddAnswerModal}
+            />
+            <ImageCarousel
+              showImageCarouselModal={showImageCarouselModal}
               toggleImageCarouselModal={this.toggleImageCarouselModal}
             />
-          </section>
-          <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
-        </>
+            <section className="overview module">
+              <TrackedOverview
+                productId={productId}
+              />
+            </section>
+            <section className="questions module">
+              <TrackedQuestions
+                productId={productId}
+                product={product}
+                incrementClick={this.incrementProduct}
+                decrementClick={this.decrementProduct}
+                toggleAskQuestionModal={this.toggleAskQuestionModal}
+                toggleAddAnswerModal={this.toggleAddAnswerModal}
+                toggleImageCarouselModal={this.toggleImageCarouselModal}
+              />
+            </section>
+            <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
+          </StyledApp>
+        </ThemeProvider>
       ) : null
     );
   }

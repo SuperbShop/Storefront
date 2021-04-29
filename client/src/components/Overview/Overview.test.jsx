@@ -84,6 +84,18 @@ test('should render the QuantitySelector component', () => {
   expect(quantitySelector).toBeInTheDocument();
 });
 
+test('should render the SizeSelector component', () => {
+  const title = 'SELECT SIZE';
+  const skus = {
+    751683: { quantity: 14, size: '7' },
+  };
+  const resetThenSet = () => {};
+
+  render(<SizeSelector title={title} skus={skus} resetThenSet={resetThenSet} />);
+  const sizeSelector = screen.getByTestId('sizeSelector');
+  expect(sizeSelector).toBeInTheDocument();
+});
+
 // test('should render the Breakdown component', () => {
 //   const productId = 23185;
 //   const filterFunc = () => 'yo';

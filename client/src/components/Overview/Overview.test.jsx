@@ -1,54 +1,45 @@
-// /* eslint-disable no-undef */
-// // import dependencies
-// import React from 'react';
-
-// // import API mocking utilities from Mock Service Worker
-// import { rest } from 'msw';
-// import { setupServer } from 'msw/node';
-
-// // import react-testing methods
-// import {
-//   render, fireEvent, waitFor, screen,
-// } from '@testing-library/react';
-
-// // add custom jest matchers from jest-dom
-// import '@testing-library/jest-dom/extend-expect';
-// // Resolve react-slick matchMedia error
-// import '../../matchMedia';
-// // the component to test
-// import Overview from './Overview';
-
-// // set up server
-// const server = setupServer(
-//   rest.get('/', (req, res, ctx) => res(ctx.json({
-
-//   }))),
-// );
-
-// beforeAll(() => server.listen());
-// afterEach(() => server.resetHandlers());
-// afterAll(() => server.close());
-
-// // test('Overview GET from API', async() => {
-// //   server.use(
-// //     rest.get('/', (req, res, ctx) => {
-// //       return res(ctx.status)
-// //     })
-// //   )
-// // })
-
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import renderer from 'react-test-renderer';
 import '../../matchMedia';
-import ImageGallery from './Subcomponents/ImageGallery';
 import Overview from './Overview';
-import Description from './Subcomponents/Description';
 import AddToCart from './Subcomponents/AddToCart';
+import Description from './Subcomponents/Description';
+import ImageGallery from './Subcomponents/ImageGallery';
+import Price from './Subcomponents/Price';
+import ProductInfo from './Subcomponents/ProductInfo';
+import QuantitySelector from './Subcomponents/QuantitySelector';
+import SizeSelector from './Subcomponents/SizeSelector';
+import StarRating from './Subcomponents/StarRating';
+import StyleSelector from './Subcomponents/StyleSelector';
 
 afterEach(() => {
   cleanup();
+});
+
+test('should render the AddToCart component', () => {
+  const productName = 'Heir Force Ones';
+  const skus = {
+    751683: { quantity: 14, size: '7' },
+    751684: { quantity: 25, size: '7.5' },
+  };
+  render(<AddToCart skus={skus} productName={productName} />);
+  const addToCart = screen.getByTestId('addToCart');
+  expect(addToCart).toBeInTheDocument();
+});
+
+test('should render the Description component', () => {
+  const product = {
+    id: 23145,
+    name: 'Camo Onesie',
+    slogan: 'Blend in to your crowd',
+    description: 'The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.',
+  };
+
+  render(<Description currentProduct={product} />);
+  const descriptionComponent = screen.getByTestId('description');
+  expect(descriptionComponent).toBeInTheDocument();
 });
 
 test('should render the ImageGallery component', () => {
@@ -65,7 +56,7 @@ test('should render the ImageGallery component', () => {
   expect(imageGallery).toBeInTheDocument();
 });
 
-test('should render the Description component', () => {
+test('should render the ProductInfo component', () => {
   const product = {
     id: 23145,
     name: 'Camo Onesie',
@@ -73,9 +64,9 @@ test('should render the Description component', () => {
     description: 'The So Fatigues will wake you up and fit you in. This high energy camo will have you blending in to even the wildest surroundings.',
   };
 
-  render(<Description currentProduct={product} />);
-  const descriptionComponent = screen.getByTestId('description');
-  expect(descriptionComponent).toBeInTheDocument();
+  render(<ProductInfo currentProduct={product} />);
+  const productInfo = screen.getByTestId('productInfo');
+  expect(productInfo).toBeInTheDocument();
 });
 
 // test('should render the Breakdown component', () => {

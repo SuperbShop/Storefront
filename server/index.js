@@ -51,11 +51,8 @@ app.put('/api/reviews/:id/report', (req, res) => {
 
 app.post('/api/reviews', (req, res) => {
   const content = req.body;
-  console.log("content!!!!", content);
-  api.postReview(content, (err) => {
-    if (err) res.send(err);
-    res.send();
-    res.status(201);
+  api.postReview(content, () => {
+    res.end();
   });
 });
 

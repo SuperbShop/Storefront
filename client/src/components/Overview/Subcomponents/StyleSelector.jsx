@@ -84,7 +84,7 @@ class StyleSelector extends React.Component {
     };
 
     return (
-      <StyleWrapper>
+      <StyleWrapper data-testid="styleSelector">
         <Price price={original_price} sale={sale_price} />
         <StyleText>Style &gt;</StyleText>
         <CurrentStyle>{name}</CurrentStyle>

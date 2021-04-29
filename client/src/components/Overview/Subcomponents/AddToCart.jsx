@@ -143,7 +143,7 @@ class AddToCart extends React.Component {
     const skusObj = Object.keys(skus).map((key) => skus[key]);
 
     return (skusObj.length > 0 ? (
-      <AddToCartWrapper>
+      <AddToCartWrapper data-testid="addToCart">
         <SelectorsWrapper>
           <LeftDiv>
             <SizeSelector title={skusObj.includes('null') ? 'OUT OF STOCK' : 'SELECT SIZE'} skus={skus} resetThenSet={this.resetThenSet} />

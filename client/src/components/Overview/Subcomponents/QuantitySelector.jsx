@@ -95,7 +95,7 @@ class QuantitySelector extends React.Component {
     const { quantity, available } = this.props;
 
     return (
-      <DDWrapper>
+      <DDWrapper data-testid="quantitySelector">
         <DDHeader onClick={this.toggleList}>
           <DDTitle>{headerTitle}</DDTitle>
           {isListOpen

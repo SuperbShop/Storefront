@@ -41,14 +41,14 @@ const Description = ({ currentProduct }) => {
   const { slogan, description, features } = currentProduct;
   return ((slogan || description)
     ? (
-      <DescWrapper>
+      <DescWrapper data-testid="description">
         <LeftDiv>
           <Slogan>{slogan}</Slogan>
           <Body>{description}</Body>
         </LeftDiv>
         <RightDiv>
           <Features>
-            {features.map((item) => {
+            {features && features.map((item) => {
               if (item.value) {
                 return (
                   <li key={item.value}>

@@ -18,7 +18,7 @@ const SalePrice = styled.span`
 `;
 
 const Price = ({ price, sale }) => (
-  <PriceWrapper>
+  <PriceWrapper data-testid="priceComponent">
     {sale ? (
       <div>
         <RegularPrice>{`$${Math.round(price)}`}</RegularPrice>

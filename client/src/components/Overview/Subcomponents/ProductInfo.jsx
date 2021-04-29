@@ -44,7 +44,7 @@ class ProductInfo extends React.Component {
     const url = 'http://127.0.0.1:8080/';
 
     return (
-      <ProductWrapper>
+      <ProductWrapper data-testid="productInfo">
         {productRatings.length > 0
         && <StarRating ratings={productRatings} />}
 

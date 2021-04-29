@@ -15,7 +15,6 @@
 }
 
 .thumb-slider {
-
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -102,26 +101,12 @@
   height: 80vh;
   width: 100%;
 }
-/* .backdrop img{
-  display: block;
-  position: absolute;
-  justify-content: center;
-  align-items: center;
-  z-index: 100;
-  object-fit: cover;
-  width: 70%;
-  height: 80vh;
-  box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
-  border: 3px solid white;
-  cursor: cell;
-} */
 
 .expand {
   position: absolute;
   right: 10px;
   font-size: 3rem;
   color: #000;
-  z-index: 200;
   padding: 10px;
 }
 

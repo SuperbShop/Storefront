@@ -12,6 +12,7 @@ import Ratings from './components/Ratings/Ratings';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
+import Search from './components/SharedComponents/Search';
 
 const Logo = styled.img`
   width: 75px;
@@ -140,6 +141,7 @@ class App extends React.Component {
         <>
           <Navbar bg="dark" variant="dark">
             <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
+            <Search />
           </Navbar>
           <Message>
             Free Shipping & Returns! - Sale / Discount

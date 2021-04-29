@@ -36,3 +36,25 @@ html, body {
   border-radius: 18px;
   border: 1px solid #cfcece;
 }
+
+
+.nav-search {
+  position: absolute;
+  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 30px;
+  border-bottom: 2px solid #fff;
+}
+
+.nav-search-field {
+  background-color: inherit;
+  outline: none;
+  border-style: none;
+  color: #fff;
+}
+
+.nav-search-field::placeholder {
+  color: #fff;
+}

@@ -1,7 +1,7 @@
+/* eslint-disable no-undef */
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import renderer from 'react-test-renderer';
 import '../../matchMedia';
 import Overview from './Overview';
 import AddToCart from './Subcomponents/AddToCart';

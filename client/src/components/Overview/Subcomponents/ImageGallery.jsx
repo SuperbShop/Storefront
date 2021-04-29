@@ -80,7 +80,7 @@ const ImageGallery = ({ photos }) => {
   };
 
   return (
-    <div className="gallery">
+    <div className="gallery" data-testid="gallery">
       { selectedImg ? (
         <div>
           <PageBlockerModalDiv>

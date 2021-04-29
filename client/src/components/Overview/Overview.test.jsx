@@ -96,57 +96,11 @@ test('should render the SizeSelector component', () => {
   expect(sizeSelector).toBeInTheDocument();
 });
 
-// test('should render the Breakdown component', () => {
-//   const productId = 23185;
-//   const filterFunc = () => 'yo';
-//   const reviewsMeta = {
-//     productId: '23185',
-//     recommended: {
-//       false: '7',
-//       true: '19',
-//     },
-//     ratings: {
-//       1: '7',
-//       2: '1',
-//       3: '0',
-//       4: '9',
-//       5: '10',
-//     },
-//     characteristics: {
-//       Quality: {
-//         id: 77812,
-//         value: '2.7',
-//       },
-//     },
-//   };
-//   render(<Breakdown productId={productId} reviewsMeta={reviewsMeta} filterFunc={filterFunc} />);
-//   const breakdownComponent = screen.getByTestId('breakdown-1');
-//   expect(breakdownComponent).toBeInTheDocument();
-// });
-
-// test('should render the Distribution component', () => {
-//   const ratings = {
-//     1: '7',
-//     2: '6',
-//     3: '5',
-//     4: '4',
-//     5: '3',
-//   };
-//   const filterFunc = () => 'foo';
-//   render(<Distribution ratings={ratings} filterFunc={filterFunc} />);
-//   const distributionComponent = screen.getByTestId('distribution-1');
-//   expect(distributionComponent).toBeInTheDocument();
-// });
-
-// test('should render the ProductFactors component', () => {
-//   const chars = {
-//     Quality: {
-//       id: 55555,
-//       value: '2.00',
-//     },
-//   };
-//   const productId = 23000;
-//   render(<ProductFactors productId={productId} chars={chars} />);
-//   const productFactorsComponent = screen.getByTestId('productfactors-1');
-//   expect(productFactorsComponent).toBeInTheDocument();
-// });
+test('should render the StarRating component', () => {
+  const ratings = [
+    { rating: 4 }, { rating: 3 }, { rating: 5 },
+  ];
+  render(<StarRating ratings={ratings} />);
+  const starRating = screen.getByTestId('starRating');
+  expect(starRating).toBeInTheDocument();
+});

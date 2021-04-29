@@ -55,6 +55,7 @@ app.post('/api/reviews', (req, res) => {
   api.postReview(content, (err) => {
     if (err) res.send(err);
     res.send();
+    res.status(201);
   });
 });
 

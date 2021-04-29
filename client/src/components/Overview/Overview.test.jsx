@@ -78,6 +78,12 @@ test('should render the ProductInfo component', () => {
   expect(productInfo).toBeInTheDocument();
 });
 
+test('should render the QuantitySelector component', () => {
+  render(<QuantitySelector />);
+  const quantitySelector = screen.getByTestId('quantitySelector');
+  expect(quantitySelector).toBeInTheDocument();
+});
+
 // test('should render the Breakdown component', () => {
 //   const productId = 23185;
 //   const filterFunc = () => 'yo';

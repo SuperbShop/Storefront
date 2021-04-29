@@ -23,7 +23,8 @@ const StyledApp = styled.div`
 
 const Logo = styled.img`
   width: 90px;
-  height: auto;
+  height: 45px;
+  margin-left: 20px;
 `;
 
 const Toggle = styled.button`
@@ -171,7 +172,7 @@ class App extends React.Component {
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
               <Search />
-              <Toggle type="button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
+              <Toggle type="button" aria-label="Toggle Theme Button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
             </Navbar>
             <Message>
               Free Shipping & Returns! - Sale / Discount

@@ -19,10 +19,9 @@ const Wrapper = styled.div`
 `;
 
 const TopWrapper = styled.div`
-  margin: 2rem;
-  padding: 2rem;
+  margin: 1rem;
+  padding: 1rem;
   display: flex;
-  color: #535353;
 `;
 
 const LeftDiv = styled.div`

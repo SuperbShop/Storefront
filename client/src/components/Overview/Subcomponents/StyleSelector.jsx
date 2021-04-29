@@ -13,14 +13,12 @@ const StyleWrapper = styled.div`
 
 const StyleText = styled.span`
   font-weight: 700;
-  color: #535353;
   text-transform: uppercase;
 `;
 const CurrentStyle = styled.span`
   padding-left: 5px;
   text-transform: uppercase;
   font-weight: 300;
-  color: #535353;
 `;
 
 const ThumbWrapper = styled.div`

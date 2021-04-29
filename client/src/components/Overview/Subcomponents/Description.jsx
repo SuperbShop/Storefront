@@ -6,10 +6,9 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 const DescWrapper = styled.div`
-  margin: 3rem;
-  padding: 3rem;
+  margin: 1rem;
+  padding: 1rem;
   display: flex;
-  color: #535353;
 `;
 
 const LeftDiv = styled.div`
@@ -26,10 +25,8 @@ const RightDiv = styled.div`
 `;
 
 const Slogan = styled.h3`
-  color: #535353;
 `;
 const Body = styled.p`
-  color: #929292;
 `;
 const Features = styled.ul`
 

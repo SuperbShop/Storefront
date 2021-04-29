@@ -41,7 +41,7 @@ const reportReview = (id, cb) => {
 };
 
 const postReview = (content, cb) => {
-  axios.post(`${API_URL}/reviews`, JSON.stringify(content))
+  axios.post(`${API_URL}/reviews`, content)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };

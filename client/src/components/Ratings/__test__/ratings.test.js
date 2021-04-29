@@ -13,10 +13,10 @@ afterEach(() => {
 });
 
 test('should render the ReviewsList component', () => {
-  const productName = "testproduct";
+  const productName = 'testproduct';
   const filterState = [];
   const reviewsList = {
-    product: "22222",
+    product: '22222',
     page: 0,
     count: 5,
     results: [
@@ -28,25 +28,32 @@ test('should render the ReviewsList component', () => {
     ],
   };
   const reviewsMeta = {
-    product_id: "00000",
+    product_id: '00000',
     ratings: {
-      1: "0",
-      2: "5",
-      3: "4",
-      4: "4",
-      5: "4",
+      1: '0',
+      2: '5',
+      3: '4',
+      4: '4',
+      5: '4',
     },
     recommended: {
-      true: "1",
+      true: '1',
     },
     characteristics: {
       Quality: {
         id: 1,
-        value: "5",
-      }
-    }
+        value: '5',
+      },
+    },
   };
-  render(<ReviewsList productName={productName} filterState={filterState} reviewsList={reviewsList} reviewsMeta={reviewsMeta} />)
+  render(
+    <ReviewsList
+      productName={productName}
+      filterState={filterState}
+      reviewsList={reviewsList}
+      reviewsMeta={reviewsMeta}
+    />
+  );
   const reviewsListComponent = screen.getByTestId('reviewslist-1');
   expect(reviewsListComponent).toBeInTheDocument();
 });
@@ -57,20 +64,20 @@ test('should render the Breakdown component', () => {
   const reviewsMeta = {
     productId: '23185',
     recommended: {
-      false: "7",
-      true: "19",
+      false: '7',
+      true: '19',
     },
     ratings: {
-      1: "7",
-      2: "1",
-      3: "0",
-      4: "9",
-      5: "10",
+      1: '7',
+      2: '1',
+      3: '0',
+      4: '9',
+      5: '10',
     },
     characteristics: {
       Quality: {
         id: 77812,
-        value: "2.7",
+        value: '2.7',
       },
     },
   };
@@ -81,11 +88,11 @@ test('should render the Breakdown component', () => {
 
 test('should render the Distribution component', () => {
   const ratings = {
-    1: "7",
-    2: "6",
-    3: "5",
-    4: "4",
-    5: "3",
+    1: '7',
+    2: '6',
+    3: '5',
+    4: '4',
+    5: '3',
   };
   const filterFunc = () => 'foo';
   render(<Distribution ratings={ratings} filterFunc={filterFunc} />);
@@ -97,7 +104,7 @@ test('should render the ProductFactors component', () => {
   const chars = {
     Quality: {
       id: 55555,
-      value: "2.00",
+      value: '2.00',
     },
   };
   const productId = 23000;

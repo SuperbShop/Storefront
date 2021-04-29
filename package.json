@@ -4,7 +4,7 @@
   "description": "FEC ecommerce app",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --coverage",
     "react-dev": "webpack --mode=development --watch",
     "live-server": "live-server client/dist/",
     "start": "nodemon server/index.js"

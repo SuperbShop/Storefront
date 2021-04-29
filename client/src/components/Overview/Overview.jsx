@@ -108,7 +108,7 @@ class Overview extends React.Component {
     const { photos } = selectedStyle;
     return (
 
-      <Wrapper>
+      <Wrapper data-testid="overviewComponent">
         <TopWrapper>
           <LeftDiv>
             <ImageGallery photos={photos} />

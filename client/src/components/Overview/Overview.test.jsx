@@ -18,6 +18,13 @@ afterEach(() => {
   cleanup();
 });
 
+test('should render the Overview component', () => {
+  const productId = 23149;
+  render(<Overview productId={productId} />);
+  const overviewComponent = screen.getByTestId('overviewComponent');
+  expect(overviewComponent).toBeInTheDocument();
+});
+
 test('should render the AddToCart component', () => {
   const productName = 'Heir Force Ones';
   const skus = {

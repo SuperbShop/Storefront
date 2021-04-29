@@ -40,6 +40,12 @@ const reportReview = (id, cb) => {
     .catch((err) => console.error(err));
 };
 
+const postReview = (content, cb) => {
+  axios.post(`${API_URL}/reviews`, JSON.stringify(content))
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
 const fetchQandA = (id, cb) => {
   axios.get(`${API_URL}/qa/questions?product_id=${id}`)
     .then((data) => cb(data))
@@ -68,6 +74,7 @@ module.exports.fetchProductStyles = fetchProductStyles;
 module.exports.fetchReviews = fetchReviews;
 module.exports.upvoteReview = upvoteReview;
 module.exports.reportReview = reportReview;
+module.exports.postReview = postReview;
 module.exports.fetchReviewsMeta = fetchReviewsMeta;
 module.exports.fetchQandA = fetchQandA;
 module.exports.reportQuestion = reportQuestion;

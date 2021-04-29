@@ -49,6 +49,15 @@ app.put('/api/reviews/:id/report', (req, res) => {
   });
 });
 
+app.post('/api/reviews', (req, res) => {
+  const content = req.body;
+  console.log("content!!!!", content);
+  api.postReview(content, (err) => {
+    if (err) res.send(err);
+    res.send();
+  });
+});
+
 app.get('/api/:id/q_and_a', (req, res) => {
   const { id } = req.params;
   api.fetchQandA(id, (QandA) => {

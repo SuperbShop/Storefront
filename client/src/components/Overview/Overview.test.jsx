@@ -104,3 +104,39 @@ test('should render the StarRating component', () => {
   const starRating = screen.getByTestId('starRating');
   expect(starRating).toBeInTheDocument();
 });
+
+test('should render the StyleSelector component', () => {
+  const selectedStyle = {
+    name: 'White & White',
+    original_price: '99.00',
+    sale_price: null,
+    style_id: 129668,
+  };
+  const styles = [
+    {
+      name: 'White & Black',
+      original_price: '99.00',
+      sale_price: null,
+      style_id: 129670,
+      photos: [
+        {
+          thumbnail_url: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+          url: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+        }],
+    },
+    {
+      name: 'White & Red',
+      original_price: '99.00',
+      sale_price: null,
+      style_id: 129669,
+      photos: [
+        {
+          thumbnail_url: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80',
+          url: 'https://images.unsplash.com/photo-1544441892-794166f1e3be?ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80',
+        }],
+    },
+  ];
+  render(<StyleSelector selectedStyle={selectedStyle} styles={styles} />);
+  const styleSelector = screen.getByTestId('styleSelector');
+  expect(styleSelector).toBeInTheDocument();
+});

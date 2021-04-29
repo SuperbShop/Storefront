@@ -22,7 +22,6 @@ const TopWrapper = styled.div`
   margin: 1rem;
   padding: 1rem;
   display: flex;
-  color: #535353;
 `;
 
 const LeftDiv = styled.div`

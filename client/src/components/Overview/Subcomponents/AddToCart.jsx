@@ -31,7 +31,6 @@ const AddBtn = styled.button`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  color: #535353;
   padding: 15px;
   width: 75%;
   border: 1px solid #535353;

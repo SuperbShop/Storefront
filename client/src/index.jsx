@@ -14,14 +14,29 @@ import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
 import Search from './components/SharedComponents/Search';
 import { lightTheme, darkTheme, GlobalStyles } from './components/SharedComponents/themes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const StyledApp = styled.div`
   color: ${(props) => props.theme.fontColor};
 `;
 
 const Logo = styled.img`
-  width: 75px;
+  width: 90px;
   height: auto;
+`;
+
+const Toggle = styled.button`
+  position: absolute;
+  right: 20%;
+  cursor: pointer;
+  border-radius: 50%;
+  border: none;
+  background: #dc3545;
+  transition: all .5s ease;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const Message = styled.h1`
@@ -156,7 +171,7 @@ class App extends React.Component {
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
               <Search />
-              <button type="button" onClick={() => this.toggleTheme()}>Change Theme</button>
+              <Toggle type="button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
             </Navbar>
             <Message>
               Free Shipping & Returns! - Sale / Discount

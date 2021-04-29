@@ -56,6 +56,15 @@ test('should render the ImageGallery component', () => {
   expect(imageGallery).toBeInTheDocument();
 });
 
+test('should render the Price component', () => {
+  const original = '99.00';
+  const sale = '69.00';
+
+  render(<Price sale={sale} price={original} />);
+  const priceComponent = screen.getByTestId('priceComponent');
+  expect(priceComponent).toBeInTheDocument();
+});
+
 test('should render the ProductInfo component', () => {
   const product = {
     id: 23145,

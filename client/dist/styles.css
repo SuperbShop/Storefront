@@ -4,9 +4,13 @@ html, body {
 }
 
 a {
-  color:#000;
+  color:#004c9e;
   font-weight: 700;
   text-decoration: underline;
+}
+a:hover {
+  color: #dc3545;
+  transition: .3s;
 }
 
 /* Modal */

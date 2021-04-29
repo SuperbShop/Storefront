@@ -3,13 +3,30 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import ReactDOM from 'react-dom';
 import React from 'react';
-import $ from 'jquery';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import styled from 'styled-components';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
 import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
+
+const Logo = styled.img`
+  width: 75px;
+  height: auto;
+`;
+
+const Message = styled.h1`
+  padding-top: 1rem;
+  font-size: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  &:hover {
+    color: red;
+  }
+`;
 
 // store clicks object
 window.clicks = [];
@@ -45,27 +62,12 @@ class App extends React.Component {
       showAskQuestionModal: false,
       showAddAnswerModal: false,
     };
-    // this.getProductId = this.getProductId.bind(this);
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
     this.toggleAskQuestionModal = this.toggleAskQuestionModal.bind(this);
     this.toggleAddAnswerModal = this.toggleAddAnswerModal.bind(this);
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
   }
-
-  // componentDidMount() {
-  //   const defaultId = 23149;
-  //   const productId = this.getProductId() || defaultId;
-  //   console.log(productId);
-  //   this.setState({
-  //     productId,
-  //   });
-  //   console.log('mounted');
-  // }
-
-  // getProductId() {
-  //   return window.location.pathname.slice(5);
-  // }
 
   incrementProduct() {
     const { productId } = this.state;
@@ -136,6 +138,16 @@ class App extends React.Component {
     return (
       productId !== undefined ? (
         <>
+          <Navbar bg="dark" variant="dark">
+            <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
+          </Navbar>
+          <Message>
+            Free Shipping & Returns! - Sale / Discount
+            <em> OFFER</em>
+            {' '}
+            -
+            <a href="/"> New Product Highlight</a>
+          </Message>
           <AskQuestion
             showAskQuestionModal={showAskQuestionModal}
             toggleAskQuestionModal={this.toggleAskQuestionModal}

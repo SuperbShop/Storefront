@@ -6,8 +6,8 @@ import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 
 const DescWrapper = styled.div`
-  margin: 3rem;
-  padding: 3rem;
+  margin: 1rem;
+  padding: 1rem;
   display: flex;
   color: #535353;
 `;

@@ -24,7 +24,7 @@ const RightDiv = styled.div`
   width: 30%;
 `;
 
-const Slogan = styled.h4`
+const Slogan = styled.h1`
   font-size: 36px;
   font-weight: 600;
   padding-bottom: 10px;

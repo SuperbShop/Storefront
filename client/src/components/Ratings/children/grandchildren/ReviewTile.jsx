@@ -120,6 +120,11 @@ const TileButton = styled.button`
   };
   `;
 
+const Summary = styled.h2`
+  font-size: 24px;
+  font-weight: 600;
+`;
+
 const ShowMoreButtonStyle = {
   color: 'rgb(128, 128, 128)',
 };
@@ -314,7 +319,7 @@ class ReviewTile extends React.Component {
 
         </StarsAuthorDateWrapper>
         <SummaryWrapper>
-          <h5>{review.summary}</h5>
+          <Summary>{review.summary}</Summary>
         </SummaryWrapper>
         <PhotosWrapper>
           {photoBody}

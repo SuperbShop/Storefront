@@ -3,6 +3,12 @@ html, body {
   scroll-behavior: smooth;
 }
 
+a {
+  color:#000;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
 /* Modal */
 .modal {
   font-size: 12px;

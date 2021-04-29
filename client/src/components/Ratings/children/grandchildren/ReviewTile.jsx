@@ -110,7 +110,8 @@ const StarsOuter = styled.div`
   `;
 
 const TileButton = styled.button`
-  color: #007BFF;
+  color: #004c9e;
+  font-weight: 700;
   border: none;
   background-color: white;
   text-decoration: underline;

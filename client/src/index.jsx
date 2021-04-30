@@ -23,7 +23,6 @@ const clickTracker = (WrappedComponent, module) => (props) => (
   // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
-    // console.log(info);
     window.clicks.push(info);
   }}
   >
@@ -40,32 +39,17 @@ class App extends React.Component {
     super();
     this.state = {
       product: '23149',
-      productId: 23190,
+      productId: 23145,
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
     };
-    // this.getProductId = this.getProductId.bind(this);
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
     this.toggleAskQuestionModal = this.toggleAskQuestionModal.bind(this);
     this.toggleAddAnswerModal = this.toggleAddAnswerModal.bind(this);
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
   }
-
-  // componentDidMount() {
-  //   const defaultId = 23149;
-  //   const productId = this.getProductId() || defaultId;
-  //   console.log(productId);
-  //   this.setState({
-  //     productId,
-  //   });
-  //   console.log('mounted');
-  // }
-
-  // getProductId() {
-  //   return window.location.pathname.slice(5);
-  // }
 
   incrementProduct() {
     const { productId } = this.state;

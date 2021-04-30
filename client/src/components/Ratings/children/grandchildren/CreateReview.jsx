@@ -299,7 +299,6 @@ class CreateReview extends React.Component {
     this.setState({
       rating: Number(event.target.id),
     });
-    // THIS IS NOT A PERMANENT FIX
     $('#InnerStars').width(`${event.target.id * 20}%`);
     $('#HiddenRatingInput').val(event.target.id);
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
@@ -320,7 +319,8 @@ class CreateReview extends React.Component {
   }
 
   handleCharRadioClick(event) {
-    const charId = this.props.metaInfo.characteristics[event.target.name].id;
+    const { metaInfo } = this.props;
+    const charId = metaInfo.characteristics[event.target.name].id;
     $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
     this.setState((prevState) => ({
       characteristics: {

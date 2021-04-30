@@ -305,37 +305,6 @@ class CreateReview extends React.Component {
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
-  // handleFormSubmit() {
-  //   event.preventDefault();
-  //   const { metaInfo } = this.props;
-  //   const characteristicsObj = {};
-  //   const chars = Object.keys(metaInfo.characteristics);
-  //   chars.forEach((char) => {
-  //     characteristicsObj[char] = document.getElementById(char).value;
-  //   });
-
-  //   $.ajax({
-  //     method: 'POST',
-  //     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews',
-  //     headers: {
-  //       Authorization: config.TOKEN,
-  //     },
-  //     data: {
-  //       product_id: Number(metaInfo.product_id),
-  //       rating: document.getElementById('HiddenRatingInput').value,
-  //       summary: document.getElementById('ReviewSummaryText').value,
-  //       body: document.getElementById('ReviewBodyText').value,
-  //       recommend: document.getElementsByName('RecommendOption:checked').value,
-  //       name: document.getElementById('WhatIsYourNicknameText').value,
-  //       email: document.getElementById('WhatIsYourEmailText').value,
-  //       photos: [],
-  //       characteristics: characteristicsObj,
-  //     },
-  //     success: () => console.log('form submit worked!'),
-  //     error: (err) => console.log(err),
-  //   });
-  // }
-
   handleImageUpload() {
     $('#UploadedImages').empty();
     const { files } = document.getElementById('ImgUpload');
@@ -350,17 +319,8 @@ class CreateReview extends React.Component {
     }
   }
 
-  updateBodyLengthDetails(event) {
-    if (event.target.value.length < 50) {
-      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
-    } else {
-      $('#ReviewBodyLengthDetails').text('Minimum reached');
-    }
-  }
-
   handleCharRadioClick(event) {
     const charId = this.props.metaInfo.characteristics[event.target.name].id;
-    console.log('charId', charId);
     $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
     this.setState((prevState) => ({
       characteristics: {
@@ -382,31 +342,55 @@ class CreateReview extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    const {
+      rating,
+      summary,
+      body,
+      recommend,
+      name,
+      email,
+      photos,
+      characteristics,
+    } = this.state;
+    const { metaInfo } = this.props;
     const data = {
-      product_id: Number(this.props.metaInfo.product_id),
-      rating: this.state.rating,
-      summary: this.state.summary,
-      body: this.state.body,
-      recommend: this.state.recommend,
-      name: this.state.name,
-      email: this.state.email,
-      photos: this.state.photos,
-      characteristics: this.state.characteristics,
+      product_id: Number(metaInfo.product_id),
+      rating,
+      summary,
+      body,
+      recommend,
+      name,
+      email,
+      photos,
+      characteristics,
     };
-    console.log('data', data);
     $.ajax({
       url: '/api/reviews',
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
-      success: () => console.log('successful post'),
+      success: () => this.handleExitButtonClick(),
       error: (err) => console.error(err),
     });
-    this.handleExitButtonClick();
+  }
+
+  updateBodyLengthDetails(event) {
+    if (event.target.value.length < 50) {
+      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+    } else {
+      $('#ReviewBodyLengthDetails').text('Minimum reached');
+    }
   }
 
   render() {
     const { metaInfo, productName } = this.props;
+    const {
+      rating,
+      summary,
+      body,
+      name,
+      email,
+    } = this.state;
     const charsArray = Object.keys(metaInfo.characteristics);
     return (
       <>
@@ -423,7 +407,7 @@ class CreateReview extends React.Component {
             </TitleWrapper>
             <FloatLeft>
               <RatingAndRecommendWrapper>
-                <HiddenRating name="rating" value={this.state.rating} onChange={this.handleInputChange} type="text" required="required" id="HiddenRatingInput" />
+                <HiddenRating name="rating" value={rating} onChange={this.handleInputChange} type="text" required="required" id="HiddenRatingInput" />
                 <RatingWrapper id="overall-rating">
                   <div id="RatingText">Overall Rating:*</div>
                   {/* maybe make this hidden rating a radio input
@@ -460,14 +444,14 @@ class CreateReview extends React.Component {
                 <ReviewSummaryPrompt>
                   Review summary:
                 </ReviewSummaryPrompt>
-                <SummaryTextInput name="summary" value={this.state.summary} onChange={this.handleInputChange} id="ReviewSummaryText" maxLength="60" type="text" placeholder="Example: Best purchase ever!" />
+                <SummaryTextInput name="summary" value={summary} onChange={this.handleInputChange} id="ReviewSummaryText" maxLength="60" type="text" placeholder="Example: Best purchase ever!" />
               </ReviewSummaryWrapper>
 
               <ReviewBodyWrapper id="ReviewBody">
                 <ReviewBodyTitle>
                   Review body:*
                 </ReviewBodyTitle>
-                <ReviewBodyTextArea name="body" value={this.state.body} onChange={this.handleInputChange} id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+                <ReviewBodyTextArea name="body" value={body} onChange={this.handleInputChange} id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
                 <ReviewBodyCharCount id="ReviewBodyLengthDetails">Minimum required characters left: 50</ReviewBodyCharCount>
               </ReviewBodyWrapper>
 
@@ -477,7 +461,7 @@ class CreateReview extends React.Component {
                     What is your nickname?*
 
                   </NicknameAndEmailTitle>
-                  <StyledNicknameEmailInput name="name" value={this.state.name} onChange={this.handleInputChange} id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
+                  <StyledNicknameEmailInput name="name" value={name} onChange={this.handleInputChange} id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
                   <PrivacyWrapper>
                     For privacy reasons, do not use your full name or email address
                   </PrivacyWrapper>
@@ -488,7 +472,7 @@ class CreateReview extends React.Component {
                     What is your email?*
 
                   </NicknameAndEmailTitle>
-                  <StyledNicknameEmailInput name="email" value={this.state.email} onChange={this.handleInputChange} id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
+                  <StyledNicknameEmailInput name="email" value={email} onChange={this.handleInputChange} id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
                   <PrivacyWrapper>
                     For authentication reasons, you will not be emailed
                   </PrivacyWrapper>

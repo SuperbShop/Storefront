@@ -4,7 +4,6 @@ const api = require('./apiHandler');
 const app = express();
 const port = 3000;
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname}/../client/dist`));
 
 app.get('/api/:id', (req, res) => {
@@ -52,7 +51,6 @@ app.put('/api/reviews/:id/report', (req, res) => {
 
 app.post('/api/reviews', (req, res) => {
   const content = req.body;
-  console.log('CONTENT!!!!!!!', content);
   api.postReview(content, () => {
     res.end();
   });

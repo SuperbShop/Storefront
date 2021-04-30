@@ -5,7 +5,6 @@ import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
-import config from '../../../../../../config';
 import CharsRadioButtons from './CharsRadioButtons';
 
 const CenteredDiv = styled.div`
@@ -258,7 +257,17 @@ const StarsInner = styled.div`
 class CreateReview extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      rating: 1,
+      summary: '',
+      body: '',
+      recommend: '',
+      name: '',
+      email: '',
+      photos: [],
+      characteristics: {},
+    };
+
     this.charsObject = {
       Size: ['A size too small', '1/2 a size too small', 'Perfect', '1/2 a size too big', 'A size too wide'],
       Width: ['Too narrow', 'Slightly narrow', 'Perfect', 'Slightly wide', 'Too wide'],
@@ -271,7 +280,10 @@ class CreateReview extends React.Component {
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
     this.updateBodyLengthDetails = this.updateBodyLengthDetails.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleStarIconClick = this.handleStarIconClick.bind(this);
+    this.handleRecommendChange = this.handleRecommendChange.bind(this);
   }
 
   handleExitButtonClick() {
@@ -279,61 +291,62 @@ class CreateReview extends React.Component {
     toggleCreateReviewModal();
   }
 
-  handleCharRadioClick(event) {
-    $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
-  }
-
-  handleStarIconClick() {
-    // THIS IS NOT A PERMANENT FIX
+  handleStarIconClick(event) {
     const ratingWords = ['Poor', 'Fair', 'Average', 'Good', 'Best'];
     if (ratingWords[event.target.id - 1] === undefined) {
       return;
     }
+    this.setState({
+      rating: Number(event.target.id),
+    });
+    // THIS IS NOT A PERMANENT FIX
     $('#InnerStars').width(`${event.target.id * 20}%`);
     $('#HiddenRatingInput').val(event.target.id);
     $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
   }
 
-  handleFormSubmit() {
-    event.preventDefault();
-    const { metaInfo } = this.props;
-    const characteristicsObj = {};
-    const chars = Object.keys(metaInfo.characteristics);
-    chars.forEach((char) => {
-      characteristicsObj[char] = document.getElementById(char).value;
-    });
+  // handleFormSubmit() {
+  //   event.preventDefault();
+  //   const { metaInfo } = this.props;
+  //   const characteristicsObj = {};
+  //   const chars = Object.keys(metaInfo.characteristics);
+  //   chars.forEach((char) => {
+  //     characteristicsObj[char] = document.getElementById(char).value;
+  //   });
 
-    $.ajax({
-      method: 'POST',
-      url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews',
-      headers: {
-        Authorization: config.TOKEN,
-      },
-      data: {
-        product_id: Number(metaInfo.product_id),
-        rating: document.getElementById('HiddenRatingInput').value,
-        summary: document.getElementById('ReviewSummaryText').value,
-        body: document.getElementById('ReviewBodyText').value,
-        recommend: document.getElementsByName('RecommendOption:checked').value,
-        name: document.getElementById('WhatIsYourNicknameText').value,
-        email: document.getElementById('WhatIsYourEmailText').value,
-        photos: [],
-        characteristics: characteristicsObj,
-      },
-      success: () => console.log('form submit worked!'),
-      error: (err) => console.log(err),
-    });
-  }
+  //   $.ajax({
+  //     method: 'POST',
+  //     url: 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews',
+  //     headers: {
+  //       Authorization: config.TOKEN,
+  //     },
+  //     data: {
+  //       product_id: Number(metaInfo.product_id),
+  //       rating: document.getElementById('HiddenRatingInput').value,
+  //       summary: document.getElementById('ReviewSummaryText').value,
+  //       body: document.getElementById('ReviewBodyText').value,
+  //       recommend: document.getElementsByName('RecommendOption:checked').value,
+  //       name: document.getElementById('WhatIsYourNicknameText').value,
+  //       email: document.getElementById('WhatIsYourEmailText').value,
+  //       photos: [],
+  //       characteristics: characteristicsObj,
+  //     },
+  //     success: () => console.log('form submit worked!'),
+  //     error: (err) => console.log(err),
+  //   });
+  // }
 
-  handleImageUpload(event) {
-    // HARDCODING ONE IMAGE FILE FOR EACH
-    // MUST SELECT ALL IMAGES AT ONCE FOR THIS TO WORK
+  handleImageUpload() {
     $('#UploadedImages').empty();
-
-    const imgFiles = Object.keys(event.target.files);
-    imgFiles.forEach(() => $('#UploadedImages').append('<img style="padding: 5px;" src=https://picsum.photos/40 />'));
-    if (event.target.files.length >= 5) {
-      $('input').remove('#ImgUpload');
+    const { files } = document.getElementById('ImgUpload');
+    for (let i = 0; i < files.length; i += 1) {
+      const img = new Image();
+      img.src = URL.createObjectURL(files[i]);
+      img.title = files[i].name;
+      document.getElementById('UploadedImages').appendChild(img);
+      this.setState((prevState) => ({
+        photos: [...prevState.photos, img.src],
+      }));
     }
   }
 
@@ -345,14 +358,60 @@ class CreateReview extends React.Component {
     }
   }
 
+  handleCharRadioClick(event) {
+    const charId = this.props.metaInfo.characteristics[event.target.name].id;
+    console.log('charId', charId);
+    $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
+    this.setState((prevState) => ({
+      characteristics: {
+        ...prevState.characteristics,
+        [charId]: Number(event.target.value),
+      },
+    }));
+  }
+
+  handleRecommendChange(event) {
+    this.setState({
+      recommend: (event.target.value === 'true'),
+    });
+  }
+
+  handleInputChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    const data = {
+      product_id: Number(this.props.metaInfo.product_id),
+      rating: this.state.rating,
+      summary: this.state.summary,
+      body: this.state.body,
+      recommend: this.state.recommend,
+      name: this.state.name,
+      email: this.state.email,
+      photos: this.state.photos,
+      characteristics: this.state.characteristics,
+    };
+    console.log('data', data);
+    $.ajax({
+      url: '/api/reviews',
+      method: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(data),
+      success: () => console.log('successful post'),
+      error: (err) => console.error(err),
+    });
+    this.handleExitButtonClick();
+  }
+
   render() {
     const { metaInfo, productName } = this.props;
     const charsArray = Object.keys(metaInfo.characteristics);
     return (
       <>
         <CenteredDiv>
-          <form action="https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews" method="post">
-            <input type="hidden" id="myApiKey" name="myApiKey" value={config.TOKEN} />
+          <form method="post" action="/api/reviews">
             <TitleWrapper>
               <strong>
                 <h4>
@@ -364,7 +423,7 @@ class CreateReview extends React.Component {
             </TitleWrapper>
             <FloatLeft>
               <RatingAndRecommendWrapper>
-                <HiddenRating type="text" required="required" id="HiddenRatingInput" />
+                <HiddenRating name="rating" value={this.state.rating} onChange={this.handleInputChange} type="text" required="required" id="HiddenRatingInput" />
                 <RatingWrapper id="overall-rating">
                   <div id="RatingText">Overall Rating:*</div>
                   {/* maybe make this hidden rating a radio input
@@ -390,10 +449,10 @@ class CreateReview extends React.Component {
                 <RecommendWrapper id="recommend">
                   Do you recommend this product?*
                   <div>
-                    <label htmlFor="YesRecommend">Yes</label>
-                    <input type="radio" className="RecommendRadio" id="YesRecommend" required="required" name="RecommendOption" value="Yes" />
-                    <label htmlFor="NoRecommend">No</label>
-                    <input type="radio" className="RecommendRadio" id="NoRecommend" name="RecommendOption" value="No" />
+                    <label htmlFor="true">Yes</label>
+                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="true" required="required" name="recommend" value="true" />
+                    <label htmlFor="false">No</label>
+                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="false" name="recommend" value="false" />
                   </div>
                 </RecommendWrapper>
               </RatingAndRecommendWrapper>
@@ -401,14 +460,14 @@ class CreateReview extends React.Component {
                 <ReviewSummaryPrompt>
                   Review summary:
                 </ReviewSummaryPrompt>
-                <SummaryTextInput id="ReviewSummaryText" maxLength="60" type="text" placeholder="Example: Best purchase ever!" />
+                <SummaryTextInput name="summary" value={this.state.summary} onChange={this.handleInputChange} id="ReviewSummaryText" maxLength="60" type="text" placeholder="Example: Best purchase ever!" />
               </ReviewSummaryWrapper>
 
               <ReviewBodyWrapper id="ReviewBody">
                 <ReviewBodyTitle>
                   Review body:*
                 </ReviewBodyTitle>
-                <ReviewBodyTextArea id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+                <ReviewBodyTextArea name="body" value={this.state.body} onChange={this.handleInputChange} id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
                 <ReviewBodyCharCount id="ReviewBodyLengthDetails">Minimum required characters left: 50</ReviewBodyCharCount>
               </ReviewBodyWrapper>
 
@@ -418,7 +477,7 @@ class CreateReview extends React.Component {
                     What is your nickname?*
 
                   </NicknameAndEmailTitle>
-                  <StyledNicknameEmailInput id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
+                  <StyledNicknameEmailInput name="name" value={this.state.name} onChange={this.handleInputChange} id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
                   <PrivacyWrapper>
                     For privacy reasons, do not use your full name or email address
                   </PrivacyWrapper>
@@ -429,7 +488,7 @@ class CreateReview extends React.Component {
                     What is your email?*
 
                   </NicknameAndEmailTitle>
-                  <StyledNicknameEmailInput id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
+                  <StyledNicknameEmailInput name="email" value={this.state.email} onChange={this.handleInputChange} id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
                   <PrivacyWrapper>
                     For authentication reasons, you will not be emailed
                   </PrivacyWrapper>
@@ -461,7 +520,7 @@ class CreateReview extends React.Component {
               </PhotoUploadWrapper>
             </FloatRight>
             <SubmitWrapper>
-              <SubmitButton type="submit" onClick={this.handleFormSubmit}>SUBMIT REVIEW</SubmitButton>
+              <SubmitButton type="submit" onClick={this.handleSubmit}>SUBMIT REVIEW</SubmitButton>
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>

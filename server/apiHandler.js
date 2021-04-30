@@ -64,11 +64,6 @@ const reportQuestion = (question_id, cb) => {
 // Curtis POST request QuestionHelpful goes here
 // Curtis POST request AnswerHelpful goes here
 
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-
 module.exports.fetchProducts = fetchProducts;
 module.exports.fetchProductStyles = fetchProductStyles;
 module.exports.fetchReviews = fetchReviews;

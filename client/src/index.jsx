@@ -23,7 +23,7 @@ const clickTracker = (WrappedComponent, module) => (props) => (
   // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
-    console.log(info);
+    // console.log(info);
     window.clicks.push(info);
   }}
   >
@@ -40,7 +40,7 @@ class App extends React.Component {
     super();
     this.state = {
       product: '23149',
-      productId: 23145,
+      productId: 23190,
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,

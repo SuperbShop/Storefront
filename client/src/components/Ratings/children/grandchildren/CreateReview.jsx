@@ -254,6 +254,14 @@ const StarsInner = styled.div`
   width: 0;
   `;
 
+const updateBodyLengthDetails = (event) => {
+  if (event.target.value.length < 50) {
+    $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+  } else {
+    $('#ReviewBodyLengthDetails').text('Minimum reached');
+  }
+};
+
 class CreateReview extends React.Component {
   constructor(props) {
     super(props);
@@ -278,7 +286,6 @@ class CreateReview extends React.Component {
     };
     this.handleExitButtonClick = this.handleExitButtonClick.bind(this);
     this.handleCharRadioClick = this.handleCharRadioClick.bind(this);
-    this.updateBodyLengthDetails = this.updateBodyLengthDetails.bind(this);
     this.handleImageUpload = this.handleImageUpload.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -374,14 +381,6 @@ class CreateReview extends React.Component {
     });
   }
 
-  updateBodyLengthDetails(event) {
-    if (event.target.value.length < 50) {
-      $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
-    } else {
-      $('#ReviewBodyLengthDetails').text('Minimum reached');
-    }
-  }
-
   render() {
     const { metaInfo, productName } = this.props;
     const {
@@ -410,10 +409,7 @@ class CreateReview extends React.Component {
                 <HiddenRating name="rating" value={rating} onChange={this.handleInputChange} type="text" required="required" id="HiddenRatingInput" />
                 <RatingWrapper id="overall-rating">
                   <div id="RatingText">Overall Rating:*</div>
-                  {/* maybe make this hidden rating a radio input
-                 - that way it makes more sense that its required? */}
                   <StarsWrapper>
-
                     <StarsOuter>
                       <FontAwesomeIcon icon={faStar} id="1" onClick={this.handleStarIconClick} />
                       <FontAwesomeIcon icon={faStar} id="2" onClick={this.handleStarIconClick} />
@@ -451,7 +447,7 @@ class CreateReview extends React.Component {
                 <ReviewBodyTitle>
                   Review body:*
                 </ReviewBodyTitle>
-                <ReviewBodyTextArea name="body" value={body} onChange={this.handleInputChange} id="ReviewBodyText" onKeyUp={this.updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
+                <ReviewBodyTextArea name="body" value={body} onChange={this.handleInputChange} id="ReviewBodyText" onKeyUp={updateBodyLengthDetails} required="required" minLength="50" maxLength="1000" type="text" placeholder="Why did you like the product or not?" />
                 <ReviewBodyCharCount id="ReviewBodyLengthDetails">Minimum required characters left: 50</ReviewBodyCharCount>
               </ReviewBodyWrapper>
 
@@ -459,18 +455,15 @@ class CreateReview extends React.Component {
                 <NicknameWrapper id="WhatIsYourNickname">
                   <NicknameAndEmailTitle>
                     What is your nickname?*
-
                   </NicknameAndEmailTitle>
                   <StyledNicknameEmailInput name="name" value={name} onChange={this.handleInputChange} id="WhatIsYourNicknameText" required="required" maxLength="60" type="text" placeholder="Example: jackson11!" />
                   <PrivacyWrapper>
                     For privacy reasons, do not use your full name or email address
                   </PrivacyWrapper>
                 </NicknameWrapper>
-
                 <EmailWrapper id="WhatIsYourEmail">
                   <NicknameAndEmailTitle>
                     What is your email?*
-
                   </NicknameAndEmailTitle>
                   <StyledNicknameEmailInput name="email" value={email} onChange={this.handleInputChange} id="WhatIsYourEmailText" required="required" maxLength="60" type="text" placeholder="Example: jackson11@email.com" />
                   <PrivacyWrapper>
@@ -479,7 +472,6 @@ class CreateReview extends React.Component {
                 </EmailWrapper>
               </NicknameAndEmailWrapper>
             </FloatLeft>
-
             <FloatRight>
               <CharacteristicsWrapper id="characteristics">
                 Please rate the product characteristics*
@@ -499,7 +491,6 @@ class CreateReview extends React.Component {
                   Upload photos:
                   <input type="file" onChange={this.handleImageUpload} id="ImgUpload" multiple name="img[]" accept="image/*" />
                 </PhotoUploadUpper>
-
                 <PhotoUploadLower id="UploadedImages" />
               </PhotoUploadWrapper>
             </FloatRight>

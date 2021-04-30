@@ -31,7 +31,6 @@ const AddBtn = styled.button`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  color: #535353;
   padding: 15px;
   width: 75%;
   border: 1px solid #535353;
@@ -143,7 +142,7 @@ class AddToCart extends React.Component {
     const skusObj = Object.keys(skus).map((key) => skus[key]);
 
     return (skusObj.length > 0 ? (
-      <AddToCartWrapper>
+      <AddToCartWrapper data-testid="addToCart">
         <SelectorsWrapper>
           <LeftDiv>
             <SizeSelector title={skusObj.includes('null') ? 'OUT OF STOCK' : 'SELECT SIZE'} skus={skus} resetThenSet={this.resetThenSet} />
@@ -180,9 +179,9 @@ class AddToCart extends React.Component {
           )}
 
           {liked
-            ? <LikeBtn onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
+            ? <LikeBtn aria-label="Like Button" onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
             : (
-              <LikeBtn onClick={this.handleLikeClicked}>
+              <LikeBtn aria-label="Like Button" onClick={this.handleLikeClicked}>
                 <FontAwesomeIcon icon={farHeart} />
               </LikeBtn>
             )}

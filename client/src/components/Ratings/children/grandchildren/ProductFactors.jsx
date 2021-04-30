@@ -23,7 +23,6 @@ const BackdropDiv = styled.div`
   `;
 
 const Descriptions = styled.div`
-  color: grey;
   font-weight: 0.5;
   font-size: 12px;
   margin-top: 4px;

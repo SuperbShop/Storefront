@@ -110,7 +110,8 @@ const StarsOuter = styled.div`
   `;
 
 const TileButton = styled.button`
-  color: #007BFF;
+  color: #004c9e;
+  font-weight: 700;
   border: none;
   background-color: white;
   text-decoration: underline;
@@ -118,6 +119,11 @@ const TileButton = styled.button`
     color: grey;
   };
   `;
+
+const Summary = styled.h2`
+  font-size: 24px;
+  font-weight: 600;
+`;
 
 const ShowMoreButtonStyle = {
   color: 'rgb(128, 128, 128)',
@@ -141,7 +147,7 @@ class ReviewTile extends React.Component {
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `/api/reviews/${review.review_id}/helpful`,
+      url: `api/reviews/${review.review_id}/helpful`,
       success: () => {
         this.setState({
           helpful: review.helpfulness + 1,
@@ -156,7 +162,7 @@ class ReviewTile extends React.Component {
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `/api/reviews/${review.review_id}/report`,
+      url: `api/reviews/${review.review_id}/report`,
       success: () => console.log('report worked'),
       error: (err) => console.error(err),
     });
@@ -313,7 +319,7 @@ class ReviewTile extends React.Component {
 
         </StarsAuthorDateWrapper>
         <SummaryWrapper>
-          <h5>{review.summary}</h5>
+          <Summary>{review.summary}</Summary>
         </SummaryWrapper>
         <PhotosWrapper>
           {photoBody}

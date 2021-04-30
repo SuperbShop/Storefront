@@ -57,7 +57,7 @@ const ProductFactors = (props) => {
           descriptions = ['Runs tight', 'Runs long'];
         }
         return (
-          <CharsContainer key={`${prop}${productId}CharContainer`}>
+          <CharsContainer key={`${prop}${productId}CharContainer`} data-testid="productfactors-1">
             <CharTitle key={`${prop}${productId}CharTitle`}>{prop}</CharTitle>
             <BackdropDiv key={`${prop}${productId}BackdropDiv`}>
               <div
@@ -96,9 +96,3 @@ ProductFactors.propTypes = {
 };
 
 export default ProductFactors;
-
-// charName
-// charDiv
-//   flex row
-// row 1 is grey bars + icon - whos location is dynamic
-// row 2 are words - need to be hard coded based on charName

@@ -1,5 +1,4 @@
 import $ from 'jquery';
-import config from '../../../../config';
 
 const fetchersObject = {
   metaGetter: (id) => new Promise((resolve, reject) => $.ajax({
@@ -16,10 +15,7 @@ const fetchersObject = {
   })),
   productGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`,
-    headers: {
-      Authorization: config.TOKEN,
-    },
+    url: `api/${id}`,
     success: (data) => resolve(data),
     error: (err) => reject(err),
   })),

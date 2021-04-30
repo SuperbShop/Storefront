@@ -176,7 +176,7 @@ class Distribution extends React.Component {
       `;
 
     return (
-      <div>
+      <div data-testid="distribution-1">
         <FlexboxDiv>
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5button">5 stars</StyledButton>

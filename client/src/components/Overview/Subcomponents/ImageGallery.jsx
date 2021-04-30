@@ -9,6 +9,9 @@ import {
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+// import Image from 'next/image';
+import Img from 'react-cool-img';
+import loadingImg from '../../../../dist/assets/loading.gif';
 import Modal from '../../SharedComponents/Modal';
 
 const PageBlockerModalDiv = styled.div`
@@ -127,7 +130,7 @@ const ImageGallery = ({ photos }) => {
               <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} aria-hidden="true">
                 {' '}
                 <FontAwesomeIcon icon={faExpand} className="expand" onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} />
-                {index === current && (<img className="image" src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product photo" />) }
+                {index === current && (<Img placeholder={loadingImg} className="image" src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product photo" />) }
               </div>
             ))}
           </section>

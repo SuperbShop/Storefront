@@ -2,17 +2,22 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import ReactDOM from 'react-dom';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import styled, { ThemeProvider } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import Overview from './components/Overview/Overview';
-import Questions from './components/Questions';
-import Ratings from './components/Ratings/Ratings';
-import AskQuestion from './components/Questions/Modal/AskQuestion';
-import AddAnswer from './components/Questions/Modal/AddAnswer';
-import ImageCarousel from './components/Questions/Modal/ImageCarousel';
+const Questions = React.lazy(() => import('./components/Questions'));
+const Ratings = React.lazy(() => import('./components/Ratings/Ratings'));
+const AskQuestion = React.lazy(() => import('./components/Questions/Modal/AskQuestion'));
+const AddAnswer = React.lazy(() => import('./components/Questions/Modal/AddAnswer'));
+const ImageCarousel = React.lazy(() => import('./components/Questions/Modal/ImageCarousel'));
+// import Questions from './components/Questions';
+// import Ratings from './components/Ratings/Ratings';
+// import AskQuestion from './components/Questions/Modal/AskQuestion';
+// import AddAnswer from './components/Questions/Modal/AddAnswer';
+// import ImageCarousel from './components/Questions/Modal/ImageCarousel';
 import Search from './components/SharedComponents/Search';
 import { lightTheme, darkTheme, GlobalStyles } from './components/SharedComponents/themes';
 
@@ -185,36 +190,43 @@ class App extends React.Component {
               -
               <a href="/"> New Product Highlight</a>
             </Message>
-            <AskQuestion
-              showAskQuestionModal={showAskQuestionModal}
-              toggleAskQuestionModal={this.toggleAskQuestionModal}
-              productId={productId}
-            />
-            <AddAnswer
-              showAddAnswerModal={showAddAnswerModal}
-              toggleAddAnswerModal={this.toggleAddAnswerModal}
-            />
-            <ImageCarousel
-              showImageCarouselModal={showImageCarouselModal}
-              toggleImageCarouselModal={this.toggleImageCarouselModal}
-            />
             <section className="overview module">
               <TrackedOverview
                 productId={productId}
               />
             </section>
-            <section className="questions module">
-              <TrackedQuestions
-                productId={productId}
-                product={product}
-                incrementClick={this.incrementProduct}
-                decrementClick={this.decrementProduct}
+            <Suspense fallback={<div>Loading...</div>}>
+              <AskQuestion
+                showAskQuestionModal={showAskQuestionModal}
                 toggleAskQuestionModal={this.toggleAskQuestionModal}
-                toggleAddAnswerModal={this.toggleAddAnswerModal}
+                productId={productId}
+              />
+              <AddAnswer
+              showAddAnswerModal={showAddAnswerModal}
+              toggleAddAnswerModal={this.toggleAddAnswerModal}
+            />
+              <ImageCarousel
+                showImageCarouselModal={showImageCarouselModal}
                 toggleImageCarouselModal={this.toggleImageCarouselModal}
               />
-            </section>
-            <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <section className="questions module">
+                <TrackedQuestions
+                  productId={productId}
+                  product={product}
+                  incrementClick={this.incrementProduct}
+                  decrementClick={this.decrementProduct}
+                  toggleAskQuestionModal={this.toggleAskQuestionModal}
+                  toggleAddAnswerModal={this.toggleAddAnswerModal}
+                  toggleImageCarouselModal={this.toggleImageCarouselModal}
+                />
+              </section>
+            </Suspense>
+            <Suspense fallback={<div>Loading...</div>}>
+              <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
+            </Suspense>
+            
           </StyledApp>
         </ThemeProvider>
       ) : null

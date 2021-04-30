@@ -17,7 +17,7 @@ const fetchProductStyles = (id, callback) => {
 };
 
 const fetchReviews = (id, cb) => {
-  axios.get(`${API_URL}/reviews?product_id=${id}`)
+  axios.get(`${API_URL}/reviews?product_id=${id}&count=50`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
@@ -40,6 +40,12 @@ const reportReview = (id, cb) => {
     .catch((err) => console.error(err));
 };
 
+const postReview = (content, cb) => {
+  axios.post(`${API_URL}/reviews`, content)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
 const fetchQandA = (id, cb) => {
   axios.get(`${API_URL}/qa/questions?product_id=${id}`)
     .then((data) => cb(data))
@@ -58,16 +64,12 @@ const reportQuestion = (question_id, cb) => {
 // Curtis POST request QuestionHelpful goes here
 // Curtis POST request AnswerHelpful goes here
 
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-// Sam POST request for [createReview] goes here
-
 module.exports.fetchProducts = fetchProducts;
 module.exports.fetchProductStyles = fetchProductStyles;
 module.exports.fetchReviews = fetchReviews;
 module.exports.upvoteReview = upvoteReview;
 module.exports.reportReview = reportReview;
+module.exports.postReview = postReview;
 module.exports.fetchReviewsMeta = fetchReviewsMeta;
 module.exports.fetchQandA = fetchQandA;
 module.exports.reportQuestion = reportQuestion;

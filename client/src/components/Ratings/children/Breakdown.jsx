@@ -77,7 +77,7 @@ const Breakdown = (props) => {
   };
 
   return (
-    <BreakdownSection>
+    <BreakdownSection data-testid="breakdown-1">
       <ScoreAndStarsContainer>
         <OverallScoreh2>
           {average}

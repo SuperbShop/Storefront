@@ -84,7 +84,7 @@ class SizeSelector extends React.Component {
     const { isListOpen, headerTitle } = this.state;
     const { skus } = this.props;
     return (
-      <DDWrapper>
+      <DDWrapper data-testid="sizeSelector">
         <DDHeader onClick={this.toggleList}>
           <DDTitle>{headerTitle}</DDTitle>
           {isListOpen

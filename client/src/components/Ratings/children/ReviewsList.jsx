@@ -166,7 +166,7 @@ class ReviewsList extends React.Component {
       : '';
 
     return (
-      <div id="tiles">
+      <div id="tiles" data-testid="reviewslist-1">
         <p>
           {sortedFilteredReviews.length}
           {' '}

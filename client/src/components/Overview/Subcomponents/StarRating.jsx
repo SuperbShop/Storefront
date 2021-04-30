@@ -60,7 +60,7 @@ class StarRating extends React.Component {
       $('.StarsInner').width(`${averagePercentage * 100}%`);
     }
     return (
-      <StarRatingWrapper>
+      <StarRatingWrapper data-testid="starRating">
         <StarsContainer>
           <StarsOuter>
             <FontAwesomeIcon key={1} icon={faStar} />

@@ -1,27 +1,21 @@
 import $ from 'jquery';
-import config from '../../../../config';
-
-const API_URL = 'http://localhost:3000';
 
 const fetchersObject = {
   metaGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `${API_URL}/api/${id}/reviews/meta`,
+    url: `api/${id}/reviews/meta`,
     success: (data) => resolve(data),
     error: (err) => reject(err),
   })),
   listGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `${API_URL}/api/${id}/reviews`,
+    url: `api/${id}/reviews`,
     success: (data) => resolve(data),
     error: (err) => reject(err),
   })),
   productGetter: (id) => new Promise((resolve, reject) => $.ajax({
     method: 'GET',
-    url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`,
-    headers: {
-      Authorization: config.TOKEN,
-    },
+    url: `api/${id}`,
     success: (data) => resolve(data),
     error: (err) => reject(err),
   })),

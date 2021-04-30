@@ -58,7 +58,11 @@ class ProductInfo extends React.Component {
           </FacebookShareButton>
         </SocialMediaButton>
         <SocialMediaButton>
-          <TwitterShareButton url={url} title="Check out this product" hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}>
+          <TwitterShareButton
+            url={url}
+            title="Check out this product"
+            hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}
+          >
             <TwitterIcon round size={30} />
           </TwitterShareButton>
         </SocialMediaButton>

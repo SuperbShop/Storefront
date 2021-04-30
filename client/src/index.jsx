@@ -13,12 +13,7 @@ const Ratings = React.lazy(() => import('./components/Ratings/Ratings'));
 const AskQuestion = React.lazy(() => import('./components/Questions/Modal/AskQuestion'));
 const AddAnswer = React.lazy(() => import('./components/Questions/Modal/AddAnswer'));
 const ImageCarousel = React.lazy(() => import('./components/Questions/Modal/ImageCarousel'));
-// import Questions from './components/Questions';
-// import Ratings from './components/Ratings/Ratings';
-// import AskQuestion from './components/Questions/Modal/AskQuestion';
-// import AddAnswer from './components/Questions/Modal/AddAnswer';
-// import ImageCarousel from './components/Questions/Modal/ImageCarousel';
-import Search from './components/SharedComponents/Search';
+const Search = React.lazy(() => import('./components/SharedComponents/Search'));
 import { lightTheme, darkTheme, GlobalStyles } from './components/SharedComponents/themes';
 
 const StyledApp = styled.div`
@@ -179,9 +174,22 @@ class App extends React.Component {
           <GlobalStyles />
           <StyledApp>
             <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="/"><Logo width="50%" src="https://res.cloudinary.com/willtrinh/image/upload/c_limit,w_180/v1619741251/81097bf6535ece52424ab0679d6f807c_vmncgu.png" alt="supreme-font" border="0" /></Navbar.Brand>
-              <Search />
-              <Toggle type="button" aria-label="Toggle Theme Button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
+              <Navbar.Brand href="/">
+                <Logo 
+                width="50%" 
+                src="https://res.cloudinary.com/willtrinh/image/upload/c_limit,w_180/v1619741251/81097bf6535ece52424ab0679d6f807c_vmncgu.png"
+                alt="supreme-font"
+                border="0" />
+                </Navbar.Brand>
+              <Suspense fallback={<div>Loading...</div>}><Search /></Suspense>
+              <Toggle 
+              type="button"
+              aria-label="Toggle Theme Button"
+              onClick={() => this.toggleTheme()}>
+                {theme === 'light'
+                ? <FontAwesomeIcon icon={faSun} color="white" />
+                : <FontAwesomeIcon icon={faMoon} color="white" />}
+                </Toggle>
             </Navbar>
             <Message>
               Free Shipping & Returns! - Sale / Discount

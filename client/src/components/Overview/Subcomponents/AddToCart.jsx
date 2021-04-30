@@ -179,9 +179,9 @@ class AddToCart extends React.Component {
           )}
 
           {liked
-            ? <LikeBtn onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
+            ? <LikeBtn aria-label="Like Button" onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
             : (
-              <LikeBtn onClick={this.handleLikeClicked}>
+              <LikeBtn aria-label="Like Button" onClick={this.handleLikeClicked}>
                 <FontAwesomeIcon icon={farHeart} />
               </LikeBtn>
             )}

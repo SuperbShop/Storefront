@@ -3,9 +3,10 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import ReactDOM from 'react-dom';
 import React from 'react';
-import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import styled, { ThemeProvider } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
@@ -14,16 +15,13 @@ import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
 import Search from './components/SharedComponents/Search';
 import { lightTheme, darkTheme, GlobalStyles } from './components/SharedComponents/themes';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
 
 const StyledApp = styled.div`
   color: ${(props) => props.theme.fontColor};
 `;
 
 const Logo = styled.img`
-  width: 90px;
-  height: auto;
+  margin-left: 20px;
 `;
 
 const Toggle = styled.button`
@@ -151,7 +149,15 @@ class App extends React.Component {
 
   toggleTheme() {
     const { theme } = this.state;
-    (theme === 'light' ? this.setState({ theme: 'dark' }) : this.setState({ theme: 'light' }));
+    if (theme === 'light') {
+      this.setState({
+        theme: 'dark',
+      });
+    } else {
+      this.setState({
+        theme: 'light',
+      });
+    }
   }
 
   render() {
@@ -169,9 +175,9 @@ class App extends React.Component {
           <GlobalStyles />
           <StyledApp>
             <Navbar bg="dark" variant="dark">
-              <Navbar.Brand href="/"><Logo src="https://fontmeme.com/permalink/210429/81097bf6535ece52424ab0679d6f807c.png" alt="supreme-font" border="0" /></Navbar.Brand>
+              <Navbar.Brand href="/"><Logo width="50%" src="https://res.cloudinary.com/willtrinh/image/upload/c_limit,w_180/v1619741251/81097bf6535ece52424ab0679d6f807c_vmncgu.png" alt="supreme-font" border="0" /></Navbar.Brand>
               <Search />
-              <Toggle type="button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
+              <Toggle type="button" aria-label="Toggle Theme Button" onClick={() => this.toggleTheme()}>{theme === 'light' ? <FontAwesomeIcon icon={faSun} color="white" /> : <FontAwesomeIcon icon={faMoon} color="white" />}</Toggle>
             </Navbar>
             <Message>
               Free Shipping & Returns! - Sale / Discount

@@ -97,6 +97,7 @@ class StyleSelector extends React.Component {
                       <SelectedImage
                         key={style.style_id}
                         src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                        alt="style thumbnail"
                       />
                       <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
                     </SelectedImageWrapper>
@@ -105,6 +106,7 @@ class StyleSelector extends React.Component {
                     <Thumbnail
                       key={style.style_id}
                       src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      alt="style thumbnail"
                       onClick={() => this.handleClick(style.style_id, style.name)}
                     />
                   )

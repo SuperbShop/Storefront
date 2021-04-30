@@ -3,6 +3,16 @@ html, body {
   scroll-behavior: smooth;
 }
 
+a {
+  color:#004c9e;
+  font-weight: 700;
+  text-decoration: underline;
+}
+a:hover {
+  color: #dc3545;
+  transition: .3s;
+}
+
 /* Modal */
 .modal {
   font-size: 12px;

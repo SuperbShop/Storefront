@@ -45,13 +45,16 @@ const calculateAvgRatings = (ratings) => {
   ratings.forEach((item) => {
     totalRating += item.rating;
   });
-  avgRating = (totalRating / totalCount);
+  avgRating = (totalRating / totalCount).toFixed(1);
   averagePercentage = avgRating / 5;
-  $('.StarsInner').width(`${averagePercentage * 100}%`);
+  return averagePercentage;
 };
 const StarRating = ({ ratings }) => {
   if (ratings.length > 0) {
-    calculateAvgRatings(ratings);
+    const percentage = calculateAvgRatings(ratings);
+    const innerStarWidth = {
+      width: `${percentage * 100}%`,
+    };
     return (
       <StarRatingWrapper data-testid="starRating">
         <StarsContainer>
@@ -61,7 +64,7 @@ const StarRating = ({ ratings }) => {
             <FontAwesomeIcon key={3} icon={faStar} />
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
-            <StarsInner className="StarsInner">
+            <StarsInner className="StarsInner" style={innerStarWidth}>
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />

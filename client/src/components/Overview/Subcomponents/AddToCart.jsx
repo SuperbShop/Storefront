@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
+import {
+  ToastContainer, toast, Zoom,
+} from 'react-toastify';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddToCartWrapper = styled.div`
   padding-top: 10px;
@@ -89,20 +93,11 @@ class AddToCart extends React.Component {
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
     this.handleLikeClicked = this.handleLikeClicked.bind(this);
-    this.handleClick = this.handleClick.bind(this);
   }
 
   handleLikeClicked() {
     const { liked } = this.state;
     this.setState({ liked: !liked });
-  }
-
-  handleClick() {
-    const { size, quantity } = this.state;
-    this.setState({
-      size,
-      quantity,
-    });
   }
 
   sizeChangeHandler() {
@@ -136,11 +131,13 @@ class AddToCart extends React.Component {
 
   render() {
     const {
-      liked, isSizeSelected, available, maxQuantity, headerQuantity, quantity,
+      liked, isSizeSelected, available, maxQuantity, headerQuantity, quantity, size,
     } = this.state;
-    const { skus } = this.props;
+    const { skus, productName, styleName } = this.props;
     const skusObj = Object.keys(skus).map((key) => skus[key]);
-
+    const notify = () => toast.success(
+      `${productName} (${styleName})\nSize: ${size} - qty: ${quantity} added to bag`,
+    );
     return (skusObj.length > 0 ? (
       <AddToCartWrapper data-testid="addToCart">
         <SelectorsWrapper>
@@ -171,10 +168,24 @@ class AddToCart extends React.Component {
         </SelectorsWrapper>
         <AddWrapper>
           {(isSizeSelected && quantity !== null) ? (
-            <AddBtn onClick={this.handleClick}>
-              Add To Bag
-              <FontAwesomeIcon icon={faPlus} />
-            </AddBtn>
+            <>
+              <AddBtn onClick={notify}>
+                Add To Bag
+                <FontAwesomeIcon icon={faPlus} />
+              </AddBtn>
+              <ToastContainer
+                transition={Zoom}
+                position="top-center"
+                autoClose={3000}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+              />
+            </>
           ) : (
             <AddBtn disabled>
               Add To Bag

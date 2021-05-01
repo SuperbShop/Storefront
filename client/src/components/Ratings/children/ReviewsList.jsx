@@ -43,6 +43,9 @@ const SortSelect = styled.select`
   cursor: pointer;
   border: none;
   text-decoration: underline;
+  &:hover {
+    color: rgb(128, 128, 128);
+  }
   `;
 
 class ReviewsList extends React.Component {

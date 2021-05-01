@@ -136,9 +136,9 @@ class Questions extends React.Component {
     const numOfTotalQs = QandA.results.length;
     return (
       <AppBody className="QuestionsAndAnswers">
-        <button type="submit" onClick={this.productIdUp}>+</button>
+        {/* <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
-        <button type="submit" onClick={this.productIdDown}>-</button>
+        <button type="submit" onClick={this.productIdDown}>-</button> */}
         <QandAHeader
           total={numOfTotalQs}
           QandA={QandA}

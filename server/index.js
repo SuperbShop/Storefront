@@ -63,7 +63,6 @@ app.put('/api/reviews/:id/report', (req, res) => {
   });
 });
 
-
 app.post('/api/reviews', (req, res) => {
   const content = req.body;
   api.postReview(content, () => {

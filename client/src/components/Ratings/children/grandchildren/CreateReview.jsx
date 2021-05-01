@@ -206,6 +206,8 @@ const SubmitWrapper = styled.div`
 
 const SubmitButton = styled.button`
   cursor: pointer;
+  width: 250px;
+  padding: 15px;
   background-color: white;
   border: 1px solid #838383;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
@@ -348,7 +350,7 @@ class CreateReview extends React.Component {
   }
 
   handleSubmit(event) {
-    event.preventDefault();
+    // event.preventDefault();
     const {
       rating,
       summary,
@@ -380,7 +382,9 @@ class CreateReview extends React.Component {
         this.handleExitButtonClick();
         fetchReviewsList();
       },
-      error: (err) => console.error(err),
+      error: () => {
+        console.error('Could not process review submission');
+      },
     });
   }
 

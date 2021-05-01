@@ -6,7 +6,6 @@ import QandABody from './QandABody';
 import config from '../../../../config';
 
 const AppBody = styled.div`
-  background-color: #fff;
   width: 100%;
   display: flex-box;
   justify-content: center;
@@ -47,6 +46,8 @@ class Questions extends React.Component {
     this.productIdDown = this.productIdDown.bind(this);
     this.displayMore = this.displayMore.bind(this);
     this.collapse = this.collapse.bind(this);
+    this.refresh = this.refresh.bind(this);
+    this.bindSubmit = this.bindSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -62,15 +63,29 @@ class Questions extends React.Component {
         Authorization: config.TOKEN,
       },
       success: (data) => {
+        console.log('getting new questions');
         this.setState({
           QandA: data,
         });
+        console.log("RESPONSE IS:",data);
       },
       error: (error) => { console.log('Youre a failure', error); },
     });
   }
 
+  bindSubmit() {
+    const { setSubmit } = this.props;
+    setSubmit(this.getProduct);
+  }
+
   collapse() {
+    this.setState({
+      questionsDisplayed: 2,
+    });
+  }
+
+  refresh(id) {
+    this.getProduct(id);
     this.setState({
       questionsDisplayed: 2,
     });
@@ -116,26 +131,31 @@ class Questions extends React.Component {
       toggleAskQuestionModal,
       toggleAddAnswerModal,
       toggleImageCarouselModal,
+      setFeaturedImages,
     } = this.props;
     const numOfTotalQs = QandA.results.length;
     return (
       <AppBody className="QuestionsAndAnswers">
-        {/* <button type="submit" onClick={this.productIdUp}>+</button>
+        <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
-        <button type="submit" onClick={this.productIdDown}>-</button> */}
+        <button type="submit" onClick={this.productIdDown}>-</button>
         <QandAHeader
           total={numOfTotalQs}
           QandA={QandA}
           toggleAskQuestionModal={toggleAskQuestionModal}
+          refresh={this.refresh}
         />
         <QandABody
           QandA={QandA}
           questionsDisplayed={questionsDisplayed}
           collapse={this.collapse}
           displayMore={this.displayMore}
+          refresh={this.refresh}
           toggleAskQuestionModal={toggleAskQuestionModal}
           toggleAddAnswerModal={toggleAddAnswerModal}
           toggleImageCarouselModal={toggleImageCarouselModal}
+          bindSubmit={this.bindSubmit}
+          setFeaturedImages={setFeaturedImages}
         />
       </AppBody>
     );

@@ -5,11 +5,11 @@ import AOptions from './AOptions';
 const AnswerBody = styled.div`
   background-color: rgb(220, 220, 220);
   border: 1px solid rgb(150, 150, 150);
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   border-radius: 10px 10px 0 10px;
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.55) 0px 3px 8px;
     transition: 0.5s;
@@ -25,6 +25,7 @@ const AnswerOptions = styled.div`
 `;
 
 const AnswerText = styled.div`
+  color: black;
   text-size: 1.5em;
   margin-left: 10px;
 `;
@@ -47,7 +48,13 @@ class ABody extends React.Component {
       reported: false,
     };
     this.report = this.report.bind(this);
+    this.launchImageModal = this.launchImageModal.bind(this);
+    this.sendIndex = this.sendIndex.bind(this);
   }
+
+  sendIndex(e) {
+    console.log(e.target.getAttribute('src'));
+  };
 
   report() {
     const { onClickReport } = this.props;
@@ -64,11 +71,31 @@ class ABody extends React.Component {
     });
   }
 
-  render() {
-    const { product_id, question_id } = this.props;
+  launchImageModal(e) {
     const {
-      id, body, answerer_name, date, helpfulness, photos,
-    } = this.props.answer;
+      setFeaturedImages,
+      toggleImageCarouselModal,
+      answer,
+    } = this.props;
+    const imgUrl = [e.target.getAttribute('src')];
+    setFeaturedImages(imgUrl);
+    toggleImageCarouselModal();
+  }
+
+  render() {
+    const {
+      answer,
+      product_id,
+      question_id,
+    } = this.props;
+    const {
+      id,
+      body,
+      answerer_name,
+      date,
+      helpfulness,
+      photos,
+    } = answer;
     return (
       <AnswerBody>
 
@@ -86,7 +113,7 @@ class ABody extends React.Component {
                   alt="description"
                   width="100"
                   height="100"
-                  onClick={this.props.toggleImageCarouselModal}
+                  onClick={this.launchImageModal}
                   key={`${photo}+${index}`}
                 />
               ))

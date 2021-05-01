@@ -34,8 +34,14 @@ const QandAFooter = (props) => {
     questionsDisplayed,
     displayMore,
     collapse,
-    toggleAskQuestionModal
+    toggleAskQuestionModal,
+    refresh,
+    bindSubmit,
   } = props;
+  const onSubmit = () => {
+    toggleAskQuestionModal(true);
+    bindSubmit();
+  };
   const moreToDisplay = questionsDisplayed < questions.length && questions.length > 2;
   const lessToDisplay = questionsDisplayed > 2 && questions.length <= questionsDisplayed;
 
@@ -54,7 +60,7 @@ const QandAFooter = (props) => {
           </Button>
         : null
       }
-      <Button type="submit" onClick={toggleAskQuestionModal}>
+      <Button type="submit" onClick={onSubmit}>
         + Add A Question
       </Button>
     </FooterWrapper>

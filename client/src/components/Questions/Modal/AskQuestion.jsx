@@ -90,6 +90,7 @@ const AskQuestion = (props) => {
     toggleAskQuestionModal,
     productId,
     productInfo,
+    submitFunc,
   } = props;
 
   const toggleModal = toggleAskQuestionModal;
@@ -126,10 +127,10 @@ const AskQuestion = (props) => {
     setEmail(value);
   };
 
-  const submitPostReq = (question) => {
+  const submitPostReq = (question, productId) => {
     axios.post('/api/qa/questions', question)
       .then(() => {
-        console.log('data');
+        submitFunc(productId.toString());
       })
       .catch((err) => console.error(err));
   };
@@ -140,7 +141,10 @@ const AskQuestion = (props) => {
       name,
       email,
     };
-    submitPostReq(question);
+    submitPostReq(question, productId);
+    setBody('');
+    setName('');
+    setEmail('');
     toggleModal();
   };
 

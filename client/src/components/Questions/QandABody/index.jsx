@@ -4,7 +4,6 @@ import QBody from './QBody';
 import QandAFooter from '../QandAFooter';
 
 const QuestionComponent = styled.div`
-  background-color: #fff;
   overflow-y: auto;
 `;
 const QuestionBodyComp = styled.div`
@@ -26,6 +25,9 @@ const QandABody = (props) => {
     toggleAskQuestionModal,
     collapse,
     displayMore,
+    refresh,
+    bindSubmit,
+    setFeaturedImages,
   } = props;
   const results = props.QandA.results;
   const { product_id } = props.QandA;
@@ -47,8 +49,11 @@ const QandABody = (props) => {
                 product_id={product_id}
                 question={result}
                 report={report}
+                refresh={refresh}
                 toggleAddAnswerModal={toggleAddAnswerModal}
                 toggleImageCarouselModal={toggleImageCarouselModal}
+                bindSubmit={bindSubmit}
+                setFeaturedImages={setFeaturedImages}
               />
             </div>
           ))}
@@ -63,6 +68,8 @@ const QandABody = (props) => {
             questionsDisplayed={questionsDisplayed}
             questions={questionArr}
             toggleAskQuestionModal={toggleAskQuestionModal}
+            refresh={refresh}
+            bindSubmit={bindSubmit}
           />
         )
         : null }

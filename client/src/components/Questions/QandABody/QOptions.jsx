@@ -23,7 +23,6 @@ const QButton = styled.button`
 const ReportButton = styled.button`
   background: none!important;
   border: none;
-  color: black;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -63,14 +62,13 @@ class QOptions extends React.Component {
   }
 
   onClickReport() {
-    this.setState({
-      reported: true,
-    });
     const { question_id } = this.props;
     const url = `/api/questions/${question_id}/report`;
     axios.put(url)
       .then(() => {
-        console.log('Question Reported');
+        this.setState({
+          reported: true,
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -78,8 +76,14 @@ class QOptions extends React.Component {
   }
 
   launchModal() {
-    const { toggleAddAnswerModal, question_id, question } = this.props;
+    const {
+      toggleAddAnswerModal,
+      question_id,
+      question,
+      bindSubmit
+    } = this.props;
     toggleAddAnswerModal(question_id, question);
+    bindSubmit();
   }
 
   render() {

@@ -33,6 +33,7 @@ class Ratings extends React.Component {
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
+    this.fetchReviewsList = this.fetchReviewsList.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +81,21 @@ class Ratings extends React.Component {
     }
   }
 
+  fetchReviewsList() {
+    const { product } = this.props;
+    fetch.listGetter(product)
+      .then((listInfo) => {
+        this.setState({
+          reviewsList: listInfo,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          fetchersError: true,
+        });
+      });
+  }
+
   render() {
     const {
       reviewsMeta,
@@ -110,6 +126,7 @@ class Ratings extends React.Component {
             </BreakdownWrapper>
             <ListWrapper>
               <ReviewsList
+                fetchReviewsList={this.fetchReviewsList}
                 productName={productName}
                 reviewsList={reviewsList}
                 filterState={filterState}

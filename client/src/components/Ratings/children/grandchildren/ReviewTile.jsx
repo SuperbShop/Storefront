@@ -161,12 +161,15 @@ class ReviewTile extends React.Component {
   }
 
   handleReportClick(event) {
-    const { review } = this.props;
+    const { review, fetchReviewsList } = this.props;
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
       url: `api/reviews/${review.review_id}/report`,
-      success: () => console.log('report worked'),
+      success: () => {
+        // GET request to retrieve the updated reviewsList
+        fetchReviewsList();
+      },
       error: (err) => console.error(err),
     });
   }
@@ -376,6 +379,7 @@ ReviewTile.propTypes = {
     reviewer_name: PropTypes.string,
     summary: PropTypes.string,
   }).isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default ReviewTile;

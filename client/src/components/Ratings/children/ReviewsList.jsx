@@ -108,6 +108,7 @@ class ReviewsList extends React.Component {
       reviewsMeta,
       filterState,
       productName,
+      fetchReviewsList,
     } = this.props;
 
     let sortedReviews;
@@ -180,7 +181,7 @@ class ReviewsList extends React.Component {
           {sortDropdown}
         </p>
         <TilesWrapper>
-          {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
+          {slicedReviews.map((item) => <ReviewTile key={item.review_id} fetchReviewsList={fetchReviewsList} review={item} />)}
         </TilesWrapper>
         {moreReviewsButton}
         <ListControlButton type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</ListControlButton>
@@ -217,6 +218,7 @@ ReviewsList.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   filterState: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;

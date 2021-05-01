@@ -145,12 +145,12 @@ class ReviewsList extends React.Component {
     } = this.props;
     const sortedReviews = this.sortReviews();
     const sortedFilteredReviews = this.filterReviews(sortedReviews);
-    const list = reviewsList.results;
+    const numberOfReviews = reviewsList.results.length;
     const slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
     let moreReviewsButton;
-    if (sliceBy < list.length) {
+    if (sliceBy < numberOfReviews) {
       moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>SEE MORE REVIEWS</ListControlButton>;
-    } else if (list.length >= 0 && list.length <= 2) {
+    } else if (numberOfReviews >= 0 && numberOfReviews <= 2) {
       moreReviewsButton = '';
     } else {
       moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;

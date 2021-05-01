@@ -13,14 +13,12 @@ const StyleWrapper = styled.div`
 
 const StyleText = styled.span`
   font-weight: 700;
-  color: #535353;
   text-transform: uppercase;
 `;
 const CurrentStyle = styled.span`
   padding-left: 5px;
   text-transform: uppercase;
   font-weight: 300;
-  color: #535353;
 `;
 
 const ThumbWrapper = styled.div`
@@ -84,7 +82,7 @@ class StyleSelector extends React.Component {
     };
 
     return (
-      <StyleWrapper>
+      <StyleWrapper data-testid="styleSelector">
         <Price price={original_price} sale={sale_price} />
         <StyleText>Style &gt;</StyleText>
         <CurrentStyle>{name}</CurrentStyle>
@@ -98,7 +96,9 @@ class StyleSelector extends React.Component {
                     <SelectedImageWrapper>
                       <SelectedImage
                         key={style.style_id}
-                        src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                        src={style.photos[0].thumbnail_url
+                          || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                        alt="style thumbnail"
                       />
                       <FontAwesomeIcon icon={farCheckCircle} style={checkmark} />
                     </SelectedImageWrapper>
@@ -106,7 +106,9 @@ class StyleSelector extends React.Component {
                   : (
                     <Thumbnail
                       key={style.style_id}
-                      src={style.photos[0].thumbnail_url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      src={style.photos[0].thumbnail_url
+                        || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                      alt="style thumbnail"
                       onClick={() => this.handleClick(style.style_id, style.name)}
                     />
                   )

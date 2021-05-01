@@ -6,7 +6,6 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import config from '../../../../../../config';
 import Modal from './Modal';
 
 const TileContainer = styled.div`
@@ -60,7 +59,7 @@ const HelpfulReportWrapper = styled.div`
 height: 10%;
 `;
 
-const ResponseTag = styled.p`
+const ResponseTag = styled.div`
   line-height: 2;
   background-color: lightgrey;
   `;
@@ -111,7 +110,8 @@ const StarsOuter = styled.div`
   `;
 
 const TileButton = styled.button`
-  color: #007BFF;
+  color: #004c9e;
+  font-weight: 700;
   border: none;
   background-color: white;
   text-decoration: underline;
@@ -119,6 +119,11 @@ const TileButton = styled.button`
     color: grey;
   };
   `;
+
+const Summary = styled.h2`
+  font-size: 24px;
+  font-weight: 600;
+`;
 
 const ShowMoreButtonStyle = {
   color: 'rgb(128, 128, 128)',
@@ -142,10 +147,7 @@ class ReviewTile extends React.Component {
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/helpful`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      url: `api/reviews/${review.review_id}/helpful`,
       success: () => {
         this.setState({
           helpful: review.helpfulness + 1,
@@ -160,10 +162,7 @@ class ReviewTile extends React.Component {
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/reviews/${review.review_id}/report`,
-      headers: {
-        Authorization: config.TOKEN,
-      },
+      url: `api/reviews/${review.review_id}/report`,
       success: () => console.log('report worked'),
       error: (err) => console.error(err),
     });
@@ -320,7 +319,7 @@ class ReviewTile extends React.Component {
 
         </StarsAuthorDateWrapper>
         <SummaryWrapper>
-          <h5>{review.summary}</h5>
+          <Summary>{review.summary}</Summary>
         </SummaryWrapper>
         <PhotosWrapper>
           {photoBody}

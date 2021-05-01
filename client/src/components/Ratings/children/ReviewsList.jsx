@@ -166,7 +166,7 @@ class ReviewsList extends React.Component {
       : '';
 
     return (
-      <div id="tiles">
+      <div id="tiles" data-testid="reviewslist-1">
         <p>
           {sortedFilteredReviews.length}
           {' '}
@@ -211,7 +211,7 @@ ReviewsList.propTypes = {
     }).isRequired,
     recommended: PropTypes.shape({}),
   }).isRequired,
-  filterState: PropTypes.arrayOf(PropTypes.number).isRequired,
+  filterState: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ReviewsList;

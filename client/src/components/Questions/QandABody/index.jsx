@@ -36,7 +36,7 @@ const QandABody = (props) => {
   && results.length > displayArr.length
   && displayArr.length > 0);
   const lengthTest2 = props.QandA.results.length > 0;
-  console.log('DISPLAYED: ',displayArr);
+  // console.log('DISPLAYED: ',displayArr);
   return (
     <>
       <QuestionComponent>

@@ -1,10 +1,10 @@
+/* eslint-disable no-alert */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
-
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
 
@@ -31,7 +31,6 @@ const AddBtn = styled.button`
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
-  color: #535353;
   padding: 15px;
   width: 75%;
   border: 1px solid #535353;
@@ -85,7 +84,6 @@ class AddToCart extends React.Component {
       available: null,
       quantity: null,
       isSizeSelected: false,
-      isQuantitySelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       liked: false,
     };
@@ -143,10 +141,14 @@ class AddToCart extends React.Component {
     const skusObj = Object.keys(skus).map((key) => skus[key]);
 
     return (skusObj.length > 0 ? (
-      <AddToCartWrapper>
+      <AddToCartWrapper data-testid="addToCart">
         <SelectorsWrapper>
           <LeftDiv>
-            <SizeSelector title={skusObj.includes('null') ? 'OUT OF STOCK' : 'SELECT SIZE'} skus={skus} resetThenSet={this.resetThenSet} />
+            <SizeSelector
+              title={skusObj.includes('null') ? 'OUT OF STOCK' : 'SELECT SIZE'}
+              skus={skus}
+              resetThenSet={this.resetThenSet}
+            />
           </LeftDiv>
           <RightDiv>
             {isSizeSelected ? (
@@ -180,9 +182,16 @@ class AddToCart extends React.Component {
           )}
 
           {liked
-            ? <LikeBtn onClick={this.handleLikeClicked}><FontAwesomeIcon color="red" icon={faHeart} /></LikeBtn>
+            ? (
+              <LikeBtn
+                aria-label="Like Button"
+                onClick={this.handleLikeClicked}
+              >
+                <FontAwesomeIcon color="red" icon={faHeart} />
+              </LikeBtn>
+            )
             : (
-              <LikeBtn onClick={this.handleLikeClicked}>
+              <LikeBtn aria-label="Like Button" onClick={this.handleLikeClicked}>
                 <FontAwesomeIcon icon={farHeart} />
               </LikeBtn>
             )}

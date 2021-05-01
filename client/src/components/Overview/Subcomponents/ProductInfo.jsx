@@ -44,7 +44,7 @@ class ProductInfo extends React.Component {
     const url = 'http://127.0.0.1:8080/';
 
     return (
-      <ProductWrapper>
+      <ProductWrapper data-testid="productInfo">
         {productRatings.length > 0
         && <StarRating ratings={productRatings} />}
 
@@ -58,7 +58,11 @@ class ProductInfo extends React.Component {
           </FacebookShareButton>
         </SocialMediaButton>
         <SocialMediaButton>
-          <TwitterShareButton url={url} title="Check out this product" hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}>
+          <TwitterShareButton
+            url={url}
+            title="Check out this product"
+            hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}
+          >
             <TwitterIcon round size={30} />
           </TwitterShareButton>
         </SocialMediaButton>

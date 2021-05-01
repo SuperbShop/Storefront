@@ -80,20 +80,58 @@ const ImageGallery = ({ photos }) => {
   };
 
   return (
-    <div className="gallery">
+    <div className="gallery" data-testid="gallery">
       { selectedImg ? (
         <div>
           <PageBlockerModalDiv>
             <Modal>
               <ImageModalDiv>
                 <section className="backdrop">
-                  {
-        current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-          }
-                  {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+                  {current === 0
+                    ? (
+                      <FontAwesomeIcon
+                        icon={faArrowLeft}
+                        className="left-arrow hidden"
+                        onClick={prevSlide}
+                      />
+                    )
+                    : (
+                      <FontAwesomeIcon
+                        icon={faArrowLeft}
+                        className="left-arrow"
+                        onClick={prevSlide}
+                      />
+                    )}
+                  {current === photos.length - 1
+                    ? (
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        className="right-arrow hidden"
+                        onClick={nextSlide}
+                      />
+                    )
+                    : (
+                      <FontAwesomeIcon
+                        icon={faArrowRight}
+                        className="right-arrow"
+                        onClick={nextSlide}
+                      />
+                    )}
                   {photos.map((photo, index) => (
-                    <div className={index === current ? 'modal-slide active' : 'modal-slide'} key={photo.thumbnail_url} aria-hidden="true">
-                      {index === current && (<FullsizeImage onClick={handleImageZoom} src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
+                    <div
+                      className={index === current ? 'modal-slide active' : 'modal-slide'}
+                      key={photo.thumbnail_url}
+                      aria-hidden="true"
+                    >
+                      {index === current
+                      && (
+                      <FullsizeImage
+                        onClick={handleImageZoom}
+                        src={photo.url
+                      || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                        alt="product photo"
+                      />
+                      ) }
                     </div>
                   ))}
                   <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
@@ -105,7 +143,7 @@ const ImageGallery = ({ photos }) => {
                       className={index === current ? 'dots active' : 'dots'}
                       key={photo.thumbnail_url}
                       src={photo.thumbnail_url}
-                      alt="product"
+                      alt="product photo"
                       onClick={() => handleClick(index)}
                       aria-hidden="true"
                     />
@@ -119,15 +157,60 @@ const ImageGallery = ({ photos }) => {
         <div>
           {' '}
           <section className="slider">
-            {
-      current === 0 ? <FontAwesomeIcon icon={faArrowLeft} className="left-arrow hidden" onClick={prevSlide} /> : <FontAwesomeIcon icon={faArrowLeft} className="left-arrow" onClick={prevSlide} />
-        }
-            {current === photos.length - 1 ? <FontAwesomeIcon icon={faArrowRight} className="right-arrow hidden" onClick={nextSlide} /> : <FontAwesomeIcon icon={faArrowRight} className="right-arrow" onClick={nextSlide} />}
+            {current === 0
+              ? (
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  className="left-arrow hidden"
+                  onClick={prevSlide}
+                />
+              )
+              : (
+                <FontAwesomeIcon
+                  icon={faArrowLeft}
+                  className="left-arrow"
+                  onClick={prevSlide}
+                />
+              )}
+            {current === photos.length - 1
+              ? (
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="right-arrow hidden"
+                  onClick={nextSlide}
+                />
+              )
+              : (
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className="right-arrow"
+                  onClick={nextSlide}
+                />
+              )}
             {photos.map((photo, index) => (
-              <div className={index === current ? 'slide active' : 'slide'} key={photo.thumbnail_url} onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} aria-hidden="true">
+              <div
+                className={index === current ? 'slide active' : 'slide'}
+                key={photo.thumbnail_url}
+                onClick={() => setSelectedImg(photo.url
+              || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')}
+                aria-hidden="true"
+              >
                 {' '}
-                <FontAwesomeIcon icon={faExpand} className="expand" onClick={() => setSelectedImg(photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')} />
-                {index === current && (<img className="image" src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'} alt="product" />) }
+                <FontAwesomeIcon
+                  icon={faExpand}
+                  className="expand"
+                  onClick={() => setSelectedImg(photo.url
+                || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg')}
+                />
+                {index === current
+                && (
+                <img
+                  className="image"
+                  src={photo.url
+                || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                  alt="product"
+                />
+                ) }
               </div>
             ))}
           </section>
@@ -138,8 +221,9 @@ const ImageGallery = ({ photos }) => {
                   <img
                     className={index === current ? 'thumbnail active' : 'thumbnail'}
                     key={photo.url}
-                    src={photo.url || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
-                    alt="product"
+                    src={photo.url
+                      || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
+                    alt="product photo"
                     onClick={() => handleClick(index)}
                     aria-hidden="true"
                   />

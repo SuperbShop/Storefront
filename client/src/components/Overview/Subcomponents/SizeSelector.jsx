@@ -93,11 +93,11 @@ class SizeSelector extends React.Component {
         </DDHeader>
         {isListOpen && (
         <DDList role="list">
-          {Object.values(skus).map((item) => (
-            item.quantity > 0
+          {Object.values(skus).map((sku) => (
+            sku.quantity > 0
                 && (
-                  <DDListItems type="button" key={item.size} onClick={() => this.selectItem(item)}>
-                    {item.size}
+                  <DDListItems type="button" key={sku.size} onClick={() => this.selectItem(sku)}>
+                    {sku.size}
                   </DDListItems>
                 )
           ))}

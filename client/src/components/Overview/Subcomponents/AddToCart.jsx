@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -90,7 +89,7 @@ class AddToCart extends React.Component {
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
     this.handleLikeClicked = this.handleLikeClicked.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleLikeClicked() {
@@ -98,10 +97,12 @@ class AddToCart extends React.Component {
     this.setState({ liked: !liked });
   }
 
-  handleSubmit() {
-    const { productName, styleName } = this.props;
+  handleClick() {
     const { size, quantity } = this.state;
-    alert(`${productName} (${styleName})\nSize: ${size} - qty: ${quantity}`);
+    this.setState({
+      size,
+      quantity,
+    });
   }
 
   sizeChangeHandler() {
@@ -170,7 +171,7 @@ class AddToCart extends React.Component {
         </SelectorsWrapper>
         <AddWrapper>
           {(isSizeSelected && quantity !== null) ? (
-            <AddBtn onClick={this.handleSubmit}>
+            <AddBtn onClick={this.handleClick}>
               Add To Bag
               <FontAwesomeIcon icon={faPlus} />
             </AddBtn>
@@ -206,14 +207,10 @@ class AddToCart extends React.Component {
 
 AddToCart.propTypes = {
   skus: PropTypes.shape({}),
-  productName: PropTypes.string,
-  styleName: PropTypes.string,
 };
 
 AddToCart.defaultProps = {
   skus: {},
-  productName: '',
-  styleName: '',
 };
 
 export default AddToCart;

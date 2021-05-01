@@ -195,6 +195,10 @@ const ExitButtonWrapper = styled.div`
 const ExitButton = styled.button`
   border: none;
   background-color: white;
+  font-size: 25px;
+  &:hover {
+    color: red;
+  }
   `;
 
 const SubmitWrapper = styled.div`
@@ -258,9 +262,9 @@ const StarsInner = styled.div`
 
 const updateBodyLengthDetails = (event) => {
   if (event.target.value.length < 50) {
-    $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+    document.getElementById('ReviewBodyLengthDetails').innerText = `Minumum required characters left: ${50 - event.target.value.length}`;
   } else {
-    $('#ReviewBodyLengthDetails').text('Minimum reached');
+    document.getElementById('ReviewBodyLengthDetails').innerText = 'Minimum reached';
   }
 };
 
@@ -308,13 +312,16 @@ class CreateReview extends React.Component {
     this.setState({
       rating: Number(event.target.id),
     });
-    $('#InnerStars').width(`${event.target.id * 20}%`);
-    $('#HiddenRatingInput').val(event.target.id);
-    $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
+    document.getElementById('InnerStars').style.width = `${event.target.id * 20}%`;
+    document.getElementById('HiddenRatingInput').value = event.target.id;
+    document.getElementById('RatingText').innerText = `Overall Rating:* ${ratingWords[event.target.id - 1]}`;
   }
 
   handleImageUpload() {
-    $('#UploadedImages').empty();
+    const imageThumbnails = document.getElementById('UploadedImages');
+    while (imageThumbnails.firstChild) {
+      imageThumbnails.removeChild(imageThumbnails.firstChild);
+    }
     const { files } = document.getElementById('ImgUpload');
     for (let i = 0; i < files.length; i += 1) {
       const img = new Image();
@@ -330,7 +337,7 @@ class CreateReview extends React.Component {
   handleCharRadioClick(event) {
     const { metaInfo } = this.props;
     const charId = metaInfo.characteristics[event.target.name].id;
-    $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
+    document.getElementById(`choice${event.target.name}`).innerText = `${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`;
     this.setState((prevState) => ({
       characteristics: {
         ...prevState.characteristics,
@@ -349,8 +356,7 @@ class CreateReview extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
-    // event.preventDefault();
+  handleSubmit() {
     const {
       rating,
       summary,

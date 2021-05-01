@@ -20,9 +20,6 @@ const ListWrapper = styled.div`
   width: 800px;
   `;
 
-const StyledTitle = styled.h2`
-  `;
-
 class Ratings extends React.Component {
   constructor(props) {
     super(props);
@@ -84,9 +81,9 @@ class Ratings extends React.Component {
     } = this.state;
     return (
       <>
-        <StyledTitle>
+        <h2>
           Ratings & Reviews
-        </StyledTitle>
+        </h2>
         { this.state && productId
           && (
           <ReviewsAndRatingsDiv>

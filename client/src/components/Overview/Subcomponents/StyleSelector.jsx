@@ -4,6 +4,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle as farCheckCircle } from '@fortawesome/free-regular-svg-icons';
+import PropTypes from 'prop-types';
 import Price from './Price';
 
 const StyleWrapper = styled.div`
@@ -122,5 +123,9 @@ class StyleSelector extends React.Component {
     );
   }
 }
-
+StyleSelector.propTypes = {
+  handleStyleChange: PropTypes.func.isRequired,
+  selectedStyle: PropTypes.shape({}).isRequired,
+  styles: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+};
 export default StyleSelector;

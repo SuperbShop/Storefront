@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -86,8 +85,6 @@ class AddToCart extends React.Component {
       isSizeSelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       liked: false,
-      name: null,
-      style: null,
     };
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
@@ -101,14 +98,11 @@ class AddToCart extends React.Component {
   }
 
   handleClick() {
-    const { productName, styleName } = this.props;
     const { size, quantity } = this.state;
     this.setState({
       size,
       quantity,
-      name: productName,
-      styleName: styleName,
-    })
+    });
   }
 
   sizeChangeHandler() {
@@ -213,14 +207,10 @@ class AddToCart extends React.Component {
 
 AddToCart.propTypes = {
   skus: PropTypes.shape({}),
-  productName: PropTypes.string,
-  styleName: PropTypes.string,
 };
 
 AddToCart.defaultProps = {
   skus: {},
-  productName: '',
-  styleName: '',
 };
 
 export default AddToCart;

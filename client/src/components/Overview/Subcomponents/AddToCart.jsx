@@ -7,6 +7,7 @@ import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
+import 'react-notifications-component/dist/theme.css';
 
 const AddToCartWrapper = styled.div`
   padding-top: 10px;
@@ -86,11 +87,13 @@ class AddToCart extends React.Component {
       isSizeSelected: false,
       maxQuantity: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
       liked: false,
+      name: null,
+      style: null,
     };
     this.resetThenSet = this.resetThenSet.bind(this);
     this.sizeChangeHandler = this.sizeChangeHandler.bind(this);
     this.handleLikeClicked = this.handleLikeClicked.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   handleLikeClicked() {
@@ -98,10 +101,15 @@ class AddToCart extends React.Component {
     this.setState({ liked: !liked });
   }
 
-  handleSubmit() {
+  handleClick() {
     const { productName, styleName } = this.props;
     const { size, quantity } = this.state;
-    alert(`${productName} (${styleName})\nSize: ${size} - qty: ${quantity}`);
+    this.setState({
+      size,
+      quantity,
+      name: productName,
+      styleName: styleName,
+    })
   }
 
   sizeChangeHandler() {
@@ -170,7 +178,7 @@ class AddToCart extends React.Component {
         </SelectorsWrapper>
         <AddWrapper>
           {(isSizeSelected && quantity !== null) ? (
-            <AddBtn onClick={this.handleSubmit}>
+            <AddBtn onClick={this.handleClick}>
               Add To Bag
               <FontAwesomeIcon icon={faPlus} />
             </AddBtn>

@@ -41,36 +41,16 @@ const ExtendedImageView = ({
   return (
     <>
       <section className="backdrop">
-        {current === 0
-          ? (
-            <FontAwesomeIcon
-              icon={faArrowLeft}
-              className="left-arrow hidden"
-              onClick={prevSlide}
-            />
-          )
-          : (
-            <FontAwesomeIcon
-              icon={faArrowLeft}
-              className="left-arrow"
-              onClick={prevSlide}
-            />
-          )}
-        {current === photos.length - 1
-          ? (
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className="right-arrow hidden"
-              onClick={nextSlide}
-            />
-          )
-          : (
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className="right-arrow"
-              onClick={nextSlide}
-            />
-          )}
+        <FontAwesomeIcon
+          icon={faArrowLeft}
+          className={current === 0 ? 'left-arrow hidden' : 'left-arrow'}
+          onClick={prevSlide}
+        />
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          className={current === photos.length - 1 ? 'right-arrow hidden' : 'right-arrow'}
+          onClick={nextSlide}
+        />
         {photos.map((photo, index) => (
           <div
             className={index === current ? 'modal-slide active' : 'modal-slide'}

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
-import $ from 'jquery';
 import PropTypes from 'prop-types';
 
 const StarRatingWrapper = styled.div`
@@ -19,13 +18,12 @@ const ReviewWrapper = styled.div`
 const StarsContainer = styled.div`
   display: flex;
   align-items: center;
-  `;
+`;
 
 const StarsOuter = styled.div`
   display: inline-block;
   position: relative;
   overflow-x: hidden;
-  width: 100%;
   color: rgb(128, 128, 128);
   `;
 
@@ -38,27 +36,24 @@ const StarsInner = styled.div`
   color: #EFC050;
   `;
 
-class StarRating extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+const calculateAvgRatings = (ratings) => {
+  let totalRating = 0;
+  let avgRating = 0;
+  let averagePercentage = 0;
+  const totalCount = ratings.length;
+  ratings.forEach((item) => {
+    totalRating += item.rating;
+  });
+  avgRating = (totalRating / totalCount).toFixed(1);
+  averagePercentage = avgRating / 5;
+  return averagePercentage;
+};
+const StarRating = ({ ratings }) => {
+  if (ratings.length > 0) {
+    const percentage = calculateAvgRatings(ratings);
+    const innerStarWidth = {
+      width: `${percentage * 100}%`,
     };
-  }
-
-  render() {
-    const { ratings } = this.props;
-    let totalRating = 0;
-    let avgRating = 0;
-    let averagePercentage = 0;
-    const totalCount = ratings.length;
-    if (totalCount > 0) {
-      ratings.forEach((item) => {
-        totalRating += item.rating;
-      });
-      avgRating = (totalRating / totalCount).toFixed(1);
-      averagePercentage = avgRating / 5;
-      $('.StarsInner').width(`${averagePercentage * 100}%`);
-    }
     return (
       <StarRatingWrapper data-testid="starRating">
         <StarsContainer>
@@ -68,7 +63,7 @@ class StarRating extends React.Component {
             <FontAwesomeIcon key={3} icon={faStar} />
             <FontAwesomeIcon key={4} icon={faStar} />
             <FontAwesomeIcon key={5} icon={faStar} />
-            <StarsInner className="StarsInner">
+            <StarsInner className="StarsInner" style={innerStarWidth}>
               <FontAwesomeIcon key={10} icon={solidStar} />
               <FontAwesomeIcon key={11} icon={solidStar} />
               <FontAwesomeIcon key={12} icon={solidStar} />
@@ -81,7 +76,7 @@ class StarRating extends React.Component {
           <a href="#Reviews">
             Read
             {' '}
-            {totalCount}
+            {ratings.length}
             {' '}
             reviews
           </a>
@@ -89,7 +84,8 @@ class StarRating extends React.Component {
       </StarRatingWrapper>
     );
   }
-}
+  return null;
+};
 
 StarRating.propTypes = {
   ratings: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

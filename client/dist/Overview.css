@@ -103,6 +103,7 @@
 }
 
 .expand {
+  z-index:11;
   position: absolute;
   right: 10px;
   font-size: 3rem;

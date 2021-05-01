@@ -73,8 +73,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23156',
-      productId: 23156,
+      product: '23149',
+      productId: 23149,
       productInfo: [],
       featuredQ: '',
       featuredImages: [],
@@ -217,7 +217,7 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      productId !== undefined ? (
+      productId !== undefined && (
         <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
           <GlobalStyles />
           <StyledApp>
@@ -294,7 +294,7 @@ class App extends React.Component {
 
           </StyledApp>
         </ThemeProvider>
-      ) : null
+      )
     );
   }
 }

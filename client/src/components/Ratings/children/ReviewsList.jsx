@@ -21,9 +21,11 @@ const PageBlockerModalDiv = styled.div`
   `;
 
 const ListControlButton = styled.button`
+  width: 250px;
   margin-top: 10px;
   margin-bottom: 25px;
   margin-left: 10px;
+  padding: 15px;
   cursor: pointer;
   background-color: white;
   border: 1px solid #838383;
@@ -41,6 +43,9 @@ const SortSelect = styled.select`
   cursor: pointer;
   border: none;
   text-decoration: underline;
+  &:hover {
+    color: rgb(128, 128, 128);
+  }
   `;
 
 class ReviewsList extends React.Component {
@@ -92,57 +97,63 @@ class ReviewsList extends React.Component {
     }));
   }
 
+  sortReviews() {
+    const { reviewsList } = this.props;
+    const { sortBy } = this.state;
+    const list = reviewsList.results;
+    if (reviewsList) {
+      if (sortBy === 'newest') {
+        return list.sort((a, b) => new Date(b.date) - new Date(a.date));
+      } if (sortBy === 'helpful') {
+        return list.sort((a, b) => b.helpfulness - a.helpfulness);
+      }
+      return list.sort((a, b) => {
+        if (a.helpfulness === b.helpfulness) {
+          return new Date(b.date) - new Date(a.date);
+        }
+        return b.helpfulness - a.helpfulness;
+      });
+    }
+  }
+
+  filterReviews(array) {
+    const { filterState } = this.props;
+    let sortedFilteredArray = [];
+    if (array.length > 0) {
+      for (let i = 0; i < array.length; i += 1) {
+        if (filterState.includes(array[i].rating.toString())) {
+          sortedFilteredArray.push(array[i]);
+        }
+      }
+    }
+    if (sortedFilteredArray.length === 0) {
+      sortedFilteredArray = array;
+    }
+    return sortedFilteredArray;
+  }
+
   render() {
     const {
-      sortBy,
       sliceBy,
       renderCreate,
     } = this.state;
     const {
       reviewsList,
       reviewsMeta,
-      filterState,
       productName,
+      fetchReviewsList,
     } = this.props;
-
-    let sortedReviews;
-    let sortedFilteredReviews = [];
-    let slicedReviews = [];
+    const sortedReviews = this.sortReviews();
+    const sortedFilteredReviews = this.filterReviews(sortedReviews);
+    const numberOfReviews = reviewsList.results.length;
+    const slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
     let moreReviewsButton;
-
-    if (reviewsList) {
-      const list = reviewsList.results;
-      if (sortBy === 'newest') {
-        sortedReviews = list.sort((a, b) => new Date(b.date) - new Date(a.date));
-      } else if (sortBy === 'helpful') {
-        sortedReviews = list.sort((a, b) => b.helpfulness - a.helpfulness);
-      } else {
-        sortedReviews = list.sort((a, b) => {
-          if (a.helpfulness === b.helpfulness) {
-            return new Date(b.date) - new Date(a.date);
-          }
-          return b.helpfulness - a.helpfulness;
-        });
-      }
-      if (sortedReviews.length > 0) {
-        for (let i = 0; i < sortedReviews.length; i += 1) {
-          if (filterState.includes(sortedReviews[i].rating.toString())) {
-            sortedFilteredReviews.push(sortedReviews[i]);
-          }
-        }
-      }
-      if (sortedFilteredReviews.length === 0) {
-        sortedFilteredReviews = sortedReviews;
-      }
-
-      slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
-      if (sliceBy < list.length) {
-        moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
-      } else if (list.length >= 0 && list.length <= 2) {
-        moreReviewsButton = '';
-      } else {
-        moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
-      }
+    if (sliceBy < numberOfReviews) {
+      moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>SEE MORE REVIEWS</ListControlButton>;
+    } else if (numberOfReviews >= 0 && numberOfReviews <= 2) {
+      moreReviewsButton = '';
+    } else {
+      moreReviewsButton = <ListControlButton type="button" onClick={this.showLessReviews}>REVERT TO NORMAL VIEW</ListControlButton>;
     }
 
     const sortDropdown = (
@@ -156,6 +167,7 @@ class ReviewsList extends React.Component {
       <PageBlockerModalDiv>
         <Modal>
           <CreateReview
+            fetchReviewsList={fetchReviewsList}
             metaInfo={reviewsMeta}
             toggleCreateReviewModal={this.toggleCreateReviewModal}
             productName={productName}
@@ -175,7 +187,13 @@ class ReviewsList extends React.Component {
           {sortDropdown}
         </p>
         <TilesWrapper>
-          {slicedReviews.map((item) => <ReviewTile key={item.review_id} review={item} />)}
+          {slicedReviews.map((item) => (
+            <ReviewTile
+              key={item.review_id}
+              fetchReviewsList={fetchReviewsList}
+              review={item}
+            />
+          ))}
         </TilesWrapper>
         {moreReviewsButton}
         <ListControlButton type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</ListControlButton>
@@ -212,6 +230,7 @@ ReviewsList.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   filterState: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;

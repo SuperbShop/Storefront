@@ -115,6 +115,9 @@ const TileButton = styled.button`
   border: none;
   background-color: white;
   text-decoration: underline;
+  &:hover {
+    color: red;
+  };
   &:disabled {
     color: grey;
   };
@@ -158,12 +161,14 @@ class ReviewTile extends React.Component {
   }
 
   handleReportClick(event) {
-    const { review } = this.props;
+    const { review, fetchReviewsList } = this.props;
     event.target.disabled = true;
     $.ajax({
       method: 'PUT',
       url: `api/reviews/${review.review_id}/report`,
-      success: () => console.log('report worked'),
+      success: () => {
+        fetchReviewsList();
+      },
       error: (err) => console.error(err),
     });
   }
@@ -373,6 +378,7 @@ ReviewTile.propTypes = {
     reviewer_name: PropTypes.string,
     summary: PropTypes.string,
   }).isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default ReviewTile;

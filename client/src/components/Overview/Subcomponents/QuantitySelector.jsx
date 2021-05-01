@@ -3,9 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp } from '@fortawesome/free-solid-svg-icons';
-
-const DDWrapper = styled.div`
-`;
+import PropTypes from 'prop-types';
 
 const DDHeader = styled.button`
   display: flex;
@@ -95,7 +93,7 @@ class QuantitySelector extends React.Component {
     const { quantity, available } = this.props;
 
     return (
-      <DDWrapper data-testid="quantitySelector">
+      <div data-testid="quantitySelector">
         <DDHeader onClick={this.toggleList}>
           <DDTitle>{headerTitle}</DDTitle>
           {isListOpen
@@ -115,8 +113,18 @@ class QuantitySelector extends React.Component {
         </DDList>
         )}
 
-      </DDWrapper>
+      </div>
     );
   }
 }
+
+QuantitySelector.propTypes = {
+  resetThenSet: PropTypes.func.isRequired,
+  available: PropTypes.number,
+};
+
+QuantitySelector.defaultProps = {
+  available: null,
+};
+
 export default QuantitySelector;

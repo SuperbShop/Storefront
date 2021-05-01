@@ -7,7 +7,6 @@ import { faPlus, faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as farHeart } from '@fortawesome/free-regular-svg-icons';
 import SizeSelector from './SizeSelector';
 import QuantitySelector from './QuantitySelector';
-import 'react-notifications-component/dist/theme.css';
 
 const AddToCartWrapper = styled.div`
   padding-top: 10px;

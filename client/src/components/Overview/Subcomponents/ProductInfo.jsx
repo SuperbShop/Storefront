@@ -31,51 +31,42 @@ const SocialMediaButton = styled.span`
   padding-right: 10px;
 `;
 
-class ProductInfo extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    };
-  }
+const ProductInfo = ({ currentProduct, productRatings }) => {
+  const { name, category } = currentProduct;
+  const url = 'http://127.0.0.1:8080/';
 
-  render() {
-    const { currentProduct, productRatings } = this.props;
-    const { name, category } = currentProduct;
-    const url = 'http://127.0.0.1:8080/';
-
-    return (
-      <ProductWrapper data-testid="productInfo">
-        {productRatings.length > 0
+  return (
+    <ProductWrapper data-testid="productInfo">
+      {productRatings.length > 0
         && <StarRating ratings={productRatings} />}
 
-        <Category>{category}</Category>
+      <Category>{category}</Category>
 
-        <Title>{name}</Title>
+      <Title>{name}</Title>
 
-        <SocialMediaButton>
-          <FacebookShareButton url={url} quote="cool product!" hashtag="ootd">
-            <FacebookIcon round size={30} />
-          </FacebookShareButton>
-        </SocialMediaButton>
-        <SocialMediaButton>
-          <TwitterShareButton
-            url={url}
-            title="Check out this product"
-            hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}
-          >
-            <TwitterIcon round size={30} />
-          </TwitterShareButton>
-        </SocialMediaButton>
-        <SocialMediaButton>
-          <PinterestShareButton url={url} media={url} description="check out this product!">
-            <PinterestIcon round size={30} />
-          </PinterestShareButton>
-        </SocialMediaButton>
+      <SocialMediaButton>
+        <FacebookShareButton url={url} quote="cool product!" hashtag="ootd">
+          <FacebookIcon round size={30} />
+        </FacebookShareButton>
+      </SocialMediaButton>
+      <SocialMediaButton>
+        <TwitterShareButton
+          url={url}
+          title="Check out this product"
+          hashtags={['FEC', 'fashionista', 'ootd', 'fashionstyle']}
+        >
+          <TwitterIcon round size={30} />
+        </TwitterShareButton>
+      </SocialMediaButton>
+      <SocialMediaButton>
+        <PinterestShareButton url={url} media={url} description="check out this product!">
+          <PinterestIcon round size={30} />
+        </PinterestShareButton>
+      </SocialMediaButton>
 
-      </ProductWrapper>
-    );
-  }
-}
+    </ProductWrapper>
+  );
+};
 
 ProductInfo.propTypes = {
   currentProduct: PropTypes.shape({}).isRequired,

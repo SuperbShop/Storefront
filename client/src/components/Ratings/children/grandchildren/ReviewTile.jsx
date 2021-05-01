@@ -167,7 +167,6 @@ class ReviewTile extends React.Component {
       method: 'PUT',
       url: `api/reviews/${review.review_id}/report`,
       success: () => {
-        // GET request to retrieve the updated reviewsList
         fetchReviewsList();
       },
       error: (err) => console.error(err),

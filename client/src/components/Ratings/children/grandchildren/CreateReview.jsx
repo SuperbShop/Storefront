@@ -341,14 +341,14 @@ class CreateReview extends React.Component {
     }));
   }
 
-  handleRecommendChange(event) {
-    this.setState({
-      recommend: (event.target.value === 'true'),
-    });
-  }
-
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'recommend') {
+      this.setState({
+        recommend: (event.target.value === 'true'),
+      });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
   }
 
   handleSubmit() {
@@ -438,9 +438,9 @@ class CreateReview extends React.Component {
                   Do you recommend this product?*
                   <div>
                     <label htmlFor="true">Yes</label>
-                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="true" required="required" name="recommend" value="true" />
+                    <input type="radio" className="RecommendRadio" onChange={this.handleInputChange} id="true" required="required" name="recommend" value="true" />
                     <label htmlFor="false">No</label>
-                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="false" name="recommend" value="false" />
+                    <input type="radio" className="RecommendRadio" onChange={this.handleInputChange} id="false" name="recommend" value="false" />
                   </div>
                 </RecommendWrapper>
               </RatingAndRecommendWrapper>

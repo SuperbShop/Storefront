@@ -33,7 +33,7 @@ const SocialMediaButton = styled.span`
 
 const ProductInfo = ({ currentProduct, productRatings }) => {
   const { name, category } = currentProduct;
-  const url = 'http://127.0.0.1:8080/';
+  const url = window.location.href;
 
   return (
     <ProductWrapper data-testid="productInfo">

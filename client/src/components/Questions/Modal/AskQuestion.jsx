@@ -1,4 +1,8 @@
-import React, { useRef, useEffect, useCallback } from 'react';
+import React, {
+  useRef, useEffect, useCallback, useState,
+} from 'react';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import Modal from './index';
@@ -23,7 +27,7 @@ const ModalWrapper = styled.div`
   transform: translate(-50%, -50%);
   margin: 0 auto;
   width: 900px;
-  height: 600px;
+  height: 650px;
   opacity: 100%;
   background: white;
   color: black;
@@ -81,7 +85,13 @@ const FormHeader = styled.div`
 `;
 
 const AskQuestion = (props) => {
-  const { showAskQuestionModal, toggleAskQuestionModal, productId } = props;
+  const {
+    showAskQuestionModal,
+    toggleAskQuestionModal,
+    productId,
+    productInfo,
+  } = props;
+
   const toggleModal = toggleAskQuestionModal;
   const modalRef = useRef();
 
@@ -95,11 +105,51 @@ const AskQuestion = (props) => {
       toggleModal();
     }
   }, [showAskQuestionModal, toggleModal]);
-
   useEffect(() => {
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
+
+  const [body, setBody] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const bodyChangeHandler = (event) => {
+    const { value } = event.target;
+    setBody(value);
+  };
+  const nameChangeHandler = (event) => {
+    const { value } = event.target;
+    setName(value);
+  };
+  const emailChangeHandler = (event) => {
+    const { value } = event.target;
+    setEmail(value);
+  };
+
+  const submitPostReq = (question) => {
+    axios.post('/api/qa/questions', question)
+      .then(() => {
+        console.log('data');
+      })
+      .catch((err) => console.error(err));
+  };
+  const submitQuestion = () => {
+    const question = {
+      product_id: productId,
+      body,
+      name,
+      email,
+    };
+    submitPostReq(question);
+    toggleModal();
+  };
+
+  let productName;
+  if (productInfo.data) {
+    productName = productInfo.data.name;
+  } else {
+    productName = 'product';
+  }
 
   return (
     <>
@@ -107,28 +157,49 @@ const AskQuestion = (props) => {
         ? (
           <PageBlockerModalDiv ref={modalRef} onClick={closeModal}>
             <Modal>
-              <ModalWrapper showAskQuestionModal={showAskQuestionModal} onClick={closeModal}>
+              <ModalWrapper
+                showAskQuestionModal={showAskQuestionModal}
+              >
                 <ModalContent>
                   <CloseModalButton
                     aria-label="Close modal"
-                    ref={modalRef}
                     onClick={toggleModal}
                   />
                   <FormHeader>
                     <h1>Ask Your Question</h1>
-                    <h3>
-                      About the `currentProduct`
-                      {/* currentProduct from props goes here */}
-                    </h3>
+                    <h3>About the {productName}</h3>
                   </FormHeader>
                   <div>Your Question: </div>
-                  <FormInput type="form" />
+                  <FormInput
+                    type="form"
+                    name="body"
+                    value={body}
+                    onChange={bodyChangeHandler}
+                  />
                   <div>What is Your Nickname: </div>
-                  <FormInput type="form" placeholder="Example: jackson11!" />
+                  <FormInput
+                    type="form"
+                    name="name"
+                    placeholder="Example: jackson11!"
+                    value={name}
+                    onChange={nameChangeHandler}
+                  />
                   <div>Your Email: </div>
-                  <FormInput type="form" placeholder="Why did you like the product or not?" />
+                  <FormInput
+                    type="form"
+                    name="email"
+                    placeholder="Why did you like the product or not?"
+                    value={email}
+                    onChange={emailChangeHandler}
+                  />
                   <p>For authentication reasons, you will not be emailed</p>
-                  <SubmitButton type="submit" onClick={toggleModal}>Submit</SubmitButton>
+                  <SubmitButton
+                    type="submit"
+                    name="email"
+                    onClick={submitQuestion}
+                  >
+                    Submit
+                  </SubmitButton>
                 </ModalContent>
               </ModalWrapper>
             </Modal>
@@ -137,6 +208,20 @@ const AskQuestion = (props) => {
         : null }
     </>
   );
+};
+
+AskQuestion.propTypes = {
+  // toggleAskQuestionModal: PropTypes.function.isRequired,
+  showAskQuestionModal: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]).isRequired,
+  productId: PropTypes.number.isRequired,
+  // productInfo: PropTypes.shape({
+  //   congfig: PropTypes.shape({
+
+  //   })
+  // }).isRequired,
 };
 
 export default AskQuestion;

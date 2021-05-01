@@ -1,7 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/*
+  eslint-disable react/jsx-props-no-spreading
+  eslint-disable jsx-a11y/no-static-element-interactions
+  eslint-disable jsx-a11y/click-events-have-key-events
+*/
 import ReactDOM from 'react-dom';
+
+import axios from 'axios';
 import React, { Suspense } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import styled, { ThemeProvider } from 'styled-components';
@@ -47,16 +51,11 @@ const Message = styled.h1`
   }
 `;
 
-// store clicks object
 window.clicks = [];
 
 const time = new Date();
 
 const clickTracker = (WrappedComponent, module) => (props) => (
-  // For each click on the page, capture:
-  // Element of the page which was clicked
-  // Time of click
-  // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
     window.clicks.push(info);
@@ -76,6 +75,8 @@ class App extends React.Component {
     this.state = {
       product: '23149',
       productId: 23149,
+      productInfo: [],
+      featuredQ: '',
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
@@ -89,22 +90,52 @@ class App extends React.Component {
     this.toggleTheme = this.toggleTheme.bind(this);
   }
 
+  componentDidMount() {
+    const { productId } = this.state;
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${productId}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   incrementProduct() {
     const { productId } = this.state;
     const id = (productId + 1).toString();
-    this.setState({
-      product: id,
-      productId: parseInt(id),
-    });
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+          product: id,
+          productId: parseInt(id),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   decrementProduct() {
     const { productId } = this.state;
     const id = (productId - 1).toString();
-    this.setState({
-      product: id,
-      productId: parseInt(id),
-    });
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+          product: id,
+          productId: parseInt(id),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   toggleAskQuestionModal(input) {
@@ -120,15 +151,17 @@ class App extends React.Component {
     }
   }
 
-  toggleAddAnswerModal(input) {
+  toggleAddAnswerModal(input, question) {
     const { showAddAnswerModal } = this.state;
     if (!input) {
       this.setState({
         showAddAnswerModal: input,
+        featuredQ: question,
       });
     } else {
       this.setState({
         showAddAnswerModal: !showAddAnswerModal,
+        featuredQ: question,
       });
     }
   }
@@ -163,9 +196,12 @@ class App extends React.Component {
     const {
       product,
       productId,
+      productInfo,
       showAskQuestionModal,
       showImageCarouselModal,
-      showAddAnswerModal, theme,
+      featuredQ,
+      showAddAnswerModal,
+      theme,
     } = this.state;
 
     return (
@@ -207,12 +243,16 @@ class App extends React.Component {
               <AskQuestion
                 showAskQuestionModal={showAskQuestionModal}
                 toggleAskQuestionModal={this.toggleAskQuestionModal}
+                productInfo={productInfo}
                 productId={productId}
               />
               <AddAnswer
-              showAddAnswerModal={showAddAnswerModal}
-              toggleAddAnswerModal={this.toggleAddAnswerModal}
-            />
+                showAddAnswerModal={showAddAnswerModal}
+                toggleAddAnswerModal={this.toggleAddAnswerModal}
+                productInfo={productInfo}
+                productId={productId}
+                featuredQ={featuredQ}
+              />
               <ImageCarousel
                 showImageCarouselModal={showImageCarouselModal}
                 toggleImageCarouselModal={this.toggleImageCarouselModal}

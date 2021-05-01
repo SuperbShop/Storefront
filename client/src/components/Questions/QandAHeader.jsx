@@ -18,6 +18,11 @@ const SearchBar = styled.input`
   width: 100%;
   height: 50px;
   font-size: 25px;
+  box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 3px 8px;
+    transition: 0.5s;
+  }
 `;
 
 const ButtonsWrapper = styled.div`

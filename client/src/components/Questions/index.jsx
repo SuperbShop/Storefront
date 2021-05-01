@@ -57,7 +57,7 @@ class Questions extends React.Component {
   getProduct(id) {
     $.ajax({
       method: 'GET',
-      url: `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/qa/questions?product_id=${id}`,
+      url: `/api/${id}/questions`,
       headers: {
         Authorization: config.TOKEN,
       },
@@ -120,11 +120,9 @@ class Questions extends React.Component {
     const numOfTotalQs = QandA.results.length;
     return (
       <AppBody className="QuestionsAndAnswers">
-
-        <button type="submit" onClick={this.productIdUp}>+</button>
+        {/* <button type="submit" onClick={this.productIdUp}>+</button>
         <span>{QandA.product_id}</span>
-        <button type="submit" onClick={this.productIdDown}>-</button>
-
+        <button type="submit" onClick={this.productIdDown}>-</button> */}
         <QandAHeader
           total={numOfTotalQs}
           QandA={QandA}

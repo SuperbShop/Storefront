@@ -28,6 +28,7 @@ const QandABody = (props) => {
     displayMore,
   } = props;
   const results = props.QandA.results;
+  const { product_id } = props.QandA;
 
   const questionArr = sortByQHelpful(results);
   const displayArr = questionArr.slice(0, questionsDisplayed);
@@ -43,6 +44,7 @@ const QandABody = (props) => {
           { displayArr.map((result) => (
             <div key={'question '+result.question_id}>
               <QBody
+                product_id={product_id}
                 question={result}
                 report={report}
                 toggleAddAnswerModal={toggleAddAnswerModal}

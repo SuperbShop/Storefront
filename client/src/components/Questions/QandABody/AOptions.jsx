@@ -1,13 +1,13 @@
 import React from 'react';
 import moment from 'moment';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const OptionsContainer = styled.div`
   display: flex-grid;
   font-size: 0.7em;
   position: relative;
   grid-template-columns: 1fr 1fr;
-
 `;
 
 const AOptionItem = styled.div`
@@ -15,7 +15,6 @@ const AOptionItem = styled.div`
   background: none!important;
   border: none;
   color: black;
-  cursor: pointer;
   margin-right: 10px;
 `;
 
@@ -24,6 +23,9 @@ const AOptionButton = styled.button`
   border: none;
   color: black;
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 class AOptions extends React.Component {
@@ -31,50 +33,55 @@ class AOptions extends React.Component {
     super(props);
     this.state = {
       helpful: false,
-      reported: false,
+      helpfulClicked: false,
     };
     this.onClickHelpful = this.onClickHelpful.bind(this);
-    this.onClickReport = this.onClickReport.bind(this);
   }
 
   componentWillUnmount() {
     this.setState({
       helpful: false,
-      reported: false,
     });
   }
 
   onClickHelpful() {
+    const { answer_id } = this.props;
+    const { helpful, helpfulClicked } = this.state;
+    const url = `/api/answers/${answer_id}/helpful`;
+    if (!helpful && !helpfulClicked) {
+      axios.put(url)
+        .then(() => {
+          console.log(answer_id, ' Marked Helpful');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
     this.setState({
-      helpful: !this.state.helpful,
+      helpful: !helpful,
+      helpfulClicked: true,
     });
-  }
-
-  onClickReport() {
-    this.setState({
-      reported: true,
-    });
-    this.props.onClickReport();
   }
 
   render() {
     const { answerer, date, helpfulness } = this.props;
-    const isHelpful = this.state.helpful;
+    const { helpful } = this.state;
     const helpfulClicked = helpfulness + 1;
     return (
       <OptionsContainer className="options container">
-        <AOptionItem className="option username">{answerer}</AOptionItem>
-        <AOptionItem className="option date">{moment(date, 'YYYY-MM--DD HH:mm:ss').format('MMMM Do YYYY')}</AOptionItem>
+        <AOptionItem className="option username">
+          {answerer}
+        </AOptionItem>
+        <AOptionItem className="option date">
+          {moment(date, 'YYYY-MM--DD HH:mm:ss').format('MMMM Do YYYY')}
+        </AOptionItem>
         <AOptionItem className="option helpful">
           <AOptionButton type="submit" onClick={this.onClickHelpful}>
-            { isHelpful
+            { helpful
               ? (<div>Helpful? Yes (<strong>{helpfulClicked}</strong>)</div>)
               : (<div>Helpful? Yes ({helpfulness})</div>)}
           </AOptionButton>
         </AOptionItem>
-        { !this.state.reported
-          ? <AOptionButton className="option report" onClick={this.onClickReport}>Report</AOptionButton>
-          : <span>Reported</span> }
       </OptionsContainer>
     );
   }

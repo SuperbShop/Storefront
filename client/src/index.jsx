@@ -74,7 +74,7 @@ class App extends React.Component {
     super();
     this.state = {
       product: '23149',
-      productId: 23149,
+      productId: 23178,
       productInfo: [],
       featuredQ: '',
       showImageCarouselModal: false,
@@ -211,14 +211,14 @@ class App extends React.Component {
           <StyledApp>
             <Navbar bg="dark" variant="dark">
               <Navbar.Brand href="/">
-                <Logo 
-                width="50%" 
+                <Logo
+                width="50%"
                 src="https://res.cloudinary.com/willtrinh/image/upload/c_limit,w_180/v1619741251/81097bf6535ece52424ab0679d6f807c_vmncgu.png"
                 alt="supreme-font"
                 border="0" />
                 </Navbar.Brand>
               <Suspense fallback={<div>Loading...</div>}><Search /></Suspense>
-              <Toggle 
+              <Toggle
               type="button"
               aria-label="Toggle Theme Button"
               onClick={() => this.toggleTheme()}>
@@ -274,7 +274,7 @@ class App extends React.Component {
             <Suspense fallback={<div>Loading...</div>}>
               <section className="ratings module" id="Reviews"><TrackedRatings product={productId} /></section>
             </Suspense>
-            
+
           </StyledApp>
         </ThemeProvider>
       ) : null

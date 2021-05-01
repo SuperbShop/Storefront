@@ -115,6 +115,9 @@ const TileButton = styled.button`
   border: none;
   background-color: white;
   text-decoration: underline;
+  &:hover {
+    color: red;
+  };
   &:disabled {
     color: grey;
   };

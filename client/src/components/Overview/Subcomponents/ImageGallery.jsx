@@ -4,12 +4,13 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faArrowLeft, faArrowRight, faExpand, faCircle, faTimes,
+  faArrowLeft, faArrowRight, faExpand,
 } from '@fortawesome/free-solid-svg-icons';
 import Slider from 'react-slick';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Modal from '../../SharedComponents/Modal';
+import ExtendedImageView from './ExtendedImageView';
 
 const PageBlockerModalDiv = styled.div`
   position: fixed;
@@ -34,13 +35,6 @@ const ImageModalDiv = styled.div`
   z-index: 2;
 `;
 
-const FullsizeImage = styled.img`
-  object-fit: cover;
-  width: 100%;
-  height: 80vh;
-  cursor: pointer;
-`;
-
 const ImageGallery = ({ photos }) => {
   const [current, setCurrent] = useState(0);
   const [thumbnail, setThumbnail] = useState(0);
@@ -51,11 +45,6 @@ const ImageGallery = ({ photos }) => {
       setCurrent(current + 1);
       setThumbnail(thumbnail + 1);
     }
-  };
-
-  const handleImageZoom = () => {
-    const element = document.getElementsByClassName('backdrop')[0];
-    element.classList.toggle('zoomed-img');
   };
 
   const handleClick = (index) => {
@@ -86,69 +75,15 @@ const ImageGallery = ({ photos }) => {
           <PageBlockerModalDiv>
             <Modal>
               <ImageModalDiv>
-                <section className="backdrop">
-                  {current === 0
-                    ? (
-                      <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        className="left-arrow hidden"
-                        onClick={prevSlide}
-                      />
-                    )
-                    : (
-                      <FontAwesomeIcon
-                        icon={faArrowLeft}
-                        className="left-arrow"
-                        onClick={prevSlide}
-                      />
-                    )}
-                  {current === photos.length - 1
-                    ? (
-                      <FontAwesomeIcon
-                        icon={faArrowRight}
-                        className="right-arrow hidden"
-                        onClick={nextSlide}
-                      />
-                    )
-                    : (
-                      <FontAwesomeIcon
-                        icon={faArrowRight}
-                        className="right-arrow"
-                        onClick={nextSlide}
-                      />
-                    )}
-                  {photos.map((photo, index) => (
-                    <div
-                      className={index === current ? 'modal-slide active' : 'modal-slide'}
-                      key={photo.thumbnail_url}
-                      aria-hidden="true"
-                    >
-                      {index === current
-                      && (
-                      <FullsizeImage
-                        onClick={handleImageZoom}
-                        src={photo.url
-                      || 'https://www.arraymedical.com/wp-content/uploads/2018/12/product-image-placeholder-564x564.jpg'}
-                        alt="product photo"
-                      />
-                      ) }
-                    </div>
-                  ))}
-                  <FontAwesomeIcon icon={faTimes} className="closeBtn" onClick={() => setSelectedImg(!selectedImg)} />
-                </section>
-                <section className="modal-icons">
-                  {photos.map((photo, index) => (
-                    <FontAwesomeIcon
-                      icon={faCircle}
-                      className={index === current ? 'dots active' : 'dots'}
-                      key={photo.thumbnail_url}
-                      src={photo.thumbnail_url}
-                      alt="product photo"
-                      onClick={() => handleClick(index)}
-                      aria-hidden="true"
-                    />
-                  ))}
-                </section>
+                <ExtendedImageView
+                  photos={photos}
+                  current={current}
+                  setCurrent={setCurrent}
+                  thumbnail={thumbnail}
+                  setThumbnail={setThumbnail}
+                  setSelectedImg={setSelectedImg}
+                  selectedImg={selectedImg}
+                />
               </ImageModalDiv>
             </Modal>
           </PageBlockerModalDiv>

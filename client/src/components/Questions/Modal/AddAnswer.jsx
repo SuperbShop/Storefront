@@ -107,8 +107,6 @@ const AddAnswer = (props) => {
     featuredQ,
   } = props;
 
-  console.log('FEATURED: ',featuredQ);
-
   const toggleModal = toggleAddAnswerModal;
   const modalRef = useRef();
 

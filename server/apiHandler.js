@@ -98,16 +98,18 @@ const reportQuestion = (question_id, cb) => {
 // Curtis POST request QuestionHelpful goes here
 // Curtis POST request AnswerHelpful goes here
 
-module.exports.fetchProducts = fetchProducts;
-module.exports.fetchProductStyles = fetchProductStyles;
-module.exports.fetchReviews = fetchReviews;
-module.exports.upvoteReview = upvoteReview;
-module.exports.reportReview = reportReview;
-module.exports.postReview = postReview;
-module.exports.fetchReviewsMeta = fetchReviewsMeta;
-module.exports.fetchQandA = fetchQandA;
-module.exports.addQuestion = addQuestion;
-module.exports.addAnswer = addAnswer;
-module.exports.reportQuestion = reportQuestion;
-module.exports.upvoteQuestions = upvoteQuestions;
-module.exports.upvoteAnswers = upvoteAnswers;
+module.exports = {
+  fetchProducts,
+  fetchProductStyles,
+  fetchReviews,
+  upvoteReview,
+  reportReview,
+  postReview,
+  fetchReviewsMeta,
+  fetchQandA,
+  addQuestion,
+  addAnswer,
+  reportQuestion,
+  upvoteQuestions,
+  upvoteAnswers,
+};

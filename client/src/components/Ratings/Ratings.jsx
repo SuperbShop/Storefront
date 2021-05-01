@@ -5,6 +5,10 @@ import Breakdown from './children/Breakdown';
 import ReviewsList from './children/ReviewsList';
 import fetch from './fetchers';
 
+const RatingsWidgetWrapper = styled.div`
+  margin-top: 70px;
+  `;
+
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
   display: flex;
@@ -25,6 +29,7 @@ class Ratings extends React.Component {
     super(props);
     this.state = {
       filterState: [],
+      fetchersError: false,
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
@@ -46,7 +51,11 @@ class Ratings extends React.Component {
           productId: values[2].id,
         });
       }))
-      .catch((err) => console.error(err));
+      .catch(() => {
+        this.setState({
+          fetchersError: true,
+        });
+      });
   }
 
   handleFilterBy(value) {
@@ -78,14 +87,15 @@ class Ratings extends React.Component {
       productName,
       productId,
       filterState,
+      fetchersError,
     } = this.state;
     return (
-      <>
+      <RatingsWidgetWrapper>
         <h2>
           Ratings & Reviews
         </h2>
         { this.state && productId
-          && (
+          && fetchersError === false && (
           <ReviewsAndRatingsDiv>
             <BreakdownWrapper>
               <Breakdown
@@ -104,8 +114,8 @@ class Ratings extends React.Component {
               />
             </ListWrapper>
           </ReviewsAndRatingsDiv>
-          )}
-      </>
+        )}
+      </RatingsWidgetWrapper>
     );
   }
 }

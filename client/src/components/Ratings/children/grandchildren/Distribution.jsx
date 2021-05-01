@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const FlexboxDiv = styled.div`
+const DistributionWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
   `;
 
 const ButtonContainer = styled.div`
@@ -177,7 +178,7 @@ class Distribution extends React.Component {
 
     return (
       <div data-testid="distribution-1">
-        <FlexboxDiv>
+        <DistributionWrapper>
           <ButtonContainer>
             <StyledButton className="ReviewFilter" onClick={this.handleRatingFilterClick} type="button" id="5button">5 stars</StyledButton>
             <BackdropDiv onClick={this.handleRatingFilterClick} id="5Backdrop">
@@ -213,7 +214,7 @@ class Distribution extends React.Component {
             </BackdropDiv>
             <QuantityContainer onClick={this.handleRatingFilterClick} id="1Quantity">{ratings ? ratings[1] : 0}</QuantityContainer>
           </ButtonContainer>
-        </FlexboxDiv>
+        </DistributionWrapper>
         <FilterStatusWrapper>
           {filterStatus}
         </FilterStatusWrapper>

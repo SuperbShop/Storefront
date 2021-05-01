@@ -24,6 +24,7 @@ const ListControlButton = styled.button`
   margin-top: 10px;
   margin-bottom: 25px;
   margin-left: 10px;
+  padding: 15px;
   cursor: pointer;
   background-color: white;
   border: 1px solid #838383;

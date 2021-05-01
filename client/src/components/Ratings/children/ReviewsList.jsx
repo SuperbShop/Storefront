@@ -162,6 +162,7 @@ class ReviewsList extends React.Component {
       <PageBlockerModalDiv>
         <Modal>
           <CreateReview
+            fetchReviewsList={fetchReviewsList}
             metaInfo={reviewsMeta}
             toggleCreateReviewModal={this.toggleCreateReviewModal}
             productName={productName}
@@ -181,7 +182,13 @@ class ReviewsList extends React.Component {
           {sortDropdown}
         </p>
         <TilesWrapper>
-          {slicedReviews.map((item) => <ReviewTile key={item.review_id} fetchReviewsList={fetchReviewsList} review={item} />)}
+          {slicedReviews.map((item) => (
+            <ReviewTile
+              key={item.review_id}
+              fetchReviewsList={fetchReviewsList}
+              review={item}
+            />
+          ))}
         </TilesWrapper>
         {moreReviewsButton}
         <ListControlButton type="button" onClick={this.toggleCreateReviewModal}>ADD A REVIEW</ListControlButton>

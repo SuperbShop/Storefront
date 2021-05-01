@@ -359,7 +359,7 @@ class CreateReview extends React.Component {
       photos,
       characteristics,
     } = this.state;
-    const { metaInfo } = this.props;
+    const { metaInfo, fetchReviewsList } = this.props;
     const data = {
       product_id: Number(metaInfo.product_id),
       rating,
@@ -376,7 +376,10 @@ class CreateReview extends React.Component {
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
-      success: () => this.handleExitButtonClick(),
+      success: () => {
+        this.handleExitButtonClick();
+        fetchReviewsList();
+      },
       error: (err) => console.error(err),
     });
   }
@@ -516,6 +519,7 @@ CreateReview.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   toggleCreateReviewModal: PropTypes.func.isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default CreateReview;

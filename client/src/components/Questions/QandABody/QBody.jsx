@@ -69,6 +69,7 @@ class QBody extends React.Component {
       question: 'default',
       numDisplayed: 2,
       markedHelpful: false,
+
     };
     this.onClickDisplay = this.onClickDisplay.bind(this);
     this.onClickCollapse = this.onClickCollapse.bind(this);
@@ -113,11 +114,12 @@ class QBody extends React.Component {
   render() {
     const { numDisplayed } = this.state;
     const {
+      question_id,
       question_body,
       answers,
       question_helpfulness,
     } = this.props.question;
-    const { toggleAddAnswerModal, toggleImageCarouselModal } = this.props;
+    const { product_id, toggleAddAnswerModal, toggleImageCarouselModal } = this.props;
     const ansArr = sortByAHelpful(answers);
     const ansDisplayed = ansArr.slice(0, numDisplayed);
     const lengthTest = {
@@ -146,7 +148,9 @@ class QBody extends React.Component {
 
             <div className="q options">
               <QOptions
+                question={question_body}
                 helpfulness={question_helpfulness}
+                question_id={question_id}
                 onClickHelpful={this.onClickHelpful}
                 onClickReport={this.report}
                 toggleAddAnswerModal={toggleAddAnswerModal}
@@ -169,8 +173,9 @@ class QBody extends React.Component {
                     answer.body
                       ? (
                         <ABody
+                          product_id={product_id}
+                          question_id={question_id}
                           answer={answer}
-                          onClickReport={this.report}
                           toggleImageCarouselModal={toggleImageCarouselModal}
                         />
                       )

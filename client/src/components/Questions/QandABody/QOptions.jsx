@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const QOptionsContainer = styled.div`
   display: flex-grid;
@@ -13,8 +14,20 @@ const QButton = styled.button`
   background: none!important;
   border: none;
   padding: 5px;
-  text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const ReportButton = styled.button`
+  background: none!important;
+  border: none;
+  color: black;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 class QOptions extends React.Component {
@@ -22,15 +35,30 @@ class QOptions extends React.Component {
     super(props);
     this.state = {
       helpful: false,
+      helpfulClicked: false,
       reported: false,
     };
     this.onClickHelpful = this.onClickHelpful.bind(this);
     this.onClickReport = this.onClickReport.bind(this);
+    this.launchModal = this.launchModal.bind(this);
   }
 
   onClickHelpful() {
+    const { question_id } = this.props;
+    const { helpful, helpfulClicked } = this.state;
+    const url = `/api/questions/${question_id}/helpful`;
+    if (!helpful && !helpfulClicked) {
+      axios.put(url)
+        .then(() => {
+          console.log(question_id, ' Marked Helpful');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
     this.setState({
-      helpful: !this.state.helpful,
+      helpful: !helpful,
+      helpfulClicked: true,
     });
   }
 
@@ -38,28 +66,62 @@ class QOptions extends React.Component {
     this.setState({
       reported: true,
     });
-    this.props.onClickReport();
+    const { question_id } = this.props;
+    const url = `/api/questions/${question_id}/report`;
+    axios.put(url)
+      .then(() => {
+        console.log('Question Reported');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  launchModal() {
+    const { toggleAddAnswerModal, question_id, question } = this.props;
+    toggleAddAnswerModal(question_id, question);
   }
 
   render() {
     const { helpfulness } = this.props;
-    const isHelpful = this.state.helpful;
+    const { helpful, reported } = this.state;
     const helpfulClicked = helpfulness + 1;
     return (
       <QOptionsContainer className="options container">
         <span className="option helpful">
           Helpful?
           <QButton type="submit" onClick={this.onClickHelpful}>
-            { isHelpful
+            { helpful
               ? (
-                <div>Yes <strong>({helpfulClicked})</strong></div>
+                <div>
+                  Yes
+                  <strong>
+                    (
+                    {helpfulClicked}
+                    )
+                  </strong>
+                </div>
               )
               : (
-                <div>Yes ({helpfulness})</div>
+                <div>
+                  Yes (
+                  {helpfulness}
+                  )
+                </div>
               ) }
           </QButton>
+          { !reported
+            ? (
+              <ReportButton
+                className="option report"
+                onClick={this.onClickReport}
+              >
+                Report
+              </ReportButton>
+            )
+            : <span>Reported</span> }
         </span>
-        <QButton type="submit" onClick={this.props.toggleAddAnswerModal}>  Add Answer</QButton>
+        <QButton type="submit" onClick={this.launchModal}>  Add Answer</QButton>
       </QOptionsContainer>
     );
   }

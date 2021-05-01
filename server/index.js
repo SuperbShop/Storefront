@@ -42,6 +42,20 @@ app.put('/api/reviews/:id/helpful', (req, res) => {
   });
 });
 
+app.put('/api/questions/:id/helpful', (req, res) => {
+  const { id } = req.params;
+  api.upvoteQuestions(id, (question) => {
+    res.send(question.data);
+  });
+});
+
+app.put('/api/answers/:id/helpful', (req, res) => {
+  const { id } = req.params;
+  api.upvoteAnswers(id, (answer) => {
+    res.send(answer.data);
+  });
+});
+
 app.put('/api/reviews/:id/report', (req, res) => {
   const { id } = req.params;
   api.reportReview(id, (review) => {
@@ -49,24 +63,36 @@ app.put('/api/reviews/:id/report', (req, res) => {
   });
 });
 
-app.get('/api/:id/q_and_a', (req, res) => {
+app.get('/api/:id/questions', (req, res) => {
   const { id } = req.params;
   api.fetchQandA(id, (QandA) => {
     res.send(QandA.data);
   });
 });
 
-app.put('/api/:id/q_and_a/:question_id/report', (req, res) => {
+app.put('/api/questions/:question_id/report', (req, res) => {
   const { question_id } = req.params;
   api.reportQuestion(question_id, (QandA) => {
-    res.send(QandA.data);
+    res.status(200).send(QandA.data);
   });
 });
 
-app.get('/api/:id/q_and_a/:question_id/report', (req, res) => {
+app.post('/api/qa/questions', (req, res) => {
+  const {
+    product_id, body, name, email,
+  } = req.body;
+  api.addQuestion(product_id, body, name, email, () => {
+    res.end();
+  });
+});
+
+app.post('/api/questions/:question_id/answers', (req, res) => {
   const { question_id } = req.params;
-  api.reportQuestion(question_id, (QandA) => {
-    res.send(QandA.data);
+  const {
+    body, name, email,
+  } = req.body;
+  api.addAnswer(question_id, body, name, email, () => {
+    res.end();
   });
 });
 

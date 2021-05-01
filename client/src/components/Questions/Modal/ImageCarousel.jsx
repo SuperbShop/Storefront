@@ -61,7 +61,10 @@ const CloseModalButton = styled(MdClose)`
 `;
 
 const ImageCarousel = (props) => {
-  const { showImageCarouselModal, toggleImageCarouselModal } = props;
+  const {
+    showImageCarouselModal,
+    toggleImageCarouselModal,
+  } = props;
   const modalRef = useRef();
 
   const closeModal = (e) => {

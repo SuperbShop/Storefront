@@ -1,5 +1,7 @@
-import React, { useRef, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
+import React, {
+  useRef, useEffect, useCallback, useState,
+} from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import { MdClose } from 'react-icons/md';
 import Modal from './index';
@@ -24,7 +26,7 @@ const ModalWrapper = styled.div`
   transform: translate(-50%, -50%);
   margin: 0 auto;
   width: 900px;
-  height: 600px;
+  height: 650px;
   opacity: 100%;
   background: white;
   color: black;
@@ -67,6 +69,10 @@ const FormInput = styled.input`
   font-size: 1.5 em;
 `;
 
+const Featured = styled.h3`
+  font-style: italic;
+`;
+
 const SubmitButton = styled.button`
   color: black;
   background-color: white;
@@ -93,13 +99,23 @@ const FormHeader = styled.div`
 `;
 
 const AddAnswer = (props) => {
-  const { showAddAnswerModal, toggleAddAnswerModal } = props;
+  const {
+    showAddAnswerModal,
+    toggleAddAnswerModal,
+    productId,
+    productInfo,
+    featuredQ,
+  } = props;
+
+  console.log('FEATURED: ',featuredQ);
+
   const toggleModal = toggleAddAnswerModal;
   const modalRef = useRef();
 
   const closeModal = (e) => {
     if (modalRef.current === e.target) {
       toggleModal();
+      console.log(modalRef);
     }
   };
   const keyPress = useCallback((e) => {
@@ -107,11 +123,58 @@ const AddAnswer = (props) => {
       toggleModal();
     }
   }, [showAddAnswerModal, toggleModal]);
-
   useEffect(() => {
     document.addEventListener('keydown', keyPress);
     return () => document.removeEventListener('keydown', keyPress);
   }, [keyPress]);
+
+  const [body, setBody] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const bodyChangeHandler = (event) => {
+    const { value } = event.target;
+    setBody(value);
+    console.log(value);
+  };
+
+  const nameChangeHandler = (event) => {
+    const { value } = event.target;
+    setName(value);
+    console.log(value);
+  };
+
+  const emailChangeHandler = (event) => {
+    const { value } = event.target;
+    setEmail(value);
+    console.log(value);
+  };
+
+  const submitPostReq = (question_id, answer) => {
+    console.log('SUBMITTING POST REQ');
+    axios.post(`/api/questions/${question_id}/answers`, answer)
+      .then((data) => {
+        console.log('HELLO', data);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  const submitAnswer = () => {
+    const answer = {
+      body,
+      name,
+      email,
+    };
+    submitPostReq(showAddAnswerModal, answer);
+    toggleModal();
+  };
+
+  let productName;
+  if (productInfo.data) {
+    productName = productInfo.data.name;
+  } else {
+    productName = 'product';
+  }
 
   return (
     <>
@@ -123,26 +186,49 @@ const AddAnswer = (props) => {
                 <ModalContent>
                   <CloseModalButton
                     aria-label="Close modal"
-                    ref={modalRef}
                     onClick={toggleModal}
                   />
                   <FormHeader>
                     <h1>Submit Your Answer</h1>
                     <h3>
-                      product_name: QuestionBody
-                      {/* currentProduct from props goes here */}
+                      {`${productName}: `}
                     </h3>
+                    <Featured>
+                      {`"${featuredQ}"`}
+                    </Featured>
                   </FormHeader>
                   <div>Your Answer: </div>
-                  <FormInput type="form" />
+                  <FormInput
+                    type="form"
+                    name="body"
+                    onChange={bodyChangeHandler}
+                  />
                   <div>What is Your Nickname: </div>
-                  <FormInput type="form" placeholder="Example: jackson11!" />
+                  <FormInput
+                    type="form"
+                    name="name"
+                    placeholder="Example: jackson11!"
+                    onChange={nameChangeHandler}
+                  />
                   <div>Your Email: </div>
-                  <FormInput type="form" placeholder="Why did you like the product or not?" />
+                  <FormInput
+                    type="form"
+                    name="email"
+                    placeholder="Why did you like the product or not?"
+                    onChange={emailChangeHandler}
+                  />
                   <p>For authentication reasons, you will not be emailed</p>
                   <div>Add Photos</div>
-                  <FormInput type="form" placeholder="Upload Photos" />
-                  <SubmitButton type="submit" onClick={toggleModal}>Submit</SubmitButton>
+                  <FormInput
+                    type="form"
+                    placeholder="Upload Photos"
+                  />
+                  <SubmitButton
+                    type="submit"
+                    onClick={submitAnswer}
+                  >
+                    Submit
+                  </SubmitButton>
                 </ModalContent>
                 <CloseModalButton
                   aria-label="Close modal"
@@ -156,11 +242,6 @@ const AddAnswer = (props) => {
         : null }
     </>
   );
-};
-
-AddAnswer.propTypes = {
-  showAddAnswerModal: PropTypes.bool.isRequired,
-  toggleAddAnswerModal: PropTypes.func.isRequired,
 };
 
 export default AddAnswer;

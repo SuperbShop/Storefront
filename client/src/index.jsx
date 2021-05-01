@@ -1,9 +1,11 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/*
+  eslint-disable react/jsx-props-no-spreading
+  eslint-disable jsx-a11y/no-static-element-interactions
+  eslint-disable jsx-a11y/click-events-have-key-events
+*/
 import ReactDOM from 'react-dom';
 import React from 'react';
-import $ from 'jquery';
+import axios from 'axios';
 import Overview from './components/Overview/Overview';
 import Questions from './components/Questions';
 import Ratings from './components/Ratings/Ratings';
@@ -11,16 +13,11 @@ import AskQuestion from './components/Questions/Modal/AskQuestion';
 import AddAnswer from './components/Questions/Modal/AddAnswer';
 import ImageCarousel from './components/Questions/Modal/ImageCarousel';
 
-// store clicks object
 window.clicks = [];
 
 const time = new Date();
 
 const clickTracker = (WrappedComponent, module) => (props) => (
-  // For each click on the page, capture:
-  // Element of the page which was clicked
-  // Time of click
-  // Module clicked
   <div onClick={(event) => {
     const info = { element: event.target, time, module };
     console.log(info);
@@ -41,11 +38,12 @@ class App extends React.Component {
     this.state = {
       product: '23149',
       productId: 23149,
+      productInfo: [],
+      featuredQ: '',
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
     };
-    // this.getProductId = this.getProductId.bind(this);
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
     this.toggleAskQuestionModal = this.toggleAskQuestionModal.bind(this);
@@ -53,36 +51,52 @@ class App extends React.Component {
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
   }
 
-  // componentDidMount() {
-  //   const defaultId = 23149;
-  //   const productId = this.getProductId() || defaultId;
-  //   console.log(productId);
-  //   this.setState({
-  //     productId,
-  //   });
-  //   console.log('mounted');
-  // }
-
-  // getProductId() {
-  //   return window.location.pathname.slice(5);
-  // }
+  componentDidMount() {
+    const { productId } = this.state;
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${productId}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   incrementProduct() {
     const { productId } = this.state;
     const id = (productId + 1).toString();
-    this.setState({
-      product: id,
-      productId: parseInt(id),
-    });
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+          product: id,
+          productId: parseInt(id),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   decrementProduct() {
     const { productId } = this.state;
     const id = (productId - 1).toString();
-    this.setState({
-      product: id,
-      productId: parseInt(id),
-    });
+    const url = `https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo/products/${id}`;
+    axios.get(url)
+      .then((data) => {
+        this.setState({
+          productInfo: data,
+          product: id,
+          productId: parseInt(id),
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   toggleAskQuestionModal(input) {
@@ -98,15 +112,17 @@ class App extends React.Component {
     }
   }
 
-  toggleAddAnswerModal(input) {
+  toggleAddAnswerModal(input, question) {
     const { showAddAnswerModal } = this.state;
     if (!input) {
       this.setState({
         showAddAnswerModal: input,
+        featuredQ: question,
       });
     } else {
       this.setState({
         showAddAnswerModal: !showAddAnswerModal,
+        featuredQ: question,
       });
     }
   }
@@ -128,9 +144,11 @@ class App extends React.Component {
     const {
       product,
       productId,
+      productInfo,
       showAskQuestionModal,
       showImageCarouselModal,
       showAddAnswerModal,
+      featuredQ,
     } = this.state;
 
     return (
@@ -139,11 +157,15 @@ class App extends React.Component {
           <AskQuestion
             showAskQuestionModal={showAskQuestionModal}
             toggleAskQuestionModal={this.toggleAskQuestionModal}
+            productInfo={productInfo}
             productId={productId}
           />
           <AddAnswer
             showAddAnswerModal={showAddAnswerModal}
             toggleAddAnswerModal={this.toggleAddAnswerModal}
+            productInfo={productInfo}
+            productId={productId}
+            featuredQ={featuredQ}
           />
           <ImageCarousel
             showImageCarouselModal={showImageCarouselModal}

@@ -10,6 +10,10 @@ const AnswerBody = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
+  &:hover {
+    box-shadow: rgba(0, 0, 0, 0.55) 0px 3px 8px;
+    transition: 0.5s;
+  }
 `;
 
 const AnswerOptions = styled.div`
@@ -61,8 +65,9 @@ class ABody extends React.Component {
   }
 
   render() {
+    const { product_id, question_id } = this.props;
     const {
-      body, answerer_name, date, helpfulness, photos,
+      id, body, answerer_name, date, helpfulness, photos,
     } = this.props.answer;
     return (
       <AnswerBody>
@@ -94,6 +99,9 @@ class ABody extends React.Component {
           <AnswerOptions>
             <div>
               <AOptions
+                answer_id={id}
+                product_id={product_id}
+                question_id={question_id}
                 onClickReport={this.report}
                 answerer={answerer_name}
                 date={date}

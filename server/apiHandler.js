@@ -34,6 +34,40 @@ const upvoteReview = (id, cb) => {
     .catch((err) => console.error(err));
 };
 
+const upvoteQuestions = (id, cb) => {
+  axios.put(`${API_URL}/qa/questions/${id}/helpful`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
+const upvoteAnswers = (id, cb) => {
+  axios.put(`${API_URL}/qa/answers/${id}/helpful`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
+
+const addQuestion = (product_id, body, name, email, cb) => {
+  axios.post(`${API_URL}/qa/questions`, {
+    product_id, body, name, email,
+  })
+    .then((data) => {
+      console.log('DATA: ', data);
+      cb(data);
+    })
+    .catch((err) => console.error(err));
+};
+
+const addAnswer = (question_id, body, name, email, cb) => {
+  axios.post(`${API_URL}/qa/questions/${question_id}/answers`, {
+    body, name, email,
+  })
+    .then((data) => {
+      console.log('_____________________DATA: ', data);
+      cb(data);
+    })
+    .catch((err) => console.error(err));
+};
+
 const reportReview = (id, cb) => {
   axios.put(`${API_URL}/reviews/${id}/report`)
     .then((data) => cb(data))
@@ -50,7 +84,7 @@ const fetchQandA = (id, cb) => {
 // Curtis POST request AddAnswer goes here
 // [X] Curtis POST request ReportAnswer goes here
 const reportQuestion = (question_id, cb) => {
-  axios.put(`${API_URL}/qa/questions?question_id=${question_id}`)
+  axios.put(`${API_URL}/qa/questions/${question_id}/report`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
@@ -70,4 +104,8 @@ module.exports.upvoteReview = upvoteReview;
 module.exports.reportReview = reportReview;
 module.exports.fetchReviewsMeta = fetchReviewsMeta;
 module.exports.fetchQandA = fetchQandA;
+module.exports.addQuestion = addQuestion;
+module.exports.addAnswer = addAnswer;
 module.exports.reportQuestion = reportQuestion;
+module.exports.upvoteQuestions = upvoteQuestions;
+module.exports.upvoteAnswers = upvoteAnswers;

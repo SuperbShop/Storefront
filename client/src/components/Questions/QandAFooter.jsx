@@ -42,7 +42,7 @@ const QandAFooter = (props) => {
   return (
     <FooterWrapper className="QA Footer Question-Buttons">
       { moreToDisplay
-        ? <Button type="submit" onClick={displayMore}>More Answered Questions</Button>
+        ? <Button type="submit" onClick={displayMore}>More Questions</Button>
         : null
       }
       { lessToDisplay

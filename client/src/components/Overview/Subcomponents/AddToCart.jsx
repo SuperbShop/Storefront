@@ -218,10 +218,14 @@ class AddToCart extends React.Component {
 
 AddToCart.propTypes = {
   skus: PropTypes.shape({}),
+  productName: PropTypes.string,
+  styleName: PropTypes.string,
 };
 
 AddToCart.defaultProps = {
   skus: {},
+  productName: '',
+  styleName: '',
 };
 
 export default AddToCart;

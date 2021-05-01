@@ -2,8 +2,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
-// import $ from 'jquery';
 import PropTypes from 'prop-types';
+import {
+  ToastContainer, toast, Zoom,
+} from 'react-toastify';
 import config from '../../../../config';
 import ProductInfo from './Subcomponents/ProductInfo';
 import Description from './Subcomponents/Description';
@@ -42,6 +44,9 @@ class Overview extends React.Component {
       productStyles: [],
       selectedStyle: {},
       productRatings: [],
+      errorStatusText: null,
+      errorStatus: null,
+
     };
     this.handleStyleChange = this.handleStyleChange.bind(this);
   }
@@ -72,7 +77,12 @@ class Overview extends React.Component {
       .then(() => {
         this.fetchProductRatings();
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.setState({
+          errorStatusText: `Product ${err.response.statusText}`,
+          errorStatus: err.response.status,
+        });
+      });
   }
 
   fetchProductStyles() {
@@ -85,7 +95,12 @@ class Overview extends React.Component {
           selectedStyle: res.data.results[0],
         });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.setState({
+          errorStatusText: `Styles ${err.response.statusText}`,
+          errorStatus: err.response.status,
+        });
+      });
   }
 
   fetchProductRatings() {
@@ -97,46 +112,75 @@ class Overview extends React.Component {
           productRatings: res.data.results,
         });
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        this.setState({
+          errorStatusText: `Ratings ${err.response.statusText}`,
+          errorStatus: err.response.status,
+        });
+      });
   }
 
   render() {
     const {
-      currentProduct, productStyles, selectedStyle, productRatings,
+      currentProduct, productStyles, selectedStyle, productRatings, errorStatus, errorStatusText,
     } = this.state;
     const { photos } = selectedStyle;
-    return (
-
-      <Wrapper data-testid="overviewComponent">
-        <TopWrapper>
-          <LeftDiv>
-            <ImageGallery photos={photos} />
-          </LeftDiv>
-          <RightDiv>
-            <ProductInfo
-              currentProduct={currentProduct}
-              selectedStyle={selectedStyle}
-              productRatings={productRatings}
-            />
-            <StyleSelector
-              selectedStyle={selectedStyle}
-              styles={productStyles}
-              handleStyleChange={this.handleStyleChange}
-            />
-            <AddToCart
-              skus={selectedStyle.skus}
-              productName={currentProduct.name}
-              styleName={selectedStyle.name}
-            />
-          </RightDiv>
-        </TopWrapper>
-        <div className="ProductOverview">
-          <div className="Description">
-            <Description currentProduct={currentProduct} />
-          </div>
-        </div>
-      </Wrapper>
+    const notify = () => toast.error(
+      `${errorStatusText}`,
     );
+    if (errorStatus !== null) {
+      return (
+        <>
+          {notify()}
+          <ToastContainer
+            transition={Zoom}
+            position="top-center"
+            autoClose={2000}
+            hideProgressBar
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </>
+      );
+    }
+    if (errorStatus === null) {
+      return (
+        <Wrapper data-testid="overviewComponent">
+          <TopWrapper>
+            <LeftDiv>
+              <ImageGallery photos={photos} />
+            </LeftDiv>
+            <RightDiv>
+              <ProductInfo
+                currentProduct={currentProduct}
+                selectedStyle={selectedStyle}
+                productRatings={productRatings}
+              />
+              <StyleSelector
+                selectedStyle={selectedStyle}
+                styles={productStyles}
+                handleStyleChange={this.handleStyleChange}
+              />
+              <AddToCart
+                skus={selectedStyle.skus}
+                productName={currentProduct.name}
+                styleName={selectedStyle.name}
+              />
+            </RightDiv>
+          </TopWrapper>
+          <div className="ProductOverview">
+            <div className="Description">
+              <Description currentProduct={currentProduct} />
+            </div>
+          </div>
+        </Wrapper>
+      );
+    }
+    return null;
   }
 }
 

@@ -95,7 +95,7 @@ class Ratings extends React.Component {
           Ratings & Reviews
         </h2>
         { fetchersError && (
-          <h3>Something went wrong</h3>
+          <h4>Something went wrong</h4>
         )}
         { this.state && productId
           && fetchersError === false && (

@@ -21,6 +21,7 @@ const PageBlockerModalDiv = styled.div`
   `;
 
 const ListControlButton = styled.button`
+  width: 250px;
   margin-top: 10px;
   margin-bottom: 25px;
   margin-left: 10px;
@@ -138,7 +139,7 @@ class ReviewsList extends React.Component {
 
       slicedReviews = sortedFilteredReviews.slice(0, sliceBy);
       if (sliceBy < list.length) {
-        moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>MORE REVIEWS</ListControlButton>;
+        moreReviewsButton = <ListControlButton type="button" onClick={this.showMoreReviews}>SEE MORE REVIEWS</ListControlButton>;
       } else if (list.length >= 0 && list.length <= 2) {
         moreReviewsButton = '';
       } else {

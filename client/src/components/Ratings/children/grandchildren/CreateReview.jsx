@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as solidStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import CharsRadioButtons from './CharsRadioButtons';
 
 const CenteredDiv = styled.div`
@@ -188,14 +188,9 @@ const PhotoUploadLower = styled.div`
 
 const ExitButtonWrapper = styled.div`
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 0;
-  `;
-
-const ExitButton = styled.button`
-  border: none;
-  background-color: white;
-  font-size: 25px;
+  cursor: pointer;
   &:hover {
     color: red;
   }
@@ -512,7 +507,7 @@ class CreateReview extends React.Component {
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>
-            <ExitButton type="button" id="exitbutton" onClick={this.handleExitButtonClick}>X</ExitButton>
+            <FontAwesomeIcon icon={faTimes} onClick={this.handleExitButtonClick} />
           </ExitButtonWrapper>
         </CenteredDiv>
       </>

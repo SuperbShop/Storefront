@@ -291,7 +291,6 @@ class CreateReview extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleStarIconClick = this.handleStarIconClick.bind(this);
-    this.handleRecommendChange = this.handleRecommendChange.bind(this);
   }
 
   handleExitButtonClick() {

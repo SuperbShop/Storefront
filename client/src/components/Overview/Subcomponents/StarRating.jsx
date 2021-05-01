@@ -19,13 +19,12 @@ const ReviewWrapper = styled.div`
 const StarsContainer = styled.div`
   display: flex;
   align-items: center;
-  `;
+`;
 
 const StarsOuter = styled.div`
   display: inline-block;
   position: relative;
   overflow-x: hidden;
-  width: 100%;
   color: rgb(128, 128, 128);
   `;
 
@@ -43,44 +42,48 @@ const calculateAvgRatings = (ratings) => {
   let avgRating = 0;
   let averagePercentage = 0;
   const totalCount = ratings.length;
-  if (totalCount > 0) {
-    ratings.forEach((item) => {
-      totalRating += item.rating;
-    });
-    avgRating = (totalRating / totalCount).toFixed(1);
-    averagePercentage = avgRating / 5;
-    $('.StarsInner').width(`${averagePercentage * 100}%`);
-  }
+  ratings.forEach((item) => {
+    totalRating += item.rating;
+  });
+  avgRating = (totalRating / totalCount);
+  averagePercentage = avgRating / 5;
+  $('.StarsInner').width(`${averagePercentage * 100}%`);
 };
-const StarRating = ({ ratings }) => (
-  <StarRatingWrapper data-testid="starRating">
-    <StarsContainer>
-      <StarsOuter>
-        <FontAwesomeIcon key={1} icon={faStar} />
-        <FontAwesomeIcon key={2} icon={faStar} />
-        <FontAwesomeIcon key={3} icon={faStar} />
-        <FontAwesomeIcon key={4} icon={faStar} />
-        <FontAwesomeIcon key={5} icon={faStar} />
-        <StarsInner className="StarsInner">
-          <FontAwesomeIcon key={10} icon={solidStar} />
-          <FontAwesomeIcon key={11} icon={solidStar} />
-          <FontAwesomeIcon key={12} icon={solidStar} />
-          <FontAwesomeIcon key={13} icon={solidStar} />
-          <FontAwesomeIcon key={14} icon={solidStar} />
-        </StarsInner>
-      </StarsOuter>
-    </StarsContainer>
-    <ReviewWrapper>
-      <a href="#Reviews">
-        Read
-        {' '}
-        {ratings.length}
-        {' '}
-        reviews
-      </a>
-    </ReviewWrapper>
-  </StarRatingWrapper>
-);
+const StarRating = ({ ratings }) => {
+  if (ratings.length > 0) {
+    calculateAvgRatings(ratings);
+    return (
+      <StarRatingWrapper data-testid="starRating">
+        <StarsContainer>
+          <StarsOuter>
+            <FontAwesomeIcon key={1} icon={faStar} />
+            <FontAwesomeIcon key={2} icon={faStar} />
+            <FontAwesomeIcon key={3} icon={faStar} />
+            <FontAwesomeIcon key={4} icon={faStar} />
+            <FontAwesomeIcon key={5} icon={faStar} />
+            <StarsInner className="StarsInner">
+              <FontAwesomeIcon key={10} icon={solidStar} />
+              <FontAwesomeIcon key={11} icon={solidStar} />
+              <FontAwesomeIcon key={12} icon={solidStar} />
+              <FontAwesomeIcon key={13} icon={solidStar} />
+              <FontAwesomeIcon key={14} icon={solidStar} />
+            </StarsInner>
+          </StarsOuter>
+        </StarsContainer>
+        <ReviewWrapper>
+          <a href="#Reviews">
+            Read
+            {' '}
+            {ratings.length}
+            {' '}
+            reviews
+          </a>
+        </ReviewWrapper>
+      </StarRatingWrapper>
+    );
+  }
+  return null;
+};
 
 StarRating.propTypes = {
   ratings: PropTypes.arrayOf(PropTypes.shape({})).isRequired,

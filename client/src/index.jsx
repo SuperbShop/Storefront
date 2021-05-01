@@ -205,7 +205,7 @@ class App extends React.Component {
     } = this.state;
 
     return (
-      productId !== undefined ? (
+      productId !== undefined && (
         <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
           <GlobalStyles />
           <StyledApp>
@@ -277,7 +277,7 @@ class App extends React.Component {
             
           </StyledApp>
         </ThemeProvider>
-      ) : null
+      )
     );
   }
 }

@@ -7,13 +7,13 @@ import fetch from './fetchers';
 
 const RatingsWidgetWrapper = styled.div`
   margin-top: 70px;
+  margin-bottom: 100px;
   `;
 
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 100px;
   `;
 
 const BreakdownWrapper = styled.div`
@@ -94,6 +94,9 @@ class Ratings extends React.Component {
         <h2>
           Ratings & Reviews
         </h2>
+        { fetchersError && (
+          <h3>Something went wrong</h3>
+        )}
         { this.state && productId
           && fetchersError === false && (
           <ReviewsAndRatingsDiv>

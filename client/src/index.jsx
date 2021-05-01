@@ -74,9 +74,11 @@ class App extends React.Component {
     super();
     this.state = {
       product: '23149',
-      productId: 23182,
+      productId: 23149,
       productInfo: [],
       featuredQ: '',
+      featuredImages: [],
+      submitFunc: '',
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
@@ -88,6 +90,8 @@ class App extends React.Component {
     this.toggleAddAnswerModal = this.toggleAddAnswerModal.bind(this);
     this.toggleImageCarouselModal = this.toggleImageCarouselModal.bind(this);
     this.toggleTheme = this.toggleTheme.bind(this);
+    this.setSubmit = this.setSubmit.bind(this);
+    this.setFeaturedImages = this.setFeaturedImages.bind(this);
   }
 
   componentDidMount() {
@@ -153,7 +157,7 @@ class App extends React.Component {
 
   toggleAddAnswerModal(input, question) {
     const { showAddAnswerModal } = this.state;
-    if (!input) {
+    if (typeof input === 'number') {
       this.setState({
         showAddAnswerModal: input,
         featuredQ: question,
@@ -166,17 +170,11 @@ class App extends React.Component {
     }
   }
 
-  toggleImageCarouselModal(input) {
+  toggleImageCarouselModal() {
     const { showImageCarouselModal } = this.state;
-    if (!input) {
-      this.setState({
-        showImageCarouselModal: input,
-      });
-    } else {
-      this.setState({
-        showImageCarouselModal: !showImageCarouselModal,
-      });
-    }
+    this.setState({
+      showImageCarouselModal: !showImageCarouselModal,
+    });
   }
 
   toggleTheme() {
@@ -192,6 +190,18 @@ class App extends React.Component {
     }
   }
 
+  setSubmit(func) {
+    this.setState({
+      submitFunc: func,
+    });
+  }
+
+  setFeaturedImages(imageArr) {
+    this.setState({
+      featuredImages: imageArr,
+    });
+  }
+
   render() {
     const {
       product,
@@ -202,6 +212,8 @@ class App extends React.Component {
       featuredQ,
       showAddAnswerModal,
       theme,
+      submitFunc,
+      featuredImages,
     } = this.state;
 
     return (
@@ -245,6 +257,7 @@ class App extends React.Component {
                 toggleAskQuestionModal={this.toggleAskQuestionModal}
                 productInfo={productInfo}
                 productId={productId}
+                submitFunc={submitFunc}
               />
               <AddAnswer
                 showAddAnswerModal={showAddAnswerModal}
@@ -252,10 +265,12 @@ class App extends React.Component {
                 productInfo={productInfo}
                 productId={productId}
                 featuredQ={featuredQ}
+                submitFunc={submitFunc}
               />
               <ImageCarousel
                 showImageCarouselModal={showImageCarouselModal}
                 toggleImageCarouselModal={this.toggleImageCarouselModal}
+                featuredImages={featuredImages}
               />
             </Suspense>
             <Suspense fallback={<div>Loading...</div>}>
@@ -265,9 +280,11 @@ class App extends React.Component {
                   product={product}
                   incrementClick={this.incrementProduct}
                   decrementClick={this.decrementProduct}
+                  setSubmit={this.setSubmit}
                   toggleAskQuestionModal={this.toggleAskQuestionModal}
                   toggleAddAnswerModal={this.toggleAddAnswerModal}
                   toggleImageCarouselModal={this.toggleImageCarouselModal}
+                  setFeaturedImages={this.setFeaturedImages}
                 />
               </section>
             </Suspense>

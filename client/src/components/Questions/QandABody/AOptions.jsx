@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from 'axios';
 
 const OptionsContainer = styled.div`
+  color: black;
   display: flex-grid;
   font-size: 0.7em;
   position: relative;
@@ -14,14 +15,12 @@ const AOptionItem = styled.div`
   float: right;
   background: none!important;
   border: none;
-  color: black;
   margin-right: 10px;
 `;
 
 const AOptionButton = styled.button`
   background: none!important;
   border: none;
-  color: black;
   cursor: pointer;
   &:hover {
     text-decoration: underline;

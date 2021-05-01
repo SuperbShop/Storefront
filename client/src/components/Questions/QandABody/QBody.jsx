@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import QOptions from './QOptions';
 import ABody from './ABody';
 
-const sortByAHelpful = function (obj) {
-  const copy = Object.values(obj);
+const sortByAHelpful = (answers) => {
+  const copy = Object.values(answers);
   copy.sort((answer, next) => ((
     answer.helpfulness > next.helpfulness
   ) ? -1 : 1));
@@ -12,8 +12,6 @@ const sortByAHelpful = function (obj) {
 };
 
 const QuestionDiv = styled.div`
-  background-color: white;
-  border: 5px solid white;
   border-radius: 10px;
   width: 95%;
   margin: 2px auto 10px auto;
@@ -21,7 +19,6 @@ const QuestionDiv = styled.div`
 `;
 
 const QuestionHeader = styled.div`
-  color: black;
   display: grid;
   margin: 10 auto 10 auto;
   grid-template-columns: 1fr 15fr 5fr;
@@ -29,7 +26,6 @@ const QuestionHeader = styled.div`
 
 const AnswerWrapper = styled.div`
   display: grid;
-  background-color: white;
   margin: 0 auto;
   width: auto;
   max-height: 300px;
@@ -41,7 +37,6 @@ const LoadOption = styled.button`
   background: none!important;
   border: none;
   padding: 5px;
-  color: black;
   text-decoration: underline;
   cursor: pointer;
   margin: 0 15px;
@@ -86,13 +81,6 @@ class QBody extends React.Component {
     this.displayMore();
   }
 
-  onClickHelpful() {
-    const { markedHelpful } = this.state;
-    this.setState({
-      markedHelpful: !markedHelpful,
-    });
-  }
-
   onClickCollapse() {
     this.collapse();
   }
@@ -119,7 +107,13 @@ class QBody extends React.Component {
       answers,
       question_helpfulness,
     } = this.props.question;
-    const { product_id, toggleAddAnswerModal, toggleImageCarouselModal } = this.props;
+    const {
+      product_id,
+      toggleAddAnswerModal,
+      toggleImageCarouselModal,
+      bindSubmit,
+      setFeaturedImages,
+    } = this.props;
     const ansArr = sortByAHelpful(answers);
     const ansDisplayed = ansArr.slice(0, numDisplayed);
     const lengthTest = {
@@ -149,11 +143,10 @@ class QBody extends React.Component {
             <div className="q options">
               <QOptions
                 question={question_body}
-                helpfulness={question_helpfulness}
                 question_id={question_id}
-                onClickHelpful={this.onClickHelpful}
-                onClickReport={this.report}
+                helpfulness={question_helpfulness}
                 toggleAddAnswerModal={toggleAddAnswerModal}
+                bindSubmit={bindSubmit}
               />
             </div>
           </QuestionHeader>
@@ -177,6 +170,7 @@ class QBody extends React.Component {
                           question_id={question_id}
                           answer={answer}
                           toggleImageCarouselModal={toggleImageCarouselModal}
+                          setFeaturedImages={setFeaturedImages}
                         />
                       )
                       : null

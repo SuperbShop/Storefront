@@ -28,17 +28,16 @@ const ModalWrapper = styled.div`
   background: white;
   color: black;
   box-shadow: 0, 5px, 16px, rgba(0, 0, 0, 0.2);
-  grid-template-columns: 1fr 1fr;
   border-radius: 10px;
 `;
 
 const ModalImg = styled.img`
-  border-radius: 10px 0 0 10px;
   background: black;
+  max-height: 100%;
   max-width: 100%;
-  height: auto;
   width: auto;
   margin: auto;
+  overflow: hidden;
 `;
 
 const ModalContent = styled.div`
@@ -64,6 +63,7 @@ const ImageCarousel = (props) => {
   const {
     showImageCarouselModal,
     toggleImageCarouselModal,
+    featuredImages,
   } = props;
   const modalRef = useRef();
 
@@ -90,10 +90,7 @@ const ImageCarousel = (props) => {
           <PageBlockerModalDiv ref={modalRef} onClick={closeModal}>
             <Modal>
               <ModalWrapper showImageCarouselModal={showImageCarouselModal} onClick={closeModal}>
-                <ModalImg src="https://i.ytimg.com/vi/dBSHhuSMLMQ/maxresdefault.jpg" alt="test" />
-                <ModalContent>
-                  <h1>The New BMW Z4...</h1>
-                </ModalContent>
+                <ModalImg src={featuredImages[0]} alt="test" />
                 <CloseModalButton
                   aria-label="Close modal"
                   ref={modalRef}

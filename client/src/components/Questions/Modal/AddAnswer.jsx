@@ -105,6 +105,7 @@ const AddAnswer = (props) => {
     productId,
     productInfo,
     featuredQ,
+    submitFunc,
   } = props;
 
   const toggleModal = toggleAddAnswerModal;
@@ -133,26 +134,23 @@ const AddAnswer = (props) => {
   const bodyChangeHandler = (event) => {
     const { value } = event.target;
     setBody(value);
-    console.log(value);
   };
 
   const nameChangeHandler = (event) => {
     const { value } = event.target;
     setName(value);
-    console.log(value);
   };
 
   const emailChangeHandler = (event) => {
     const { value } = event.target;
     setEmail(value);
-    console.log(value);
   };
 
   const submitPostReq = (question_id, answer) => {
-    console.log('SUBMITTING POST REQ');
     axios.post(`/api/questions/${question_id}/answers`, answer)
-      .then((data) => {
-        console.log('HELLO', data);
+      .then(() => {
+        console.log('submitting');
+        submitFunc(productId.toString());
       })
       .catch((err) => console.error(err));
   };
@@ -163,7 +161,11 @@ const AddAnswer = (props) => {
       name,
       email,
     };
+    console.log('answer submitted', answer);
     submitPostReq(showAddAnswerModal, answer);
+    setBody('');
+    setName('');
+    setEmail('');
     toggleModal();
   };
 

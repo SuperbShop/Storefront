@@ -3,25 +3,22 @@ import styled from 'styled-components';
 import QBody from './QandABody/QBody';
 
 const HeaderComponent = styled.div`
-  color: black;
-  background-color: white;
-  border: 5px solid white;
   width: 100%;
-  margin: 0 auto 15px auto;
+  height: 60px;
+  margin: 0 auto 70px auto;
 `;
 
 const SearchBar = styled.input`
-  color: black;
-  background-color: white;
   margin: 0 auto;
-  border: 1px solid black;
+  border: none;
   width: 100%;
-  height: 50px;
-  font-size: 25px;
+  height: 30px;
+  font-size: 20px;
+  font-style: italic;
   box-shadow: 0 5px 10px 2px rgba(195,192,192,.5);
   &:hover {
     box-shadow: rgba(0, 0, 0, 0.55) 0px 3px 8px;
-    transition: 0.5s;
+    transition: 0.2s;
   }
 `;
 
@@ -31,16 +28,17 @@ const ButtonsWrapper = styled.div`
 `;
 
 const SearchResults = styled.div`
-  background-color: grey;
+  background: white;
+  color: black;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   padding: 2px 5px 10px 5px;
   max-height: 400px;
   overflow-y: auto;
+  position: relative;
+  z-index: 300;
 `;
 
 const AddQButton = styled.button`
-  color: black;
-  background-color: white;
   border: 2px solid black;
   width: 250px;
   padding: 10px 20px;

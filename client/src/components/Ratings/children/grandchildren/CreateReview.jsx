@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import $ from 'jquery';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-import { faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
+import { faStar as solidStar, faTimes } from '@fortawesome/free-solid-svg-icons';
 import CharsRadioButtons from './CharsRadioButtons';
 
 const CenteredDiv = styled.div`
@@ -188,13 +188,12 @@ const PhotoUploadLower = styled.div`
 
 const ExitButtonWrapper = styled.div`
   position: absolute;
-  right: 0;
+  right: 5px;
   top: 0;
-  `;
-
-const ExitButton = styled.button`
-  border: none;
-  background-color: white;
+  cursor: pointer;
+  &:hover {
+    color: red;
+  }
   `;
 
 const SubmitWrapper = styled.div`
@@ -206,6 +205,8 @@ const SubmitWrapper = styled.div`
 
 const SubmitButton = styled.button`
   cursor: pointer;
+  width: 250px;
+  padding: 15px;
   background-color: white;
   border: 1px solid #838383;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px 0px;
@@ -256,9 +257,9 @@ const StarsInner = styled.div`
 
 const updateBodyLengthDetails = (event) => {
   if (event.target.value.length < 50) {
-    $('#ReviewBodyLengthDetails').text(`Minumum required characters left: ${50 - event.target.value.length}`);
+    document.getElementById('ReviewBodyLengthDetails').innerText = `Minumum required characters left: ${50 - event.target.value.length}`;
   } else {
-    $('#ReviewBodyLengthDetails').text('Minimum reached');
+    document.getElementById('ReviewBodyLengthDetails').innerText = 'Minimum reached';
   }
 };
 
@@ -290,7 +291,6 @@ class CreateReview extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleStarIconClick = this.handleStarIconClick.bind(this);
-    this.handleRecommendChange = this.handleRecommendChange.bind(this);
   }
 
   handleExitButtonClick() {
@@ -306,13 +306,16 @@ class CreateReview extends React.Component {
     this.setState({
       rating: Number(event.target.id),
     });
-    $('#InnerStars').width(`${event.target.id * 20}%`);
-    $('#HiddenRatingInput').val(event.target.id);
-    $('#RatingText').text(`Overall Rating:* ${ratingWords[event.target.id - 1]}`);
+    document.getElementById('InnerStars').style.width = `${event.target.id * 20}%`;
+    document.getElementById('HiddenRatingInput').value = event.target.id;
+    document.getElementById('RatingText').innerText = `Overall Rating:* ${ratingWords[event.target.id - 1]}`;
   }
 
   handleImageUpload() {
-    $('#UploadedImages').empty();
+    const imageThumbnails = document.getElementById('UploadedImages');
+    while (imageThumbnails.firstChild) {
+      imageThumbnails.removeChild(imageThumbnails.firstChild);
+    }
     const { files } = document.getElementById('ImgUpload');
     for (let i = 0; i < files.length; i += 1) {
       const img = new Image();
@@ -328,7 +331,7 @@ class CreateReview extends React.Component {
   handleCharRadioClick(event) {
     const { metaInfo } = this.props;
     const charId = metaInfo.characteristics[event.target.name].id;
-    $(`#choice${event.target.name}`).text(`${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`);
+    document.getElementById(`choice${event.target.name}`).innerText = `${event.target.name}: ${this.charsObject[event.target.name][event.target.value - 1]}`;
     this.setState((prevState) => ({
       characteristics: {
         ...prevState.characteristics,
@@ -337,18 +340,17 @@ class CreateReview extends React.Component {
     }));
   }
 
-  handleRecommendChange(event) {
-    this.setState({
-      recommend: (event.target.value === 'true'),
-    });
-  }
-
   handleInputChange(event) {
-    this.setState({ [event.target.name]: event.target.value });
+    if (event.target.name === 'recommend') {
+      this.setState({
+        recommend: (event.target.value === 'true'),
+      });
+    } else {
+      this.setState({ [event.target.name]: event.target.value });
+    }
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSubmit() {
     const {
       rating,
       summary,
@@ -359,7 +361,7 @@ class CreateReview extends React.Component {
       photos,
       characteristics,
     } = this.state;
-    const { metaInfo } = this.props;
+    const { metaInfo, fetchReviewsList } = this.props;
     const data = {
       product_id: Number(metaInfo.product_id),
       rating,
@@ -376,8 +378,13 @@ class CreateReview extends React.Component {
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(data),
-      success: () => this.handleExitButtonClick(),
-      error: (err) => console.error(err),
+      success: () => {
+        this.handleExitButtonClick();
+        fetchReviewsList();
+      },
+      error: () => {
+        console.error('Could not process review submission');
+      },
     });
   }
 
@@ -430,9 +437,9 @@ class CreateReview extends React.Component {
                   Do you recommend this product?*
                   <div>
                     <label htmlFor="true">Yes</label>
-                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="true" required="required" name="recommend" value="true" />
+                    <input type="radio" className="RecommendRadio" onChange={this.handleInputChange} id="true" required="required" name="recommend" value="true" />
                     <label htmlFor="false">No</label>
-                    <input type="radio" className="RecommendRadio" onChange={this.handleRecommendChange} id="false" name="recommend" value="false" />
+                    <input type="radio" className="RecommendRadio" onChange={this.handleInputChange} id="false" name="recommend" value="false" />
                   </div>
                 </RecommendWrapper>
               </RatingAndRecommendWrapper>
@@ -499,7 +506,7 @@ class CreateReview extends React.Component {
             </SubmitWrapper>
           </form>
           <ExitButtonWrapper>
-            <ExitButton type="button" id="exitbutton" onClick={this.handleExitButtonClick}>X</ExitButton>
+            <FontAwesomeIcon icon={faTimes} onClick={this.handleExitButtonClick} />
           </ExitButtonWrapper>
         </CenteredDiv>
       </>
@@ -516,6 +523,7 @@ CreateReview.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   toggleCreateReviewModal: PropTypes.func.isRequired,
+  fetchReviewsList: PropTypes.func.isRequired,
 };
 
 export default CreateReview;

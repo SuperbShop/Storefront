@@ -37,7 +37,7 @@ const CharsRadioButtons = (props) => {
   return (
     <>
       <CharWrapper>
-        <TitleWrapper id={`${name}`}>
+        <TitleWrapper id={`choice${name}`}>
           {name}
           : None selected
         </TitleWrapper>

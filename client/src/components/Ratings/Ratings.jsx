@@ -5,11 +5,15 @@ import Breakdown from './children/Breakdown';
 import ReviewsList from './children/ReviewsList';
 import fetch from './fetchers';
 
+const RatingsWidgetWrapper = styled.div`
+  margin-top: 70px;
+  margin-bottom: 100px;
+  `;
+
 const ReviewsAndRatingsDiv = styled.section`
   padding: 5px;
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 100px;
   `;
 
 const BreakdownWrapper = styled.div`
@@ -20,17 +24,16 @@ const ListWrapper = styled.div`
   width: 800px;
   `;
 
-const StyledTitle = styled.h2`
-  `;
-
 class Ratings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       filterState: [],
+      fetchersError: false,
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
+    this.fetchReviewsList = this.fetchReviewsList.bind(this);
   }
 
   componentDidMount() {
@@ -49,7 +52,11 @@ class Ratings extends React.Component {
           productId: values[2].id,
         });
       }))
-      .catch((err) => console.error(err));
+      .catch(() => {
+        this.setState({
+          fetchersError: true,
+        });
+      });
   }
 
   handleFilterBy(value) {
@@ -74,6 +81,21 @@ class Ratings extends React.Component {
     }
   }
 
+  fetchReviewsList() {
+    const { product } = this.props;
+    fetch.listGetter(product)
+      .then((listInfo) => {
+        this.setState({
+          reviewsList: listInfo,
+        });
+      })
+      .catch(() => {
+        this.setState({
+          fetchersError: true,
+        });
+      });
+  }
+
   render() {
     const {
       reviewsMeta,
@@ -81,14 +103,18 @@ class Ratings extends React.Component {
       productName,
       productId,
       filterState,
+      fetchersError,
     } = this.state;
     return (
-      <>
-        <StyledTitle>
+      <RatingsWidgetWrapper>
+        <h2>
           Ratings & Reviews
-        </StyledTitle>
+        </h2>
+        { fetchersError && (
+          <h4>Something went wrong</h4>
+        )}
         { this.state && productId
-          && (
+          && fetchersError === false && (
           <ReviewsAndRatingsDiv>
             <BreakdownWrapper>
               <Breakdown
@@ -100,6 +126,7 @@ class Ratings extends React.Component {
             </BreakdownWrapper>
             <ListWrapper>
               <ReviewsList
+                fetchReviewsList={this.fetchReviewsList}
                 productName={productName}
                 reviewsList={reviewsList}
                 filterState={filterState}
@@ -107,8 +134,8 @@ class Ratings extends React.Component {
               />
             </ListWrapper>
           </ReviewsAndRatingsDiv>
-          )}
-      </>
+        )}
+      </RatingsWidgetWrapper>
     );
   }
 }

@@ -33,30 +33,11 @@ class Ratings extends React.Component {
     };
 
     this.handleFilterBy = this.handleFilterBy.bind(this);
-    this.fetchReviewsList = this.fetchReviewsList.bind(this);
+    this.fetchReviewData = this.fetchReviewData.bind(this);
   }
 
   componentDidMount() {
-    const { product } = this.props;
-
-    Promise.all([
-      fetch.metaGetter(product),
-      fetch.listGetter(product),
-      fetch.productGetter(product),
-    ])
-      .then(((values) => {
-        this.setState({
-          reviewsMeta: values[0],
-          reviewsList: values[1],
-          productName: values[2].name,
-          productId: values[2].id,
-        });
-      }))
-      .catch(() => {
-        this.setState({
-          fetchersError: true,
-        });
-      });
+    this.fetchReviewData();
   }
 
   handleFilterBy(value) {
@@ -81,14 +62,22 @@ class Ratings extends React.Component {
     }
   }
 
-  fetchReviewsList() {
+  fetchReviewData() {
     const { product } = this.props;
-    fetch.listGetter(product)
-      .then((listInfo) => {
+
+    Promise.all([
+      fetch.metaGetter(product),
+      fetch.listGetter(product),
+      fetch.productGetter(product),
+    ])
+      .then(((values) => {
         this.setState({
-          reviewsList: listInfo,
+          reviewsMeta: values[0],
+          reviewsList: values[1],
+          productName: values[2].name,
+          productId: values[2].id,
         });
-      })
+      }))
       .catch(() => {
         this.setState({
           fetchersError: true,
@@ -126,7 +115,7 @@ class Ratings extends React.Component {
             </BreakdownWrapper>
             <ListWrapper>
               <ReviewsList
-                fetchReviewsList={this.fetchReviewsList}
+                fetchReviewData={this.fetchReviewData}
                 productName={productName}
                 reviewsList={reviewsList}
                 filterState={filterState}

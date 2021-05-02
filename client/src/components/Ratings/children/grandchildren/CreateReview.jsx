@@ -361,7 +361,7 @@ class CreateReview extends React.Component {
       photos,
       characteristics,
     } = this.state;
-    const { metaInfo, fetchReviewsList } = this.props;
+    const { metaInfo, fetchReviewData } = this.props;
     const data = {
       product_id: Number(metaInfo.product_id),
       rating,
@@ -380,7 +380,7 @@ class CreateReview extends React.Component {
       data: JSON.stringify(data),
       success: () => {
         this.handleExitButtonClick();
-        fetchReviewsList();
+        fetchReviewData();
       },
       error: () => {
         console.error('Could not process review submission');
@@ -523,7 +523,7 @@ CreateReview.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   toggleCreateReviewModal: PropTypes.func.isRequired,
-  fetchReviewsList: PropTypes.func.isRequired,
+  fetchReviewData: PropTypes.func.isRequired,
 };
 
 export default CreateReview;

@@ -141,7 +141,7 @@ class ReviewsList extends React.Component {
       reviewsList,
       reviewsMeta,
       productName,
-      fetchReviewsList,
+      fetchReviewData,
     } = this.props;
     const sortedReviews = this.sortReviews();
     const sortedFilteredReviews = this.filterReviews(sortedReviews);
@@ -167,7 +167,7 @@ class ReviewsList extends React.Component {
       <PageBlockerModalDiv>
         <Modal>
           <CreateReview
-            fetchReviewsList={fetchReviewsList}
+            fetchReviewData={fetchReviewData}
             metaInfo={reviewsMeta}
             toggleCreateReviewModal={this.toggleCreateReviewModal}
             productName={productName}
@@ -190,7 +190,7 @@ class ReviewsList extends React.Component {
           {slicedReviews.map((item) => (
             <ReviewTile
               key={item.review_id}
-              fetchReviewsList={fetchReviewsList}
+              fetchReviewData={fetchReviewData}
               review={item}
             />
           ))}
@@ -230,7 +230,7 @@ ReviewsList.propTypes = {
     recommended: PropTypes.shape({}),
   }).isRequired,
   filterState: PropTypes.arrayOf(PropTypes.string).isRequired,
-  fetchReviewsList: PropTypes.func.isRequired,
+  fetchReviewData: PropTypes.func.isRequired,
 };
 
 export default ReviewsList;

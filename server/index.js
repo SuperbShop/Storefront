@@ -22,7 +22,6 @@ app.get('/api/:id/styles', (req, res) => {
 
 app.get('/api/:id/reviews', (req, res) => {
   const { id } = req.params;
-
   api.fetchReviews(id, (reviews) => {
     res.send(reviews.data);
   });
@@ -42,24 +41,17 @@ app.put('/api/reviews/:id/helpful', (req, res) => {
   });
 });
 
-app.put('/api/questions/:id/helpful', (req, res) => {
-  const { id } = req.params;
-  api.upvoteQuestions(id, (question) => {
-    res.send(question.data);
-  });
-});
-
-app.put('/api/answers/:id/helpful', (req, res) => {
-  const { id } = req.params;
-  api.upvoteAnswers(id, (answer) => {
-    res.send(answer.data);
-  });
-});
-
 app.put('/api/reviews/:id/report', (req, res) => {
   const { id } = req.params;
   api.reportReview(id, (review) => {
     res.send(review.data);
+  });
+});
+
+app.put('/api/questions/:id/report', (req, res) => {
+  const { id } = req.params;
+  api.reportQuestion(id, (question) => {
+    res.send(question.data);
   });
 });
 
@@ -77,13 +69,6 @@ app.get('/api/:id/questions', (req, res) => {
   });
 });
 
-app.put('/api/questions/:question_id/report', (req, res) => {
-  const { question_id } = req.params;
-  api.reportQuestion(question_id, (QandA) => {
-    res.status(200).send(QandA.data);
-  });
-});
-
 app.post('/api/qa/questions', (req, res) => {
   const {
     product_id, body, name, email,
@@ -95,11 +80,23 @@ app.post('/api/qa/questions', (req, res) => {
 
 app.post('/api/questions/:question_id/answers', (req, res) => {
   const { question_id } = req.params;
-  const {
-    body, name, email,
-  } = req.body;
-  api.addAnswer(question_id, body, name, email, () => {
+  const content = req.body;
+  api.addAnswer(question_id, content, () => {
     res.end();
+  });
+});
+
+app.put('/api/questions/:id/helpful', (req, res) => {
+  const { id } = req.params;
+  api.upvoteQuestions(id, (question) => {
+    res.send(question.data);
+  });
+});
+
+app.put('/api/answers/:id/helpful', (req, res) => {
+  const { id } = req.params;
+  api.upvoteAnswers(id, (answer) => {
+    res.send(answer.data);
   });
 });
 

@@ -73,8 +73,8 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: '23149',
-      productId: 23149,
+      product: '23156',
+      productId: 23156,
       productInfo: [],
       featuredQ: '',
       featuredImages: [],

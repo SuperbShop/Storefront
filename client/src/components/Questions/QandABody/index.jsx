@@ -10,10 +10,16 @@ const QuestionBodyComp = styled.div`
   width: 100%;
 `;
 const sortByQHelpful = (arr) => {
+  let result = [];
   const copy = arr.slice();
   copy.sort((question, nextQ) => ((question.question_helpfulness > nextQ.question_helpfulness)
     ? -1 : 1));
-  return copy;
+  copy.forEach((question) => {
+    if (!question.reported) {
+      result.push(question);
+    }
+  });
+  return result;
 };
 
 const QandABody = (props) => {
@@ -43,20 +49,25 @@ const QandABody = (props) => {
     <>
       <QuestionComponent>
         <QuestionBodyComp className="QA-Body">
-          { displayArr.map((result) => (
-            <div key={'question '+result.question_id}>
-              <QBody
-                product_id={product_id}
-                question={result}
-                report={report}
-                refresh={refresh}
-                toggleAddAnswerModal={toggleAddAnswerModal}
-                toggleImageCarouselModal={toggleImageCarouselModal}
-                bindSubmit={bindSubmit}
-                setFeaturedImages={setFeaturedImages}
-              />
-            </div>
-          ))}
+          { displayArr.map((result) => {
+            // if (!result.reported) {
+              return (
+                <div key={'question ' + result.question_id}>
+                  <QBody
+                    product_id={product_id}
+                    question={result}
+                    report={report}
+                    refresh={refresh}
+                    toggleAddAnswerModal={toggleAddAnswerModal}
+                    toggleImageCarouselModal={toggleImageCarouselModal}
+                    bindSubmit={bindSubmit}
+                    setFeaturedImages={setFeaturedImages}
+                  />
+                </div>
+              );
+            }
+          // }
+          )}
         </QuestionBodyComp>
       </QuestionComponent>
       { lengthTest2

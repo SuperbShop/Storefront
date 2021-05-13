@@ -2,6 +2,7 @@ const axios = require('axios');
 const API_KEY = require('../config.js');
 
 const API_URL = 'https://app-hrsei-api.herokuapp.com/api/fec2/hr-sfo';
+const API_ALT = 'http://localhost:8080';
 axios.defaults.headers.common.Authorization = API_KEY.TOKEN; // authorization for all requests
 
 const fetchProducts = (id, callback) => {
@@ -34,40 +35,6 @@ const upvoteReview = (id, cb) => {
     .catch((err) => console.error(err));
 };
 
-const upvoteQuestions = (id, cb) => {
-  axios.put(`${API_URL}/qa/questions/${id}/helpful`)
-    .then((data) => cb(data))
-    .catch((err) => console.error(err));
-};
-
-const upvoteAnswers = (id, cb) => {
-  axios.put(`${API_URL}/qa/answers/${id}/helpful`)
-    .then((data) => cb(data))
-    .catch((err) => console.error(err));
-};
-
-const addQuestion = (product_id, body, name, email, cb) => {
-  axios.post(`${API_URL}/qa/questions`, {
-    product_id, body, name, email,
-  })
-    .then((data) => {
-      console.log('DATA: ', data);
-      cb(data);
-    })
-    .catch((err) => console.error(err));
-};
-
-const addAnswer = (question_id, body, name, email, cb) => {
-  axios.post(`${API_URL}/qa/questions/${question_id}/answers`, {
-    body, name, email,
-  })
-    .then((data) => {
-      console.log('_____________________DATA: ', data);
-      cb(data);
-    })
-    .catch((err) => console.error(err));
-};
-
 const reportReview = (id, cb) => {
   axios.put(`${API_URL}/reviews/${id}/report`)
     .then((data) => cb(data))
@@ -81,22 +48,49 @@ const postReview = (content, cb) => {
 };
 
 const fetchQandA = (id, cb) => {
-  axios.get(`${API_URL}/qa/questions?product_id=${id}`)
+  axios.get(`${API_ALT}/qa/questions/product_id=${id}`)
+    .then((data) => cb(data))
+    .then((data) => console.log(data))
+    .catch((err) => console.error(err));
+};
+
+const addQuestion = (product_id, body, name, email, cb) => {
+  axios.post(`${API_ALT}/qa/questions`, {
+    product_id, body, name, email,
+  })
+    .then((data) => {
+      cb(data);
+    })
+    .catch((err) => console.error(err));
+};
+
+const upvoteQuestions = (id, cb) => {
+  axios.put(`${API_ALT}/qa/questions/${id}/helpful`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
 
-// Curtis POST request AddQuestion goes here
-// Curtis POST request AddAnswer goes here
-// [X] Curtis POST request ReportAnswer goes here
-const reportQuestion = (question_id, cb) => {
-  axios.put(`${API_URL}/qa/questions/${question_id}/report`)
+const upvoteAnswers = (id, cb) => {
+  axios.put(`${API_ALT}/qa/answers/${id}/helpful`)
     .then((data) => cb(data))
     .catch((err) => console.error(err));
 };
-// Curtis POST request addQuestion goes here
-// Curtis POST request QuestionHelpful goes here
-// Curtis POST request AnswerHelpful goes here
+
+const addAnswer = (question_id, body, name, email, cb) => {
+  axios.post(`${API_ALT}/qa/questions/${question_id}/answers`, {
+    body, name, email,
+  })
+    .then((data) => {
+      cb(data);
+    })
+    .catch((err) => console.error(err));
+};
+
+const reportQuestion = (question_id, cb) => {
+  axios.put(`${API_ALT}/qa/questions/${question_id}/report`)
+    .then((data) => cb(data))
+    .catch((err) => console.error(err));
+};
 
 module.exports = {
   fetchProducts,

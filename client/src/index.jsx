@@ -3,32 +3,32 @@
   eslint-disable jsx-a11y/no-static-element-interactions
   eslint-disable jsx-a11y/click-events-have-key-events
 */
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 
-import axios from "axios";
-import React, { Suspense } from "react";
-import Navbar from "react-bootstrap/Navbar";
-import styled, { ThemeProvider } from "styled-components";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
-import Overview from "./components/Overview/Overview";
-const Questions = React.lazy(() => import("./components/Questions"));
-const Ratings = React.lazy(() => import("./components/Ratings/Ratings"));
+import axios from 'axios';
+import React, { Suspense } from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import styled, { ThemeProvider } from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
+import Overview from './components/Overview/Overview';
+const Questions = React.lazy(() => import('./components/Questions'));
+const Ratings = React.lazy(() => import('./components/Ratings/Ratings'));
 const AskQuestion = React.lazy(() =>
-  import("./components/Questions/Modal/AskQuestion")
+  import('./components/Questions/Modal/AskQuestion')
 );
 const AddAnswer = React.lazy(() =>
-  import("./components/Questions/Modal/AddAnswer")
+  import('./components/Questions/Modal/AddAnswer')
 );
 const ImageCarousel = React.lazy(() =>
-  import("./components/Questions/Modal/ImageCarousel")
+  import('./components/Questions/Modal/ImageCarousel')
 );
-const Search = React.lazy(() => import("./components/SharedComponents/Search"));
+const Search = React.lazy(() => import('./components/SharedComponents/Search'));
 import {
   lightTheme,
   darkTheme,
   GlobalStyles,
-} from "./components/SharedComponents/themes";
+} from './components/SharedComponents/themes';
 
 const StyledApp = styled.div`
   color: ${(props) => props.theme.fontColor};
@@ -77,24 +77,24 @@ const clickTracker = (WrappedComponent, module) => (props) =>
     </div>
   );
 
-const TrackedOverview = clickTracker(Overview, "Overview");
-const TrackedQuestions = clickTracker(Questions, "Q&A");
-const TrackedRatings = clickTracker(Ratings, "Ratings");
+const TrackedOverview = clickTracker(Overview, 'Overview');
+const TrackedQuestions = clickTracker(Questions, 'Q&A');
+const TrackedRatings = clickTracker(Ratings, 'Ratings');
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      product: "25167",
+      product: '25167',
       productId: 25167,
       productInfo: [],
-      featuredQ: "",
+      featuredQ: '',
       featuredImages: [],
-      submitFunc: "",
+      submitFunc: '',
       showImageCarouselModal: false,
       showAskQuestionModal: false,
       showAddAnswerModal: false,
-      theme: "light",
+      theme: 'light',
     };
     this.incrementProduct = this.incrementProduct.bind(this);
     this.decrementProduct = this.decrementProduct.bind(this);
@@ -172,7 +172,7 @@ class App extends React.Component {
 
   toggleAddAnswerModal(input, question) {
     const { showAddAnswerModal } = this.state;
-    if (typeof input === "number") {
+    if (typeof input === 'number') {
       this.setState({
         showAddAnswerModal: input,
         featuredQ: question,
@@ -194,13 +194,13 @@ class App extends React.Component {
 
   toggleTheme() {
     const { theme } = this.state;
-    if (theme === "light") {
+    if (theme === 'light') {
       this.setState({
-        theme: "dark",
+        theme: 'dark',
       });
     } else {
       this.setState({
-        theme: "light",
+        theme: 'light',
       });
     }
   }
@@ -233,7 +233,7 @@ class App extends React.Component {
 
     return (
       productId !== undefined && (
-        <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
+        <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
           <GlobalStyles />
           <StyledApp>
             <Navbar bg="dark" variant="dark">
@@ -253,7 +253,7 @@ class App extends React.Component {
                 aria-label="Toggle Theme Button"
                 onClick={() => this.toggleTheme()}
               >
-                {theme === "light" ? (
+                {theme === 'light' ? (
                   <FontAwesomeIcon icon={faSun} color="white" />
                 ) : (
                   <FontAwesomeIcon icon={faMoon} color="white" />
@@ -267,7 +267,7 @@ class App extends React.Component {
             <section className="overview module">
               <TrackedOverview productId={productId} />
             </section>
-            {/* <Suspense fallback={<div>Loading...</div>}>
+            <Suspense fallback={<div>Loading...</div>}>
               <AskQuestion
                 showAskQuestionModal={showAskQuestionModal}
                 toggleAskQuestionModal={this.toggleAskQuestionModal}
@@ -308,7 +308,7 @@ class App extends React.Component {
               <section className="ratings module" id="Reviews">
                 <TrackedRatings product={productId} />
               </section>
-            </Suspense> */}
+            </Suspense>
           </StyledApp>
         </ThemeProvider>
       )
@@ -316,4 +316,4 @@ class App extends React.Component {
   }
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));
